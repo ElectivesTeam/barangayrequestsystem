@@ -10,25 +10,14 @@ import {
 import Home from './navigation/Home';
 import Login from './navigation/Login';
 import Register from './navigation/Register';
+import MenuAppBar from './components/navbar';
 
 
 function App() {
   return (
     <Router>
       <div>
-        <nav>
-          <ul>
-            <li>
-              <Link to="/">Home</Link>
-            </li>
-            <li>
-              <Link to="/login">Login</Link>
-            </li>
-            <li>
-              <Link to="/register">Register</Link>
-            </li>
-          </ul>
-        </nav>
+      <MenuAppBar/>
         <Switch>
           <Route exact path="/" component={Home}></Route>
           <Route exact path="/login" component={Login}></Route>

@@ -1,10 +1,9 @@
 import React from 'react';
-import PrimarySearchAppBar from '../components/navbar';
+
 
 function Home() {
     return (
-        <div>
-            <PrimarySearchAppBar/>
+        <div>    
              <h1>home</h1>
         </div>
         

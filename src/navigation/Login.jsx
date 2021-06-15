@@ -15,15 +15,8 @@ import { makeStyles } from '@material-ui/core/styles';
 import MailOutlineIcon from '@material-ui/icons/MailOutline';
 import InputAdornment from '@material-ui/core/InputAdornment';
 import LockOpenIcon from '@material-ui/icons/LockOpen';
-import PrimarySearchAppBar from '../components/navbar';
 
 
-
-function NavBar() {
-  return (
-      <PrimarySearchAppBar/>
-  )
-}    
 
 function Copyright() {
     return (
@@ -46,7 +39,7 @@ const useStyles = makeStyles((theme) => ({
     padding: '30px',
   },
   image: {
-    backgroundColor: 'grey',
+    backgroundColor: '#D2888A',
     borderTopLeftRadius: 28,
     borderBottomLeftRadius: 28, 
   },
@@ -55,7 +48,7 @@ const useStyles = makeStyles((theme) => ({
     display: 'flex',
     flexDirection: 'column',
     alignItems: 'center',
-    margin: '110px 32px'       
+    margin: '110px 32px',       
   },
   signInContainer: {
     borderTopRightRadius: 28,
@@ -65,7 +58,7 @@ const useStyles = makeStyles((theme) => ({
   avatar: {
     margin: theme.spacing(1),
     color: '#fff',
-    backgroundColor: '#3f51b5',
+    backgroundColor: '#80181B',
   },
   form: {
     width: '100%', // Fix IE 11 issue.
@@ -80,6 +73,7 @@ const useStyles = makeStyles((theme) => ({
     fontSize: 18,
     width: '40%',
     left: '30%',    
+    backgroundColor: '#80181B',
 
   },
   h1: {
@@ -99,99 +93,98 @@ function SignInSide() {
   const classes = useStyles();
   
   return (  
-    <div>
-        <NavBar/>
-        <Grid container component="main" className={classes.root} >
+    
+    <Grid container component="main" className={classes.root} >
+      
+      <CssBaseline />
+      <Grid item xs={false} sm={4} md={7} className={classes.image} />
+      <Grid item xs={12} sm={8} md={5} component={Paper} elevation={6} square className={classes.signInContainer}>
+        <div className={classes.paper}>
+          <div className={classes.divtest}>
+            <Avatar className={classes.avatar} >
+              <PeopleAltIcon />
+            </Avatar>
+            <Typography component="h1" variant="h5" className={classes.h1}>
+              Login
+            </Typography>
+          </div>
           
-          <CssBaseline />
-          <Grid item xs={false} sm={4} md={7} className={classes.image} />
-          <Grid item xs={12} sm={8} md={5} component={Paper} elevation={6} square className={classes.signInContainer}>
-            <div className={classes.paper}>
-              <div className={classes.divtest}>
-                <Avatar className={classes.avatar} >
-                  <PeopleAltIcon />
-                </Avatar>
-                <Typography component="h1" variant="h5" className={classes.h1}>
-                  Login
-                </Typography>
-              </div>
+          <form className={classes.form} noValidate>
+            <TextField
+              variant="outlined"
+              margin="normal"
+              required
+              fullWidth
+              id="email"
+              label="Email Address"
+              name="email"
+              autoComplete="email"
+              autoFocus
+              InputProps={{
+                startAdornment: (
+                  <InputAdornment position="start">
+                    <MailOutlineIcon />
+                  </InputAdornment>
+                ),
+              }}
+            />
+            <TextField
+              variant="outlined"
+              margin="normal"
+              required
+              fullWidth
+              name="password"
+              label="Password"
+              type="password"
+              id="password"
+              autoComplete="current-password"
+              InputProps={{
+                startAdornment: (
+                  <InputAdornment position="start">
+                    <LockOpenIcon />
+                  </InputAdornment>
+                ),
+              }}
+            />
+            
+            <FormControlLabel
+              control={<Checkbox value="remember" color="primary" />}
+              label="Remember me"
               
-              <form className={classes.form} noValidate>
-                <TextField
-                  variant="outlined"
-                  margin="normal"
-                  required
+            />
+            <div>
+              <Button
+                  type="submit"
                   fullWidth
-                  id="email"
-                  label="Email Address"
-                  name="email"
-                  autoComplete="email"
-                  autoFocus
-                  InputProps={{
-                    startAdornment: (
-                      <InputAdornment position="start">
-                        <MailOutlineIcon />
-                      </InputAdornment>
-                    ),
-                  }}
-                />
-                <TextField
-                  variant="outlined"
-                  margin="normal"
-                  required
-                  fullWidth
-                  name="password"
-                  label="Password"
-                  type="password"
-                  id="password"
-                  autoComplete="current-password"
-                  InputProps={{
-                    startAdornment: (
-                      <InputAdornment position="start">
-                        <LockOpenIcon />
-                      </InputAdornment>
-                    ),
-                  }}
-                />
-                
-                <FormControlLabel
-                  control={<Checkbox value="remember" color="primary" />}
-                  label="Remember me"
-                  
-                />
-                <div>
-                  <Button
-                      type="submit"
-                      fullWidth
-                      variant="contained"
-                      color="primary"
-                      className={classes.submit}
-                      href="/"
-                  >
-                      Sign In
-                  </Button>
-                </div>
-                
-                <Grid container>
-                  <Grid item xs>
-                    <Link href="#" variant="body2">
-                      Forgot password?
-                    </Link>
-                  </Grid>
-                  <Grid item>
-                    <Link href="/register" variant="body2">
-                      {"Don't have an account? Sign Up"}
-                    </Link>
-                  </Grid>
-                </Grid>
-                <Box mt={5}>
-                  <Copyright />
-                </Box>
-              </form>
+                  variant="contained"
+                  color="primary"
+                  className={classes.submit}
+                  href="/"
+              >
+                  Sign In
+              </Button>
             </div>
-          </Grid>
-        </Grid>
-  </div>
+            
+            <Grid container>
+              <Grid item xs>
+                <Link href="#" variant="body2">
+                  Forgot password?
+                </Link>
+              </Grid>
+              <Grid item>
+                <Link href="/register" variant="body2">
+                  {"Don't have an account? Sign Up"}
+                </Link>
+              </Grid>
+            </Grid>
+            <Box mt={5}>
+              <Copyright />
+            </Box>
+          </form>
+        </div>
+      </Grid>
+    </Grid>
+ 
   )
 }
   
