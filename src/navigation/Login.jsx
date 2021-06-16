@@ -63,7 +63,7 @@ const useStyles = makeStyles((theme) => ({
   form: {
     width: '100%', // Fix IE 11 issue.
     margin: theme.spacing(1),
-    fontFamily: 'Montserrat', 
+    fontFamily: 'Montserrat',
   },
   submit: {
     margin: theme.spacing(3, 0, 2),
@@ -74,6 +74,11 @@ const useStyles = makeStyles((theme) => ({
     width: '40%',
     left: '30%',    
     backgroundColor: '#80181B',
+    color: 'white',
+    '&:hover': {
+      backgroundColor: '#b71c1c',
+      
+    },
 
   },
   h1: {
@@ -157,7 +162,6 @@ function SignInSide() {
                   type="submit"
                   fullWidth
                   variant="contained"
-                  color="primary"
                   className={classes.submit}
                   href="/"
               >
