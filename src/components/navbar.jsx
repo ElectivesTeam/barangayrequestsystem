@@ -1,5 +1,5 @@
 import React from 'react';
-import { fade,makeStyles, withStyles  } from '@material-ui/core/styles';
+import { makeStyles  } from '@material-ui/core/styles';
 import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
 import Typography from '@material-ui/core/Typography';
@@ -7,78 +7,41 @@ import IconButton from '@material-ui/core/IconButton';
 import AccountCircle from '@material-ui/icons/AccountCircle';
 import MenuItem from '@material-ui/core/MenuItem';
 import Menu from '@material-ui/core/Menu';
-import { Link } from 'react-router-dom'
-import Button from '@material-ui/core/Button';
-import InputBase from '@material-ui/core/InputBase';
-import SearchIcon from '@material-ui/icons/Search';
+import { Link } from 'react-router-dom';
 import HomeIcon from '@material-ui/icons/Home';
 import VpnKeyIcon from '@material-ui/icons/VpnKey';
 import Tooltip from '@material-ui/core/Tooltip';
+import Button from '@material-ui/core/Button';
+import NoteAddIcon from '@material-ui/icons/NoteAdd';
+
+import AuthService from "../services/auth.service";
+import { useHistory } from "react-router-dom";
 
 const useStyles = makeStyles((theme) => ({
   root: {
     flexGrow: 1,
-  },
-  navbar: {
-    backgroundColor: '#80181B'
+    
+    
   },
   title: {
-    flexGrow: 1,
-    display: 'none',
+    flexGrow: 1,   
     [theme.breakpoints.up('sm')]: {
       display: 'block',
     },
     fontFamily: 'Montserrat',
     fontWeight: 600,
-    fontSize: 25,
-  },
-  search: {
-    position: 'relative',
-    borderRadius: theme.shape.borderRadius,
-    backgroundColor: fade(theme.palette.common.white, 0.15),
-    '&:hover': {
-      backgroundColor: fade(theme.palette.common.white, 0.25),
+    fontSize: 22,
+    
+    '@media (max-width:550px)': {
+      display: 'none',
+
     },
-    marginLeft: 0,
-    width: '100%',
-    [theme.breakpoints.up('sm')]: {
-      marginLeft: theme.spacing(1),
-      width: 'auto',
-    },
-  },
-  searchIcon: {
-    padding: theme.spacing(0, 2),
-    height: '100%',
-    position: 'absolute',
-    pointerEvents: 'none',
-    display: 'flex',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-  inputRoot: {
-    color: 'inherit',
-  },
-  inputInput: {
-    padding: theme.spacing(1, 1, 1, 0),
-    // vertical padding + font size from searchIcon
-    paddingLeft: `calc(1em + ${theme.spacing(4)}px)`,
-    transition: theme.transitions.create('width'),
-    width: '100%',
-    [theme.breakpoints.up('sm')]: {
-    width: '12ch',
-    '&:focus': {
-      width: '20ch',
-    },
-   },
   },
   styledButton: {
     fontFamily: 'Montserrat',
     fontWeight: 600,
     fontSize: 16,
-    '&:hover': {
-     
-      
-    },
+    
   },
   styledMenu: {
     marginTop: 35,
@@ -87,6 +50,18 @@ const useStyles = makeStyles((theme) => ({
     fontFamily: 'Montserrat',
     fontSize: 14,
     
+  },
+  styledTooltip: {
+    color: '#fff',
+  },
+  logo: {
+    height: 50,
+    
+  },
+  divTool: {
+    '@media (max-width:550px)': {
+      marginLeft: 'auto',     
+    },
   }
 }));
 
@@ -105,106 +80,110 @@ export default function MenuAppBar() {
     setAnchorEl(null);
   };
 
+  const Logout = () => {
+    AuthService.logout();
+    setAnchorEl(null);
+  };
+
+  const user = AuthService.getCurrentUser()
+  
+  const loginButton = () => {
+    if(user){
+    }else{
+      return <Tooltip title="Login" color="inherit"> 
+        <IconButton
+          href="/login"
+        >
+          <VpnKeyIcon />
+        </IconButton>
+      </Tooltip>
+    }
+  }
+  
+  const profileMenu = () => {
+    if(user){
+      return <div style={{display: "contents"}}>
+        <Tooltip title="Menu" color="inherit">
+          <IconButton
+            aria-label="account of current user"
+            aria-controls="menu-appbar"
+            aria-haspopup="true"
+            onClick={handleMenu}                  
+          >
+            <AccountCircle />
+          </IconButton>
+        </Tooltip>
+        <Menu
+          className={classes.styledMenu}
+          id="menu-appbar"
+          anchorEl={anchorEl}
+          anchorOrigin={{
+            vertical: 'top',
+            horizontal: 'right',
+          }}
+          keepMounted
+          transformOrigin={{
+            vertical: 'top',
+            horizontal: 'right',
+          }}
+          open={open}
+          onClose={handleClose}
+        >
+          <MenuItem
+            className={classes.styledMenuItem}  
+            onClick={handleClose}
+            component={Link}
+            to="/myaccount"
+            >                   
+          My Account</MenuItem>
+          <MenuItem
+            className={classes.styledMenuItem}  
+            onClick={handleClose}
+            component={Link}
+            to="#"
+            >                   
+          My Requests</MenuItem>
+          <MenuItem 
+            className={classes.styledMenuItem} 
+            onClick={Logout}
+            component={Link}
+            to="#"
+            >                   
+          Logout</MenuItem>
+        </Menu>
+      </div>
+    }
+  }
+
   return (
     <div className={classes.root}>
-      <AppBar position="static" className={classes.navbar}>
+      <AppBar position="static" className={classes.navbar} color="primary">
         <Toolbar>
-          <Typography variant="h6" className={classes.title}>
-            Title
+          <Button href="/">
+          <img src="../img/Brgy Landayan Logo.png" className={classes.logo} alt=""  />
+          </Button>
+          <Typography variant="h6" className={classes.title} >
+            Online Document Request
           </Typography>
-          
-          <div className={classes.search}>
-            <div className={classes.searchIcon}>
-              <SearchIcon />
-            </div>
-            <InputBase
-              placeholder="Search…"
-              classes={{
-                root: classes.inputRoot,
-                input: classes.inputInput,
-              }}
-              inputProps={{ 'aria-label': 'search' }}
-            />
-          </div>
           { (
-            <div>
-              <Tooltip title="Home">
+            <div className={classes.divTool}> 
+              <Tooltip title="Home" color="inherit">
                 <IconButton
                 href="/"
-                color="inherit"
                 >
                 <HomeIcon />
                 </IconButton>
               </Tooltip>
-              
-              <Tooltip title="Login">
+              {loginButton()}
+              <Tooltip title="Request" color="inherit"> 
                 <IconButton
-                  href="/login"
-                  color="inherit"
+                  href="/requests"
                 >
-                  <VpnKeyIcon />
+                  <NoteAddIcon />
                 </IconButton>
               </Tooltip>
-              
-              <Tooltip title="Menu">
-                <IconButton
-                  aria-label="account of current user"
-                  aria-controls="menu-appbar"
-                  aria-haspopup="true"
-                  onClick={handleMenu}
-                  color="inherit"
-                >
-                  <AccountCircle />
-                </IconButton>
-              </Tooltip>
-              
-              <Menu
-                className={classes.styledMenu}
-                id="menu-appbar"
-                anchorEl={anchorEl}
-                anchorOrigin={{
-                  vertical: 'top',
-                  horizontal: 'right',
-                }}
-                keepMounted
-                transformOrigin={{
-                  vertical: 'top',
-                  horizontal: 'right',
-                }}
-                open={open}
-                onClose={handleClose}
-              >
-                <MenuItem
-                  className={classes.styledMenuItem} 
-                  onClick={handleClose}
-                  component={Link} 
-                  to="#"
-                 >
+              {profileMenu()}       
                    
-                    Profile</MenuItem>
-                <MenuItem
-                  className={classes.styledMenuItem}  
-                  onClick={handleClose}
-                  component={Link}
-                  to="#"
-                  >                   
-                My Account</MenuItem>
-                <MenuItem
-                  className={classes.styledMenuItem}  
-                  onClick={handleClose}
-                  component={Link}
-                  to="#"
-                  >                   
-                Requests</MenuItem>
-                <MenuItem 
-                  className={classes.styledMenuItem} 
-                  onClick={handleClose}
-                  component={Link}
-                  to="#"
-                  >                   
-                Logout</MenuItem>
-              </Menu>
-                  
             </div>
           )}
         </Toolbar>
