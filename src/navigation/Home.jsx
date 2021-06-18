@@ -4,17 +4,25 @@ import { makeStyles, createMuiTheme } from '@material-ui/core/styles';
 import Paper from '@material-ui/core/Paper'
 import Typography from '@material-ui/core/Typography';
 import Divider from '@material-ui/core/Divider';
+import Card from '@material-ui/core/Card';
+import CardActionArea from '@material-ui/core/CardActionArea';
+import CardActions from '@material-ui/core/CardActions';
+import CardContent from '@material-ui/core/CardContent';
+import CardMedia from '@material-ui/core/CardMedia';
+import Button from '@material-ui/core/Button';
 
 const useStyles = makeStyles((theme) => ({
     root: {
-        width: '100%',
+        width: '95%',
+        margin: 'auto'
     },
 
     paper: {
-        padding: theme.spacing(6),
+        padding: theme.spacing(10),
         textAlign: 'center',
         margin: '25px 33px 0px',
-        backgroundColor: '#f5f5f5'
+        backgroundColor: '#f5f5f5',
+
     },
     
     title : {
@@ -22,15 +30,24 @@ const useStyles = makeStyles((theme) => ({
     },
     
     styledGridContainer: {
-        margin: '0px 33px',
+        margin: '0px 30px',
         
     },
     styledPaper: {
         padding: '20px 5px',
         height: 300,
+        textAlign: 'justify',
+        
     },
     
+    styledCard: {
+        maxWidth: 450,
+        margin: 'auto',
+        marginTop: '13px',
+        maxHeight: '350px' 
+    },
     
+
     
 }));
 function Home() {
@@ -57,47 +74,87 @@ function Home() {
                 </Typography>
             </Paper>
         </Grid>
+        
+
         <Grid container spacing={2} className={classes.styledGridContainer}>
-            <Grid item xs={4}>
-                <Paper className={classes.styledPaper}>
-                    <Typography variant="h5"gutterBottom>
+        <Card className={classes.styledCard}>
+            <CardActionArea>
+                <CardMedia
+                    component="img"
+                    alt="Contemplative Reptile"
+                    height="140"
+                    image="https://image.freepik.com/free-photo/closeup-hands-passing-contract-unrecognizable-businessman_1098-19612.jpg"
+                    title="Contemplative Reptile"
+                />
+                <CardContent>
+                    <Typography gutterBottom variant="h5" component="h2">
                         Document Requesting
                     </Typography>
-                    <Divider />
-                    <Typography variant="body1">
+                    <Typography variant="body2" color="textSecondary" component="p">
                         Requesting of documents is now available online. Create an account and upload your valid ID for verfication to get an access to the Online Document Request Page
                     </Typography>
-                </Paper>
-            </Grid>
-            <Grid item xs={4}>
-                <Paper className={classes.styledPaper}>
-                    <Typography variant="h5" gutterBottom>
-                        Easy Payment
-                    </Typography>
-                    <Divider />
-                    <Typography variant="body1">
-                        Payment of Document Request is easy. Either through any LandBank Branch or through PUP Cashier's Office
-                    </Typography>
-                </Paper>
-            </Grid>
-            <Grid item xs={4}>
-                <Paper className={classes.styledPaper}>
-                    <Typography variant="h5"gutterBottom>
-                        Clearance Monitoring
-                    </Typography>
-                    <Divider />
-                    <Typography variant="body1">
-                    Before, Document Requests should be submitted together with the Clearance Form, signed by all required signatories. But now, you’ll just have to wait (and do some actions if necessary) for the system to accomplish your clearance automatically.
-
-
-
-                    </Typography>
-                </Paper>
-            </Grid>
+                </CardContent>
+            </CardActionArea>
+            <CardActions>
+                <Button size="small" color="primary">
+                Learn More
+                </Button>
+            </CardActions>
             
+        </Card>
+        <Card className={classes.styledCard}>
+            <CardActionArea>
+                <CardMedia
+                    component="img"
+                    alt="Contemplative Reptile"
+                    height="140"
+                    image="https://image.freepik.com/free-photo/closeup-hands-passing-contract-unrecognizable-businessman_1098-19612.jpg"
+                    title="Contemplative Reptile"
+                />
+                <CardContent>
+                    <Typography gutterBottom variant="h5" component="h2">
+                    Easy Payment
+                    </Typography>
+                    <Typography variant="body2" color="textSecondary" component="p">
+                    Requesting of documents is now available online. Create an account and upload your valid ID for verfication to get an access to the Online Document Request Page
+                    </Typography>
+                </CardContent>
+            </CardActionArea>
+            <CardActions>
+                <Button size="small" color="primary">
+                Learn More
+                </Button>
+            </CardActions>
+            
+        </Card>
+        <Card className={classes.styledCard}>
+            <CardActionArea>
+                <CardMedia
+                    component="img"
+                    alt="Contemplative Reptile"
+                    height="140"
+                    image="https://image.freepik.com/free-photo/closeup-hands-passing-contract-unrecognizable-businessman_1098-19612.jpg"
+                    title="Contemplative Reptile"
+                />
+                <CardContent>
+                    <Typography gutterBottom variant="h5" component="h2">
+                    Clearance Monitoring
+                    </Typography>
+                    <Typography variant="body2" color="textSecondary" component="p" >
+                    Requesting of documents is now available online. Create an account and upload your valid ID for verfication to get an access to the Online Document Request Page
+                    </Typography>
+                </CardContent>
+            </CardActionArea>
+            <CardActions>
+                <Button size="small" color="primary">
+                Learn More
+            </Button>
+            </CardActions>
+            
+        </Card>
+        
+        
         </Grid>
-        
-        
         </Grid>
         
         
