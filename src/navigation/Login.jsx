@@ -113,7 +113,7 @@ function SignInSide() {
         <div>
         <img src="https://scontent.fmnl17-1.fna.fbcdn.net/v/t1.15752-9/120262584_774624143328661_2810025230854550812_n.png?_nc_cat=101&ccb=1-3&_nc_sid=ae9488&_nc_eui2=AeF1xf0NXry52opL6G5eS_Bqkh--bQQ5yHKSH75tBDnIch3Uo_T7SZZJgjCPfMH0LiWZBLPSMyhBPPq3D-qOhWiK&_nc_ohc=Gj5-LkKOoxgAX-t2JWT&_nc_ht=scontent.fmnl17-1.fna&oh=325fc12676645c94649ab165f672b526&oe=60D3AC59" alt="" className= {classes.image}/>
         </div>
-      <Grid item xs={12} sm={8} md={5} component={Paper} elevation={6} square className={classes.signInContainer}>
+      <Grid item xs={12} sm={8} md={5} component={Paper} elevation={2} square className={classes.signInContainer}>
         <div className={classes.paper}>
           <div className={classes.divtest}>
             <Avatar className={classes.avatar} >
