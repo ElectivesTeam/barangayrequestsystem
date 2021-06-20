@@ -1,7 +1,14 @@
 import React from 'react';
 
-export default function () {
+
+function Register() {
     return (
-        <h1>register</h1>
+        <div>
+             <h1>register</h1>
+        </div>
+        
     )
 }
+
+
+export default Register
