@@ -35,13 +35,21 @@ function Copyright() {
 const useStyles = makeStyles((theme) => ({
   root: {
     
-    height: '100vh',
+    height: '90vh',
     padding: '30px',
+    
   },
   image: {
-    backgroundColor: '#D2888A',
+    
     borderTopLeftRadius: 28,
     borderBottomLeftRadius: 28, 
+    width: '850px',
+    height: '500px',
+    marginTop: '90px',
+    
+
+   
+    
   },
   paper: {
     margin: theme.spacing(8, 4),
@@ -58,7 +66,7 @@ const useStyles = makeStyles((theme) => ({
   avatar: {
     margin: theme.spacing(1),
     color: '#fff',
-    backgroundColor: '#80181B',
+    backgroundColor: 'black',
   },
   form: {
     width: '100%', // Fix IE 11 issue.
@@ -73,7 +81,7 @@ const useStyles = makeStyles((theme) => ({
     fontSize: 18,
     width: '40%',
     left: '30%',    
-    backgroundColor: '#80181B',
+    backgroundColor: 'black',
     color: 'white',
     '&:hover': {
       backgroundColor: '#b71c1c',
@@ -102,7 +110,9 @@ function SignInSide() {
     <Grid container component="main" className={classes.root} >
       
       <CssBaseline />
-      <Grid item xs={false} sm={4} md={7} className={classes.image} />
+        <div>
+        <img src="https://scontent.fmnl17-1.fna.fbcdn.net/v/t1.15752-9/120262584_774624143328661_2810025230854550812_n.png?_nc_cat=101&ccb=1-3&_nc_sid=ae9488&_nc_eui2=AeF1xf0NXry52opL6G5eS_Bqkh--bQQ5yHKSH75tBDnIch3Uo_T7SZZJgjCPfMH0LiWZBLPSMyhBPPq3D-qOhWiK&_nc_ohc=Gj5-LkKOoxgAX-t2JWT&_nc_ht=scontent.fmnl17-1.fna&oh=325fc12676645c94649ab165f672b526&oe=60D3AC59" alt="" className= {classes.image}/>
+        </div>
       <Grid item xs={12} sm={8} md={5} component={Paper} elevation={6} square className={classes.signInContainer}>
         <div className={classes.paper}>
           <div className={classes.divtest}>

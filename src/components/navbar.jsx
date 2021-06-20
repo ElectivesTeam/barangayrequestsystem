@@ -1,5 +1,5 @@
 import React from 'react';
-import { fade,makeStyles, withStyles  } from '@material-ui/core/styles';
+import { makeStyles  } from '@material-ui/core/styles';
 import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
 import Typography from '@material-ui/core/Typography';
@@ -7,10 +7,7 @@ import IconButton from '@material-ui/core/IconButton';
 import AccountCircle from '@material-ui/icons/AccountCircle';
 import MenuItem from '@material-ui/core/MenuItem';
 import Menu from '@material-ui/core/Menu';
-import { Link } from 'react-router-dom'
-import Button from '@material-ui/core/Button';
-import InputBase from '@material-ui/core/InputBase';
-import SearchIcon from '@material-ui/icons/Search';
+import { Link } from 'react-router-dom';
 import HomeIcon from '@material-ui/icons/Home';
 import VpnKeyIcon from '@material-ui/icons/VpnKey';
 import Tooltip from '@material-ui/core/Tooltip';
@@ -18,9 +15,10 @@ import Tooltip from '@material-ui/core/Tooltip';
 const useStyles = makeStyles((theme) => ({
   root: {
     flexGrow: 1,
+    
   },
   navbar: {
-    backgroundColor: '#80181B'
+    backgroundColor: '#fff'
   },
   title: {
     flexGrow: 1,
@@ -31,15 +29,13 @@ const useStyles = makeStyles((theme) => ({
     fontFamily: 'Montserrat',
     fontWeight: 600,
     fontSize: 25,
+    color: 'black'
   },
   styledButton: {
     fontFamily: 'Montserrat',
     fontWeight: 600,
     fontSize: 16,
-    '&:hover': {
-     
-      
-    },
+    
   },
   styledMenu: {
     marginTop: 35,
@@ -48,6 +44,9 @@ const useStyles = makeStyles((theme) => ({
     fontFamily: 'Montserrat',
     fontSize: 14,
     
+  },
+  styledTooltip: {
+    color: 'black'
   }
 }));
 
@@ -76,31 +75,31 @@ export default function MenuAppBar() {
           
           { (
             <div>
-              <Tooltip title="Home">
+              <Tooltip title="Home" className={classes.styledTooltip}>
                 <IconButton
                 href="/"
-                color="inherit"
+                
                 >
                 <HomeIcon />
                 </IconButton>
               </Tooltip>
               
-              <Tooltip title="Login">
+              <Tooltip title="Login" className={classes.styledTooltip}> 
                 <IconButton
                   href="/login"
-                  color="inherit"
+                  
                 >
                   <VpnKeyIcon />
                 </IconButton>
               </Tooltip>
               
-              <Tooltip title="Menu">
+              <Tooltip title="Menu" className={classes.styledTooltip}>
                 <IconButton
                   aria-label="account of current user"
                   aria-controls="menu-appbar"
                   aria-haspopup="true"
                   onClick={handleMenu}
-                  color="inherit"
+                  
                 >
                   <AccountCircle />
                 </IconButton>
@@ -121,12 +120,14 @@ export default function MenuAppBar() {
                 }}
                 open={open}
                 onClose={handleClose}
+                
               >
                 <MenuItem
                   className={classes.styledMenuItem} 
                   onClick={handleClose}
                   component={Link} 
                   to="#"
+                  
                  >
                    
                     Profile</MenuItem>
