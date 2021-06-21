@@ -4,7 +4,6 @@ import {
   BrowserRouter as Router,
   Switch,
   Route,
-  Link
 } from "react-router-dom";
 import { createMuiTheme } from '@material-ui/core/styles';
 import { ThemeProvider } from '@material-ui/styles';
@@ -19,6 +18,7 @@ const theme = createMuiTheme({
     fontFamily: [
       "'Montserrat', sans-serif",
     ].join(','),
+    
   }
 });
 

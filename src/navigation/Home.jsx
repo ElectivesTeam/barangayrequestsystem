@@ -12,41 +12,106 @@ import Button from '@material-ui/core/Button';
 const useStyles = makeStyles((theme) => ({
     root: {
         width: '95%',
-        margin: 'auto',
+        margin: 'auto'
         
     },
 
     paper: {
         padding: theme.spacing(6),
-        textAlign: 'right',
+        
         margin: '25px 33px 0px',
         color: '#616161',
         flexDirection: 'row',
-        backgroundColor: '#fff'
+        backgroundColor: '#fff',
+        
     },
     
     title : {
         fontWeight: 600,
         
+        '@media (max-width:600px)': {
+            fontSize: '1.7rem',
+            textAlign: 'center',  
+        },
+        '@media (min-width:600px)': {
+            textAlign: 'center',
+            fontSize: '2rem',   
+        },
+        '@media (min-width:1200px)': {
+            fontSize: '2.5rem',
+        },
+    },
+
+    styledTypography : {
+        '@media (max-width:600px)': {
+            fontSize: '0.8rem',
+            textAlign: 'center'
+        },
+        '@media (min-width:600px)': {
+            fontSize: '1rem',
+            textAlign: 'center'
+        },
+        '@media (min-width:768px)': {
+            
+            fontSize: '0.8rem',   
+        },
+        '@media (min-width:1200px)': {
+            fontSize: '1rem', 
+        },
     },
     
     styledGridContainer: {
         margin: '0px 30px',
-        
+        paddingBottom: '30px',
+        '@media (max-width:600px)': {
+            margin:'auto',
+            width: '100%'
+        },
+        '@media (min-width:600px)': {
+            margin:'auto',
+            width: '100%'
+        },
     },
     
     styledCard: {
-        maxWidth: 450,
-        margin: 'auto',
+         
+        display: 'block',
+        marginLeft: 'auto',
+        marginRight: 'auto',
         marginTop: '13px',
-        maxHeight: '350px' 
+        maxHeight: '350px',
+        '@media (min-width:1300px)': {
+            width: '32%', 
+            
+        },
+        '@media (max-width:1300px)': {
+            width: '32%',    
+        },
+        '@media (max-width:972px)': {
+            width: '90%'   
+        },   
+        
     },
 
     heroImg: {
-        width:'600px',
-        height:'400px',
         
+        height:'400px',
+        '@media (max-width:767px)': {
+            display: 'none'
+        },
+        
+        '@media (min-width:768px)': {
+            display: 'initial',
+            width:'400px',  
+        },
+        '@media (max-width:1200px)': {
+            width:'400px', 
+        },
+        '@media (min-width:1300px)': {
+            width:'550px',  
+        },
     },
+
     heroPage: {
         display: 'flex',
         
@@ -55,10 +120,15 @@ const useStyles = makeStyles((theme) => ({
     heroContent: {
         margin: '100px 0px 0px 197px',
         
+        '@media (max-width:600px)': {
+            margin:'auto',
+        },
+        '@media (min-width:600px)': {
+            margin:'auto',
+            
+        },
     },
-    divtest: {
-        
-    }
+    
     
 
     
@@ -79,10 +149,7 @@ function Home() {
                     <Typography variant="h4" className={classes.title}>
                         Request Documents Online!
                     </Typography>
-                    <Typography variant="subtitle1">
-                        (For Residents of Barangay Landayan)
-                    </Typography>
-                    <Typography variant="h5" >
+                    <Typography variant="h5" className={classes.styledTypography}>
                         Request, Pay, Submit the Requirements, & Claim.
                     </Typography>
                 </div>
