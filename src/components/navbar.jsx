@@ -11,6 +11,8 @@ import { Link } from 'react-router-dom';
 import HomeIcon from '@material-ui/icons/Home';
 import VpnKeyIcon from '@material-ui/icons/VpnKey';
 import Tooltip from '@material-ui/core/Tooltip';
+import Button from '@material-ui/core/Button';
+import { BrightnessLow } from '@material-ui/icons';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -18,20 +20,19 @@ const useStyles = makeStyles((theme) => ({
     
     
   },
-  navbar: {
-    backgroundColor: '#fff',
-    
-  },
   title: {
-    flexGrow: 1,
-    
+    flexGrow: 1,   
     [theme.breakpoints.up('sm')]: {
       display: 'block',
     },
     fontFamily: 'Montserrat',
     fontWeight: 600,
-    fontSize: 25,
-    color: 'black'
+    fontSize: 22,
+    
+    '@media (max-width:550px)': {
+      display: 'none',
+
+    },
   },
   styledButton: {
     fontFamily: 'Montserrat',
@@ -48,7 +49,16 @@ const useStyles = makeStyles((theme) => ({
     
   },
   styledTooltip: {
-    color: 'black'
+    color: '#fff',
+  },
+  logo: {
+    height: 50,
+    
+  },
+  divTool: {
+    '@media (max-width:550px)': {
+      marginLeft: 'auto',     
+    },
   }
 }));
 
@@ -69,15 +79,19 @@ export default function MenuAppBar() {
 
   return (
     <div className={classes.root}>
-      <AppBar position="static" className={classes.navbar}>
+      <AppBar position="static" className={classes.navbar} color="primary">
         <Toolbar>
-          <Typography variant="h6" className={classes.title}>
-            Title
+          <Button href="/">
+          <img src="https://scontent.fmnl17-1.fna.fbcdn.net/v/t1.15752-9/204627169_611989476473092_2429560391142003983_n.png?_nc_cat=108&ccb=1-3&_nc_sid=ae9488&_nc_eui2=AeEJVn396gh0XvvopH5uPJacBIrhXmX8CJAEiuFeZfwIkE7Q8QMXzmRTlt2qemEb8Xv58xppjIxPO8sxInaV6yyU&_nc_ohc=CsCkA7Qx_bMAX8UsTLA&_nc_ht=scontent.fmnl17-1.fna&oh=b5cd9569a4c3e6384447d24e0c122d6d&oe=60D53F80" className={classes.logo} alt=""  />
+          </Button>
+          
+          <Typography variant="h6" className={classes.title} >
+            Online Document Request
           </Typography>
           
           { (
-            <div>
-              <Tooltip title="Home" className={classes.styledTooltip}>
+            <div className={classes.divTool}> 
+              <Tooltip title="Home" color="inherit">
                 <IconButton
                 href="/"
                 
@@ -86,7 +100,7 @@ export default function MenuAppBar() {
                 </IconButton>
               </Tooltip>
               
-              <Tooltip title="Login" className={classes.styledTooltip}> 
+              <Tooltip title="Login" color="inherit"> 
                 <IconButton
                   href="/login"
                   
@@ -95,7 +109,7 @@ export default function MenuAppBar() {
                 </IconButton>
               </Tooltip>
               
-              <Tooltip title="Menu" className={classes.styledTooltip}>
+              <Tooltip title="Menu" color="inherit">
                 <IconButton
                   aria-label="account of current user"
                   aria-controls="menu-appbar"

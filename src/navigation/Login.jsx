@@ -38,9 +38,10 @@ const useStyles = makeStyles((theme) => ({
     padding: '30px',
   },
   image: {
-    width: 700,
+    width: 500,
     height: '500px',
     marginTop: '90px',
+    marginLeft:130,
     
     '@media (max-width: 600px)': {
       display:'none'
@@ -71,7 +72,7 @@ const useStyles = makeStyles((theme) => ({
   avatar: {
     margin: theme.spacing(1),
     color: '#fff',
-    backgroundColor: 'black',
+    backgroundColor: '#3f51b5',
   },
   form: {
     width: '100%', // Fix IE 11 issue.
@@ -86,12 +87,7 @@ const useStyles = makeStyles((theme) => ({
     fontSize: 18,
     width: '40%',
     left: '30%',    
-    backgroundColor: 'black',
-    color: 'white',
-    '&:hover': {
-      backgroundColor: '#b71c1c',
       
-    },
     '@media (max-width: 600px)': {
       width: '53%',
       left: '23%'
@@ -123,7 +119,7 @@ function SignInSide() {
       
       <CssBaseline />
         <div className={classes.divtest}>
-        <img src="https://scontent.fmnl17-1.fna.fbcdn.net/v/t1.15752-9/120262584_774624143328661_2810025230854550812_n.png?_nc_cat=101&ccb=1-3&_nc_sid=ae9488&_nc_eui2=AeF1xf0NXry52opL6G5eS_Bqkh--bQQ5yHKSH75tBDnIch3Uo_T7SZZJgjCPfMH0LiWZBLPSMyhBPPq3D-qOhWiK&_nc_ohc=Gj5-LkKOoxgAX-t2JWT&_nc_ht=scontent.fmnl17-1.fna&oh=325fc12676645c94649ab165f672b526&oe=60D3AC59" alt="" className= {classes.image}/>
+        <img src="https://scontent.fcrk1-1.fna.fbcdn.net/v/t1.15752-9/90036948_227712078624792_677662375209336832_n.png?_nc_cat=104&ccb=1-3&_nc_sid=ae9488&_nc_eui2=AeFY0x3ePKWVfpdohu7lLYHWqCCnkwAzOsWoIKeTADM6xaa_eeY1UwevB75XUss2IqrE6haiKQ1go5Awjifl9q7C&_nc_ohc=iN9nt6_gG_4AX_U9xEP&tn=LC_zEBNov5h8K-5R&_nc_ht=scontent.fcrk1-1.fna&oh=22193834ec1a823f378b6b8123c5acd9&oe=60D4F696" alt="" className= {classes.image}/>
         </div>
       <Grid item xs={12} sm={8} md={5} component={Paper} elevation={2} square className={classes.signInContainer}>
         <div className={classes.paper}>
@@ -186,6 +182,7 @@ function SignInSide() {
                   variant="contained"
                   className={classes.submit}
                   href="/"
+                  color= "primary"
               >
                   Sign In
               </Button>
