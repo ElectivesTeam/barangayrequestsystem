@@ -2,22 +2,10 @@ import React from 'react';
 import Grid from '@material-ui/core/Grid'
 import Paper from '@material-ui/core/Paper'
 import CssBaseline from '@material-ui/core/CssBaseline';
-import Avatar from '@material-ui/core/Avatar';
-import BorderColorIcon from '@material-ui/icons/BorderColor';
 import Typography from '@material-ui/core/Typography';
 import TextField from '@material-ui/core/TextField';
+import Button from '@material-ui/core/Button'
 import { makeStyles } from '@material-ui/core/styles';
-import 'date-fns'
-import DateFnsUtils from '@date-io/date-fns';
-import {
-  MuiPickersUtilsProvider,
-  KeyboardDatePicker
-} from '@material-ui/pickers';
-import InputLabel from '@material-ui/core/InputLabel';
-import MenuItem from '@material-ui/core/MenuItem';
-import FormControl from '@material-ui/core/FormControl';
-import Select from '@material-ui/core/Select';
-import Button  from '@material-ui/core/Button';
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -25,9 +13,21 @@ const useStyles = makeStyles((theme) => ({
       padding: '30px', 
     },
 
-    uploadContainer: {
-      height:'279px',
-      margin: theme.spacing(1, 1, 1, 1),
+    myaccountContainer: {
+      borderTopRightRadius: 28,
+      borderBottomRightRadius: 28,
+      borderTopLeftRadius: 28,
+      borderBottomLeftRadius: 28,
+    },
+
+    h1: {
+      fontFamily: 'Montserrat',
+      fontWeight: 600,
+      padding: '15px',
+      backgroundColor: 'gray',
+      color: 'white',
+      borderTopRightRadius: 28,
+      borderTopLeftRadius: 28
     },
 
     paper: {
@@ -38,37 +38,37 @@ const useStyles = makeStyles((theme) => ({
       margin: '20px 32px',       
     },
 
-    registerContainer: {
-      borderTopRightRadius: 28,
-      borderBottomRightRadius: 28,
-      borderTopLeftRadius: 28,
-      borderBottomLeftRadius: 28,
-    },
-
-    avatar: {
-      margin: theme.spacing(1),
-      color: '#fff',
-      backgroundColor: 'black',
-    },
-
     form: {
       width: '100%', // Fix IE 11 issue.
       margin: theme.spacing(1),
       fontFamily: 'Montserrat',
     },
+    
+    divHeader: {
+      marginLeft: theme.spacing(2),
+      display: 'flex',
+      flex: 'row'
+    },
+    
+    uploadContainer: {
+      height:'279px',
+      margin: theme.spacing(1, 1, 1, 1),
+    },
 
-    button: {
-      margin: theme.spacing(0, 0, 0, 1),
-      borderRadius: 16,
-      fontFamily: 'Montserrat',
-      fontWeight: 600,
-      fontSize: 9,
-      width: '5%',   
-      backgroundColor: 'black',
-      color: 'white',
-      '&:hover': {
-        backgroundColor: '#b71c1c',
-      }
+    h6: {
+        fontFamily: 'Montserrat',
+        fontWeight: 600,
+        margin: '10px', 
+    },
+
+    divtest: {
+      display: 'flex',
+      flexDirection: 'row',
+    },
+
+    picture: {
+      display: 'flex',
+      flexDirection: 'column',
     },
 
     buttonUpload: {
@@ -84,65 +84,6 @@ const useStyles = makeStyles((theme) => ({
       '&:hover': {
         backgroundColor: '#b71c1c',
       },
-    },
-
-    h1: {
-      fontFamily: 'Montserrat',
-      fontWeight: 600,
-      padding: '15px'
-    },
-
-
-    h2: {
-        fontFamily: 'Montserrat',
-        fontWeight: 500,
-        fontSize : 14,
-        margin: '3px 10px', 
-    },
-    h6: {
-        fontFamily: 'Montserrat',
-        fontWeight: 600,
-        margin: '10px', 
-    },
-
-    header:{
-
-      borderTopRightRadius: 28,
-      borderTopLeftRadius: 28,
-      fontWeight: 1000,
-    },
-
-    divtest: {
-      display: 'flex',
-      flexDirection: 'row',
-    },
-
-    formControlGender: {
-      marginTop: theme.spacing(2),
-      minWidth: 160,
-    },
-
-    formControlSubdivision: {
-      marginTop: theme.spacing(2),
-      minWidth: 200,
-    },
-    divHeader: {
-      marginLeft: theme.spacing(2),
-      display: 'flex',
-      flex: 'row'
-    },
-  
-    picture: {
-      display: 'flex',
-      flexDirection: 'column',
-    },
-    headerPanel:{
-	  
-      color: 'white',
-      backgroundColor:'gray',
-      height: '75px',
-      borderTopRightRadius: 28,
-      borderTopLeftRadius: 28,
     }
 }));
 
@@ -155,15 +96,13 @@ function MyAccount() {
 	return (
 		<Grid container component="main" className={classes.root}  >
 		<CssBaseline/>
-			<Grid item xs={12} sm={12} md={12} component={Paper} elevation={2} square className={classes.registerContainer}>
+			<Grid item xs={12} sm={12} md={12} component={Paper} elevation={2} square className={classes.myaccountContainer}>
 				<div className={classes.headerPanel}>
-
-				<div>
-					<Typography  component="h1" variant="h4" className={classes.h1}>My Account</Typography>
-				</div>
+					<div>
+						<Typography  component="h1" variant="h4" className={classes.h1}>My Account</Typography>
+					</div>
 				</div>
 				<div className={classes.paper}>
-					
 					<form className={classes.form} noValidate>
 						<Grid container spacing={2}>
 							<Grid item xs={12} sm={12}>
@@ -264,40 +203,37 @@ function MyAccount() {
 								<Grid item xs={12} sm={6} component={Paper} elevation={2} square className={classes.uploadContainer}>
 									<Typography className={classes.h6}>PICTURE
 									</Typography> 
-								<div className={classes.divtest}>
-								<Grid item xs={12} sm={2}>
-									<img width="250px" height="250px" src="https://cdn3.iconfinder.com/data/icons/google-material-design-icons/48/ic_account_box_48px-512.png"></img>
-								</Grid>
-								
-									<div className={classes.picture}>
-										<Button 
-										type="submit"
-										fullWidth
-										variant="contained"
-										className={classes.buttonUpload}
-										href="#"
-										>
-										UPLOAD
-										</Button>
-										<Button 
-										type="submit"
-										fullWidth
-										variant="contained"
-										className={classes.buttonUpload}
-										href="#"
-										>
-										DELETE
-										</Button>
+									<div className={classes.divtest}>
+										<Grid item xs={12} sm={2}>
+											<img width="250px" height="250px" src="https://cdn3.iconfinder.com/data/icons/google-material-design-icons/48/ic_account_box_48px-512.png"></img>
+										</Grid>
+									
+										<div className={classes.picture}>
+											<Button 
+											type="submit"
+											fullWidth
+											variant="contained"
+											className={classes.buttonUpload}
+											href="#"
+											>
+											UPLOAD
+											</Button>
+											<Button 
+											type="submit"
+											fullWidth
+											variant="contained"
+											className={classes.buttonUpload}
+											href="#"
+											>
+											DELETE
+											</Button>
+										</div>
 									</div>
-								</div>
 								</Grid>
 							</Grid>
-
-							
 						</Grid>
 					</form>
 				</div>
-				
 			</Grid>
 		</Grid>
 	)
