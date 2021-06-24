@@ -34,7 +34,6 @@ function Copyright() {
 
 const useStyles = makeStyles((theme) => ({
   root: {
-    
     padding: '30px',
   },
   image: {
@@ -103,9 +102,7 @@ const useStyles = makeStyles((theme) => ({
     display: 'flex',
     flexDirection: 'row',
   },
-  divtest: {
-    
-  }
+  
   
 }));
 

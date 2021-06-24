@@ -11,6 +11,7 @@ import { ThemeProvider } from '@material-ui/styles';
 import Home from './navigation/Home';
 import Login from './navigation/Login';
 import Register from './navigation/Register';
+import Requests from './navigation/Requests';
 import MenuAppBar from './components/navbar';
 
 const theme = createMuiTheme({
@@ -33,6 +34,7 @@ function App() {
           <Route exact path="/" component={Home}></Route>
           <Route exact path="/login" component={Login}></Route>
           <Route exact path="/register" component={Register}></Route>
+          <Route exact path="/requests" component={Requests}></Route>
         </Switch>
       </div>
     </ThemeProvider> 

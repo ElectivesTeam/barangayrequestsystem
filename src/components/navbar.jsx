@@ -12,7 +12,6 @@ import HomeIcon from '@material-ui/icons/Home';
 import VpnKeyIcon from '@material-ui/icons/VpnKey';
 import Tooltip from '@material-ui/core/Tooltip';
 import Button from '@material-ui/core/Button';
-import { BrightnessLow } from '@material-ui/icons';
 
 const useStyles = makeStyles((theme) => ({
   root: {
