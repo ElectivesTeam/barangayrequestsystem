@@ -23,7 +23,7 @@ function Copyright() {
       <Typography variant="body2" color="textSecondary" align="center">
         {'Copyright © '}
         <Link color="inherit" href="https://material-ui.com/">
-          Your Website
+          ODRS
         </Link>{' '}
         {new Date().getFullYear()}
         {'.'}
@@ -116,7 +116,7 @@ function SignInSide() {
       
       <CssBaseline />
         <div className={classes.divtest}>
-        <img src="https://scontent.fcrk1-1.fna.fbcdn.net/v/t1.15752-9/90036948_227712078624792_677662375209336832_n.png?_nc_cat=104&ccb=1-3&_nc_sid=ae9488&_nc_eui2=AeFY0x3ePKWVfpdohu7lLYHWqCCnkwAzOsWoIKeTADM6xaa_eeY1UwevB75XUss2IqrE6haiKQ1go5Awjifl9q7C&_nc_ohc=iN9nt6_gG_4AX_U9xEP&tn=LC_zEBNov5h8K-5R&_nc_ht=scontent.fcrk1-1.fna&oh=22193834ec1a823f378b6b8123c5acd9&oe=60D4F696" alt="" className= {classes.image}/>
+        <img src="../img/login.png" alt="" className= {classes.image}/>
         </div>
       <Grid item xs={12} sm={8} md={5} component={Paper} elevation={2} square className={classes.signInContainer}>
         <div className={classes.paper}>

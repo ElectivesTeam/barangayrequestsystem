@@ -12,6 +12,7 @@ import HomeIcon from '@material-ui/icons/Home';
 import VpnKeyIcon from '@material-ui/icons/VpnKey';
 import Tooltip from '@material-ui/core/Tooltip';
 import Button from '@material-ui/core/Button';
+import NoteAddIcon from '@material-ui/icons/NoteAdd';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -81,7 +82,7 @@ export default function MenuAppBar() {
       <AppBar position="static" className={classes.navbar} color="primary">
         <Toolbar>
           <Button href="/">
-          <img src="https://scontent.fmnl17-1.fna.fbcdn.net/v/t1.15752-9/204627169_611989476473092_2429560391142003983_n.png?_nc_cat=108&ccb=1-3&_nc_sid=ae9488&_nc_eui2=AeEJVn396gh0XvvopH5uPJacBIrhXmX8CJAEiuFeZfwIkE7Q8QMXzmRTlt2qemEb8Xv58xppjIxPO8sxInaV6yyU&_nc_ohc=CsCkA7Qx_bMAX8UsTLA&_nc_ht=scontent.fmnl17-1.fna&oh=b5cd9569a4c3e6384447d24e0c122d6d&oe=60D53F80" className={classes.logo} alt=""  />
+          <img src="../img/Brgy Landayan Logo.png" className={classes.logo} alt=""  />
           </Button>
           
           <Typography variant="h6" className={classes.title} >
@@ -105,6 +106,15 @@ export default function MenuAppBar() {
                   
                 >
                   <VpnKeyIcon />
+                </IconButton>
+              </Tooltip>
+
+              <Tooltip title="Request" color="inherit"> 
+                <IconButton
+                  href="/requests"
+                  
+                >
+                  <NoteAddIcon />
                 </IconButton>
               </Tooltip>
               
@@ -159,7 +169,7 @@ export default function MenuAppBar() {
                   component={Link}
                   to="#"
                   >                   
-                Requests</MenuItem>
+                My Requests</MenuItem>
                 <MenuItem 
                   className={classes.styledMenuItem} 
                   onClick={handleClose}

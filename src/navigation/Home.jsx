@@ -77,20 +77,17 @@ const useStyles = makeStyles((theme) => ({
         marginRight: 'auto',
         marginTop: '13px',
         maxHeight: '350px',
+        
         '@media (min-width:1300px)': {
             width: '32%', 
-            paddingBottom:8   
+             
         },
         '@media (max-width:1300px)': {
             width: '32%',    
         },
         '@media (max-width:1080px)': {
-            width: '90%',
-            paddingBottom:30   
-        },   
-        '@media (min-width:972px)': {
-            paddingBottom:12   
-        },   
+            width: '90%',   
+        },    
         
     },
     styledButton: {
@@ -156,7 +153,7 @@ function Home() {
             
             <div className={classes.heroPage}>
                 <div>
-                    <img src="https://scontent.fcrk1-3.fna.fbcdn.net/v/t1.15752-9/188300092_202878801651435_2133067217804359586_n.jpg?_nc_cat=102&ccb=1-3&_nc_sid=ae9488&_nc_eui2=AeG2NE-9x8kiGoYwSBn-7pZeygqAx2o85FLKCoDHajzkUpBnXssCUQCmtHMSJEgmJLEA_8NtCx32AyJwwubtOA7W&_nc_ohc=ijUn_a3Yhm8AX9PGQev&_nc_ht=scontent.fcrk1-3.fna&oh=326220fa67b5832eff97fce894fa91fa&oe=60D5FF5D" alt="" className= {classes.heroImg}/>
+                    <img src="../img/support.png" alt="" className= {classes.heroImg}/>
                 </div>
                 
                 <div className={classes.heroContent}>
@@ -186,9 +183,9 @@ function Home() {
             <CardActionArea>
                 <CardMedia
                     component="img"
-                    alt="Contemplative Reptile"
+                    alt="Document"
                     height="175"
-                    image="https://scontent.fcrk1-1.fna.fbcdn.net/v/t1.15752-9/186481270_484180009573132_4728733517113713159_n.jpg?_nc_cat=111&ccb=1-3&_nc_sid=ae9488&_nc_eui2=AeFN8XI0_OLZ1241YhFma5c60VARI-K-KA_RUBEj4r4oDxOvkJ2dj0SB9WbnR6TQ_a_mFZZZxTkT44uq5-i-QQsF&_nc_ohc=B0awnYe_SjEAX_nma3T&tn=LC_zEBNov5h8K-5R&_nc_ht=scontent.fcrk1-1.fna&oh=b67ce1a4dbe17b6be04b4a02d2c1217b&oe=60D60484"
+                    image="../img/graph.png"
                     title="test"
                 />
                 <CardContent>
@@ -200,20 +197,16 @@ function Home() {
                     </Typography>
                 </CardContent>
             </CardActionArea>
-            <CardActions>
-                <Button size="small" color="primary">
-                Learn More
-                </Button>
-            </CardActions>
+            
             
         </Card>
         <Card className={classes.styledCard}>
             <CardActionArea>
                 <CardMedia
                     component="img"
-                    alt="Contemplative Reptile"
+                    alt="Payment"
                     height="175"
-                    image="https://scontent.fcrk1-1.fna.fbcdn.net/v/t1.15752-9/187798736_755005728524555_4900334241093532067_n.jpg?_nc_cat=111&ccb=1-3&_nc_sid=ae9488&_nc_eui2=AeFyah2polI4hqQHkNeqGT1FrPI3a4WXoFWs8jdrhZegVaU531XytaL8JTTHRvmNuxnP3KAeATK37i3Qb2R-19pw&_nc_ohc=ze2LMFvNX2AAX_CbKCQ&_nc_ht=scontent.fcrk1-1.fna&oh=7bc9316265cfab67530b3e3a2dbb529c&oe=60D529EF"
+                    image="../img/payment.png"
                     title="test"
                 />
                 <CardContent>
@@ -225,20 +218,16 @@ function Home() {
                     </Typography>
                 </CardContent>
             </CardActionArea>
-            <CardActions>
-                <Button size="small" color="primary">
-                Learn More
-                </Button>
-            </CardActions>
+            
             
         </Card>
         <Card className={classes.styledCard}>
             <CardActionArea>
                 <CardMedia
                     component="img"
-                    alt="Contemplative Reptile"
+                    alt="Clearance"
                     height="175"
-                    image="https://scontent.fcrk1-3.fna.fbcdn.net/v/t1.15752-9/187530930_496613918207406_3165223724841735941_n.jpg?_nc_cat=102&ccb=1-3&_nc_sid=ae9488&_nc_eui2=AeHXIBuw1zaKmsRsgPIjxIP9IkKvHDLFP14iQq8cMsU_XvlLtUSVigHL6fHMI3HYozWqVbM0vRppwwHL1NPUp0he&_nc_ohc=6AlSiHNKS8MAX9z2kyq&tn=LC_zEBNov5h8K-5R&_nc_ht=scontent.fcrk1-3.fna&oh=fe1c0769d8d2f27326c85499175877c6&oe=60D4A189"
+                    image="../img/team.png"
                     title="test"
                 />
                 <CardContent>
@@ -250,11 +239,7 @@ function Home() {
                     </Typography>
                 </CardContent>
             </CardActionArea>
-            <CardActions>
-                <Button size="small" color="primary" >
-                Learn More
-            </Button>
-            </CardActions>
+            
             
         </Card>
         
