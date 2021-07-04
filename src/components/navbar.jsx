@@ -94,7 +94,6 @@ export default function MenuAppBar() {
               <Tooltip title="Home" color="inherit">
                 <IconButton
                 href="/"
-                
                 >
                 <HomeIcon />
                 </IconButton>
@@ -145,22 +144,12 @@ export default function MenuAppBar() {
                 }}
                 open={open}
                 onClose={handleClose}
-                
               >
-                <MenuItem
-                  className={classes.styledMenuItem} 
-                  onClick={handleClose}
-                  component={Link} 
-                  to="#"
-                  
-                 >
-                   
-                    Profile</MenuItem>
                 <MenuItem
                   className={classes.styledMenuItem}  
                   onClick={handleClose}
                   component={Link}
-                  to="#"
+                  to="/myaccount"
                   >                   
                 My Account</MenuItem>
                 <MenuItem
