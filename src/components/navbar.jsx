@@ -11,25 +11,28 @@ import { Link } from 'react-router-dom';
 import HomeIcon from '@material-ui/icons/Home';
 import VpnKeyIcon from '@material-ui/icons/VpnKey';
 import Tooltip from '@material-ui/core/Tooltip';
+import Button from '@material-ui/core/Button';
+import NoteAddIcon from '@material-ui/icons/NoteAdd';
 
 const useStyles = makeStyles((theme) => ({
   root: {
     flexGrow: 1,
     
-  },
-  navbar: {
-    backgroundColor: '#fff'
+    
   },
   title: {
-    flexGrow: 1,
-    display: 'none',
+    flexGrow: 1,   
     [theme.breakpoints.up('sm')]: {
       display: 'block',
     },
     fontFamily: 'Montserrat',
     fontWeight: 600,
-    fontSize: 25,
-    color: 'black'
+    fontSize: 22,
+    
+    '@media (max-width:550px)': {
+      display: 'none',
+
+    },
   },
   styledButton: {
     fontFamily: 'Montserrat',
@@ -46,7 +49,16 @@ const useStyles = makeStyles((theme) => ({
     
   },
   styledTooltip: {
-    color: 'black'
+    color: '#fff',
+  },
+  logo: {
+    height: 50,
+    
+  },
+  divTool: {
+    '@media (max-width:550px)': {
+      marginLeft: 'auto',     
+    },
   }
 }));
 
@@ -67,15 +79,19 @@ export default function MenuAppBar() {
 
   return (
     <div className={classes.root}>
-      <AppBar position="static" className={classes.navbar}>
+      <AppBar position="static" className={classes.navbar} color="primary">
         <Toolbar>
-          <Typography variant="h6" className={classes.title}>
-            Title
+          <Button href="/">
+          <img src="../img/Brgy Landayan Logo.png" className={classes.logo} alt=""  />
+          </Button>
+          
+          <Typography variant="h6" className={classes.title} >
+            Online Document Request
           </Typography>
           
           { (
-            <div>
-              <Tooltip title="Home" className={classes.styledTooltip}>
+            <div className={classes.divTool}> 
+              <Tooltip title="Home" color="inherit">
                 <IconButton
                 href="/"
                 
@@ -84,7 +100,7 @@ export default function MenuAppBar() {
                 </IconButton>
               </Tooltip>
               
-              <Tooltip title="Login" className={classes.styledTooltip}> 
+              <Tooltip title="Login" color="inherit"> 
                 <IconButton
                   href="/login"
                   
@@ -92,8 +108,17 @@ export default function MenuAppBar() {
                   <VpnKeyIcon />
                 </IconButton>
               </Tooltip>
+
+              <Tooltip title="Request" color="inherit"> 
+                <IconButton
+                  href="/requests"
+                  
+                >
+                  <NoteAddIcon />
+                </IconButton>
+              </Tooltip>
               
-              <Tooltip title="Menu" className={classes.styledTooltip}>
+              <Tooltip title="Menu" color="inherit">
                 <IconButton
                   aria-label="account of current user"
                   aria-controls="menu-appbar"
@@ -144,7 +169,7 @@ export default function MenuAppBar() {
                   component={Link}
                   to="#"
                   >                   
-                Requests</MenuItem>
+                My Requests</MenuItem>
                 <MenuItem 
                   className={classes.styledMenuItem} 
                   onClick={handleClose}
