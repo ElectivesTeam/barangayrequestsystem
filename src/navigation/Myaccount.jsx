@@ -6,6 +6,7 @@ import Typography from '@material-ui/core/Typography';
 import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button'
 import { makeStyles } from '@material-ui/core/styles';
+import Box from '@material-ui/core/Box';
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -21,13 +22,14 @@ const useStyles = makeStyles((theme) => ({
     },
 
     h1: {
-      fontFamily: 'Montserrat',
       fontWeight: 600,
-      padding: '15px',
-      backgroundColor: 'gray',
+      fontSize:'1.7rem',
+      padding: '18px',
+      backgroundColor: '#4054b4',
       color: 'white',
-      borderTopRightRadius: 28,
-      borderTopLeftRadius: 28
+	  
+	  borderTopRightRadius:15,
+	  borderTopLeftRadius:15,
     },
 
     paper: {
@@ -49,11 +51,15 @@ const useStyles = makeStyles((theme) => ({
       display: 'flex',
       flex: 'row'
     },
-    
+
     uploadContainer: {
-      height:'279px',
-      margin: theme.spacing(1, 1, 1, 1),
-    },
+		height:'180px',
+		marginRight: theme.spacing(2)
+	},
+
+	uploadContent: {
+		margin: theme.spacing (1, 1, 1, 1)
+	},
 
     h6: {
         fontFamily: 'Montserrat',
@@ -69,22 +75,39 @@ const useStyles = makeStyles((theme) => ({
     picture: {
       display: 'flex',
       flexDirection: 'column',
+      marginTop: theme.spacing(4),
+	  marginRight: theme.spacing(3)
     },
 
-    buttonUpload: {
-      marginTop: theme.spacing(1),
-      top: '32%',
-      left: '150%',
-      width: '120px',
-      fontFamily: 'Montserrat',
-      fontWeight: 600,
-      fontSize: 11,
-      backgroundColor: 'gray',
-      color: 'white',
-      '&:hover': {
-        backgroundColor: '#b71c1c',
-      },
-    }
+	buttonUpload: {
+		marginTop: theme.spacing(1),
+		marginLeft: theme.spacing(-3),
+		top: '32%',
+		left: '150%',
+		width: '120px',
+		fontFamily: 'Montserrat',
+		fontWeight: 600,
+		fontSize: 11,
+		backgroundColor: 'gray',
+		color: 'white',
+		'&:hover': {
+		  backgroundColor: '#b71c1c',
+		},
+	  },
+	
+	  button: {
+		borderRadius: 16,
+		fontFamily: 'Montserrat',
+		fontWeight: 600,
+		fontSize: 18,
+		width: '15%',
+		left: '83%',    
+		backgroundColor: 'black',
+		color: 'white',
+		'&:hover': {
+		  backgroundColor: '#b71c1c',
+		}
+	  },
 }));
 
 
@@ -94,14 +117,17 @@ function MyAccount() {
 	const classes = useStyles();
 
 	return (
-		<Grid container component="main" className={classes.root}  >
+		<Grid container component="main" className={classes.root}>
+			
 		<CssBaseline/>
 			<Grid item xs={12} sm={12} md={12} component={Paper} elevation={2} square className={classes.myaccountContainer}>
-				<div className={classes.headerPanel}>
+			
+				
 					<div>
-						<Typography  component="h1" variant="h4" className={classes.h1}>My Account</Typography>
+						<Typography  component="h2" variant="h4" className={classes.h1}>MY ACCOUNT</Typography>
 					</div>
-				</div>
+				
+
 				<div className={classes.paper}>
 					<form className={classes.form} noValidate>
 						<Grid container spacing={2}>
@@ -198,41 +224,48 @@ function MyAccount() {
 									/>
 								</Grid>
 							</Grid>
-
 							<Grid item xs={12} sm={6}>
-								<Grid item xs={12} sm={6} component={Paper} elevation={2} square className={classes.uploadContainer}>
-									<Typography className={classes.h6}>PICTURE
-									</Typography> 
-									<div className={classes.divtest}>
-										<Grid item xs={12} sm={2}>
-											<img width="250px" height="250px" src="https://cdn3.iconfinder.com/data/icons/google-material-design-icons/48/ic_account_box_48px-512.png"></img>
-										</Grid>
-									
-										<div className={classes.picture}>
-											<Button 
-											type="submit"
-											fullWidth
-											variant="contained"
-											className={classes.buttonUpload}
-											href="#"
-											>
-											UPLOAD
-											</Button>
-											<Button 
-											type="submit"
-											fullWidth
-											variant="contained"
-											className={classes.buttonUpload}
-											href="#"
-											>
-											DELETE
-											</Button>
+								<Grid item xs={12} sm={12} className={classes.uploadContainer}>
+									Upload your selfie 
+										<div className={classes.divtest}>
+											<img src="https://image.flaticon.com/icons/png/512/149/149092.png" width = "170px" height = "150px"></img>
+											<Grid item xs={12} sm={1}>
+												<div className={classes.picture}>
+													<Button 
+													type="submit"
+													fullWidth
+													variant="contained"
+													className={classes.buttonUpload}
+													href="#"
+													>
+													UPLOAD
+													</Button>
+													<Button 
+													type="submit"
+													fullWidth
+													variant="contained"
+													className={classes.buttonUpload}
+													href="#"
+													>
+													DELETE
+													</Button>
+												</div>
+											</Grid>    
 										</div>
-									</div>
 								</Grid>
-							</Grid>
+							</Grid>	
 						</Grid>
 					</form>
+					{/* Next Button */}
+					<Button
+                            type="submit"
+                            fullWidth
+                            variant="contained"
+                            className={classes.button}
+                            href="#"
+                          >
+                            UPDATE
+                          </Button>
 				</div>
 			</Grid>
 		</Grid>
