@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import Grid from '@material-ui/core/Grid'
 import Paper from '@material-ui/core/Paper'
 import CssBaseline from '@material-ui/core/CssBaseline';
@@ -18,6 +18,7 @@ import MenuItem from '@material-ui/core/MenuItem';
 import FormControl from '@material-ui/core/FormControl';
 import Select from '@material-ui/core/Select';
 import Button  from '@material-ui/core/Button';
+import { useHistory } from "react-router-dom";
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -98,25 +99,96 @@ const useStyles = makeStyles((theme) => ({
     formControlSubdivision: {
       marginTop: theme.spacing(2),
       minWidth: 200,
-    }
+    }, 
+    input: {
+      "&:disabled": {
+        color: "green"
+      }
+    },
 }));
 
 
 function Register() {
     //Date Picker
-    const [selectedDate, setSelectedDate] = React.useState(
-      new Date('2021-06-22'),
+    const [selectedDate, setSelectedDate] = useState(
     );
 
     const handleDateChange = (date) => {
       setSelectedDate(date);
     };
 
-    //Dropdown Component
-    const [value, setValue] = React.useState('');
-    const handleChange = (event) => {
-      setValue(event.target.value);
-    };
+
+     //form Validation
+    const[lastname, setLastname] = useState('')
+    const[firstname, setFirstname] = useState('')
+    const[middlename, setMiddlename] = useState('')
+    const[gender, setGender] = useState('');
+    const[house, setHouse] = useState('');
+    const[street, setStreet] = useState('');
+    const[subdivision, setSubdivision] = useState('');
+
+    const[lastnameError, setLastnameError] = useState(false)
+    const[firstnameError, setFirstnameError] = useState(false)
+    const[middlenameError, setMiddlenameError] = useState(false)
+    const[genderError, setGenderError] = useState(false)
+    const[houseError, setHouseError] = useState(false)
+    const[streetError, setStreetError] = useState(false)
+    const[subdivisionError, setSubdivisionError] = useState(false)
+
+    let history = useHistory();
+    const handleSubmit = (e) =>{
+      e.preventDefault()
+
+      setLastnameError(false)
+      setFirstnameError(false)
+      setMiddlenameError(false)
+      setGenderError(false)
+      setHouseError(false)
+      setStreetError(false)
+      setSubdivisionError(false)
+
+      let setChecker = true
+
+      if(lastname == ''){
+        setLastnameError(true)
+        setChecker = false
+      }
+
+      if(firstname == ''){
+        setFirstnameError(true)
+        setChecker = false
+      }
+
+      if(middlename == ''){
+        setMiddlenameError(true)
+        setChecker = false
+      }
+
+      if(gender == ''){
+        setGenderError(true)
+        setChecker = false
+      }
+
+      if(house == ''){
+        setHouseError(true)
+        setChecker = false
+      }
+
+      if(street == ''){
+        setStreetError(true)
+        setChecker = false
+      }
+      
+      if(subdivision == ''){
+        setSubdivisionError(true)
+        setChecker = false
+      }
+
+      if(setChecker){
+        history.push('/register2nd')
+      }
+
+    }
 
     //Style
     const classes = useStyles();
@@ -140,7 +212,7 @@ function Register() {
                             Basic Information (*Required to be filled out)
                     </Typography>
 
-                    <form className={classes.form} noValidate>
+                    <form className={classes.form} noValidate autoComplete="off" onSubmit={handleSubmit}>
 
                         <Grid item xs={12} sm={12}>
                           <Typography className={classes.header}>
@@ -153,6 +225,7 @@ function Register() {
                             {/* Last Name */}
                             <Grid item xs={12} sm={4}>
                                 <TextField
+                                    onChange={(e) => setLastname(e.target.value)}
                                     variant="outlined"
                                     margin="normal"
                                     required
@@ -162,12 +235,14 @@ function Register() {
                                     name="last_name"
                                     autoComplete="last_name"
                                     autoFocus
+                                    error={lastnameError}
                                 />
                             </Grid>
 
                             {/* First Name */}
                             <Grid item xs={12} sm={4}>
                                 <TextField
+                                    onChange={(e) => setFirstname(e.target.value)}
                                     variant="outlined"
                                     margin="normal"
                                     required
@@ -177,12 +252,14 @@ function Register() {
                                     name="first_name"
                                     autoComplete="first_name"
                                     autoFocus
+                                    error={firstnameError}
                                 />
                             </Grid>
 
                             {/* Middle Name */}
                             <Grid item xs={12} sm={4}>
                                 <TextField
+                                    onChange={(e) => setMiddlename(e.target.value)}
                                     variant="outlined"
                                     margin="normal"
                                     required
@@ -192,6 +269,7 @@ function Register() {
                                     name="Middle Name"
                                     autoComplete="middle_name"
                                     autoFocus
+                                    error={middlenameError}
                                 />
                             </Grid>
 
@@ -220,13 +298,13 @@ function Register() {
                             {/* Gender */}
                             <Grid item xs={12} sm={4}>
                                 <FormControl variant="outlined" className={classes.formControlGender} required>
-                                  <InputLabel id="demo-simple-select-outlined-label">Gender</InputLabel>
+                                  <InputLabel>Gender</InputLabel>
                                   <Select
-                                    labelId="demo-simple-select-outlined-label"
                                     id="gender"
-                                    value={value}
-                                    onChange={handleChange}
+                                    value={gender}
+                                    onChange={(e) => setGender(e.target.value)}
                                     label="Gender"
+                                    error={genderError}
                                   >
                                     <MenuItem value={"male"}>Male</MenuItem>
                                     <MenuItem value={"female"}>Female</MenuItem>
@@ -259,6 +337,7 @@ function Register() {
                             {/* House/Lot and Blk No. */}
                             <Grid item xs={12} sm={2}>
                                 <TextField
+                                    onChange={(e) => setHouse(e.target.value)}
                                     variant="outlined"
                                     margin="normal"
                                     required
@@ -268,12 +347,14 @@ function Register() {
                                     name="house_number"
                                     autoComplete="house_number"
                                     autoFocus
+                                    error={houseError}
                                 />
                             </Grid>
 
                             {/* Street Name */}
                             <Grid item xs={12} sm={2}>
                                 <TextField
+                                    onChange={(e) => setStreet(e.target.value)}
                                     variant="outlined"
                                     margin="normal"
                                     required
@@ -283,19 +364,21 @@ function Register() {
                                     name="street_name"
                                     autoComplete="street_name"
                                     autoFocus
+                                    error={streetError}
                                 />
                             </Grid>
 
                             {/* Subdivision */}
                             <Grid item xs={12} sm={4}>
                                 <FormControl variant="outlined" className={classes.formControlSubdivision} required>
-                                  <InputLabel id="demo-simple-select-outlined-label">Subdivision</InputLabel>
+                                  <InputLabel>Subdivision</InputLabel>
                                   <Select
-                                    labelId="demo-simple-select-outlined-label"
+                                    onChange={(e) => setSubdivision(e.target.value)}
                                     id="subdivision"
-                                    value={value}
-                                    onChange={handleChange}
-                                    label="Subdiivision"
+                                    value={subdivision}
+                                    onChange={(e) => setSubdivision(e.target.value)}
+                                    label="Subdivision"
+                                    error={subdivisionError}
                                   >
                                     <MenuItem value={"Purok1"}>Purok 1</MenuItem>
                                     <MenuItem value={"Purok2"}>Purok 2</MenuItem>
@@ -310,17 +393,19 @@ function Register() {
                                   </Select>
                                 </FormControl>
                             </Grid>
-
+ 
 
                             {/* Barangay */}
                             <Grid item xs={12} sm={2}>
                                 <TextField
+                                  defaultValue='Landayan'
+                                  inputProps={
+                                    { readOnly: true, }}
                                     variant="outlined"
                                     margin="normal"
-                                    disabled
                                     fullWidth
                                     id="barangay"
-                                    label="Barangay Landayan"
+                                    label="Barangay"
                                     name="barangay"
                                     autoComplete="barangay"
                                     autoFocus
@@ -329,13 +414,15 @@ function Register() {
 
                             {/* City */}
                             <Grid item xs={12} sm={2}>
-                                <TextField
+                                <TextField             
+                                    defaultValue='San Pedro'
+                                    inputProps={
+                                      { readOnly: true, }}
                                     variant="outlined"
                                     margin="normal"
-                                    disabled
                                     fullWidth
                                     id="city"
-                                    label="City of San Pedro"
+                                    label="City"
                                     name="city"
                                     autoComplete="city"
                                     autoFocus
@@ -345,12 +432,15 @@ function Register() {
                             {/* Province */}
                             <Grid item xs={12} sm={2}>
                                 <TextField
+                                           
+                                    defaultValue='Laguna'
+                                    inputProps={
+                                      { readOnly: true, }}
                                     variant="outlined"
                                     margin="normal"
-                                    disabled
                                     fullWidth
                                     id="province"
-                                    label="Laguna"
+                                    label="Province"
                                     name="province"
                                     autoComplete="province"
                                     autoFocus
@@ -358,19 +448,15 @@ function Register() {
                             </Grid>
 
                         </Grid>          
-                        <div>
-                          
-                          {/* Next Button */}
-                          <Button
+                        <Button
+                            onClick = {handleSubmit}
                             type="submit"
                             fullWidth
                             variant="contained"
                             className={classes.button}
-                            href="register2nd"
                           >
                               Next
                           </Button>
-                        </div>
 
                     </form>
                 </div>

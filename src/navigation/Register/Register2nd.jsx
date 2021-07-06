@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useState} from 'react';
 import Grid from '@material-ui/core/Grid'
 import Paper from '@material-ui/core/Paper'
 import CssBaseline from '@material-ui/core/CssBaseline';
@@ -19,9 +19,12 @@ import DialogContent from '@material-ui/core/DialogContent';
 import DialogContentText from '@material-ui/core/DialogContentText';
 import Link from '@material-ui/core/Link';
 import { DialogTitle} from '@material-ui/core';
+import clsx from 'clsx';
+import OutlinedInput from '@material-ui/core/OutlinedInput';
+import InputAdornment from '@material-ui/core/InputAdornment';
 import IconButton from '@material-ui/core/IconButton';
-import DeleteIcon from '@material-ui/icons/Delete';
-
+import Visibility from '@material-ui/icons/Visibility';
+import VisibilityOff from '@material-ui/icons/VisibilityOff';
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -58,6 +61,7 @@ const useStyles = makeStyles((theme) => ({
 
     buttonUpload: {
       marginTop: theme.spacing(1),
+      marginLeft: theme.spacing(-3),
       top: '32%',
       left: '150%',
       width: '120px',
@@ -96,16 +100,23 @@ const useStyles = makeStyles((theme) => ({
 
     formControlCivilStatus: {
       marginTop: theme.spacing(2),
-      minWidth: 210,
+      minWidth: 270,
+    },
+
+    
+    formPassword: {
+      marginTop: theme.spacing(2),
+      minWidth: 270,
     },
   
     picture: {
       display: 'flex',
       flexDirection: 'column',
+      marginTop: theme.spacing(4)
     },
 
     uploadContainer: {
-      height:'279px',
+      height:'180px',
       marginRight: theme.spacing(2)
     },
 
@@ -122,23 +133,96 @@ const useStyles = makeStyles((theme) => ({
       '&:hover': {
         backgroundColor: '#b71c1c',
       }
-    }
+    }, 
+    margin: {
+      marginTop: theme.spacing(2),
+    },
+    textField: {
+      width: '34ch',
+    },
   }));
 
 
 function Register2nd() {
-
-    //Dropdown Component
-    const [value, setValue] = React.useState('');
-    const handleChange = (event) => {
-      setValue(event.target.value);
+  const [values, setValues] = useState({
+    password: '',
+    showPassword: false,
+    });
+  
+    const handleChange = (prop) => (event) => {
+      setValues({ ...values, [prop]: event.target.value });
     };
 
-    //Pop-up Dialogue
-    const [open, setOpen] = React.useState(false);
-    const handleClickOpen = () => {
-	    setOpen(true);
+  const[open, setOpen] = useState(false);
+
+  const[birthplace, setBirthplace] = useState('')
+  const[nationality, setNationality] = useState('');
+  const[civilstatus, setCivilstatus] = useState('');
+  const[contactnumber, setContactnumber] = useState('');
+  const[email, setEmail] = useState('');
+
+  const[birthplaceError, setBirthplaceError] = useState(false)
+  const[nationalityError, setNationalityError] = useState(false)
+  const[civilstatusError, setCivilstatusError] = useState(false)
+  const[contactnumberError, setContactnumberError] = useState(false)
+  const[emailError, setEmailError] = useState(false)
+  const[passwordError, setPasswordError] = useState(false)
+
+  const handleSubmit = (e) =>{
+    e.preventDefault()
+
+    setBirthplaceError(false)
+    setNationalityError(false)
+    setCivilstatusError(false)
+    setContactnumberError(false)
+    setEmailError(false)
+    setPasswordError(false)
+    let setChecker = true
+
+    if(birthplace == ''){
+      setBirthplaceError(true)
+      setChecker = false
+    }
+
+    if(nationality == ''){
+      setNationalityError(true)
+      setChecker = false
+    }
+
+    if(civilstatus == ''){
+      setCivilstatusError(true)
+      setChecker = false
+    }
+
+    if(contactnumber == ''){
+      setContactnumberError(true)
+      setChecker = false
+    }
+
+    if(email == ''){
+      setEmailError(true)
+      setChecker = false
+    }
+
+    if(values.password == ''){
+      setPasswordError(true)
+      setChecker = false
+    }
+
+    if(setChecker){
+      setOpen(true)
+    }
+  }
+
+  const handleClickShowPassword = () => {
+      setValues({ ...values, showPassword: !values.showPassword });
     };
+  
+  const handleMouseDownPassword = (event) => {
+      event.preventDefault();
+    };
+    
+
     const handleClose = () => {
     	setOpen(false);
     };
@@ -194,8 +278,9 @@ function Register2nd() {
                         <Grid container spacing={2}>
 
                           {/* Birth Place */}
-                          <Grid item xs={12} sm={8}>
+                          <Grid item xs={12} sm={6}>
                             <TextField
+                            onChange={(e) => setBirthplace(e.target.value)}
                             variant="outlined"
                             margin="normal"
                             required
@@ -205,34 +290,13 @@ function Register2nd() {
                             name="birth_place"
                             autoComplete="birth_place"
                             autoFocus
+                            error={birthplaceError}
                             />
                           </Grid>
-
-                          <Grid item xs={12} sm={4}>
-                          </Grid>
-
-                          {/* Civil Status */}
-                          <Grid item xs={12} sm={2}>
-                            <FormControl variant="outlined" className={classes.formControlCivilStatus} required>
-                              <InputLabel id="demo-simple-select-outlined-label">Civil Status</InputLabel>
-                              <Select
-                              labelId="demo-simple-select-outlined-label"
-                              id="civil_status"
-                              value={value}
-                              onChange={handleChange}
-                              label="Civil Status"
-                              >
-                              <MenuItem value={"single"}>Single</MenuItem>
-                              <MenuItem value={"married"}>Married</MenuItem>
-                              <MenuItem value={"widowed"}>Widowed</MenuItem>
-                              <MenuItem value={"divorced"}>Divorced</MenuItem>
-                              </Select>
-                            </FormControl>
-                          </Grid>
-
                           {/* Nationality */}
-                          <Grid item xs={12} sm={2}>
+                          <Grid item xs={12} sm={3}>
                             <TextField
+                              onChange={(e) => setNationality(e.target.value)}
                               variant="outlined"
                               margin="normal"
                               required
@@ -242,12 +306,32 @@ function Register2nd() {
                               name="nationality"
                               autoComplete="nationality"
                               autoFocus
+                              error={nationalityError}
                             />
+                          </Grid>
+                          {/* Civil Status */}
+                          <Grid item xs={12} sm={3}>
+                            <FormControl variant="outlined" className={classes.formControlCivilStatus} required>
+                              <InputLabel>Civil Status</InputLabel>
+                              <Select
+                              id="civil_status"
+                              value={civilstatus}
+                              onChange={(e) => setCivilstatus(e.target.value)}
+                              label="Civil Status"
+                              error={civilstatusError}
+                              >
+                              <MenuItem value={"single"}>Single</MenuItem>
+                              <MenuItem value={"married"}>Married</MenuItem>
+                              <MenuItem value={"widowed"}>Widowed</MenuItem>
+                              <MenuItem value={"divorced"}>Divorced</MenuItem>
+                              </Select>
+                            </FormControl>
                           </Grid>
 
                           {/* Contact Number */}
-                          <Grid item xs={12} sm={2}>
+                          <Grid item xs={12} sm={3}>
                             <TextField
+                              onChange={(e) => setContactnumber(e.target.value)}
                               variant="outlined"
                               margin="normal"
                               required
@@ -257,12 +341,14 @@ function Register2nd() {
                               name="contact_number"
                               autoComplete="contact_number"
                               autoFocus
+                              error={contactnumberError}
                             />
                           </Grid>
 
                           {/* E-mail */}
                           <Grid item xs={12} sm={3}>
                             <TextField
+                              onChange={(e) => setEmail(e.target.value)}
                               variant="outlined"
                               margin="normal"
                               required
@@ -272,10 +358,36 @@ function Register2nd() {
                               name="email"
                               autoComplete="email"
                               autoFocus
+                              error={emailError}
                             />
                           </Grid>
 
-                          
+                          {/* Password */}
+                          <Grid item xs={12} sm={3}>
+                            <FormControl className={clsx(classes.margin, classes.textField)} variant="outlined" required>
+                              <InputLabel>Password</InputLabel>
+                              <OutlinedInput
+                                error={passwordError}
+                                type={values.showPassword ? 'text' : 'password'}
+                                value={values.password}
+                                onChange={handleChange('password')}
+                                endAdornment={
+                                  <InputAdornment position="end">
+                                    <IconButton
+                                      aria-label="toggle password visibility"
+                                      onClick={handleClickShowPassword}
+                                      onMouseDown={handleMouseDownPassword}
+                                      edge="end"
+                                    >
+                                      {values.showPassword ? <Visibility /> : <VisibilityOff />}
+                                    </IconButton>
+                                  </InputAdornment>
+                                }
+                                labelWidth={70}
+                              />
+                            </FormControl>
+                          </Grid>
+
                           {/* Picture */}
                           <Grid item xs={12} sm={12}>
                             <Typography className={classes.header}>
@@ -287,11 +399,9 @@ function Register2nd() {
                           <Grid item xs={12} sm={3} component={Paper} elevation={2} square className={classes.uploadContainer}>
                             Upload your selfie 
                             <div className={classes.divtest}>
-                              <Grid item xs={12} sm={2}>
-                                <img width="250px" height="250px" src="https://cdn3.iconfinder.com/data/icons/google-material-design-icons/48/ic_account_box_48px-512.png"></img>
-                              </Grid>
-                            
-                                <div className={classes.picture}>
+                            <img src="https://image.flaticon.com/icons/png/512/149/149092.png" width = "170px" height = "150px"></img>
+                             <Grid item xs={12} sm={1}>
+                              <div className={classes.picture}>
                                 <Button 
                                   type="submit"
                                   fullWidth
@@ -311,18 +421,17 @@ function Register2nd() {
                                   DELETE
                                 </Button>
                               </div>
+                             </Grid>    
                             </div>
                           </Grid>
 
-                          {/* ID */}
+                          {/* Valid ID */}
                           <Grid item xs={12} sm={3} component={Paper} elevation={2} square className={classes.uploadContainer}>
-                            Upload your ID 
+                            Upload your valid ID 
                             <div className={classes.divtest}>
-                              <Grid item xs={12} sm={2}>
-                                <img width="250px" height="250px" src="https://cdn3.iconfinder.com/data/icons/google-material-design-icons/48/ic_account_box_48px-512.png"></img>
-                              </Grid>
-                            
-                                <div className={classes.picture}>
+                            <img src="https://image.flaticon.com/icons/png/512/149/149092.png" width = "170px" height = "150px"></img>
+                             <Grid item xs={12} sm={1}>
+                              <div className={classes.picture}>
                                 <Button 
                                   type="submit"
                                   fullWidth
@@ -342,12 +451,11 @@ function Register2nd() {
                                   DELETE
                                 </Button>
                               </div>
-                              
+                             </Grid>    
                             </div>
                           </Grid>
-                          
-                          
                         </Grid>
+                        
 
                           {/* Submit and Back Button */}
                           <div className={classes.divtest}>
@@ -361,7 +469,7 @@ function Register2nd() {
                                 Back
                             </Button>
 			    
-                            <Button variant="outlined" color="primary" onClick={handleClickOpen}
+                            <Button variant="outlined" color="primary" onClick={handleSubmit}
                                 fullWidth
                                 variant="contained"
                                 className={classes.button}
@@ -418,9 +526,7 @@ function Register2nd() {
                                     <DialogTitle id="alert-dialog-title">{"Notice"}</DialogTitle>
                                     <DialogContent>
                                     <DialogContentText id="alert-dialog-description">
-                                      Lorem ipsum dolor sit amet consectetur adipisicing elit. Cumque, aspernatur. Soluta fugiat maxime 
-                                      iure esse amet unde accusamus quod temporibus quas quia, repellat, rerum eaque beatae exercitationem tenetur 
-                                      eius reprehenderit!
+                                      Please allow three working days for our barangay official to verify your registration. Thank you!
                                     </DialogContentText>
                                     </DialogContent>
                                     <DialogActions>
