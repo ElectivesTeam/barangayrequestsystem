@@ -278,7 +278,6 @@ function Register() {
                               <MuiPickersUtilsProvider utils={DateFnsUtils}>
                                 <Grid>
                                   <KeyboardDatePicker
-                                    disableToolbar
                                     required
                                     variant="inline"
                                     format="MM/dd/yyyy"
