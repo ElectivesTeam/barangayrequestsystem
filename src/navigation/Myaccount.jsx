@@ -131,7 +131,7 @@ function MyAccount() {
 				<div className={classes.paper}>
 					<form className={classes.form} noValidate>
 						<Grid container spacing={2}>
-							<Grid item xs={12} sm={12}>
+							<Grid item xs={12} sm={4}>
 								<div className={classes.divHeader}>
 								<Typography className={classes.header}>
 									USER INFORMATION
@@ -147,10 +147,27 @@ function MyAccount() {
 								</Button> */}
 								</div>
 							</Grid>
+							<Grid item xs={12} sm={4}>
+								<div className={classes.divHeader}>
+								<Typography className={classes.header}>
+									PASSWORD
+								</Typography>
+								{/* <Button 
+								type="submit"
+								fullWidth
+								variant="contained"
+								className={classes.button}
+								href="#"
+								>
+								UPLOAD
+								</Button> */}
+								</div>
+							</Grid>
+							<Grid item xs={12} sm={4}></Grid>
 							
-							<Grid item xs={12} sm={6}>
+							<Grid item xs={12} sm={3}>
 								{/* First Name */}
-								<Grid item xs={12} sm={6}>
+								<Grid item xs={12} sm={12}>
 									<TextField
 									variant="outlined"
 									margin="normal"
@@ -165,7 +182,7 @@ function MyAccount() {
 								</Grid>
 
 								{/* Last Name */}
-								<Grid item xs={12} sm={6}>
+								<Grid item xs={12} sm={12}>
 									<TextField
 									variant="outlined"
 									margin="normal"
@@ -180,7 +197,7 @@ function MyAccount() {
 								</Grid>
 
 								{/* Middle Name */}
-								<Grid item xs={12} sm={6}>
+								<Grid item xs={12} sm={12}>
 									<TextField
 									variant="outlined"
 									margin="normal"
@@ -195,7 +212,7 @@ function MyAccount() {
 								</Grid>
 
 								{/* E-mail */}
-								<Grid item xs={12} sm={6}>
+								<Grid item xs={12} sm={12}>
 									<TextField
 									variant="outlined"
 									margin="normal"
@@ -210,7 +227,7 @@ function MyAccount() {
 								</Grid>
 
 								{/* Contact Number */}
-								<Grid item xs={12} sm={6}>
+								<Grid item xs={12} sm={12}>
 									<TextField
 									variant="outlined"
 									margin="normal"
@@ -224,36 +241,86 @@ function MyAccount() {
 									/>
 								</Grid>
 							</Grid>
-							<Grid item xs={12} sm={6}>
-								<Grid item xs={12} sm={12} className={classes.uploadContainer}>
-									Upload your selfie 
-										<div className={classes.divtest}>
-											<img src="https://image.flaticon.com/icons/png/512/149/149092.png" width = "170px" height = "150px"></img>
-											<Grid item xs={12} sm={1}>
-												<div className={classes.picture}>
-													<Button 
-													type="submit"
-													fullWidth
-													variant="contained"
-													className={classes.buttonUpload}
-													href="#"
-													>
-													UPLOAD
-													</Button>
-													<Button 
-													type="submit"
-													fullWidth
-													variant="contained"
-													className={classes.buttonUpload}
-													href="#"
-													>
-													DELETE
-													</Button>
-												</div>
-											</Grid>    
-										</div>
+							<Grid item xs={12} sm={1}></Grid>
+							<Grid item xs={12} sm={3}>
+								{/* Old Password */}
+								<Grid item xs={12} sm={12}>
+									<TextField
+									variant="outlined"
+									margin="normal"
+									required
+									fullWidth
+									id="old_password"
+									label="Old Password"
+									name="old_password"
+									autoComplete="old_password"
+									autoFocus
+									/>
+								</Grid>
+
+								{/* New Password */}
+								<Grid item xs={12} sm={12}>
+									<TextField
+									variant="outlined"
+									margin="normal"
+									required
+									fullWidth
+									id="new_password"
+									label="New Password"
+									name="new_password"
+									autoComplete="new_password"
+									autoFocus
+									/>
+								</Grid>
+
+								{/* Confirm New Password */}
+								<Grid item xs={12} sm={12}>
+									<TextField
+									variant="outlined"
+									margin="normal"
+									required
+									fullWidth
+									id="confirm_new_password"
+									label="Confirm New Password"
+									name="confirm_new_password"
+									autoComplete="confirm_new_password"
+									autoFocus
+									/>
 								</Grid>
 							</Grid>	
+								
+							<Grid item xs={12} sm={1}></Grid>
+							<Grid item xs={12} sm={3}>
+								<Grid item xs={12} sm={12} className={classes.uploadContainer}>
+									Upload your selfie 
+									<div className={classes.divtest}>
+										<img src="https://image.flaticon.com/icons/png/512/149/149092.png" width = "170px" height = "150px"></img>
+										<Grid item xs={12} sm={2}>
+											<div className={classes.picture}>
+												<Button 
+												type="submit"
+												fullWidth
+												variant="contained"
+												className={classes.buttonUpload}
+												href="#"
+												>
+												UPLOAD
+												</Button>
+												<Button 
+												type="submit"
+												fullWidth
+												variant="contained"
+												className={classes.buttonUpload}
+												href="#"
+												>
+												DELETE
+												</Button>
+											</div>
+										</Grid>    
+									</div>
+								</Grid>
+							</Grid>
+						
 						</Grid>
 					</form>
 					{/* Next Button */}
