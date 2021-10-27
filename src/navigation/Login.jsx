@@ -23,7 +23,7 @@ function Copyright() {
       <Typography variant="body2" color="textSecondary" align="center">
         {'Copyright © '}
         <Link color="inherit" href="https://material-ui.com/">
-          Your Website
+          ODRS
         </Link>{' '}
         {new Date().getFullYear()}
         {'.'}
@@ -34,39 +34,44 @@ function Copyright() {
 
 const useStyles = makeStyles((theme) => ({
   root: {
-    
-    height: '90vh',
     padding: '30px',
-    
   },
   image: {
-    
-    borderTopLeftRadius: 28,
-    borderBottomLeftRadius: 28, 
-    width: '850px',
+    width: 500,
     height: '500px',
     marginTop: '90px',
+    marginLeft:130,
     
-
-   
+    '@media (max-width: 600px)': {
+      display:'none'
+    },
+    '@media (min-width: 600px)': {
+      display:'none'
+    },
+    '@media (min-width: 1260px)': {
+      display:'initial',
+      
+    },
     
+  
   },
   paper: {
-    margin: theme.spacing(8, 4),
+    
     display: 'flex',
     flexDirection: 'column',
     alignItems: 'center',
-    margin: '110px 32px',       
+    margin: '110px 32px',
+    
   },
   signInContainer: {
-    borderTopRightRadius: 28,
-    borderBottomRightRadius: 28,
-
+    borderRadius: 28,
+    margin: 'auto'
+    
   },
   avatar: {
     margin: theme.spacing(1),
     color: '#fff',
-    backgroundColor: 'black',
+    backgroundColor: '#3f51b5',
   },
   form: {
     width: '100%', // Fix IE 11 issue.
@@ -81,23 +86,23 @@ const useStyles = makeStyles((theme) => ({
     fontSize: 18,
     width: '40%',
     left: '30%',    
-    backgroundColor: 'black',
-    color: 'white',
-    '&:hover': {
-      backgroundColor: '#b71c1c',
       
+    '@media (max-width: 600px)': {
+      width: '53%',
+      left: '23%'
     },
-
+    
   },
   h1: {
     fontFamily: 'Montserrat',
     fontWeight: 600,
     margin: '10px 10px', 
   },
-  divtest: {
+  login: {
     display: 'flex',
     flexDirection: 'row',
-  }
+  },
+  
   
 }));
 
@@ -110,12 +115,12 @@ function SignInSide() {
     <Grid container component="main" className={classes.root} >
       
       <CssBaseline />
-        <div>
-        <img src="https://scontent.fmnl17-1.fna.fbcdn.net/v/t1.15752-9/120262584_774624143328661_2810025230854550812_n.png?_nc_cat=101&ccb=1-3&_nc_sid=ae9488&_nc_eui2=AeF1xf0NXry52opL6G5eS_Bqkh--bQQ5yHKSH75tBDnIch3Uo_T7SZZJgjCPfMH0LiWZBLPSMyhBPPq3D-qOhWiK&_nc_ohc=Gj5-LkKOoxgAX-t2JWT&_nc_ht=scontent.fmnl17-1.fna&oh=325fc12676645c94649ab165f672b526&oe=60D3AC59" alt="" className= {classes.image}/>
+        <div className={classes.divtest}>
+        <img src="../img/login.png" alt="" className= {classes.image}/>
         </div>
       <Grid item xs={12} sm={8} md={5} component={Paper} elevation={2} square className={classes.signInContainer}>
         <div className={classes.paper}>
-          <div className={classes.divtest}>
+          <div className={classes.login}>
             <Avatar className={classes.avatar} >
               <PeopleAltIcon />
             </Avatar>
@@ -174,6 +179,7 @@ function SignInSide() {
                   variant="contained"
                   className={classes.submit}
                   href="/"
+                  color= "primary"
               >
                   Sign In
               </Button>
