@@ -1,10 +1,11 @@
 import React from 'react'
+import FormHeader from './components/FormHeader'
 
 const BailBondForm = () => {
     return (
-        <div>
-            Bail Bond Form
-        </div>
+        <>
+            <FormHeader formTitle={'Bail Bond Form'}/>
+        </>
     )
 }
 

@@ -1,10 +1,11 @@
 import React from 'react'
+import FormHeader from './components/FormHeader'
 
 const BuildingClearance = () => {
     return (
-        <div>
-            Building Clearance
-        </div>
+        <>
+            <FormHeader formTitle={'Building Clearance'}/>
+        </>
     )
 }
 

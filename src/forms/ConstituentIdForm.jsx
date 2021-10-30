@@ -1,10 +1,11 @@
 import React from 'react'
+import FormHeader from './components/FormHeader'
 
 const ConstituentIdForm = () => {
     return (
-        <div>
-            Constituent Form
-        </div>
+        <>
+            <FormHeader formTitle={'Constituent ID Form'}/>
+        </>
     )
 }
 

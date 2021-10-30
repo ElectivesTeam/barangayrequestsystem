@@ -1,10 +1,11 @@
 import React from 'react'
+import FormHeader from './components/FormHeader'
 
 const ResidencyForm = () => {
     return (
-        <div>
-            Residency Form
-        </div>
+        <>
+            <FormHeader formTitle={'Residency Form'}/>
+        </>
     )
 }
 

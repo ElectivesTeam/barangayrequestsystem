@@ -1,10 +1,12 @@
 import React from 'react'
+import FormHeader from './components/FormHeader'
 
 const ComelecForm = () => {
     return (
-        <div>
-            Comelec Form
-        </div>
+        <>
+            <FormHeader formTitle={'Comelec Form'}/>
+            //Content
+        </>
     )
 }
 

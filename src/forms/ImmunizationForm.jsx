@@ -1,10 +1,11 @@
 import React from 'react'
+import FormHeader from './components/FormHeader'
 
 const ImmunizationForm = () => {
     return (
-        <div>
-            Immunization Form
-        </div>
+        <>
+            <FormHeader formTitle={'Immunization Form'}/>
+        </>
     )
 }
 

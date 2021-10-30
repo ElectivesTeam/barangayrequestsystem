@@ -1,10 +1,11 @@
 import React from 'react'
+import FormHeader from './components/FormHeader'
 
 const VoucherForm = () => {
     return (
-        <div>
-            Voucher Form
-        </div>
+        <>
+            <FormHeader formTitle={'Voucher Form'}/>
+        </>
     )
 }
 

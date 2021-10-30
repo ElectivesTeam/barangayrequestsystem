@@ -109,64 +109,64 @@ function Request() {
     return (
         
         <Grid container component="main" className={classes.root}>
-        <Grid item xs={12}>
-            <Box bgcolor="primary.main" color="primary.contrastText" p={2} className={classes.title}>
-                REQUESTS
-            </Box>
-        </Grid>
-        
-        <div style={{ height: 380, width: '100%' }}>
-            <DataGrid
-                rows={rows}
-                columns={columns}
-                pageSize={5}
-                checkboxSelection
-                disableSelectionOnClick
-            />
-        </div>    
-        <div>
-        
-        <FormControl required error={error} component="fieldset" className={classes.formControl}>     
-            <InputLabel id="demo-simple-select-label">Purpose of Request</InputLabel>
-            <Select
-            labelId="demo-simple-select-label"
-            id="demo-simple-select"
-            value={age}
-            onChange={handleChange}
-            >
-            <MenuItem value={0}>N/A</MenuItem>
-            <MenuItem value={0}>N/A</MenuItem>
-            <MenuItem value={0}>N/A</MenuItem>
-            </Select>
-
-            <FormGroup >
-                <FormControlLabel
-                    control={<Checkbox checked={notify} onChange={handleChange} name="notify" color="primary"/>}
-                    label="Notify via Email"
-                    
-                />
-                <FormControlLabel
-                    control={<Checkbox checked={agree} onChange={handleChange} name="agree" color="primary"/>}
-                    label="I agree to the Terms & Conditions"
-                />
-                <FormControlLabel
-                control={<Checkbox checked={check} onChange={handleChange} name="check" color="primary"/>}
-                label="I checked all the documents I need to request"
-                />   
-                
-                
-            </FormGroup>
-            <FormHelperText>Conditions must be checked to proceed</FormHelperText>
-        </FormControl>
-        <div className={classes.total}>
+            <Grid item xs={12}>
+                <Box bgcolor="primary.main" color="primary.contrastText" p={2} className={classes.title}>
+                    REQUESTS
+                </Box>
+            </Grid>
             
+            <div style={{ height: 380, width: '100%' }}>
+                <DataGrid
+                    rows={rows}
+                    columns={columns}
+                    pageSize={5}
+                    checkboxSelection
+                    disableSelectionOnClick
+                />
+            </div>    
             <div>
-                <Button variant="contained" disabled className={classes.button} color="primary">Submit</Button>
-            </div>
             
-        </div>
-    </div>
-    </Grid>
+            <FormControl required error={error} component="fieldset" className={classes.formControl}>     
+                <InputLabel id="demo-simple-select-label">Purpose of Request</InputLabel>
+                <Select
+                labelId="demo-simple-select-label"
+                id="demo-simple-select"
+                value={age}
+                onChange={handleChange}
+                >
+                <MenuItem value={0}>N/A</MenuItem>
+                <MenuItem value={0}>N/A</MenuItem>
+                <MenuItem value={0}>N/A</MenuItem>
+                </Select>
+
+                <FormGroup >
+                    <FormControlLabel
+                        control={<Checkbox checked={notify} onChange={handleChange} name="notify" color="primary"/>}
+                        label="Notify via Email"
+                        
+                    />
+                    <FormControlLabel
+                        control={<Checkbox checked={agree} onChange={handleChange} name="agree" color="primary"/>}
+                        label="I agree to the Terms & Conditions"
+                    />
+                    <FormControlLabel
+                    control={<Checkbox checked={check} onChange={handleChange} name="check" color="primary"/>}
+                    label="I checked all the documents I need to request"
+                    />   
+                    
+                    
+                </FormGroup>
+                <FormHelperText>Conditions must be checked to proceed</FormHelperText>
+            </FormControl>
+            <div className={classes.total}>
+                
+                <div>
+                    <Button variant="contained" disabled className={classes.button} color="primary">Submit</Button>
+                </div>
+                
+            </div>
+            </div>
+        </Grid>
     );
 }
 
