@@ -12,6 +12,7 @@ import InputLabel from '@material-ui/core/InputLabel';
 import MenuItem from '@material-ui/core/MenuItem';
 import Select from '@material-ui/core/Select';
 import Button from '@material-ui/core/Button';
+import { useHistory } from "react-router-dom";
 
 const columns = [
   
@@ -100,21 +101,25 @@ function Request() {
         check: false,
       });
     const handleChange = (event) => {
-        setAge(event.target.value);
+        setAge(event.target.valunpme);
         setState({ ...state, [event.target.name]: event.target.checked });
     };
     const { notify, agree, check } = state;
     const error = [notify, agree, check].filter((v) => v).length !== 3;  
 
+    let history = useHistory();
+    const handleSubmit = (e) =>{
+        e.preventDefault()
+        history.push('/listofrequest')
+      }
+
     return (
-        
         <Grid container component="main" className={classes.root}>
             <Grid item xs={12}>
                 <Box bgcolor="primary.main" color="primary.contrastText" p={2} className={classes.title}>
                     REQUESTS
                 </Box>
             </Grid>
-            
             <div style={{ height: 380, width: '100%' }}>
                 <DataGrid
                     rows={rows}
@@ -126,7 +131,7 @@ function Request() {
             </div>    
             <div>
             
-            <FormControl required error={error} component="fieldset" className={classes.formControl}>     
+            <FormControl required error={error} component="fieldset" className={classes.formControl} >     
                 <InputLabel id="demo-simple-select-label">Purpose of Request</InputLabel>
                 <Select
                 labelId="demo-simple-select-label"
@@ -161,7 +166,12 @@ function Request() {
             <div className={classes.total}>
                 
                 <div>
-                    <Button variant="contained" disabled className={classes.button} color="primary">Submit</Button>
+                    {notify && agree && check ? (
+                        <Button variant="contained" className={classes.button} color="primary" onClick = {handleSubmit}>Submit</Button>
+                    ) : (
+                        <Button variant="contained" className={classes.button} color="primary" disabled>Submit</Button>
+                    )}
+                    
                 </div>
                 
             </div>
