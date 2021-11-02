@@ -15,7 +15,6 @@ import Register from './navigation/Register/Register';
 import Register2nd from './navigation/Register/Register2nd';
 import MenuAppBar from './components/navbar';
 import MyAccount from './navigation/Myaccount';
-import ListOfRequest from './navigation/ListOfRequest';
 
 //to remove
 import Cedula from './forms/Cedula';
@@ -57,7 +56,6 @@ function App() {
           <Route exact path="/requests" component={Requests}></Route>
           <Route exact path="/register2nd" component={Register2nd}></Route>
           <Route exact path="/myaccount" component={MyAccount}></Route>
-          <Route exact path="/listofrequest" component={ListOfRequest}></Route>
           
           //to remove
           <Route exact path="/requests/cedula" component={Cedula}></Route>
