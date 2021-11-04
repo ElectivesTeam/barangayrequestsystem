@@ -5,14 +5,14 @@ import { makeStyles } from '@material-ui/core/styles';
 
 const useStyles = makeStyles((theme) => ({
     root: {
-        padding: '15px 30px 25px 30px',
+        padding: '15px 30px 0px 30px',
       
     },
     title:{ 
         fontWeight: 600,
         fontSize:'1.7rem',
-        borderTopRightRadius:15,
-        borderTopLeftRadius:15,
+        borderTopRightRadius:28,
+        borderTopLeftRadius:28,
     }
 }));
 

@@ -114,7 +114,7 @@ function Request() {
 
     const handleSubmit = (e) =>{
         e.preventDefault()
-        console.log(requestId)
+        console.log(requestId);
         setSubmitted(true)
     }
 
