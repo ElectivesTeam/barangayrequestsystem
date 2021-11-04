@@ -1,10 +1,17 @@
 import React from 'react'
+import Button  from '@material-ui/core/Button';
 
-
-const ReviewRequest = () => {
+const ReviewRequest = ({ handleBack }) => {
     return (
         <div>
-            Review Request
+            <Button
+                variant="contained"
+                onClick={handleBack}
+                sx={{ mt: 3, ml: 1 }}
+                
+            >
+                Back
+            </Button> 
         </div>
     )
 }

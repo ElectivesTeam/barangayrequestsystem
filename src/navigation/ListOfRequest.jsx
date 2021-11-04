@@ -30,14 +30,14 @@ const ListOfRequest = ({ selectedRequest }) => {
 
     const renderRequest = (i) => {
         switch(i) {
-            case "cedula" : return <Cedula/>
+            case "cedula" : return <Cedula activeForm={activeForm} handleBack={handleBack} handleNext={handleNext}/>
             case "buildingclearance" : return <BuildingClearance/>
             case "constituentidform" : return <ConstituentIdForm/>
             case "residencyform" : return <ResidencyForm/>
             case "barangayclearanceform" : return <BarangayClearanceForm/>
             case "comelecform": return <ComelecForm/>
             case "businessclosure" : return <BusinessClosure/>
-            case "bailbondform" : return <BailBondForm/>
+            case "bailbondform" : return <BailBondForm />
             case "guardianshipform" : return <GuardianshipForm/>
             case "indigencyclearance" : return <IndigencyClearance/>
             case "voucherform" : return <VoucherForm/>
@@ -53,48 +53,56 @@ const ListOfRequest = ({ selectedRequest }) => {
 
     const handleNext = () => {
         setActiveForm(activeForm + 1);
+        console.log(activeForm)
     };
 
     const handleBack = () => {
-        setActiveForm(activeForm - 1);
+        setRequestSubmitted(false)
+        if(activeForm === selectedRequest.length){
+            setActiveForm(0)
+            
+        }else{
+            setActiveForm(activeForm - 1);
+        }
+        console.log(activeForm)
     };
 
     const handleSubmit = () => {
         setActiveForm(activeForm + 1);
         setRequestSubmitted(true)
+        console.log(activeForm)
     };
 
     return (
-            requestSubmitted ? <ReviewRequest /> : 
-                (
-                    <>
-                        {renderRequest(getRequest(activeForm))}
-                        {activeForm !== 0 &&
-                            <Button onClick={handleBack} sx={{ mt: 3, ml: 1 }}>
-                                Back
-                            </Button>
-                        }
-                        
-                        {activeForm === selectedRequest.length - 1 ? 
-                            <Button
-                                variant="contained"
-                                onClick={handleSubmit}
-                                sx={{ mt: 3, ml: 1 }}
-                            >
-                                Submit
-                            </Button> :
-                            <Button
-                                variant="contained"
-                                onClick={handleNext}
-                                sx={{ mt: 3, ml: 1 }}
-                            >
-                                Next
-                            </Button>
-                        }
-                    </>
-                )
+        requestSubmitted ? <ReviewRequest handleBack={handleBack}/> : 
+        (
+            <>
+                {renderRequest(getRequest(activeForm))}
+                {activeForm !== 0 &&
+                    <Button onClick={handleBack} sx={{ mt: 3, ml: 1 }}>
+                        Back
+                    </Button>
+                }
+
+                {activeForm === selectedRequest.length - 1 ? 
+                    <Button
+                        variant="contained"
+                        onClick={handleSubmit}
+                        sx={{ mt: 3, ml: 1 }}
+                    >
+                        Submit
+                    </Button> :
+                    <Button
+                        variant="contained"
+                        onClick={handleNext}
+                        sx={{ mt: 3, ml: 1 }}
+                    >
+                        Next
+                    </Button>
+                }
+            </>
             
-        
+        )
     )
 }
 
