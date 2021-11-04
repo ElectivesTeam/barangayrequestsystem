@@ -1,4 +1,5 @@
 import React from 'react'
+import { useHistory } from 'react-router-dom';
 
 //forms to be imported
 import Cedula from '../forms/Cedula';
@@ -16,39 +17,84 @@ import ImmunizationForm from '../forms/ImmunizationForm';
 import DentalServiceForm from '../forms/DentalServiceForm';
 import MaternalCareForm from '../forms/MaternalCareForm';
 
+import ReviewRequest from './ReviewRequest';
+import Button  from '@material-ui/core/Button';
+
+
 const ListOfRequest = ({ selectedRequest }) => {
-    const cedula = selectedRequest.indexOf('cedula')
-    const buildingclearance = selectedRequest.indexOf('buildingclearance')
-    const constituentidform = selectedRequest.indexOf('constituentidform')
-    const residencyform = selectedRequest.indexOf('residencyform')
-    const barangayclearanceform = selectedRequest.indexOf('barangayclearanceform')
-    const comelecform = selectedRequest.indexOf('comelecform')
-    const businessclosure = selectedRequest.indexOf('businessclosure')
-    const bailbondform = selectedRequest.indexOf('bailbondform')
-    const guardianshipform = selectedRequest.indexOf('guardianshipform')
-    const indigencyclearance = selectedRequest.indexOf('indigencyclearance')
-    const voucherform = selectedRequest.indexOf('voucherform')
-    const immunizationform = selectedRequest.indexOf('immunizationform')
-    const dentalserviceform = selectedRequest.indexOf('dentalserviceform')
-    const maternalcareform = selectedRequest.indexOf('maternalcareform')
+
+
+    const getRequest= (i) => {
+        return selectedRequest[i]
+    }
+
+    const renderRequest = (i) => {
+        switch(i) {
+            case "cedula" : return <Cedula/>
+            case "buildingclearance" : return <BuildingClearance/>
+            case "constituentidform" : return <ConstituentIdForm/>
+            case "residencyform" : return <ResidencyForm/>
+            case "barangayclearanceform" : return <BarangayClearanceForm/>
+            case "comelecform": return <ComelecForm/>
+            case "businessclosure" : return <BusinessClosure/>
+            case "bailbondform" : return <BailBondForm/>
+            case "guardianshipform" : return <GuardianshipForm/>
+            case "indigencyclearance" : return <IndigencyClearance/>
+            case "voucherform" : return <VoucherForm/>
+            case "immunizationform" : return <ImmunizationForm/>
+            case "dentalserviceform" : return <DentalServiceForm/>
+            case "maternalcareform" : return <MaternalCareForm/>
+            default: throw new Error('Unknown Form');
+        }
+    }   
+
+    const [requestSubmitted, setRequestSubmitted] = React.useState(false)
+    const [activeForm, setActiveForm] = React.useState(0);
+
+    const handleNext = () => {
+        setActiveForm(activeForm + 1);
+    };
+
+    const handleBack = () => {
+        setActiveForm(activeForm - 1);
+    };
+
+    const handleSubmit = () => {
+        setActiveForm(activeForm + 1);
+        setRequestSubmitted(true)
+    };
 
     return (
-        <>
-            {cedula !== -1 && <Cedula/>}
-            {buildingclearance !== -1 && <BuildingClearance/>}
-            {constituentidform !== -1 && <ConstituentIdForm/>}
-            {residencyform !== -1 && <ResidencyForm/>}
-            {barangayclearanceform !== -1 && <BarangayClearanceForm/>}
-            {comelecform !== -1 && <ComelecForm/>}
-            {businessclosure !== -1 && <BusinessClosure/>}
-            {bailbondform !== -1 && <BailBondForm/>}
-            {guardianshipform !== -1 && <GuardianshipForm/>}
-            {indigencyclearance !== -1 && <IndigencyClearance/>}
-            {voucherform !== -1 && <VoucherForm/>}
-            {immunizationform !== -1 && <ImmunizationForm/>}
-            {dentalserviceform !== -1 && <DentalServiceForm/>}
-            {maternalcareform !== -1 && <MaternalCareForm/>}
-        </>
+            requestSubmitted ? <ReviewRequest /> : 
+                (
+                    <>
+                        {renderRequest(getRequest(activeForm))}
+                        {activeForm !== 0 &&
+                            <Button onClick={handleBack} sx={{ mt: 3, ml: 1 }}>
+                                Back
+                            </Button>
+                        }
+                        
+                        {activeForm === selectedRequest.length - 1 ? 
+                            <Button
+                                variant="contained"
+                                onClick={handleSubmit}
+                                sx={{ mt: 3, ml: 1 }}
+                            >
+                                Submit
+                            </Button> :
+                            <Button
+                                variant="contained"
+                                onClick={handleNext}
+                                sx={{ mt: 3, ml: 1 }}
+                            >
+                                Next
+                            </Button>
+                        }
+                    </>
+                )
+            
+        
     )
 }
 
