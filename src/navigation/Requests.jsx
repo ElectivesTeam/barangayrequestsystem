@@ -13,6 +13,10 @@ import MenuItem from '@material-ui/core/MenuItem';
 import Select from '@material-ui/core/Select';
 import Button from '@material-ui/core/Button';
 
+
+import AuthService from "../services/auth.service";
+import { useHistory } from "react-router-dom";
+
 const columns = [
   
     {
@@ -106,68 +110,77 @@ function Request() {
     const { notify, agree, check } = state;
     const error = [notify, agree, check].filter((v) => v).length !== 3;  
 
-    return (
-        
-        <Grid container component="main" className={classes.root}>
-        <Grid item xs={12}>
-            <Box bgcolor="primary.main" color="primary.contrastText" p={2} className={classes.title}>
-                REQUESTS
-            </Box>
-        </Grid>
-        
-        <div style={{ height: 380, width: '100%' }}>
-            <DataGrid
-                rows={rows}
-                columns={columns}
-                pageSize={5}
-                checkboxSelection
-                disableSelectionOnClick
-            />
-        </div>    
-        <div>
-        
-        <FormControl required error={error} component="fieldset" className={classes.formControl}>     
-            <InputLabel id="demo-simple-select-label">Purpose of Request</InputLabel>
-            <Select
-            labelId="demo-simple-select-label"
-            id="demo-simple-select"
-            value={age}
-            onChange={handleChange}
-            >
-            <MenuItem value={0}>N/A</MenuItem>
-            <MenuItem value={0}>N/A</MenuItem>
-            <MenuItem value={0}>N/A</MenuItem>
-            </Select>
 
-            <FormGroup >
-                <FormControlLabel
-                    control={<Checkbox checked={notify} onChange={handleChange} name="notify" color="primary"/>}
-                    label="Notify via Email"
-                    
-                />
-                <FormControlLabel
-                    control={<Checkbox checked={agree} onChange={handleChange} name="agree" color="primary"/>}
-                    label="I agree to the Terms & Conditions"
-                />
-                <FormControlLabel
-                control={<Checkbox checked={check} onChange={handleChange} name="check" color="primary"/>}
-                label="I checked all the documents I need to request"
-                />   
-                
-                
-            </FormGroup>
-            <FormHelperText>Conditions must be checked to proceed</FormHelperText>
-        </FormControl>
-        <div className={classes.total}>
+    let history = useHistory();
+	const user = AuthService.getCurrentUser()
+
+    if (user) {
+        return (
+        
+            <Grid container component="main" className={classes.root}>
+            <Grid item xs={12}>
+                <Box bgcolor="primary.main" color="primary.contrastText" p={2} className={classes.title}>
+                    REQUESTS
+                </Box>
+            </Grid>
             
+            <div style={{ height: 380, width: '100%' }}>
+                <DataGrid
+                    rows={rows}
+                    columns={columns}
+                    pageSize={5}
+                    checkboxSelection
+                    disableSelectionOnClick
+                />
+            </div>    
             <div>
-                <Button variant="contained" disabled className={classes.button} color="primary">Submit</Button>
-            </div>
             
+            <FormControl required error={error} component="fieldset" className={classes.formControl}>     
+                <InputLabel id="demo-simple-select-label">Purpose of Request</InputLabel>
+                <Select
+                labelId="demo-simple-select-label"
+                id="demo-simple-select"
+                value={age}
+                onChange={handleChange}
+                >
+                <MenuItem value={0}>N/A</MenuItem>
+                <MenuItem value={0}>N/A</MenuItem>
+                <MenuItem value={0}>N/A</MenuItem>
+                </Select>
+    
+                <FormGroup >
+                    <FormControlLabel
+                        control={<Checkbox checked={notify} onChange={handleChange} name="notify" color="primary"/>}
+                        label="Notify via Email"
+                        
+                    />
+                    <FormControlLabel
+                        control={<Checkbox checked={agree} onChange={handleChange} name="agree" color="primary"/>}
+                        label="I agree to the Terms & Conditions"
+                    />
+                    <FormControlLabel
+                    control={<Checkbox checked={check} onChange={handleChange} name="check" color="primary"/>}
+                    label="I checked all the documents I need to request"
+                    />   
+                    
+                    
+                </FormGroup>
+                <FormHelperText>Conditions must be checked to proceed</FormHelperText>
+            </FormControl>
+            <div className={classes.total}>
+                
+                <div>
+                    <Button variant="contained" disabled className={classes.button} color="primary">Submit</Button>
+                </div>
+                
+            </div>
         </div>
-    </div>
-    </Grid>
-    );
+        </Grid>
+        );
+    }else{
+        history.push('/login')
+    	return(<h2>Login</h2>)
+    }
 }
 
 export default Request

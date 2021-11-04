@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import Avatar from '@material-ui/core/Avatar';
 import Button from '@material-ui/core/Button';
 import CssBaseline from '@material-ui/core/CssBaseline';
@@ -16,7 +16,8 @@ import MailOutlineIcon from '@material-ui/icons/MailOutline';
 import InputAdornment from '@material-ui/core/InputAdornment';
 import LockOpenIcon from '@material-ui/icons/LockOpen';
 
-
+import AuthService from "../services/auth.service";
+import { useHistory } from "react-router-dom";
 
 function Copyright() {
     return (
@@ -106,106 +107,156 @@ const useStyles = makeStyles((theme) => ({
   
 }));
 
-
 function SignInSide() {
   const classes = useStyles();
-  
-  return (  
-    
-    <Grid container component="main" className={classes.root} >
-      
-      <CssBaseline />
-        <div className={classes.divtest}>
-        <img src="../img/login.png" alt="" className= {classes.image}/>
-        </div>
-      <Grid item xs={12} sm={8} md={5} component={Paper} elevation={2} square className={classes.signInContainer}>
-        <div className={classes.paper}>
-          <div className={classes.login}>
-            <Avatar className={classes.avatar} >
-              <PeopleAltIcon />
-            </Avatar>
-            <Typography component="h1" variant="h5" className={classes.h1}>
-              Login
-            </Typography>
+
+  const[email, setEmail] = useState('')
+  const[password, setPassword] = useState('')
+
+  const[emailError, setEmailError] = useState(false)
+  const[passwordError, setPasswordError] = useState(false)
+
+  let history = useHistory();
+  const handleSubmit = (e) =>{
+    e.preventDefault()
+
+    setEmailError(false)
+    setPasswordError(false)
+
+    let setChecker = true
+
+    if(email == ''){
+      setEmailError(true)
+      setChecker = false
+    }
+
+    if(password == ''){
+      setPasswordError(true)
+      setChecker = false
+    }
+
+    if(setChecker){
+      AuthService.login(email, password)
+        .then((response) => {
+            if (response !== undefined){
+                console.log('Logged in')
+                history.push('/')
+                window.location.reload(false);
+            }
+        })
+        .catch((response) =>{
+          console.log(response.data)
+        })
+    }
+
+  }
+
+  const user = AuthService.getCurrentUser()
+
+  if (!user){
+    return (  
+      <Grid container component="main" className={classes.root} >
+        
+        <CssBaseline />
+          <div className={classes.divtest}>
+          <img src="../img/login.png" alt="" className= {classes.image}/>
           </div>
-          
-          <form className={classes.form} noValidate>
-            <TextField
-              variant="outlined"
-              margin="normal"
-              required
-              fullWidth
-              id="email"
-              label="Email Address"
-              name="email"
-              autoComplete="email"
-              autoFocus
-              InputProps={{
-                startAdornment: (
-                  <InputAdornment position="start">
-                    <MailOutlineIcon />
-                  </InputAdornment>
-                ),
-              }}
-            />
-            <TextField
-              variant="outlined"
-              margin="normal"
-              required
-              fullWidth
-              name="password"
-              label="Password"
-              type="password"
-              id="password"
-              autoComplete="current-password"
-              InputProps={{
-                startAdornment: (
-                  <InputAdornment position="start">
-                    <LockOpenIcon />
-                  </InputAdornment>
-                ),
-              }}
-            />
-            
-            <FormControlLabel
-              control={<Checkbox value="remember" color="primary" />}
-              label="Remember me"
-              
-            />
-            <div>
-              <Button
-                  type="submit"
-                  fullWidth
-                  variant="contained"
-                  className={classes.submit}
-                  href="/"
-                  color= "primary"
-              >
-                  Sign In
-              </Button>
+        <Grid item xs={12} sm={8} md={5} component={Paper} elevation={2} square className={classes.signInContainer}>
+          <div className={classes.paper}>
+            <div className={classes.login}>
+              <Avatar className={classes.avatar} >
+                <PeopleAltIcon />
+              </Avatar>
+              <Typography component="h1" variant="h5" className={classes.h1}>
+                Login
+              </Typography>
             </div>
             
-            <Grid container>
-              <Grid item xs>
-                <Link href="#" variant="body2">
-                  Forgot password?
-                </Link>
+            <form className={classes.form} onSubmit={handleSubmit}>
+              <TextField
+                onChange={(e) => setEmail(e.target.value)}
+                variant="outlined"
+                margin="normal"
+                required
+                fullWidth
+                id="email"
+                label="Email Address"
+                name="email"
+                autoComplete="email"
+                autoFocus
+                error={emailError}
+                InputProps={{
+                  startAdornment: (
+                    <InputAdornment position="start">
+                      <MailOutlineIcon />
+                    </InputAdornment>
+                  ),
+                }}
+              />
+              <TextField
+                onChange={(e) => setPassword(e.target.value)}
+                variant="outlined"
+                margin="normal"
+                required
+                fullWidth
+                name="password"
+                label="Password"
+                type="password"
+                id="password"
+                autoComplete="current-password"
+                error={passwordError}
+                InputProps={{
+                  startAdornment: (
+                    <InputAdornment position="start">
+                      <LockOpenIcon />
+                    </InputAdornment>
+                  ),
+                }}
+              />
+              
+              <FormControlLabel
+                control={<Checkbox value="remember" color="primary" />}
+                label="Remember me"
+                
+              />
+              <div>
+                <Button
+                    onClick = {handleSubmit}
+                    type="submit"
+                    fullWidth
+                    variant="contained"
+                    className={classes.submit}
+                    href="/"
+                    color= "primary"
+                >
+                    Sign In
+                </Button>
+              </div>
+              
+              <Grid container>
+                <Grid item xs>
+                  <Link href="#" variant="body2">
+                    Forgot password?
+                  </Link>
+                </Grid>
+                <Grid item>
+                  <Link href="/register" variant="body2">
+                    {"Don't have an account? Sign Up"}
+                  </Link>
+                </Grid>
               </Grid>
-              <Grid item>
-                <Link href="/register" variant="body2">
-                  {"Don't have an account? Sign Up"}
-                </Link>
-              </Grid>
-            </Grid>
-            <Box mt={5}>
-              <Copyright />
-            </Box>
-          </form>
-        </div>
+              <Box mt={5}>
+                <Copyright />
+              </Box>
+            </form>
+          </div>
+        </Grid>
       </Grid>
-    </Grid>
- 
-  )
+    )
+  }else{
+    history.push('/')
+    return(<h2>Home</h2>)
+  }
 }
   
   export default SignInSide
