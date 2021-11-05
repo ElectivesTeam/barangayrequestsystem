@@ -11,8 +11,8 @@ const useStyles = makeStyles((theme) => ({
     title:{ 
         fontWeight: 600,
         fontSize:'1.7rem',
-        borderTopRightRadius:28,
-        borderTopLeftRadius:28,
+        borderTopRightRadius:20,
+        borderTopLeftRadius:20,
     }
 }));
 

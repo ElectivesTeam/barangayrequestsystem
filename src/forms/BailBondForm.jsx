@@ -29,7 +29,7 @@ const BailBondForm = ({ activeForm, handleBack, handleNext}) => {
 
     return (
         <>
-            <FormHeader formTitle={'Bail BondF orm'}/>
+            <FormHeader formTitle={'Bail Bond Form'}/>
             <form onSubmit={handleSubmit}>
 
                 {/* Data forms here - sample textfield*/}

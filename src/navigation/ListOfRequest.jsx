@@ -15,6 +15,7 @@ import VoucherForm from '../forms/VoucherForm';
 import ImmunizationForm from '../forms/ImmunizationForm';
 import DentalServiceForm from '../forms/DentalServiceForm';
 import MaternalCareForm from '../forms/MaternalCareForm';
+import BusinessClearanceForm from '../forms/BusinessClearanceForm';
 
 import ReviewRequest from './ReviewRequest';
 
@@ -24,10 +25,33 @@ const ListOfRequest = ({ selectedRequest }) => {
         return selectedRequest[i]
     }
 
+    const [activeForm, setActiveForm] = React.useState(0);
+
+    const handleNext = () => {
+        if(activeForm === selectedRequest.length - 1){
+            setActiveForm(activeForm + 1);
+        }else{
+            setActiveForm(activeForm + 1);
+            console.log(activeForm)
+        }
+    };
+
+    const handleBack = () => {
+        if(activeForm == selectedRequest.length){
+            setActiveForm(0)
+            
+        }else{
+            setActiveForm(activeForm - 1);
+        }
+        console.log(activeForm)
+    };
+
     const renderRequest = (i) => {
         switch(i) {
             case "cedula" : 
-                return <Cedula activeForm={activeForm} handleBack={handleBack} handleNext={handleNext} submitted="false"/>
+                return <Cedula activeForm={activeForm} handleBack={handleBack} handleNext={handleNext}/>
+            case "businessclearance":
+                return <BusinessClearanceForm activeForm={activeForm} handleBack={handleBack} handleNext={handleNext}/>
             case "buildingclearance" : 
                 return <BuildingClearance activeForm={activeForm} handleBack={handleBack} handleNext={handleNext}/>
             case "constituentidform" : 
@@ -57,26 +81,6 @@ const ListOfRequest = ({ selectedRequest }) => {
             default: return <ReviewRequest handleBack={handleBack} selectedRequest={submittedRequest}/>
         }
     }   
-
-    const [activeForm, setActiveForm] = React.useState(0);
-
-    const handleNext = () => {
-        if(activeForm === selectedRequest.length - 1){
-            setActiveForm(activeForm + 1);
-        }else{
-            setActiveForm(activeForm + 1);
-            console.log(activeForm)
-        }
-    };
-
-    const handleBack = () => {
-        if(activeForm === selectedRequest.length){
-            setActiveForm(0)
-            
-        }else{
-            setActiveForm(activeForm - 1);
-        }
-    };
 
     return <> {renderRequest(getRequest(activeForm))} </>
     

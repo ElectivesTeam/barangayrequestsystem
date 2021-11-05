@@ -5,23 +5,26 @@ import TextField from '@material-ui/core/TextField';
 
 const Cedula = ({ activeForm, handleBack, handleNext}) => {
     // fetching of data
-    // const[lastname, setLastname] = useState('')
-    // const[lastnameError, setLastnameError] = useState(false)
+    const[lastname, setLastname] = useState('')
+    const[lastnameError, setLastnameError] = useState(false)
     
     const handleSubmit = (e) =>{
         let setChecker = true
         e.preventDefault()
         
-        //validation if the textfield is not empty
-        // setLastnameError(false)
-        // if(lastname == ''){
-        //     setLastnameError(true)
-        //     setChecker = false
-        // }
+        // validation if the textfield is not empty
+        setLastnameError(false)
+        if(lastname == ''){
+            setLastnameError(true)
+            setChecker = false
+        }
 
         if(setChecker){
             //function to save the data in the form to the database
-            console.log('submitted')
+            const cedulaRequest = {
+                lastname
+            }
+            console.log(cedulaRequest)
             handleNext()
         }
 
@@ -34,7 +37,7 @@ const Cedula = ({ activeForm, handleBack, handleNext}) => {
 
                 {/* Data forms here - sample textfield*/}
 
-                {/* <TextField
+                <TextField
                     onChange={(e) => setLastname(e.target.value)}
                     variant="outlined"
                     margin="normal"
@@ -46,7 +49,7 @@ const Cedula = ({ activeForm, handleBack, handleNext}) => {
                     autoComplete="last_name"
                     autoFocus
                     error={lastnameError}
-                /> */}
+                />
                 
                 {/* Buttons */}
                 {activeForm !== 0 &&
