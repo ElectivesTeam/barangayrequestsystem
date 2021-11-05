@@ -33,7 +33,6 @@ const useStyles = makeStyles((theme) => ({
     },
 
     paper: {
-      margin: theme.spacing(8, 4),
       display: 'flex',
       flexDirection: 'column',
       alignItems: 'left',
@@ -179,32 +178,32 @@ function Register2nd() {
     setPasswordError(false)
     let setChecker = true
 
-    if(birthplace == ''){
+    if(birthplace === ''){
       setBirthplaceError(true)
       setChecker = false
     }
 
-    if(nationality == ''){
+    if(nationality === ''){
       setNationalityError(true)
       setChecker = false
     }
 
-    if(civilstatus == ''){
+    if(civilstatus === ''){
       setCivilstatusError(true)
       setChecker = false
     }
 
-    if(contactnumber == ''){
+    if(contactnumber === ''){
       setContactnumberError(true)
       setChecker = false
     }
 
-    if(email == ''){
+    if(email === ''){
       setEmailError(true)
       setChecker = false
     }
 
-    if(values.password == ''){
+    if(values.password === ''){
       setPasswordError(true)
       setChecker = false
     }
