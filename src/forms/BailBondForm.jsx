@@ -2,71 +2,173 @@ import React, { useState } from 'react'
 import FormHeader from './components/FormHeader'
 import Button  from '@material-ui/core/Button';
 import TextField from '@material-ui/core/TextField';
+import Grid from '@material-ui/core/Grid';
+import { makeStyles } from '@material-ui/core/styles'
+import Paper from '@mui/material/Paper';
+import Box from '@mui/material/Box';
+
+
+const useStyles = makeStyles((theme) => ({
+    root: {
+        padding: '5px 30px 0px 30px',
+      
+    },
+    title:{ 
+        fontWeight: 600,
+        fontSize:'1.4rem',
+    },
+    info:{
+        fontWeight: 500,
+        fontSize:'1rem',
+        paddingLeft:'25px'
+    },
+    button: {
+        width: '10%',
+        height: '10%',   
+        left: '77%',
+    },
+    firstpagebutton: {
+        width: '10%',
+        height: '10%',   
+        left: '90%',
+    },
+    buttondiv: {
+        paddingTop: '15px',
+        paddingBottom: '15px'
+    }
+}));
 
 const BailBondForm = ({ activeForm, handleBack, handleNext}) => {
-    // fetching of data
-    // const[lastname, setLastname] = useState('')
-    // const[lastnameError, setLastnameError] = useState(false)
+    console.log(activeForm)
+    const classes = useStyles();
+    const[name, setName] = useState('')
+    const[nameError, setNameError] = useState(false)
+
+    const[address, setAddress] = useState('')
+    const[addressError, setAddressError] = useState(false)
+
+    const[caseNumber, setCaseNumber] = useState('')
+    const[caseNumberError, setCaseNumberError] = useState(false)
     
     const handleSubmit = (e) =>{
         let setChecker = true
         e.preventDefault()
         
-        //validation if the textfield is not empty
-        // setLastnameError(false)
-        // if(lastname == ''){
-        //     setLastnameError(true)
-        //     setChecker = false
-        // }
+        setNameError(false)
+        if(name == ''){
+            setNameError(true)
+            setChecker = false
+        }
+
+        setAddressError(false)
+        if(address == ''){
+            setAddressError(true)
+            setChecker = false
+        }
+
+        setCaseNumberError(false)
+        if(caseNumber == ''){
+            setCaseNumberError(true)
+            setChecker = false
+        }
 
         if(setChecker){
             //function to save the data in the form to the database
-            console.log('submitted')
             handleNext()
         }
-
     }
 
     return (
         <>
             <FormHeader formTitle={'Bail Bond Form'}/>
-            <form onSubmit={handleSubmit}>
+            <Grid container component="main" className={classes.root}>
+                <Grid item xs={12}>
+                    <Paper elevation={3} >
+                        <Box p={2} className={classes.title}>
+                            <form onSubmit={handleSubmit}>
 
-                {/* Data forms here - sample textfield*/}
+                                <div className={classes.info}>
+                                    <Grid container spacing={2}>
 
-                {/* <TextField
-                    onChange={(e) => setLastname(e.target.value)}
-                    variant="outlined"
-                    margin="normal"
-                    required
-                    fullWidth
-                    id="last_name"
-                    label="Last Name"
-                    name="last_name"
-                    autoComplete="last_name"
-                    autoFocus
-                    error={lastnameError}
-                /> */}
-                
-                {/* Buttons */}
-                {activeForm !== 0 &&
-                    <Button 
-                        onClick={handleBack} 
-                        sx={{ mt: 3, ml: 1 }}
-                    >
-                        Back
-                    </Button>
-                }         
-                <Button
-                    variant="contained"
-                    onClick={handleSubmit}
-                    sx={{ mt: 3, ml: 1 }}
-                    type="submit"
-                >
-                    Next
-                </Button>
+                                        {/* Name */}
+                                        <Grid item xs={6}>
+                                            <TextField
+                                                onChange={(e) => setName(e.target.value)}
+                                                variant="outlined"
+                                                margin="normal"
+                                                required
+                                                fullWidth
+                                                id="name"
+                                                label="Name"
+                                                name="name"
+                                                autoComplete="name"
+                                                autoFocus
+                                                error={nameError}
+                                            />
+                                        </Grid>
+                                        
+                                        {/* Address */}
+                                        <Grid item xs={6}>
+                                            <TextField
+                                                onChange={(e) => setAddress(e.target.value)}
+                                                variant="outlined"
+                                                margin="normal"
+                                                required
+                                                fullWidth
+                                                id="address"
+                                                label="Address"
+                                                name="address"
+                                                autoComplete="address"
+                                                autoFocus
+                                                error={addressError}
+                                            />
+                                        </Grid>
+                                        
+                                        {/* Case Number */}
+                                        <Grid item xs={6}>
+                                            <TextField
+                                                onChange={(e) => setCaseNumber(e.target.value)}
+                                                variant="outlined"
+                                                margin="normal"
+                                                required
+                                                fullWidth
+                                                id="casenumber"
+                                                label="Case Number"
+                                                name="casenumber"
+                                                autoComplete="casenumber"
+                                                autoFocus
+                                                error={addressError}
+                                            />
+                                        </Grid>
+                                    </Grid>
+                                </div>
 
-                </form>    
+                                {/* Buttons */}
+                                <div className={classes.buttondiv}>
+                                    {activeForm !== 0 &&
+                                        <Button 
+                                            onClick={handleBack} 
+                                            color="primary"
+                                            className={classes.button}
+                                        >
+                                            Back
+                                        </Button>
+                                    } 
+                                        <Button
+                                            variant="contained"
+                                            onClick={handleSubmit}
+                                            type="submit"
+                                            color="primary"
+                                            className={activeForm === 0 ? classes.firstpagebutton : classes.button}
+                                        >
+                                            Next
+                                        </Button>
+                                </div>
+                            </form> 
+                        </Box>
+                    </Paper>
+                </Grid>
+            </Grid>
         </>
     )
 }
