@@ -6,6 +6,10 @@ import Grid from '@material-ui/core/Grid';
 import { makeStyles } from '@material-ui/core/styles'
 import Paper from '@mui/material/Paper';
 import Box from '@mui/material/Box';
+import InputLabel from '@mui/material/InputLabel'
+import MenuItem from '@mui/material/MenuItem'
+import Select from '@mui/material/Select'
+import FormControl from '@mui/material/FormControl'
 
 
 const useStyles = makeStyles((theme) => ({
@@ -45,7 +49,28 @@ const Cedula = ({ activeForm, handleBack, handleNext}) => {
 
     const[address, setAddress] = useState('')
     const[addressError, setAddressError] = useState(false)
+
+    const[birthday, setBirthday] = useState('')
+    const[birthdayError, setBirthdayError] = useState(false)
+
+    const[birthPlace, setBirthPlace] = useState('')
+    const[birthPlaceError, setBirthPlaceError] = useState(false)
+
+    const[civilStatus, setCivilStatus] = useState('')
+    const[civilStatusError, setCivilStatusError] = useState(false)
+
+    const[gender, setGender] = useState('')
+    const[genderError, setGenderError] = useState(false)
     
+    const[nationality, setNationality] = useState('')
+    const[nationalityError, setNationalityError] = useState(false)
+
+    const[profession, setProfession] = useState('')
+    const[professionError, setProfessionError] = useState(false)
+
+    const[monthlyIncome, setMonthlyIncome] = useState('')
+    const[monthlyIncomeError, setMonthlyIncomeError] = useState(false)
+
     const handleSubmit = (e) =>{
         let setChecker = true
         e.preventDefault()
@@ -59,6 +84,48 @@ const Cedula = ({ activeForm, handleBack, handleNext}) => {
         setAddressError(false)
         if(address == ''){
             setAddressError(true)
+            setChecker = false
+        }
+
+        setBirthdayError(false)
+        if(birthday == ''){
+            setBirthdayError(true)
+            setChecker = false
+        }
+
+        setBirthPlaceError(false)
+        if(birthPlace == ''){
+            setBirthPlaceError(true)
+            setChecker = false
+        }
+
+        setCivilStatusError(false)
+        if(civilStatus == ''){
+            setCivilStatusError(true)
+            setChecker = false
+        }
+
+        setGenderError(false)
+        if(gender == ''){
+            setGenderError(true)
+            setChecker = false
+        }
+
+        setNationalityError(false)
+        if(nationality == ''){
+            setNationalityError(true)
+            setChecker = false
+        }
+
+        setProfessionError(false)
+        if(profession == ''){
+            setProfessionError(true)
+            setChecker = false
+        }
+
+        setMonthlyIncomeError(false)
+        if(monthlyIncome == ''){
+            setMonthlyIncomeError(true)
             setChecker = false
         }
 
@@ -114,10 +181,132 @@ const Cedula = ({ activeForm, handleBack, handleNext}) => {
                                             />
                                         </Grid>
                                         
-                                        {/* Other Field */}
+                                        {/* Birthday */}
                                         <Grid item xs={6}>
-                                            {/* Input goes here */}
+                                            <TextField
+                                                type="date"
+                                                onChange={(e) => setBirthday(e.target.value)}
+                                                variant="outlined"
+                                                margin="normal"
+                                                required
+                                                fullWidth
+                                                id="birthday"
+                                                label="Birthday"
+                                                name="birthday"
+                                                autoComplete="birthday"
+                                                autoFocus
+                                                error={birthdayError}
+                                                defaultValue="2017-05-24"
+                                                InputLabelProps={{
+                                                    shrink: true,
+                                                }}
+                                            />
                                         </Grid>
+
+                                        {/* Birth Place */}
+                                        <Grid item xs={6}>
+                                            <TextField
+                                                onChange={(e) => setBirthPlace(e.target.value)}
+                                                variant="outlined"
+                                                margin="normal"
+                                                required
+                                                fullWidth
+                                                id="birthplace"
+                                                label="Birthplace"
+                                                name="Birthplace"
+                                                autoComplete="birthplace"
+                                                autoFocus
+                                                error={birthPlaceError}
+                                            />
+                                        </Grid>
+                                        
+                                        {/* Civil Status */}
+                                        <Grid item xs={6}>
+                                            <FormControl fullWidth>
+                                                <InputLabel id="demo-simple-select-label">Civil Status</InputLabel>
+                                                <Select
+                                                    labelId="demo-simple-select-label"
+                                                    id="demo-simple-select"
+                                                    value={civilStatus}
+                                                    label="Civil Status"
+                                                    onChange={(e) => setCivilStatus(e.target.value)}
+                                                    error={civilStatusError}
+                                                >
+                                                <MenuItem value={'Single'}>Single</MenuItem>
+                                                <MenuItem value={'Married'}>Married</MenuItem>
+                                                <MenuItem value={'Widowed'}>Widowed</MenuItem>
+                                                <MenuItem value={'Divorced'}>Divorced</MenuItem>
+                                                </Select>
+                                            </FormControl>
+                                        </Grid> 
+
+                                        {/* Gender */}
+                                        <Grid item xs={6}>
+                                            <FormControl fullWidth>
+                                                <InputLabel id="demo-simple-select-label">Gender</InputLabel>
+                                                <Select
+                                                    labelId="demo-simple-select-label"
+                                                    id="demo-simple-select"
+                                                    value={civilStatus}
+                                                    label="Gender"
+                                                    onChange={(e) => setGender(e.target.value)}
+                                                    error={genderError}
+                                                >
+                                                <MenuItem value={'Female'}>Female</MenuItem>
+                                                <MenuItem value={'Male'}>Male</MenuItem>
+                                                </Select>
+                                            </FormControl>
+                                        </Grid>
+
+                                        {/* Nationality */}
+                                        <Grid item xs={6}>
+                                            <TextField
+                                                onChange={(e) => setNationality(e.target.value)}
+                                                variant="outlined"
+                                                margin="normal"
+                                                required
+                                                fullWidth
+                                                id="nationality"
+                                                label="Nationality"
+                                                name="nationality"
+                                                autoComplete="nationality"
+                                                autoFocus
+                                                error={nationalityError}
+                                            />
+                                        </Grid> 
+
+                                        {/* Profession */}
+                                        <Grid item xs={6}>
+                                            <TextField
+                                                onChange={(e) => setProfession(e.target.value)}
+                                                variant="outlined"
+                                                margin="normal"
+                                                required
+                                                fullWidth
+                                                id="profession"
+                                                label="Profession"
+                                                name="profession"
+                                                autoComplete="profession"
+                                                autoFocus
+                                                error={professionError}
+                                            />
+                                        </Grid>  
+                                        {/* Monthly Income */}
+                                        <Grid item xs={6}>
+                                            <TextField
+                                                onChange={(e) => setMonthlyIncome(e.target.value)}
+                                                variant="outlined"
+                                                margin="normal"
+                                                required
+                                                fullWidth
+                                                id="monthlyincome"
+                                                label="Monthly Income"
+                                                name="monthlyincome"
+                                                autoComplete="monthlyincome"
+                                                autoFocus
+                                                error={monthlyIncomeError}
+                                            />
+                                        </Grid>   
                                     </Grid>
                                 </div>
 

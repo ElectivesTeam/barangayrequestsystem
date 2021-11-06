@@ -113,11 +113,6 @@ const ComelecForm = ({ activeForm, handleBack, handleNext}) => {
                                                 error={addressError}
                                             />
                                         </Grid>
-                                        
-                                        {/* Other Field */}
-                                        <Grid item xs={6}>
-                                            {/* Input goes here */}
-                                        </Grid>
                                     </Grid>
                                 </div>
 

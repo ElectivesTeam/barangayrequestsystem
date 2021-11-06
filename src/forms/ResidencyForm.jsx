@@ -114,10 +114,6 @@ const ResidencyForm = ({ activeForm, handleBack, handleNext}) => {
                                             />
                                         </Grid>
                                         
-                                        {/* Other Field */}
-                                        <Grid item xs={6}>
-                                            {/* Input goes here */}
-                                        </Grid>
                                     </Grid>
                                 </div>
 

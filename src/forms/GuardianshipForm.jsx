@@ -45,6 +45,9 @@ const GuardianshipForm = ({ activeForm, handleBack, handleNext}) => {
 
     const[address, setAddress] = useState('')
     const[addressError, setAddressError] = useState(false)
+
+    const[guardian, setGuardian] = useState('')
+    const[guardianError, setGuardianError] = useState(false)
     
     const handleSubmit = (e) =>{
         let setChecker = true
@@ -59,6 +62,12 @@ const GuardianshipForm = ({ activeForm, handleBack, handleNext}) => {
         setAddressError(false)
         if(address == ''){
             setAddressError(true)
+            setChecker = false
+        }
+
+        setGuardianError(false)
+        if(guardian == ''){
+            setGuardianError(true)
             setChecker = false
         }
 
@@ -114,9 +123,21 @@ const GuardianshipForm = ({ activeForm, handleBack, handleNext}) => {
                                             />
                                         </Grid>
                                         
-                                        {/* Other Field */}
+                                        {/* Guardian */}
                                         <Grid item xs={6}>
-                                            {/* Input goes here */}
+                                            <TextField
+                                                onChange={(e) => setGuardian(e.target.value)}
+                                                variant="outlined"
+                                                margin="normal"
+                                                required
+                                                fullWidth
+                                                id="guardian"
+                                                label="Guardian"
+                                                name="guardian"
+                                                autoComplete="guardian"
+                                                autoFocus
+                                                error={guardianError}
+                                            />
                                         </Grid>
                                     </Grid>
                                 </div>

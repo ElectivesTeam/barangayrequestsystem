@@ -6,6 +6,10 @@ import Grid from '@material-ui/core/Grid';
 import { makeStyles } from '@material-ui/core/styles'
 import Paper from '@mui/material/Paper';
 import Box from '@mui/material/Box';
+import InputLabel from '@mui/material/InputLabel'
+import MenuItem from '@mui/material/MenuItem'
+import Select from '@mui/material/Select'
+import FormControl from '@mui/material/FormControl'
 
 
 const useStyles = makeStyles((theme) => ({
@@ -25,7 +29,7 @@ const useStyles = makeStyles((theme) => ({
     button: {
         width: '10%',
         height: '10%',   
-        left: '77%',
+        left: '80%',
     },
     firstpagebutton: {
         width: '10%',
@@ -45,6 +49,10 @@ const IndigencyClearance = ({ activeForm, handleBack, handleNext}) => {
 
     const[address, setAddress] = useState('')
     const[addressError, setAddressError] = useState(false)
+
+    const[purpose, setPurpose] = useState('')
+    const[purposeError, setPurposeError] = useState(false)
+
     
     const handleSubmit = (e) =>{
         let setChecker = true
@@ -62,6 +70,12 @@ const IndigencyClearance = ({ activeForm, handleBack, handleNext}) => {
             setChecker = false
         }
 
+        setPurposeError(false)
+        if(purpose == ''){
+            setPurposeError(true)
+            setChecker = false
+        }
+
         if(setChecker){
             //function to save the data in the form to the database
             handleNext()
@@ -70,7 +84,7 @@ const IndigencyClearance = ({ activeForm, handleBack, handleNext}) => {
 
     return (
         <>
-            <FormHeader formTitle={'Indigency Clearance Form'}/>
+            <FormHeader formTitle={'Indigency Clearance'}/>
             <Grid container component="main" className={classes.root}>
                 <Grid item xs={12}>
                     <Paper elevation={3} >
@@ -114,10 +128,24 @@ const IndigencyClearance = ({ activeForm, handleBack, handleNext}) => {
                                             />
                                         </Grid>
                                         
-                                        {/* Other Field */}
+                                        {/* Other Fields */}
                                         <Grid item xs={6}>
-                                            {/* Input goes here */}
-                                        </Grid>
+                                            <FormControl fullWidth>
+                                                <InputLabel id="demo-simple-select-label">Purpose</InputLabel>
+                                                <Select
+                                                    labelId="demo-simple-select-label"
+                                                    id="demo-simple-select"
+                                                    value={purpose}
+                                                    label="Purpose"
+                                                    onChange={(e) => setPurpose(e.target.value)}
+                                                    error={purposeError}
+                                                >
+                                                <MenuItem value={'N/A'}>N/A</MenuItem>
+                                                <MenuItem value={'N/A'}>N/A</MenuItem>
+                                                <MenuItem value={'N/A'}>N/A</MenuItem>
+                                                </Select>
+                                            </FormControl>
+                                        </Grid> 
                                     </Grid>
                                 </div>
 

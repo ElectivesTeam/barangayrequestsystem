@@ -40,25 +40,52 @@ const useStyles = makeStyles((theme) => ({
 
 const VoucherForm = ({ activeForm, handleBack, handleNext}) => {
     const classes = useStyles();
-    const[name, setName] = useState('')
-    const[nameError, setNameError] = useState(false)
+    const[studentName, setStudentName] = useState('')
+    const[studentNameError, setStudentNameError] = useState(false)
 
-    const[address, setAddress] = useState('')
-    const[addressError, setAddressError] = useState(false)
+    const[parentName, setParentName] = useState('')
+    const[parentNameError, setParentNameError] = useState(false)
+
+    const[school, setSchool] = useState('')
+    const[schoolError, setSchoolError] = useState(false)
+
+    const[schoolAddress, setSchoolAddress] = useState('')
+    const[schoolAddressError, setSchoolAddressError] = useState(false)
+
+    const[grade, setGrade] = useState('')
+    const[gradeError, setGradeError] = useState(false)
     
     const handleSubmit = (e) =>{
         let setChecker = true
         e.preventDefault()
         
-        setNameError(false)
-        if(name == ''){
-            setNameError(true)
+        setStudentNameError(false)
+        if(studentName == ''){
+            setStudentNameError(true)
             setChecker = false
         }
 
-        setAddressError(false)
-        if(address == ''){
-            setAddressError(true)
+        setParentNameError(false)
+        if(parentName == ''){
+            setParentNameError(true)
+            setChecker = false
+        }
+
+        setSchoolError(false)
+        if(school == ''){
+            setSchoolError(true)
+            setChecker = false
+        }
+
+        setSchoolAddressError(false)
+        if(schoolAddress == ''){
+            setSchoolAddressError(true)
+            setChecker = false
+        }
+
+        setGradeError(false)
+        if(grade == ''){
+            setGradeError(true)
             setChecker = false
         }
 
@@ -80,43 +107,89 @@ const VoucherForm = ({ activeForm, handleBack, handleNext}) => {
                                 <div className={classes.info}>
                                     <Grid container spacing={2}>
 
-                                        {/* Name */}
+                                        {/* Student Name */}
                                         <Grid item xs={6}>
                                             <TextField
-                                                onChange={(e) => setName(e.target.value)}
+                                                onChange={(e) => setStudentName(e.target.value)}
                                                 variant="outlined"
                                                 margin="normal"
                                                 required
                                                 fullWidth
-                                                id="name"
-                                                label="Name"
-                                                name="name"
-                                                autoComplete="name"
+                                                id="studentname"
+                                                label="Student Name"
+                                                name="studentname"
+                                                autoComplete="studentname"
                                                 autoFocus
-                                                error={nameError}
+                                                error={studentNameError}
                                             />
                                         </Grid>
-                                        
-                                        {/* Address */}
+
+                                        {/* Parent Name */}
                                         <Grid item xs={6}>
                                             <TextField
-                                                onChange={(e) => setAddress(e.target.value)}
+                                                onChange={(e) => setParentName(e.target.value)}
                                                 variant="outlined"
                                                 margin="normal"
                                                 required
                                                 fullWidth
-                                                id="address"
-                                                label="Address"
-                                                name="address"
-                                                autoComplete="address"
+                                                id="parentName"
+                                                label="Parent Name"
+                                                name="parentname"
+                                                autoComplete="parentname"
                                                 autoFocus
-                                                error={addressError}
+                                                error={parentNameError}
                                             />
                                         </Grid>
                                         
-                                        {/* Other Field */}
+                                        {/* School */}
                                         <Grid item xs={6}>
-                                            {/* Input goes here */}
+                                            <TextField
+                                                onChange={(e) => setSchool(e.target.value)}
+                                                variant="outlined"
+                                                margin="normal"
+                                                required
+                                                fullWidth
+                                                id="school"
+                                                label="School"
+                                                name="school"
+                                                autoComplete="school"
+                                                autoFocus
+                                                error={schoolError}
+                                            />
+                                        </Grid>
+                                        
+                                        {/* School Address */}
+                                        <Grid item xs={6}>
+                                            <TextField
+                                                onChange={(e) => setSchoolAddress(e.target.value)}
+                                                variant="outlined"
+                                                margin="normal"
+                                                required
+                                                fullWidth
+                                                id="schooladdress"
+                                                label="School Address"
+                                                name="schooladdress"
+                                                autoComplete="schooladdress"
+                                                autoFocus
+                                                error={schoolAddressError}
+                                            />
+                                        </Grid>
+                                        
+                                        {/* Grade */}
+                                        <Grid item xs={6}>
+                                            <TextField
+                                                onChange={(e) => setGrade(e.target.value)}
+                                                variant="outlined"
+                                                margin="normal"
+                                                required
+                                                fullWidth
+                                                id="grade"
+                                                label="Grade"
+                                                name="grade"
+                                                autoComplete="grade"
+                                                autoFocus
+                                                error={gradeError}
+                                            />
                                         </Grid>
                                     </Grid>
                                 </div>

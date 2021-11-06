@@ -6,6 +6,10 @@ import Grid from '@material-ui/core/Grid';
 import { makeStyles } from '@material-ui/core/styles'
 import Paper from '@mui/material/Paper';
 import Box from '@mui/material/Box';
+import InputLabel from '@mui/material/InputLabel'
+import MenuItem from '@mui/material/MenuItem'
+import Select from '@mui/material/Select'
+import FormControl from '@mui/material/FormControl'
 
 
 const useStyles = makeStyles((theme) => ({
@@ -32,11 +36,6 @@ const useStyles = makeStyles((theme) => ({
         height: '10%',   
         left: '90%',
     },
-    firstpagebutton: {
-        width: '10%',
-        height: '10%',   
-        left: '80%',
-    },
     buttondiv: {
         paddingTop: '15px',
         paddingBottom: '15px'
@@ -50,6 +49,9 @@ const BarangayClearanceForm = ({ activeForm, handleBack, handleNext}) => {
 
     const[address, setAddress] = useState('')
     const[addressError, setAddressError] = useState(false)
+
+    const[purpose, setPurpose] = useState('')
+    const[purposeError, setPurposeError] = useState(false)
 
     
     const handleSubmit = (e) =>{
@@ -65,6 +67,12 @@ const BarangayClearanceForm = ({ activeForm, handleBack, handleNext}) => {
         setAddressError(false)
         if(address == ''){
             setAddressError(true)
+            setChecker = false
+        }
+
+        setPurposeError(false)
+        if(purpose == ''){
+            setPurposeError(true)
             setChecker = false
         }
 
@@ -122,8 +130,22 @@ const BarangayClearanceForm = ({ activeForm, handleBack, handleNext}) => {
                                         
                                         {/* Other Fields */}
                                         <Grid item xs={6}>
-                                            {/* Input goes here */}
-                                        </Grid>
+                                            <FormControl fullWidth>
+                                                <InputLabel id="demo-simple-select-label">Purpose</InputLabel>
+                                                <Select
+                                                    labelId="demo-simple-select-label"
+                                                    id="demo-simple-select"
+                                                    value={purpose}
+                                                    label="Purpose"
+                                                    onChange={(e) => setPurpose(e.target.value)}
+                                                    error={purposeError}
+                                                >
+                                                <MenuItem value={'N/A'}>N/A</MenuItem>
+                                                <MenuItem value={'N/A'}>N/A</MenuItem>
+                                                <MenuItem value={'N/A'}>N/A</MenuItem>
+                                                </Select>
+                                            </FormControl>
+                                        </Grid> 
                                     </Grid>
                                 </div>
 

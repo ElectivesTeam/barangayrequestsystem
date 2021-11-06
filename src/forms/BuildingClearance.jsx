@@ -6,6 +6,10 @@ import Grid from '@material-ui/core/Grid';
 import { makeStyles } from '@material-ui/core/styles'
 import Paper from '@mui/material/Paper';
 import Box from '@mui/material/Box';
+import InputLabel from '@mui/material/InputLabel'
+import MenuItem from '@mui/material/MenuItem'
+import Select from '@mui/material/Select'
+import FormControl from '@mui/material/FormControl'
 
 
 const useStyles = makeStyles((theme) => ({
@@ -45,6 +49,9 @@ const BuildingClearance = ({ activeForm, handleBack, handleNext}) => {
 
     const[address, setAddress] = useState('')
     const[addressError, setAddressError] = useState(false)
+
+    const[type, setType] = useState('')
+    const[typeError, setTypeError] = useState(false)
     
     const handleSubmit = (e) =>{
         let setChecker = true
@@ -59,6 +66,12 @@ const BuildingClearance = ({ activeForm, handleBack, handleNext}) => {
         setAddressError(false)
         if(address == ''){
             setAddressError(true)
+            setChecker = false
+        }
+
+        setTypeError(false)
+        if(type == ''){
+            setTypeError(true)
             setChecker = false
         }
 
@@ -113,11 +126,29 @@ const BuildingClearance = ({ activeForm, handleBack, handleNext}) => {
                                                 error={addressError}
                                             />
                                         </Grid>
-                                        
-                                        {/* Other Field */}
+
+                                        {/* Other Fields */}
                                         <Grid item xs={6}>
-                                            {/* Input goes here */}
-                                        </Grid>
+                                            <FormControl fullWidth>
+                                                <InputLabel id="demo-simple-select-label">Type</InputLabel>
+                                                <Select
+                                                    labelId="demo-simple-select-label"
+                                                    id="demo-simple-select"
+                                                    value={type}
+                                                    label="Type"
+                                                    onChange={(e) => setType(e.target.value)}
+                                                    error={typeError}
+                                                >
+                                                <MenuItem value={'Repair'}>Repair</MenuItem>
+                                                <MenuItem value={'Repainting'}>Repainting</MenuItem>
+                                                <MenuItem value={'Extension'}>Extension</MenuItem>
+                                                <MenuItem value={'Fencing'}>Fencing</MenuItem>
+                                                <MenuItem value={'Roofing'}>Roofing</MenuItem>
+                                                <MenuItem value={'Construction'}>Construction</MenuItem>
+                                                <MenuItem value={'Renovation'}>Renovation</MenuItem>
+                                                </Select>
+                                            </FormControl>
+                                        </Grid>                                   
                                     </Grid>
                                 </div>
 

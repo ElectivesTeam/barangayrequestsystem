@@ -40,25 +40,43 @@ const useStyles = makeStyles((theme) => ({
 
 const BusinessClosure = ({ activeForm, handleBack, handleNext}) => {
     const classes = useStyles();
-    const[name, setName] = useState('')
-    const[nameError, setNameError] = useState(false)
+    const[businessName, setBusinessName] = useState('')
+    const[businessNameError, setBusinessNameError] = useState(false)
 
-    const[address, setAddress] = useState('')
-    const[addressError, setAddressError] = useState(false)
+    const[businessAddress, setBusinessAddress] = useState('')
+    const[businessAddressError, setBusinessAddressError] = useState(false)
+
+    const[businessOwner, setBusinessOwner] = useState('')
+    const[businessOwnerError, setBusinessOwnerError] = useState(false)
+
+    const[natureOfBusiness, setNatureOfBusiness] = useState('')
+    const[natureOfBusinessError, setNatureOfBusinessError] = useState(false)
     
     const handleSubmit = (e) =>{
         let setChecker = true
         e.preventDefault()
         
-        setNameError(false)
-        if(name == ''){
-            setNameError(true)
+        setBusinessNameError(false)
+        if(businessName == ''){
+            setBusinessNameError(true)
+            setChecker = false
+        }
+        
+        setBusinessOwnerError(false)
+        if(businessOwner == ''){
+            setBusinessOwnerError(true)
             setChecker = false
         }
 
-        setAddressError(false)
-        if(address == ''){
-            setAddressError(true)
+        setBusinessAddressError(false)
+        if(businessAddress == ''){
+            setBusinessAddressError(true)
+            setChecker = false
+        }
+
+        setNatureOfBusinessError(false)
+        if(natureOfBusiness == ''){
+            setNatureOfBusinessError(true)
             setChecker = false
         }
 
@@ -80,41 +98,75 @@ const BusinessClosure = ({ activeForm, handleBack, handleNext}) => {
                                 <div className={classes.info}>
                                     <Grid container spacing={2}>
 
-                                        {/* Name */}
+                                        {/* Business Name */}
                                         <Grid item xs={6}>
                                             <TextField
-                                                onChange={(e) => setName(e.target.value)}
+                                                onChange={(e) => setBusinessName(e.target.value)}
                                                 variant="outlined"
                                                 margin="normal"
                                                 required
                                                 fullWidth
-                                                id="name"
-                                                label="Name"
-                                                name="name"
-                                                autoComplete="name"
+                                                id="businessname"
+                                                label="Business Name"
+                                                name="businessname"
+                                                autoComplete="businessname"
                                                 autoFocus
-                                                error={nameError}
+                                                error={businessNameError}
                                             />
                                         </Grid>
-                                        
-                                        {/* Address */}
+
+                                        {/* Business Owner */}
                                         <Grid item xs={6}>
                                             <TextField
-                                                onChange={(e) => setAddress(e.target.value)}
+                                                onChange={(e) => setBusinessOwner(e.target.value)}
                                                 variant="outlined"
                                                 margin="normal"
                                                 required
                                                 fullWidth
-                                                id="address"
-                                                label="Address"
-                                                name="address"
-                                                autoComplete="address"
+                                                id="businessowner"
+                                                label="Business Owner"
+                                                name="businessowner"
+                                                autoComplete="businessowner"
                                                 autoFocus
-                                                error={addressError}
+                                                error={businessOwnerError}
                                             />
                                         </Grid>
                                         
-                                        {/* Other Field */}
+                                        {/* Business Address */}
+                                        <Grid item xs={6}>
+                                            <TextField
+                                                onChange={(e) => setBusinessAddress(e.target.value)}
+                                                variant="outlined"
+                                                margin="normal"
+                                                required
+                                                fullWidth
+                                                id="businessaddress"
+                                                label="Business Address"
+                                                name="businessaddress"
+                                                autoComplete="businessaddress"
+                                                autoFocus
+                                                error={businessAddressError}
+                                            />
+                                        </Grid>
+                                        
+                                        {/* Nature of Business */}
+                                        <Grid item xs={6}>
+                                            <TextField
+                                                onChange={(e) => setNatureOfBusiness(e.target.value)}
+                                                variant="outlined"
+                                                margin="normal"
+                                                required
+                                                fullWidth
+                                                id="natureofbusiness"
+                                                label="Nature of Business"
+                                                name="natureofbusiness"
+                                                autoComplete="natureofbusiness"
+                                                autoFocus
+                                                error={natureOfBusinessError}
+                                            />
+                                        </Grid>
+                                        
+                                        {/* Last Business Operation */}
                                         <Grid item xs={6}>
                                             {/* Input goes here */}
                                         </Grid>
