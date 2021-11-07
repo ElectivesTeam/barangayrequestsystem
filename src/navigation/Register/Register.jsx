@@ -27,7 +27,6 @@ const useStyles = makeStyles((theme) => ({
     },
 
     paper: {
-      margin: theme.spacing(8, 4),
       display: 'flex',
       flexDirection: 'column',
       alignItems: 'left',
