@@ -15,6 +15,10 @@ import Button from '@material-ui/core/Button';
 import ListOfRequest from './ListOfRequest'
 
 
+
+import AuthService from "../services/auth.service";
+import { useHistory } from "react-router-dom";
+
 const columns = [
   
     {
@@ -118,8 +122,11 @@ function Request() {
         setSubmitted(true)
     }
 
+    let history = useHistory();
+	const user = AuthService.getCurrentUser()
 
-    return submitted ? (
+    if (user) {
+        return submitted ? (
         <ListOfRequest selectedRequest={requestId}/>
     ): (
         <>
@@ -189,6 +196,10 @@ function Request() {
             </Grid>
         </>
     )
+    }else{
+        history.push('/login')
+    	  return(<h2>Login</h2>)
+    }
 }
 
 export default Request
