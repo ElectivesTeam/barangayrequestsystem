@@ -11,8 +11,7 @@ import { ThemeProvider } from '@material-ui/styles';
 import Home from './navigation/Home';
 import Login from './navigation/Login';
 import Requests from './navigation/Requests';
-import Register from './navigation/Register/Register';
-import Register2nd from './navigation/Register/Register2nd';
+import Register from './navigation/Register';
 import MenuAppBar from './components/navbar';
 import MyAccount from './navigation/Myaccount';
 import ReviewRequest from './navigation/ReviewRequest'
@@ -55,7 +54,6 @@ function App() {
           <Route exact path="/login" component={Login}></Route>
           <Route exact path="/register" component={Register}></Route>
           <Route exact path="/requests" component={Requests}></Route>
-          <Route exact path="/register2nd" component={Register2nd}></Route>
           <Route exact path="/myaccount" component={MyAccount}></Route>
           <Route exact path="/reviewrequest" component={ReviewRequest}></Route>
           
