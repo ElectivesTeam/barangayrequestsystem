@@ -11,7 +11,7 @@ import { ThemeProvider } from '@material-ui/styles';
 import Home from './navigation/Home';
 import Login from './navigation/Login';
 import Requests from './navigation/Requests';
-import Register from './navigation/Register/Register';
+import Register from './navigation/Register';
 import MenuAppBar from './components/navbar';
 import MyAccount from './navigation/Myaccount';
 import ReviewRequest from './navigation/ReviewRequest'
