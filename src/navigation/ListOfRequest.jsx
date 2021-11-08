@@ -15,41 +15,75 @@ import VoucherForm from '../forms/VoucherForm';
 import ImmunizationForm from '../forms/ImmunizationForm';
 import DentalServiceForm from '../forms/DentalServiceForm';
 import MaternalCareForm from '../forms/MaternalCareForm';
+import BusinessClearanceForm from '../forms/BusinessClearanceForm';
+
+import ReviewRequest from './ReviewRequest';
 
 const ListOfRequest = ({ selectedRequest }) => {
-    const cedula = selectedRequest.indexOf('cedula')
-    const buildingclearance = selectedRequest.indexOf('buildingclearance')
-    const constituentidform = selectedRequest.indexOf('constituentidform')
-    const residencyform = selectedRequest.indexOf('residencyform')
-    const barangayclearanceform = selectedRequest.indexOf('barangayclearanceform')
-    const comelecform = selectedRequest.indexOf('comelecform')
-    const businessclosure = selectedRequest.indexOf('businessclosure')
-    const bailbondform = selectedRequest.indexOf('bailbondform')
-    const guardianshipform = selectedRequest.indexOf('guardianshipform')
-    const indigencyclearance = selectedRequest.indexOf('indigencyclearance')
-    const voucherform = selectedRequest.indexOf('voucherform')
-    const immunizationform = selectedRequest.indexOf('immunizationform')
-    const dentalserviceform = selectedRequest.indexOf('dentalserviceform')
-    const maternalcareform = selectedRequest.indexOf('maternalcareform')
+    const submittedRequest = selectedRequest;
+    const getRequest= (i) => {
+        return selectedRequest[i]
+    }
 
-    return (
-        <>
-            {cedula !== -1 && <Cedula/>}
-            {buildingclearance !== -1 && <BuildingClearance/>}
-            {constituentidform !== -1 && <ConstituentIdForm/>}
-            {residencyform !== -1 && <ResidencyForm/>}
-            {barangayclearanceform !== -1 && <BarangayClearanceForm/>}
-            {comelecform !== -1 && <ComelecForm/>}
-            {businessclosure !== -1 && <BusinessClosure/>}
-            {bailbondform !== -1 && <BailBondForm/>}
-            {guardianshipform !== -1 && <GuardianshipForm/>}
-            {indigencyclearance !== -1 && <IndigencyClearance/>}
-            {voucherform !== -1 && <VoucherForm/>}
-            {immunizationform !== -1 && <ImmunizationForm/>}
-            {dentalserviceform !== -1 && <DentalServiceForm/>}
-            {maternalcareform !== -1 && <MaternalCareForm/>}
-        </>
-    )
+    const [activeForm, setActiveForm] = React.useState(0);
+
+    const handleNext = () => {
+        if(activeForm === selectedRequest.length - 1){
+            setActiveForm(activeForm + 1);
+        }else{
+            setActiveForm(activeForm + 1);
+            console.log(activeForm)
+        }
+    };
+
+    const handleBack = () => {
+        if(activeForm == selectedRequest.length){
+            setActiveForm(0)
+            
+        }else{
+            setActiveForm(activeForm - 1);
+        }
+        console.log(activeForm)
+    };
+
+    const renderRequest = (i) => {
+        switch(i) {
+            case "cedula" : 
+                return <Cedula activeForm={activeForm} handleBack={handleBack} handleNext={handleNext}/>
+            case "businessclearance":
+                return <BusinessClearanceForm activeForm={activeForm} handleBack={handleBack} handleNext={handleNext}/>
+            case "buildingclearance" : 
+                return <BuildingClearance activeForm={activeForm} handleBack={handleBack} handleNext={handleNext}/>
+            case "constituentidform" : 
+                return <ConstituentIdForm activeForm={activeForm} handleBack={handleBack} handleNext={handleNext}/>
+            case "residencyform" : 
+                return <ResidencyForm activeForm={activeForm} handleBack={handleBack} handleNext={handleNext}/>
+            case "barangayclearanceform" : 
+                return <BarangayClearanceForm activeForm={activeForm} handleBack={handleBack} handleNext={handleNext}/>
+            case "comelecform": 
+                return <ComelecForm activeForm={activeForm} handleBack={handleBack} handleNext={handleNext}/>
+            case "businessclosure" : 
+                return <BusinessClosure activeForm={activeForm} handleBack={handleBack} handleNext={handleNext}/>
+            case "bailbondform" : 
+                return <BailBondForm activeForm={activeForm} handleBack={handleBack} handleNext={handleNext}/>
+            case "guardianshipform" : 
+                return <GuardianshipForm activeForm={activeForm} handleBack={handleBack} handleNext={handleNext}/>
+            case "indigencyclearance" : 
+                return <IndigencyClearance activeForm={activeForm} handleBack={handleBack} handleNext={handleNext}/>
+            case "voucherform" : 
+                return <VoucherForm activeForm={activeForm} handleBack={handleBack} handleNext={handleNext}/>
+            case "immunizationform" : 
+                return <ImmunizationForm activeForm={activeForm} handleBack={handleBack} handleNext={handleNext}/>
+            case "dentalserviceform" : 
+                return <DentalServiceForm activeForm={activeForm} handleBack={handleBack} handleNext={handleNext}/>
+            case "maternalcareform" : 
+                return <MaternalCareForm activeForm={activeForm} handleBack={handleBack} handleNext={handleNext}/>
+            default: return <ReviewRequest handleBack={handleBack} selectedRequest={submittedRequest}/>
+        }
+    }   
+
+    return <> {renderRequest(getRequest(activeForm))} </>
+    
 }
 
 export default ListOfRequest

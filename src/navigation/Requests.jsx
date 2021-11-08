@@ -15,6 +15,10 @@ import Button from '@material-ui/core/Button';
 import ListOfRequest from './ListOfRequest'
 
 
+
+import AuthService from "../services/auth.service";
+import { useHistory } from "react-router-dom";
+
 const columns = [
   
     {
@@ -40,21 +44,21 @@ const columns = [
   ];
   
 const rows = [
-    { id: 'cedula', processTime: 'N/A', requestList: 'Cedula Form', price: 69 },
-    { id: 'buildingclearance', processTime: 'N/A', requestList: 'Building Clearance', price: 69 },
-    { id: 'constituentidform', processTime: 'N/A', requestList: 'Constituent ID Form', price: 69 },
-    { id: 'residencyform', processTime: 'N/A', requestList: 'Residency Form', price: 69 },
-    { id: 'barangayclearanceform', processTime: 'N/A', requestList: 'Barangay Clearance Form', price: 69 },
-    { id: 'comelecform', processTime: 'N/A', requestList: 'Comelec Form', price: 69 },
-    { id: 'businessclosure', processTime: 'N/A', requestList: 'Business Closure', price: 69 },
     { id: 'bailbondform', processTime: 'N/A', requestList: 'Bail Bond Form', price: 69 },
-    { id: 'guardianshipform', processTime: 'N/A', requestList: 'Guardianship Form', price: 69 },
-    { id: 'indigencyclearance', processTime: 'N/A', requestList: 'Indigency Clearance', price: 69 },
-    { id: 'voucherform', processTime: 'N/A', requestList: 'Voucher Form', price: 69 },
+    { id: 'barangayclearanceform', processTime: 'N/A', requestList: 'Barangay Clearance Form', price: 69 },
+    { id: 'buildingclearance', processTime: 'N/A', requestList: 'Building Clearance', price: 69 },
     { id: 'businessclearance', processTime: 'N/A', requestList: 'Business Clearance', price: 69 },
-    { id: 'immunizationform', processTime: 'N/A', requestList: 'Immunization Form', price: 69 },
+    { id: 'businessclosure', processTime: 'N/A', requestList: 'Business Closure', price: 69 },
+    { id: 'cedula', processTime: 'N/A', requestList: 'Cedula Form', price: 69 },
+    { id: 'comelecform', processTime: 'N/A', requestList: 'Comelec Form', price: 69 },
+    { id: 'constituentidform', processTime: 'N/A', requestList: 'Constituent ID Form', price: 69 },
     { id: 'dentalserviceform', processTime: 'N/A', requestList: 'Dental Service Form', price: 69 },
+    { id: 'guardianshipform', processTime: 'N/A', requestList: 'Guardianship Form', price: 69 },
+    { id: 'immunizationform', processTime: 'N/A', requestList: 'Immunization Form', price: 69 },
+    { id: 'indigencyclearance', processTime: 'N/A', requestList: 'Indigency Clearance', price: 69 },
     { id: 'maternalcareform', processTime: 'N/A', requestList: 'Maternal Care Form', price: 69 },
+    { id: 'residencyform', processTime: 'N/A', requestList: 'Residency Form', price: 69 },
+    { id: 'voucherform', processTime: 'N/A', requestList: 'Voucher Form', price: 69 },
 ];
 
 const useStyles = makeStyles((theme) => ({
@@ -118,8 +122,11 @@ function Request() {
         setSubmitted(true)
     }
 
+    let history = useHistory();
+	const user = AuthService.getCurrentUser()
 
-    return submitted ? (
+    if (user) {
+        return submitted ? (
         <ListOfRequest selectedRequest={requestId}/>
     ): (
         <>
@@ -189,6 +196,10 @@ function Request() {
             </Grid>
         </>
     )
+    }else{
+        history.push('/login')
+    	  return(<h2>Login</h2>)
+    }
 }
 
 export default Request
