@@ -32,7 +32,6 @@ import Visibility from '@material-ui/icons/Visibility';
 import VisibilityOff from '@material-ui/icons/VisibilityOff';
 import AuthService from "../services/auth.service";
 
-
 const useStyles = makeStyles((theme) => ({
     root: {
       height: '125vh',
@@ -169,12 +168,12 @@ const useStyles = makeStyles((theme) => ({
 
 function Register() {
     //Date Picker
-    const [selectedDate, setSelectedDate] = useState(
-    );
+    const [selectedDate, setSelectedDate] = useState();
+    const [dateValue, setDateValue] = useState();
 
-    const handleDateChange = (date) => {
+    const handleDateChange = (date, value) => {
       setSelectedDate(date);
-      console.log(selectedDate);
+      setDateValue(value);
     };
 
      //form Validation
@@ -311,8 +310,6 @@ function Register() {
   
       if(setChecker){
         setOpen(true)
-        
-         
         AuthService.register(
           email, 
           firstname,
@@ -322,7 +319,7 @@ function Register() {
           address,
           contactnumber,
           residentnumber,
-          //selectedDate,
+          dateValue,
           age,
           gender.toUpperCase(),
           birthplace, //province
@@ -331,13 +328,13 @@ function Register() {
           )
         .then((response) => {
             if (response !== undefined){
-                console.log('Logged in')
+                console.log('Register Success')
                 window.history.push('/login')
                 window.location.reload(false);
             }
         })
         .catch((response) =>{
-          console.log(response.data)
+          console.log(response)
         })
       }
 
@@ -465,11 +462,12 @@ function Register() {
                                   <KeyboardDatePicker
                                     required
                                     variant="inline"
-                                    format="yyyy/dd/MM"
+                                    format="yyyy-MM-dd"
                                     margin="normal"
                                     id="birthday"
                                     label="Birthday"
                                     value={selectedDate}
+                                    inputValue={dateValue}
                                     onChange={handleDateChange}
                                     KeyboardButtonProps={{
                                       'aria-label': 'change date',
