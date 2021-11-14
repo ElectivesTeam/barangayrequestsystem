@@ -32,7 +32,6 @@ import Visibility from '@material-ui/icons/Visibility';
 import VisibilityOff from '@material-ui/icons/VisibilityOff';
 import AuthService from "../services/auth.service";
 
-
 const useStyles = makeStyles((theme) => ({
     root: {
       height: '125vh',
@@ -136,6 +135,11 @@ const useStyles = makeStyles((theme) => ({
       minWidth: 160,
     },
 
+    formControlBirthplace: {
+      marginTop: theme.spacing(2),
+      minWidth: 270,
+    },
+
     formControlSubdivision: {
       marginTop: theme.spacing(2),
       minWidth: 200,
@@ -169,12 +173,12 @@ const useStyles = makeStyles((theme) => ({
 
 function Register() {
     //Date Picker
-    const [selectedDate, setSelectedDate] = useState(
-    );
+    const [selectedDate, setSelectedDate] = useState();
+    const [dateValue, setDateValue] = useState();
 
-    const handleDateChange = (date) => {
+    const handleDateChange = (date, value) => {
       setSelectedDate(date);
-      console.log(selectedDate);
+      setDateValue(value);
     };
 
      //form Validation
@@ -208,18 +212,20 @@ function Register() {
     const[open, setOpen] = useState(false);
 
     const[birthplace, setBirthplace] = useState('')
-    const[nationality, setNationality] = useState('');
+    const[barangay, setBarangay] = useState('');
     const[civilstatus, setCivilstatus] = useState('');
     const[contactnumber, setContactnumber] = useState('');
     const[email, setEmail] = useState('');
   
     const[birthplaceError, setBirthplaceError] = useState(false)
-    const[nationalityError, setNationalityError] = useState(false)
+    const[barangayError, setBarangayError] = useState(false)
     const[civilstatusError, setCivilstatusError] = useState(false)
     const[contactnumberError, setContactnumberError] = useState(false)
     const[emailError, setEmailError] = useState(false)
     const[passwordError, setPasswordError] = useState(false)
     
+    //default contry code
+    const ph_country_code = "+63";
 
     const handleSubmit = (e) =>{
       e.preventDefault()
@@ -234,7 +240,7 @@ function Register() {
 
       //from Register2nd
       setBirthplaceError(false)
-      setNationalityError(false)
+      // setBarangayError(false)
       setCivilstatusError(false)
       setContactnumberError(false)
       setEmailError(false)
@@ -284,8 +290,8 @@ function Register() {
         setChecker = false
       }
   
-      if(nationality === ''){
-        setNationalityError(true)
+      if(barangay === ''){
+        setBarangayError(true)
         setChecker = false
       }
   
@@ -311,8 +317,6 @@ function Register() {
   
       if(setChecker){
         setOpen(true)
-        
-         
         AuthService.register(
           email, 
           firstname,
@@ -322,7 +326,7 @@ function Register() {
           address,
           contactnumber,
           residentnumber,
-          //selectedDate,
+          dateValue,
           age,
           gender.toUpperCase(),
           birthplace, //province
@@ -331,13 +335,13 @@ function Register() {
           )
         .then((response) => {
             if (response !== undefined){
-                console.log('Logged in')
+                console.log('Register Success')
                 window.history.push('/login')
                 window.location.reload(false);
             }
         })
         .catch((response) =>{
-          console.log(response.data)
+          console.log(response)
         })
       }
 
@@ -465,11 +469,12 @@ function Register() {
                                   <KeyboardDatePicker
                                     required
                                     variant="inline"
-                                    format="yyyy/dd/MM"
+                                    format="yyyy-MM-dd"
                                     margin="normal"
                                     id="birthday"
                                     label="Birthday"
                                     value={selectedDate}
+                                    inputValue={dateValue}
                                     onChange={handleDateChange}
                                     KeyboardButtonProps={{
                                       'aria-label': 'change date',
@@ -568,7 +573,7 @@ function Register() {
                             variant="outlined"
                             margin="normal"
                             required
-                            fullWidth
+                            fullWidth             
                             id="birth_place"
                             label="Birth Place"
                             name="birth_place"
@@ -577,29 +582,33 @@ function Register() {
                             error={birthplaceError}
                             />
                           </Grid>
-
                           
-                          {/* Nationality */}
+                          {/* Barangay */}
                           <Grid item xs={12} sm={4}>
                             <TextField
-                              onChange={(e) => setNationality(e.target.value)}
+                              onChange={(e) => setBarangay(e.target.value)}
                               variant="outlined"
                               margin="normal"
                               required
                               fullWidth
-                              id="nationality"
-                              label="Nationality"
-                              name="nationality"
-                              autoComplete="nationality"
+                              id="barangay"
+                              label="Barangay"
+                              name="barangay"
+                              autoComplete="barangay"
                               autoFocus
-                              error={nationalityError}
+                              error={barangayError}
                             />
                           </Grid>
 
                           {/* Contact Number */}
                           <Grid item xs={12} sm={4}>
                             <TextField
-                              onChange={(e) => setContactnumber(e.target.value)}
+                            InputProps={{
+                              startAdornment: <InputAdornment position="start">
+                                 (+63)
+                                 </InputAdornment>,
+                            }}
+                              onChange={(e) => setContactnumber(ph_country_code + e.target.value)}
                               variant="outlined"
                               margin="normal"
                               required
