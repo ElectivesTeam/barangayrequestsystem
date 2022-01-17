@@ -30,6 +30,7 @@ import InputAdornment from '@material-ui/core/InputAdornment';
 import IconButton from '@material-ui/core/IconButton';
 import Visibility from '@material-ui/icons/Visibility';
 import VisibilityOff from '@material-ui/icons/VisibilityOff';
+import AuthService from "../services/auth.service";
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -134,6 +135,11 @@ const useStyles = makeStyles((theme) => ({
       minWidth: 160,
     },
 
+    formControlBirthplace: {
+      marginTop: theme.spacing(2),
+      minWidth: 270,
+    },
+
     formControlSubdivision: {
       marginTop: theme.spacing(2),
       minWidth: 200,
@@ -167,11 +173,12 @@ const useStyles = makeStyles((theme) => ({
 
 function Register() {
     //Date Picker
-    const [selectedDate, setSelectedDate] = useState(
-    );
+    const [selectedDate, setSelectedDate] = useState();
+    const [dateValue, setDateValue] = useState();
 
-    const handleDateChange = (date) => {
+    const handleDateChange = (date, value) => {
       setSelectedDate(date);
+      setDateValue(value);
     };
 
      //form Validation
@@ -179,17 +186,18 @@ function Register() {
     const[firstname, setFirstname] = useState('')
     const[middlename, setMiddlename] = useState('')
     const[gender, setGender] = useState('');
-    const[house, setHouse] = useState('');
-    const[street, setStreet] = useState('');
-    const[subdivision, setSubdivision] = useState('');
+    const[address, setAddress] = useState('');
+    const[residentnumber, setResidentNumber] = useState('');
+    const[age, setAge] = useState(0);
 
     const[lastnameError, setLastnameError] = useState(false)
     const[firstnameError, setFirstnameError] = useState(false)
     const[middlenameError, setMiddlenameError] = useState(false)
     const[genderError, setGenderError] = useState(false)
-    const[houseError, setHouseError] = useState(false)
-    const[streetError, setStreetError] = useState(false)
-    const[subdivisionError, setSubdivisionError] = useState(false)
+    const[addressError, setAddressError] = useState(false)
+    const[residentNumberError, setResidentNumberError] = useState(false)
+    const[ageError, setAgeError] = useState(false)
+    
 
     //from Register2nd
     const [values, setValues] = useState({
@@ -204,17 +212,20 @@ function Register() {
     const[open, setOpen] = useState(false);
 
     const[birthplace, setBirthplace] = useState('')
-    const[nationality, setNationality] = useState('');
+    const[barangay, setBarangay] = useState('');
     const[civilstatus, setCivilstatus] = useState('');
     const[contactnumber, setContactnumber] = useState('');
     const[email, setEmail] = useState('');
   
     const[birthplaceError, setBirthplaceError] = useState(false)
-    const[nationalityError, setNationalityError] = useState(false)
+    const[barangayError, setBarangayError] = useState(false)
     const[civilstatusError, setCivilstatusError] = useState(false)
     const[contactnumberError, setContactnumberError] = useState(false)
     const[emailError, setEmailError] = useState(false)
     const[passwordError, setPasswordError] = useState(false)
+    
+    //default contry code
+    const ph_country_code = "+63";
 
     const handleSubmit = (e) =>{
       e.preventDefault()
@@ -223,13 +234,13 @@ function Register() {
       setFirstnameError(false)
       setMiddlenameError(false)
       setGenderError(false)
-      setHouseError(false)
-      setStreetError(false)
-      setSubdivisionError(false)
+      setAddressError(false)
+      setResidentNumberError(false)
+      setAgeError(false)
 
       //from Register2nd
       setBirthplaceError(false)
-      setNationalityError(false)
+      // setBarangayError(false)
       setCivilstatusError(false)
       setContactnumberError(false)
       setEmailError(false)
@@ -257,20 +268,21 @@ function Register() {
         setChecker = false
       }
 
-      if(house == ''){
-        setHouseError(true)
+      if (age == '') {
+        setAgeError(true)
+        setChecker = false
+      }
+      if(address == ''){
+        setAddressError(true)
         setChecker = false
       }
 
-      if(street == ''){
-        setStreetError(true)
+      if(residentnumber == ''){
+        setResidentNumberError(true)
         setChecker = false
       }
+
       
-      if(subdivision == ''){
-        setSubdivisionError(true)
-        setChecker = false
-      }
       
       //from Register2nd
       if(birthplace === ''){
@@ -278,8 +290,8 @@ function Register() {
         setChecker = false
       }
   
-      if(nationality === ''){
-        setNationalityError(true)
+      if(barangay === ''){
+        setBarangayError(true)
         setChecker = false
       }
   
@@ -305,6 +317,32 @@ function Register() {
   
       if(setChecker){
         setOpen(true)
+        AuthService.register(
+          email, 
+          firstname,
+          middlename,
+          lastname,
+          values.password,
+          address,
+          contactnumber,
+          residentnumber,
+          dateValue,
+          age,
+          gender.toUpperCase(),
+          birthplace, //province
+          civilstatus.toUpperCase(),
+          
+          )
+        .then((response) => {
+            if (response !== undefined){
+                console.log('Register Success')
+                window.history.push('/login')
+                window.location.reload(false);
+            }
+        })
+        .catch((response) =>{
+          console.log(response)
+        })
       }
 
     }
@@ -423,7 +461,7 @@ function Register() {
                                     error={middlenameError}
                                 />
                             </Grid>
-
+                        
                             {/* Birthday */}
                             <Grid item xs={12} sm={4}>
                               <MuiPickersUtilsProvider utils={DateFnsUtils}>
@@ -431,11 +469,12 @@ function Register() {
                                   <KeyboardDatePicker
                                     required
                                     variant="inline"
-                                    format="MM/dd/yyyy"
+                                    format="yyyy-MM-dd"
                                     margin="normal"
                                     id="birthday"
                                     label="Birthday"
                                     value={selectedDate}
+                                    inputValue={dateValue}
                                     onChange={handleDateChange}
                                     KeyboardButtonProps={{
                                       'aria-label': 'change date',
@@ -443,8 +482,25 @@ function Register() {
                                   />
                                 </Grid>
                               </MuiPickersUtilsProvider>
+                              
                             </Grid>
-
+                            {/* Age */}
+                            <Grid item xs={12} sm={4}>
+                                <TextField
+                                    onChange={(e) => setAge(parseInt(e.target.value, 10))}
+                                    variant="outlined"
+                                    margin="normal"
+                                    type = "number"
+                                    required
+                                    fullWidth
+                                    id="age"
+                                    label="Age"
+                                    name="Age"
+                                    autoComplete="age"
+                                    autoFocus
+                                    error={ageError}
+                                />
+                            </Grid>
                             {/* Gender */}
                             <Grid item xs={12} sm={4}>
                                 <FormControl variant="outlined" className={classes.formControlGender} required>
@@ -463,139 +519,7 @@ function Register() {
                             </Grid>
                             
                             
-                            {/* Address */}
-                            <Grid item xs={12} sm={12}>
-                              <Typography className={classes.header}>
-                                  ADDRESS
-                              </Typography>
-                            </Grid>
-
-                            {/*  Room/Flr/Unit No./ Bldg. Name */}
-                            <Grid item xs={12} sm={3}>
-                                <TextField
-                                    variant="outlined"
-                                    margin="normal"
-                                    fullWidth
-                                    id="room_number"
-                                    label="Room/Flr/Unit No./ Bldg. Name"
-                                    name="room_number"
-                                    autoComplete="room_number"
-                                    autoFocus
-                                />
-                            </Grid>
-
-                            {/* House/Lot and Blk No. */}
-                            <Grid item xs={12} sm={2}>
-                                <TextField
-                                    onChange={(e) => setHouse(e.target.value)}
-                                    variant="outlined"
-                                    margin="normal"
-                                    required
-                                    fullWidth
-                                    id="house_number"
-                                    label="House/Lot and Blk No."
-                                    name="house_number"
-                                    autoComplete="house_number"
-                                    autoFocus
-                                    error={houseError}
-                                />
-                            </Grid>
-
-                            {/* Street Name */}
-                            <Grid item xs={12} sm={2}>
-                                <TextField
-                                    onChange={(e) => setStreet(e.target.value)}
-                                    variant="outlined"
-                                    margin="normal"
-                                    required
-                                    fullWidth
-                                    id="street_name"
-                                    label="Street Name"
-                                    name="street_name"
-                                    autoComplete="street_name"
-                                    autoFocus
-                                    error={streetError}
-                                />
-                            </Grid>
-
-                            {/* Subdivision */}
-                            <Grid item xs={12} sm={4}>
-                                <FormControl variant="outlined" className={classes.formControlSubdivision} required>
-                                  <InputLabel>Subdivision</InputLabel>
-                                  <Select
-                                    onChange={(e) => setSubdivision(e.target.value)}
-                                    id="subdivision"
-                                    value={subdivision}
-                                    onChange={(e) => setSubdivision(e.target.value)}
-                                    label="Subdivision"
-                                    error={subdivisionError}
-                                  >
-                                    <MenuItem value={"Purok1"}>Purok 1</MenuItem>
-                                    <MenuItem value={"Purok2"}>Purok 2</MenuItem>
-                                    <MenuItem value={"Purok3"}>Purok 3</MenuItem>
-                                    <MenuItem value={"Purok4"}>Purok 4</MenuItem>
-                                    <MenuItem value={"Purok5"}>Purok 5</MenuItem>
-                                    <MenuItem value={"Purok6"}>Purok 6</MenuItem>
-                                    <MenuItem value={"Purok7"}>Purok 7</MenuItem>
-                                    <MenuItem value={"Pulo"}>Pulo</MenuItem>
-                                    <MenuItem value={"Camcam"}>Camcam</MenuItem>
-                                    <MenuItem value={"Southfairway"}>Southfairway</MenuItem>
-                                  </Select>
-                                </FormControl>
-                            </Grid>
- 
-
-                            {/* Barangay */}
-                            <Grid item xs={12} sm={2}>
-                                <TextField
-                                  defaultValue='Landayan'
-                                  inputProps={
-                                    { readOnly: true, }}
-                                    variant="outlined"
-                                    margin="normal"
-                                    fullWidth
-                                    id="barangay"
-                                    label="Barangay"
-                                    name="barangay"
-                                    autoComplete="barangay"
-                                    autoFocus
-                                />
-                            </Grid>
-
-                            {/* City */}
-                            <Grid item xs={12} sm={2}>
-                                <TextField             
-                                    defaultValue='San Pedro'
-                                    inputProps={
-                                      { readOnly: true, }}
-                                    variant="outlined"
-                                    margin="normal"
-                                    fullWidth
-                                    id="city"
-                                    label="City"
-                                    name="city"
-                                    autoComplete="city"
-                                    autoFocus
-                                />
-                            </Grid>
-
-                            {/* Province */}
-                            <Grid item xs={12} sm={2}>
-                                <TextField
-                                           
-                                    defaultValue='Laguna'
-                                    inputProps={
-                                      { readOnly: true, }}
-                                    variant="outlined"
-                                    margin="normal"
-                                    fullWidth
-                                    id="province"
-                                    label="Province"
-                                    name="province"
-                                    autoComplete="province"
-                                    autoFocus
-                                />
-                            </Grid>
+                            
 
                         </Grid>
 
@@ -607,15 +531,49 @@ function Register() {
 
                         
                         <Grid container spacing={2}>
+                          {/* Address */}
+                          <Grid item xs={12} sm={4}>
+                            <TextField
+                                onChange={(e) => setAddress(e.target.value)}
+                                variant="outlined"
+                                margin="normal"
+                                required
+                                fullWidth
+                                id="address"
+                                label="Address"
+                                name="address"
+                                autoComplete="address"
+                                autoFocus
+                                error={addressError}
+                            />
+                          </Grid>
+
+                          {/* Resident Number */}
+                          <Grid item xs={12} sm={4}>
+                            <TextField
+                                onChange={(e) => setResidentNumber(e.target.value)}
+                                variant="outlined"
+                                margin="normal"
+                                required
+                                fullWidth
+                                id="residentnumber"
+                                label="Resident Number"
+                                name="residentnumber"
+                                autoComplete="residentnumber"
+                                autoFocus
+                                error={residentNumberError}
+                            />
+                          </Grid>
+
 
                           {/* Birth Place */}
-                          <Grid item xs={12} sm={6}>
+                          <Grid item xs={12} sm={4}>
                             <TextField
                             onChange={(e) => setBirthplace(e.target.value)}
                             variant="outlined"
                             margin="normal"
                             required
-                            fullWidth
+                            fullWidth             
                             id="birth_place"
                             label="Birth Place"
                             name="birth_place"
@@ -624,22 +582,46 @@ function Register() {
                             error={birthplaceError}
                             />
                           </Grid>
-                          {/* Nationality */}
-                          <Grid item xs={12} sm={3}>
+                          
+                          {/* Barangay */}
+                          <Grid item xs={12} sm={4}>
                             <TextField
-                              onChange={(e) => setNationality(e.target.value)}
+                              onChange={(e) => setBarangay(e.target.value)}
                               variant="outlined"
                               margin="normal"
                               required
                               fullWidth
-                              id="nationality"
-                              label="Nationality"
-                              name="nationality"
-                              autoComplete="nationality"
+                              id="barangay"
+                              label="Barangay"
+                              name="barangay"
+                              autoComplete="barangay"
                               autoFocus
-                              error={nationalityError}
+                              error={barangayError}
                             />
                           </Grid>
+
+                          {/* Contact Number */}
+                          <Grid item xs={12} sm={4}>
+                            <TextField
+                            InputProps={{
+                              startAdornment: <InputAdornment position="start">
+                                 (+63)
+                                 </InputAdornment>,
+                            }}
+                              onChange={(e) => setContactnumber(ph_country_code + e.target.value)}
+                              variant="outlined"
+                              margin="normal"
+                              required
+                              fullWidth
+                              id="contact_number"
+                              label="Contact Number"
+                              name="contact_number"
+                              autoComplete="contact_number"
+                              autoFocus
+                              error={contactnumberError}
+                            />
+                          </Grid>
+
                           {/* Civil Status */}
                           <Grid item xs={12} sm={3}>
                             <FormControl variant="outlined" className={classes.formControlCivilStatus} required>
@@ -659,22 +641,7 @@ function Register() {
                             </FormControl>
                           </Grid>
 
-                          {/* Contact Number */}
-                          <Grid item xs={12} sm={3}>
-                            <TextField
-                              onChange={(e) => setContactnumber(e.target.value)}
-                              variant="outlined"
-                              margin="normal"
-                              required
-                              fullWidth
-                              id="contact_number"
-                              label="Contact Number"
-                              name="contact_number"
-                              autoComplete="contact_number"
-                              autoFocus
-                              error={contactnumberError}
-                            />
-                          </Grid>
+                          
 
                           {/* E-mail */}
                           <Grid item xs={12} sm={3}>
