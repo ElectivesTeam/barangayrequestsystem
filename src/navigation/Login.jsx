@@ -115,6 +115,7 @@ function SignInSide() {
 
   const[emailError, setEmailError] = useState(false)
   const[passwordError, setPasswordError] = useState(false)
+  const[loginCredentialError, setLoginCredentialError] = useState('')
 
   let history = useHistory();
   const handleSubmit = (e) =>{
@@ -122,6 +123,7 @@ function SignInSide() {
 
     setEmailError(false)
     setPasswordError(false)
+    setLoginCredentialError('')
 
     let setChecker = true
 
@@ -144,8 +146,13 @@ function SignInSide() {
                 window.location.reload(false);
             }
         })
-        .catch((response) =>{
-          console.log(response.data)
+        .catch(error => {
+          if (error.response.status === 401){
+            setPasswordError(true);
+            setEmailError(true)
+            setLoginCredentialError(JSON.stringify(error.response.data.detail));
+          } 
+          else console.log("Something went wrong. Please try again later.");
         })
     }
 
@@ -213,6 +220,10 @@ function SignInSide() {
                   ),
                 }}
               />
+
+              <Typography variant="body2"  align="center" color="secondary" name="loginCredentialError">
+              {loginCredentialError}
+              </Typography>
               
               <FormControlLabel
                 control={<Checkbox value="remember" color="primary" />}
