@@ -23,7 +23,7 @@ import DialogActions from '@material-ui/core/DialogActions';
 import DialogContent from '@material-ui/core/DialogContent';
 import DialogContentText from '@material-ui/core/DialogContentText';
 import Link from '@material-ui/core/Link';
-import { DialogTitle} from '@material-ui/core';
+import { DialogTitle, responsiveFontSizes} from '@material-ui/core';
 import clsx from 'clsx';
 import OutlinedInput from '@material-ui/core/OutlinedInput';
 import InputAdornment from '@material-ui/core/InputAdornment';
@@ -223,7 +223,7 @@ function Register() {
     const[contactnumberError, setContactnumberError] = useState(false)
     const[emailError, setEmailError] = useState(false)
     const[passwordError, setPasswordError] = useState(false)
-    
+
     //default contry code
     const ph_country_code = "+63";
 
@@ -245,7 +245,7 @@ function Register() {
       setContactnumberError(false)
       setEmailError(false)
       setPasswordError(false)
-
+      
       let setChecker = true
 
       if(lastname == ''){
@@ -316,7 +316,7 @@ function Register() {
       }
   
       if(setChecker){
-        setOpen(true)
+        // setOpen(true)
         AuthService.register(
           email, 
           firstname,
@@ -332,17 +332,30 @@ function Register() {
           birthplace, //province
           civilstatus.toUpperCase(),
           
-          )
+        )
         .then((response) => {
             if (response !== undefined){
+                setOpen(true)
                 console.log('Register Success')
                 window.history.push('/login')
                 window.location.reload(false);
             }
         })
-        .catch((response) =>{
-          console.log(response)
-        })
+        .catch(error => {
+          if (error.response != undefined){
+            if (error.response.status === 400) {
+              // setLastnameError(JSON.stringify(error.response.data.last_name));
+              // setFirstnameError(JSON.stringify(error.response.data.first_name));
+              // setResidentNumberError(JSON.stringify(error.response.data.resident_number));
+              // setCivilstatusError(JSON.stringify(error.response.data.civil_status));
+              setEmailError(JSON.stringify(error.response.data.email))
+              setContactnumberError(JSON.stringify(error.response.data.mobile_number))
+              setPasswordError(JSON.stringify(error.response.data.password))
+            }
+              else console.log("Something went wrong. Please try again later.");
+            }
+          }
+        )
       }
 
     }
@@ -620,7 +633,11 @@ function Register() {
                               autoFocus
                               error={contactnumberError}
                             />
+                          <Typography variant="body2"  align="left" color="secondary" name="contactnumberError">
+                              {contactnumberError}
+                          </Typography>
                           </Grid>
+                          
 
                           {/* Civil Status */}
                           <Grid item xs={12} sm={3}>
@@ -658,6 +675,9 @@ function Register() {
                               autoFocus
                               error={emailError}
                             />
+                            <Typography variant="body2"  align="left" color="secondary" name="emailError">
+                              {emailError}
+                            </Typography>
                           </Grid>
 
                           {/* Password */}
@@ -684,7 +704,11 @@ function Register() {
                                 labelWidth={70}
                               />
                             </FormControl>
+                            <Typography variant="body2"  align="left" color="secondary" name="passwordError">
+                              {passwordError}
+                            </Typography>
                           </Grid>
+
 
                           {/* Picture */}
                           <Grid item xs={12} sm={12}>
@@ -754,6 +778,7 @@ function Register() {
                           </Grid>
                         </Grid>
                         
+                          
 
                           {/* Submit Button */}
                           <div className={classes.divtest}>			    
@@ -764,6 +789,7 @@ function Register() {
                             >
 				                        Submit
 			                      </Button>
+                          
 
                              {/* Terms and Condition */}
                               <Dialog
