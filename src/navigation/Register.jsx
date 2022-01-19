@@ -341,14 +341,9 @@ function Register() {
                 window.location.reload(false);
             }
         })
-        .catch((response) => {
-          if (response.status == undefined) {
-            console.log('undefined')
-          }
-        })
-        
         .catch(error => {
-          if (error.response.status === 400) {
+          if (error.response != undefined){
+            if (error.response.status === 400) {
               // setLastnameError(JSON.stringify(error.response.data.last_name));
               // setFirstnameError(JSON.stringify(error.response.data.first_name));
               // setResidentNumberError(JSON.stringify(error.response.data.resident_number));
@@ -356,12 +351,10 @@ function Register() {
               setEmailError(JSON.stringify(error.response.data.email))
               setContactnumberError(JSON.stringify(error.response.data.mobile_number))
               setPasswordError(JSON.stringify(error.response.data.password))
-              console.log(JSON.stringify(error.response.data))
+            }
+              else console.log("Something went wrong. Please try again later.");
+            }
           }
-
-          else console.log("Something went wrong. Please try again later.");
-
-        }
         )
       }
 
