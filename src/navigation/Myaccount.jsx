@@ -122,6 +122,7 @@ function MyAccount() {
 	const user = AuthService.getCurrentUser()
 
 	if (user) {
+		AuthService.getUserInformation()
 		return (
 			<Grid container component="main" className={classes.root}>
 				

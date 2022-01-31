@@ -81,8 +81,8 @@ export default function MenuAppBar() {
   };
 
   const Logout = () => {
-    AuthService.logout();
     setAnchorEl(null);
+    AuthService.logout();
   };
 
   const user = AuthService.getCurrentUser()
@@ -147,7 +147,7 @@ export default function MenuAppBar() {
             className={classes.styledMenuItem} 
             onClick={Logout}
             component={Link}
-            to="#"
+            to="/"
             >                   
           Logout</MenuItem>
         </Menu>

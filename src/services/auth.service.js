@@ -16,7 +16,17 @@ class AuthService {
     }
 
     logout() {
-        localStorage.removeItem("user");
+        var token = JSON.parse(localStorage.getItem('user')).refresh;
+        var access = JSON.parse(localStorage.getItem('user')).access;
+        return axios.post(API_URL +"logout/", {"refresh": token}, {
+            headers:{
+                Accept: 'application/json',
+                Authorization: 'Bearer ' + access
+            }
+        })
+        .then(
+            localStorage.removeItem("user")
+        )
     }
 
     register(
@@ -53,6 +63,19 @@ class AuthService {
 
     getCurrentUser() {
         return JSON.parse(localStorage.getItem('user'));
+    }
+
+    getUserInformation(){
+        var token = JSON.parse(localStorage.getItem('user')).access;
+        return axios.get(API_URL + "getuser/", {
+            headers:{
+                Accept: 'application/json',
+                Authorization: 'Bearer ' + token
+            }
+        })
+        .then(response =>{
+            console.log(response.data)
+        })
     }
 }
 
