@@ -74,7 +74,7 @@ class AuthService {
             }
         })
         .then(response =>{
-            console.log(response.data)
+            return response;
         })
     }
 }
