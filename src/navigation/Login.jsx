@@ -158,9 +158,8 @@ function SignInSide() {
 
   }
 
-  const user = AuthService.getCurrentUser()
 
-  if (!user){
+  if (!AuthService.getCurrentUser()){
     return (  
       <Grid container component="main" className={classes.root} >
         

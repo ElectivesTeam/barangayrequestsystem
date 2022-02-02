@@ -123,9 +123,8 @@ function Request() {
     }
 
     let history = useHistory();
-	const user = AuthService.getCurrentUser()
 
-    if (user) {
+    if (AuthService.getCurrentUser()) {
         return submitted ? (
         <ListOfRequest selectedRequest={requestId}/>
     ): (

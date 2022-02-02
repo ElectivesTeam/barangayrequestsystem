@@ -62,7 +62,13 @@ class AuthService {
     }
 
     getCurrentUser() {
-        return JSON.parse(localStorage.getItem('user'));
+        if(localStorage.getItem('user') != null){
+            if(JSON.parse(localStorage.getItem('user')).access != null && JSON.parse(localStorage.getItem('user')).refresh != null){
+                return JSON.parse(localStorage.getItem('user'));
+            }else{
+                localStorage.removeItem('user')
+            }
+        }
     }
 
     getUserInformation(){
@@ -74,6 +80,7 @@ class AuthService {
             }
         })
         .then(response =>{
+            console.log("info fetched")
             return response;
         })
     }
@@ -95,8 +102,7 @@ class AuthService {
     }
 
     refreshAccess(){
-        var user = this.getCurrentUser()
-        console.log(user)
+        var user = localStorage.getItem('user');
         var token = JSON.parse(localStorage.getItem('user')).refresh;
         if(user){
             return axios
@@ -104,10 +110,11 @@ class AuthService {
                 "refresh": token
             })
             .then(response => {
-                user.access = JSON.stringify(response.data.access).slice(1,-1)
-                localStorage.setItem("user", user);
+                localStorage.setItem("user", '{"refresh":"' + token +'","access":' + JSON.stringify(response.data.access) + '}');
                 return response;
             })
+        }else{
+            console.log("getCurrentUser error")
         }
     }
 }
