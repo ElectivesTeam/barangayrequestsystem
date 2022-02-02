@@ -77,6 +77,39 @@ class AuthService {
             return response;
         })
     }
+
+    verifyToken(token){
+        if (token === "refresh"){
+            token = JSON.parse(localStorage.getItem('user')).refresh;
+        }
+        if (token === "access"){
+            token = JSON.parse(localStorage.getItem('user')).access;
+        }
+        return axios
+            .post(API_URL + "token/verify/", {
+                "token": token
+            })
+            .then(response => {
+                return response;
+            })
+    }
+
+    refreshAccess(){
+        var user = this.getCurrentUser()
+        console.log(user)
+        var token = JSON.parse(localStorage.getItem('user')).refresh;
+        if(user){
+            return axios
+            .post(API_URL + "token/refresh/", {
+                "refresh": token
+            })
+            .then(response => {
+                user.access = JSON.stringify(response.data.access).slice(1,-1)
+                localStorage.setItem("user", user);
+                return response;
+            })
+        }
+    }
 }
 
 export default new AuthService();

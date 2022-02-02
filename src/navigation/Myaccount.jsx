@@ -10,6 +10,7 @@ import Box from '@material-ui/core/Box';
 
 import AuthService from "../services/auth.service";
 import { useHistory } from "react-router-dom";
+import authService from '../services/auth.service';
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -126,26 +127,49 @@ function MyAccount() {
 	const[contact_number, setContactNumber] = useState('');
 	const user = AuthService.getCurrentUser();
 	const[getInfo, setGetInfoCheck] = useState(false)
-	if (!getInfo){
-		AuthService.getUserInformation()
-		.then((response) => {
-			if (response !== undefined){
-				if(JSON.stringify(response.data.first_name).length >= 3)
-					setFirstName(JSON.stringify(response.data.first_name).slice(1,-1));
-				if(JSON.stringify(response.data.last_name).length >= 3)
-					setLastName(JSON.stringify(response.data.last_name).slice(1,-1));
-				if(JSON.stringify(response.data.middle_name).length >= 3)
-					setMiddleName(JSON.stringify(response.data.middle_name).slice(1,-1));
-				if(JSON.stringify(response.data.email).length >= 3)
-					setEmail(JSON.stringify(response.data.email).slice(1,-1));
-				if(JSON.stringify(response.data.mobile_number).length >= 3)
-					setContactNumber(JSON.stringify(response.data.mobile_number).slice(1,-1));
-				setGetInfoCheck(true);
-            }
-		})
-	}
 
 	if (user) {
+		if (!getInfo){
+			setGetInfoCheck(true);
+			AuthService.getUserInformation()
+			.then((response) => {
+				if (response !== undefined){
+					if(JSON.stringify(response.data.first_name).length >= 3)
+						setFirstName(JSON.stringify(response.data.first_name).slice(1,-1));
+					if(JSON.stringify(response.data.last_name).length >= 3)
+						setLastName(JSON.stringify(response.data.last_name).slice(1,-1));
+					if(JSON.stringify(response.data.middle_name).length >= 3)
+						setMiddleName(JSON.stringify(response.data.middle_name).slice(1,-1));
+					if(JSON.stringify(response.data.email).length >= 3)
+						setEmail(JSON.stringify(response.data.email).slice(1,-1));
+					if(JSON.stringify(response.data.mobile_number).length >= 3)
+						setContactNumber(JSON.stringify(response.data.mobile_number).slice(1,-1));
+				}
+			})
+			.catch(error => {
+				if (error.response.status === 401){
+					authService.verifyToken("refresh")
+					.then((response) => {
+						if(response.status === 200){
+							authService.verifyToken("access")
+							.catch(error => {
+								if (error.response.status === 401){
+									authService.refreshAccess()
+								}
+							})
+						}
+					})
+					.catch(error => {
+						if (error.response.status === 401){
+							authService.logout()
+							history.push('/')
+						}
+					})
+				} 
+				else console.log("Something went wrong. Please try again later.");
+			  })
+		}
+
 		return (
 			<Grid container component="main" className={classes.root}>
 				
