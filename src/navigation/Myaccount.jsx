@@ -105,9 +105,9 @@ const useStyles = makeStyles((theme) => ({
 		fontFamily: 'Montserrat',
 		fontWeight: 600,
 		fontSize: 14,
-		width: '60%',
+		width: '48%',
 		textAlign: 'center',
-		left: '40%',    
+		left: '52%',    
 		backgroundColor: '#4054b4',
 		color: 'white',
 		'&:hover': {
@@ -127,7 +127,25 @@ function MyAccount() {
 	const[middle_name, setMiddleName] = useState([]);
 	const[email, setEmail] = useState([]);
 	const[contact_number, setContactNumber] = useState([]);
-
+	const[getInfo, setGetInfoCheck] = useState(false)
+	if (!getInfo){
+		AuthService.getUserInformation()
+		.then((response) => {
+			if (response !== undefined){
+				if(JSON.stringify(response.data.first_name).length >= 3)
+					setFirstName(JSON.stringify(response.data.first_name).slice(1,-1));
+				if(JSON.stringify(response.data.last_name).length >= 3)
+					setLastName(JSON.stringify(response.data.last_name).slice(1,-1));
+				if(JSON.stringify(response.data.middle_name).length >= 3)
+					setMiddleName(JSON.stringify(response.data.middle_name).slice(1,-1));
+				if(JSON.stringify(response.data.email).length >= 3)
+					setEmail(JSON.stringify(response.data.email).slice(1,-1));
+				if(JSON.stringify(response.data.mobile_number).length >= 3)
+					setContactNumber(JSON.stringify(response.data.mobile_number).slice(1,-1));
+				setGetInfoCheck(true);
+            }
+		})
+	}
 
 	//run once
 	useEffect(async() => {
@@ -337,7 +355,7 @@ function MyAccount() {
 										className={classes.button}
 										href="#"
 										>
-										SAVE CHANGES
+										SAVE
 									</Button>
 								</Grid>
 								<Grid item xs={12} sm={1}></Grid>
@@ -393,7 +411,7 @@ function MyAccount() {
 										className={classes.button}
 										href="#"
 										>
-										CHANGE PASSWORD
+										CONFIRM
 									</Button>
 								</Grid>	
 									

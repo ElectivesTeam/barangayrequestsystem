@@ -10,7 +10,7 @@ import InputLabel from '@mui/material/InputLabel'
 import MenuItem from '@mui/material/MenuItem'
 import Select from '@mui/material/Select'
 import FormControl from '@mui/material/FormControl'
-
+import AuthService from "../services/auth.service";
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -71,45 +71,68 @@ const Cedula = ({ activeForm, handleBack, handleNext}) => {
     const[monthlyIncome, setMonthlyIncome] = useState('')
     const[monthlyIncomeError, setMonthlyIncomeError] = useState(false)
 
+    const[getInfo, setGetInfoCheck] = useState(false)
+	if (!getInfo){
+		AuthService.getUserInformation()
+		.then((response) => {
+			if (response !== undefined){
+				if(JSON.stringify(response.data.first_name).length >= 3 && JSON.stringify(response.data.middle_name).length >= 0 && JSON.stringify(response.data.last_name).length >= 3)
+					setName(JSON.stringify(response.data.first_name + " " + response.data.middle_name + " " + response.data.last_name).slice(1,-1));
+				if(JSON.stringify(response.data.address).length >= 3)
+					setAddress(JSON.stringify(response.data.address).slice(1,-1));
+                if(JSON.stringify(response.data.date_of_birth).length >= 3)
+                    setBirthday(JSON.stringify(response.data.date_of_birth).slice(1,-1));
+                if(JSON.stringify(response.data.civil_status).length >= 3)
+                    setCivilStatus(JSON.stringify(response.data.civil_status).slice(1,-1));
+                if(JSON.stringify(response.data.gender).length >= 3)
+                    setGender(JSON.stringify(response.data.gender).slice(1,-1));
+				// if(JSON.stringify(response.data.email).length >= 3)
+				// 	setEmail(JSON.stringify(response.data.email).slice(1,-1));
+				// if(JSON.stringify(response.data.mobile_number).length >= 3)
+				// 	setContactNumber(JSON.stringify(response.data.mobile_number).slice(1,-1));
+				setGetInfoCheck(true);
+            }
+		})
+	}
     const handleSubmit = (e) =>{
         let setChecker = true
         e.preventDefault()
         
-        setNameError(false)
-        if(name == ''){
-            setNameError(true)
-            setChecker = false
-        }
+        // setNameError(false)
+        // if(name == ''){
+        //     setNameError(true)
+        //     setChecker = false
+        // }
 
-        setAddressError(false)
-        if(address == ''){
-            setAddressError(true)
-            setChecker = false
-        }
+        // setAddressError(false)
+        // if(address == ''){
+        //     setAddressError(true)
+        //     setChecker = false
+        // }
 
-        setBirthdayError(false)
-        if(birthday == ''){
-            setBirthdayError(true)
-            setChecker = false
-        }
+        // setBirthdayError(false)
+        // if(birthday == ''){
+        //     setBirthdayError(true)
+        //     setChecker = false
+        // }
 
-        setBirthPlaceError(false)
-        if(birthPlace == ''){
-            setBirthPlaceError(true)
-            setChecker = false
-        }
+        // setBirthPlaceError(false)
+        // if(birthPlace == ''){
+        //     setBirthPlaceError(true)
+        //     setChecker = false
+        // }
 
-        setCivilStatusError(false)
-        if(civilStatus == ''){
-            setCivilStatusError(true)
-            setChecker = false
-        }
+        // setCivilStatusError(false)
+        // if(civilStatus == ''){
+        //     setCivilStatusError(true)
+        //     setChecker = false
+        // }
 
-        setGenderError(false)
-        if(gender == ''){
-            setGenderError(true)
-            setChecker = false
-        }
+        // setGenderError(false)
+        // if(gender == ''){
+        //     setGenderError(true)
+        //     setChecker = false
+        // }
 
         setNationalityError(false)
         if(nationality == ''){
@@ -153,6 +176,7 @@ const Cedula = ({ activeForm, handleBack, handleNext}) => {
                                                 onChange={(e) => setName(e.target.value)}
                                                 variant="outlined"
                                                 margin="normal"
+                                                value={name}
                                                 required
                                                 fullWidth
                                                 id="name"
@@ -170,6 +194,7 @@ const Cedula = ({ activeForm, handleBack, handleNext}) => {
                                                 onChange={(e) => setAddress(e.target.value)}
                                                 variant="outlined"
                                                 margin="normal"
+                                                value={address}
                                                 required
                                                 fullWidth
                                                 id="address"
@@ -188,6 +213,7 @@ const Cedula = ({ activeForm, handleBack, handleNext}) => {
                                                 onChange={(e) => setBirthday(e.target.value)}
                                                 variant="outlined"
                                                 margin="normal"
+                                                value={birthday}
                                                 required
                                                 fullWidth
                                                 id="birthday"
@@ -209,6 +235,7 @@ const Cedula = ({ activeForm, handleBack, handleNext}) => {
                                                 onChange={(e) => setBirthPlace(e.target.value)}
                                                 variant="outlined"
                                                 margin="normal"
+                                                value={"Laguna"}
                                                 required
                                                 fullWidth
                                                 id="birthplace"
@@ -216,18 +243,32 @@ const Cedula = ({ activeForm, handleBack, handleNext}) => {
                                                 name="Birthplace"
                                                 autoComplete="birthplace"
                                                 autoFocus
-                                                error={birthPlaceError}
+                                                // error={birthPlaceError}
                                             />
                                         </Grid>
                                         
                                         {/* Civil Status */}
                                         <Grid item xs={6}>
-                                            <FormControl fullWidth>
+                                            <TextField
+                                                onChange={(e) => setCivilStatus(e.target.value)}
+                                                variant="outlined"
+                                                margin="normal"
+                                                value={civilStatus}
+                                                required
+                                                fullWidth
+                                                id="demo-simple-select"
+                                                label="Civil Status"
+                                                name="Civil Status"
+                                                autoComplete="civilstatus"
+                                                autoFocus
+                                                // error={civilStatusError}
+                                            />
+                                            {/* <FormControl fullWidth>
                                                 <InputLabel id="demo-simple-select-label">Civil Status</InputLabel>
                                                 <Select
                                                     labelId="demo-simple-select-label"
                                                     id="demo-simple-select"
-                                                    value={civilStatus}
+                                                    value={status_info}
                                                     label="Civil Status"
                                                     onChange={(e) => setCivilStatus(e.target.value)}
                                                     error={civilStatusError}
@@ -237,12 +278,26 @@ const Cedula = ({ activeForm, handleBack, handleNext}) => {
                                                 <MenuItem value={'Widowed'}>Widowed</MenuItem>
                                                 <MenuItem value={'Divorced'}>Divorced</MenuItem>
                                                 </Select>
-                                            </FormControl>
+                                            </FormControl> */}
                                         </Grid> 
 
                                         {/* Gender */}
                                         <Grid item xs={6}>
-                                            <FormControl fullWidth>
+                                            <TextField
+                                                onChange={(e) => setCivilStatus(e.target.value)}
+                                                variant="outlined"
+                                                margin="normal"
+                                                value={gender}
+                                                required
+                                                fullWidth
+                                                id="demo-simple-select"
+                                                label="Gender"
+                                                name="Gender"
+                                                autoComplete="gender"
+                                                autoFocus
+                                                // error={genderError}
+                                            />
+                                            {/* <FormControl fullWidth>
                                                 <InputLabel id="demo-simple-select-label">Gender</InputLabel>
                                                 <Select
                                                     labelId="demo-simple-select-label"
@@ -255,7 +310,7 @@ const Cedula = ({ activeForm, handleBack, handleNext}) => {
                                                 <MenuItem value={'Female'}>Female</MenuItem>
                                                 <MenuItem value={'Male'}>Male</MenuItem>
                                                 </Select>
-                                            </FormControl>
+                                            </FormControl> */}
                                         </Grid>
 
                                         {/* Nationality */}

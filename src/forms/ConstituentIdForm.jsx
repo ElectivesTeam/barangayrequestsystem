@@ -10,7 +10,7 @@ import InputLabel from '@mui/material/InputLabel'
 import MenuItem from '@mui/material/MenuItem'
 import Select from '@mui/material/Select'
 import FormControl from '@mui/material/FormControl'
-
+import AuthService from "../services/auth.service";
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -68,51 +68,78 @@ const ConstituentIdForm = ({ activeForm, handleBack, handleNext}) => {
     const[dateReceived, setDateReceived] = useState('')
     const[dateReceivedError, setDateReceivedError] = useState(false)
     
+	// const[address_info, setAddressInfo] = useState('');
+    // const[status_info, setStatusInfo] = useState('');
+    const[getInfo, setGetInfoCheck] = useState(false)
+	if (!getInfo){
+		AuthService.getUserInformation()
+		.then((response) => {
+			if (response !== undefined){
+				if(JSON.stringify(response.data.first_name).length >= 3)
+					setFirstName(JSON.stringify(response.data.first_name).slice(1,-1));
+				if(JSON.stringify(response.data.last_name).length >= 3)
+					setLastName(JSON.stringify(response.data.last_name).slice(1,-1));
+                if(JSON.stringify(response.data.middle_name).length >= 3)
+					setMiddleName(JSON.stringify(response.data.middle_name).slice(1,-1));
+				if(JSON.stringify(response.data.address).length >= 3)
+					setAddress(JSON.stringify(response.data.address).slice(1,-1));
+                if(JSON.stringify(response.data.civil_status).length >= 3)
+					setCivilStatus(JSON.stringify(response.data.civil_status).slice(1,-1));
+                if(JSON.stringify(response.data.mobile_number).length >= 3)
+					setContactNumber(JSON.stringify(response.data.mobile_number).slice(1,-1));
+				// if(JSON.stringify(response.data.email).length >= 3)
+				// 	setEmail(JSON.stringify(response.data.email).slice(1,-1));
+				// if(JSON.stringify(response.data.mobile_number).length >= 3)
+				// 	setContactNumber(JSON.stringify(response.data.mobile_number).slice(1,-1));
+				setGetInfoCheck(true);
+            }
+		})
+	}
     const handleSubmit = (e) =>{
         let setChecker = true
         e.preventDefault()
         
-        setLastNameError(false)
-        if(lastName == ''){
-            setLastNameError(true)
-            setChecker = false
-        }
+        // setLastNameError(false)
+        // if(lastName == ''){
+        //     setLastNameError(true)
+        //     setChecker = false
+        // }
 
-        setMiddleNameError(false)
-        if(middleName == ''){
-            setMiddleNameError(true)
-            setChecker = false
-        }
+        // setMiddleNameError(false)
+        // if(middleName == ''){
+        //     setMiddleNameError(true)
+        //     setChecker = false
+        // }
 
-        setFirstNameError(false)
-        if(firstName == ''){
-            setFirstNameError(true)
-            setChecker = false
-        }
+        // setFirstNameError(false)
+        // if(firstName == ''){
+        //     setFirstNameError(true)
+        //     setChecker = false
+        // }
 
-        setAddressError(false)
-        if(address == ''){
-            setAddressError(true)
-            setChecker = false
-        }
+        // setAddressError(false)
+        // if(address == ''){
+        //     setAddressError(true)
+        //     setChecker = false
+        // }
 
-        setCivilStatusError(false)
-        if(civilStatus == ''){
-            setCivilStatusError(true)
-            setChecker = false
-        }
+        // setCivilStatusError(false)
+        // if(civilStatus == ''){
+        //     setCivilStatusError(true)
+        //     setChecker = false
+        // }
 
-        setBirthPlaceError(false)
-        if(birthPlace == ''){
-            setBirthPlaceError(true)
-            setChecker = false
-        }
+        // setBirthPlaceError(false)
+        // if(birthPlace == ''){
+        //     setBirthPlaceError(true)
+        //     setChecker = false
+        // }
 
-        setContactNumberError(false)
-        if(contactNumber == ''){
-            setContactNumberError(true)
-            setChecker = false
-        }
+        // setContactNumberError(false)
+        // if(contactNumber == ''){
+        //     setContactNumberError(true)
+        //     setChecker = false
+        // }
 
         setDateReceivedError(false)
         if(dateReceived == ''){
@@ -144,6 +171,7 @@ const ConstituentIdForm = ({ activeForm, handleBack, handleNext}) => {
                                                 onChange={(e) => setLastName(e.target.value)}
                                                 variant="outlined"
                                                 margin="normal"
+                                                value={lastName}
                                                 required
                                                 fullWidth
                                                 id="lastname"
@@ -151,7 +179,7 @@ const ConstituentIdForm = ({ activeForm, handleBack, handleNext}) => {
                                                 name="lastname"
                                                 autoComplete="lastname"
                                                 autoFocus
-                                                error={lastNameError}
+                                                // error={lastNameError}
                                             />
                                         </Grid>
 
@@ -161,6 +189,7 @@ const ConstituentIdForm = ({ activeForm, handleBack, handleNext}) => {
                                                 onChange={(e) => setMiddleName(e.target.value)}
                                                 variant="outlined"
                                                 margin="normal"
+                                                value={middleName}
                                                 required
                                                 fullWidth
                                                 id="middlename"
@@ -168,7 +197,7 @@ const ConstituentIdForm = ({ activeForm, handleBack, handleNext}) => {
                                                 name="middlename"
                                                 autoComplete="middlename"
                                                 autoFocus
-                                                error={middleNameError}
+                                                // error={middleNameError}
                                             />
                                         </Grid>
 
@@ -178,6 +207,7 @@ const ConstituentIdForm = ({ activeForm, handleBack, handleNext}) => {
                                                 onChange={(e) => setFirstName(e.target.value)}
                                                 variant="outlined"
                                                 margin="normal"
+                                                value={firstName}
                                                 required
                                                 fullWidth
                                                 id="firstname"
@@ -185,7 +215,7 @@ const ConstituentIdForm = ({ activeForm, handleBack, handleNext}) => {
                                                 name="firstname"
                                                 autoComplete="firstname"
                                                 autoFocus
-                                                error={firstNameError}
+                                                // error={firstNameError}
                                             />
                                         </Grid>
                                         
@@ -195,6 +225,7 @@ const ConstituentIdForm = ({ activeForm, handleBack, handleNext}) => {
                                                 onChange={(e) => setAddress(e.target.value)}
                                                 variant="outlined"
                                                 margin="normal"
+                                                value={address}
                                                 required
                                                 fullWidth
                                                 id="address"
@@ -202,13 +233,27 @@ const ConstituentIdForm = ({ activeForm, handleBack, handleNext}) => {
                                                 name="address"
                                                 autoComplete="address"
                                                 autoFocus
-                                                error={addressError}
+                                                // error={addressError}
                                             />
                                         </Grid>
 
                                         {/* Civil Status */}
                                         <Grid item xs={6}>
-                                            <FormControl fullWidth>
+                                            <TextField
+                                                onChange={(e) => setCivilStatus(e.target.value)}
+                                                variant="outlined"
+                                                margin="normal"
+                                                value={civilStatus}
+                                                required
+                                                fullWidth
+                                                id="demo-simple-select"
+                                                label="Civil Status"
+                                                name="Civil Status"
+                                                autoComplete="civilstatus"
+                                                autoFocus
+                                                // error={civilStatusError}
+                                            />
+                                            {/* <FormControl fullWidth>
                                                 <InputLabel id="demo-simple-select-label">Civil Status</InputLabel>
                                                 <Select
                                                     labelId="demo-simple-select-label"
@@ -223,7 +268,7 @@ const ConstituentIdForm = ({ activeForm, handleBack, handleNext}) => {
                                                 <MenuItem value={'Widowed'}>Widowed</MenuItem>
                                                 <MenuItem value={'Divorced'}>Divorced</MenuItem>
                                                 </Select>
-                                            </FormControl>
+                                            </FormControl> */}
                                         </Grid>
                                         
                                         {/* Birth Place */}
@@ -232,6 +277,7 @@ const ConstituentIdForm = ({ activeForm, handleBack, handleNext}) => {
                                                 onChange={(e) => setBirthPlace(e.target.value)}
                                                 variant="outlined"
                                                 margin="normal"
+                                                value={"Laguna"}
                                                 required
                                                 fullWidth
                                                 id="birthplace"
@@ -239,7 +285,7 @@ const ConstituentIdForm = ({ activeForm, handleBack, handleNext}) => {
                                                 name="Birthplace"
                                                 autoComplete="birthplace"
                                                 autoFocus
-                                                error={birthPlaceError}
+                                                // error={birthPlaceError}
                                             />
                                         </Grid>
 
@@ -249,6 +295,7 @@ const ConstituentIdForm = ({ activeForm, handleBack, handleNext}) => {
                                                 onChange={(e) => setContactNumber(e.target.value)}
                                                 variant="outlined"
                                                 margin="normal"
+                                                value={contactNumber}
                                                 required
                                                 fullWidth
                                                 id="contactnumber"
@@ -256,7 +303,7 @@ const ConstituentIdForm = ({ activeForm, handleBack, handleNext}) => {
                                                 name="contactnumber"
                                                 autoComplete="ContactNumber"
                                                 autoFocus
-                                                error={contactNumberError}
+                                                // error={contactNumberError}
                                             />
                                         </Grid>
 
