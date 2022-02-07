@@ -16,7 +16,17 @@ class AuthService {
     }
 
     logout() {
-        localStorage.removeItem("user");
+        var token = JSON.parse(localStorage.getItem('user')).refresh;
+        var access = JSON.parse(localStorage.getItem('user')).access;
+        return axios.post(API_URL +"logout/", {"refresh": token}, {
+            headers:{
+                Accept: 'application/json',
+                Authorization: 'Bearer ' + access
+            }
+        })
+        .then(
+            localStorage.removeItem("user")
+        )
     }
 
     register(
@@ -52,7 +62,60 @@ class AuthService {
     }
 
     getCurrentUser() {
-        return JSON.parse(localStorage.getItem('user'));
+        if(localStorage.getItem('user') != null){
+            if(JSON.parse(localStorage.getItem('user')).access != null && JSON.parse(localStorage.getItem('user')).refresh != null){
+                return JSON.parse(localStorage.getItem('user'));
+            }else{
+                localStorage.removeItem('user')
+            }
+        }
+    }
+
+    getUserInformation(){
+        var token = JSON.parse(localStorage.getItem('user')).access;
+        return axios.get(API_URL + "getuser/", {
+            headers:{
+                Accept: 'application/json',
+                Authorization: 'Bearer ' + token
+            }
+        })
+        .then(response =>{
+            console.log("info fetched")
+            return response;
+        })
+    }
+
+    verifyToken(token){
+        if (token === "refresh"){
+            token = JSON.parse(localStorage.getItem('user')).refresh;
+        }
+        if (token === "access"){
+            token = JSON.parse(localStorage.getItem('user')).access;
+        }
+        return axios
+            .post(API_URL + "token/verify/", {
+                "token": token
+            })
+            .then(response => {
+                return response;
+            })
+    }
+
+    refreshAccess(){
+        var user = localStorage.getItem('user');
+        var token = JSON.parse(localStorage.getItem('user')).refresh;
+        if(user){
+            return axios
+            .post(API_URL + "token/refresh/", {
+                "refresh": token
+            })
+            .then(response => {
+                localStorage.setItem("user", '{"refresh":"' + token +'","access":' + JSON.stringify(response.data.access) + '}');
+                return response;
+            })
+        }else{
+            console.log("getCurrentUser error")
+        }
     }
 }
 

@@ -1,4 +1,5 @@
-import React from 'react';
+import React, { useState, Component } from 'react';
+import { useEffect } from 'react';
 import Grid from '@material-ui/core/Grid'
 import Paper from '@material-ui/core/Paper'
 import CssBaseline from '@material-ui/core/CssBaseline';
@@ -10,6 +11,7 @@ import Box from '@material-ui/core/Box';
 
 import AuthService from "../services/auth.service";
 import { useHistory } from "react-router-dom";
+import authService from '../services/auth.service';
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -120,9 +122,79 @@ function MyAccount() {
 	//Style
 	const classes = useStyles();
 	let history = useHistory();
-	const user = AuthService.getCurrentUser()
+	const[first_name, setFirstName] = useState([]);
+	const[last_name, setLastName] = useState([]);
+	const[middle_name, setMiddleName] = useState([]);
+	const[email, setEmail] = useState([]);
+	const[contact_number, setContactNumber] = useState([]);
 
-	if (user) {
+
+	//run once
+	useEffect(async() => {
+		var checkAccess = false
+		var refreshAccess = false
+		authService.verifyToken("refresh")
+		.then((response) => {
+			if(response.status === 200){
+				console.log("refresh verified")
+			}
+		})
+		.catch(error => {
+			if (error.response.status === 401){
+				authService.logout()
+				history.push('/')
+			}else{
+				console.log("Something went wrong")
+			}
+		})
+		for (let index = 0; index < 3; index++) {
+			if(checkAccess === false){
+				await authService.verifyToken("access")
+				.then(response =>{
+					if (response.data != undefined && response.status === 200){
+						checkAccess = true
+						AuthService.getUserInformation()
+						.then((response) => {
+							if (response !== undefined){
+								if(JSON.stringify(response.data.first_name).length >= 3)
+									setFirstName(JSON.stringify(response.data.first_name).slice(1,-1));
+								if(JSON.stringify(response.data.last_name).length >= 3)
+									setLastName(JSON.stringify(response.data.last_name).slice(1,-1));
+								if(JSON.stringify(response.data.middle_name).length >= 3)
+									setMiddleName(JSON.stringify(response.data.middle_name).slice(1,-1));
+								if(JSON.stringify(response.data.email).length >= 3)
+									setEmail(JSON.stringify(response.data.email).slice(1,-1));
+								if(JSON.stringify(response.data.mobile_number).length >= 3)
+									setContactNumber(JSON.stringify(response.data.mobile_number).slice(1,-1));
+							}
+						})
+						.catch(error => {
+							console.log("getInfoFailed")
+						}
+						)
+						console.log("access verified")
+					}
+				})
+				.catch(error => {
+					refreshAccess = true;
+					checkAccess = true;
+				})
+			}
+			if(refreshAccess === true){
+				await authService.refreshAccess()
+				.then(response =>{
+					refreshAccess = false;
+					checkAccess = false
+				})
+				.catch(error =>{
+					console.log("access token refreshing failed")
+				}
+				)
+			}
+		}
+	}, [])
+
+	if (AuthService.getCurrentUser()) {
 		return (
 			<Grid container component="main" className={classes.root}>
 				
@@ -176,6 +248,8 @@ function MyAccount() {
 									{/* First Name */}
 									<Grid item xs={12} sm={12}>
 										<TextField
+										onChange={(e) => setFirstName(e.target.value)}
+										value={first_name}
 										variant="outlined"
 										margin="normal"
 										required
@@ -191,6 +265,8 @@ function MyAccount() {
 									{/* Last Name */}
 									<Grid item xs={12} sm={12}>
 										<TextField
+										onChange={(e) => setLastName(e.target.value)}
+										value={last_name}
 										variant="outlined"
 										margin="normal"
 										required
@@ -206,6 +282,8 @@ function MyAccount() {
 									{/* Middle Name */}
 									<Grid item xs={12} sm={12}>
 										<TextField
+										onChange={(e) => setMiddleName(e.target.value)}	
+										value={middle_name}									
 										variant="outlined"
 										margin="normal"
 										required
@@ -221,6 +299,8 @@ function MyAccount() {
 									{/* E-mail */}
 									<Grid item xs={12} sm={12}>
 										<TextField
+										onChange={(e) => setEmail(e.target.value)}
+										value={email}
 										variant="outlined"
 										margin="normal"
 										required
@@ -236,6 +316,8 @@ function MyAccount() {
 									{/* Contact Number */}
 									<Grid item xs={12} sm={12}>
 										<TextField
+										onChange={(e) => setContactNumber(e.target.value)}
+										value={contact_number}
 										variant="outlined"
 										margin="normal"
 										required
