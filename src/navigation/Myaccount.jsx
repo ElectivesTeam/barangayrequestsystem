@@ -87,7 +87,7 @@ const useStyles = makeStyles((theme) => ({
 		marginLeft: theme.spacing(-3),
 		top: '32%',
 		left: '150%',
-		width: '120px',
+		width: '100px',
 		fontFamily: 'Montserrat',
 		fontWeight: 600,
 		fontSize: 11,
@@ -102,10 +102,11 @@ const useStyles = makeStyles((theme) => ({
 		borderRadius: 16,
 		fontFamily: 'Montserrat',
 		fontWeight: 600,
-		fontSize: 18,
-		width: '15%',
-		left: '83%',    
-		backgroundColor: 'black',
+		fontSize: 14,
+		width: '60%',
+		textAlign: 'center',
+		left: '40%',    
+		backgroundColor: '#4054b4',
 		color: 'white',
 		'&:hover': {
 		  backgroundColor: '#b71c1c',
@@ -246,6 +247,16 @@ function MyAccount() {
 										autoFocus
 										/>
 									</Grid>
+
+									<Button
+										type="submit"
+										fullWidth
+										variant="contained"
+										className={classes.button}
+										href="#"
+										>
+										SAVE CHANGES
+									</Button>
 								</Grid>
 								<Grid item xs={12} sm={1}></Grid>
 								<Grid item xs={12} sm={3}>
@@ -293,6 +304,15 @@ function MyAccount() {
 										autoFocus
 										/>
 									</Grid>
+									<Button
+										type="submit"
+										fullWidth
+										variant="contained"
+										className={classes.button}
+										href="#"
+										>
+										CHANGE PASSWORD
+									</Button>
 								</Grid>	
 									
 								<Grid item xs={12} sm={1}></Grid>
@@ -329,16 +349,7 @@ function MyAccount() {
 							
 							</Grid>
 						</form>
-						{/* Next Button */}
-						<Button
-								type="submit"
-								fullWidth
-								variant="contained"
-								className={classes.button}
-								href="#"
-							  >
-								UPDATE
-							  </Button>
+						
 					</div>
 				</Grid>
 			</Grid>
