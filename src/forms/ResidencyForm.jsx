@@ -6,7 +6,6 @@ import Grid from '@material-ui/core/Grid';
 import { makeStyles } from '@material-ui/core/styles'
 import Paper from '@mui/material/Paper';
 import Box from '@mui/material/Box';
-import AuthService from "../services/auth.service";
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -38,48 +37,33 @@ const useStyles = makeStyles((theme) => ({
     }
 }));
 
-const ResidencyForm = ({ activeForm, handleBack, handleNext}) => {
+const ResidencyForm = ({ activeForm, handleBack, handleNext, handleChange, residency}) => {
     const classes = useStyles();
-    const[name, setName] = useState('')
     const[nameError, setNameError] = useState(false)
-
-    const[address, setAddress] = useState('')
     const[addressError, setAddressError] = useState(false)
-    const[getInfo, setGetInfoCheck] = useState(false)
-	if (!getInfo){
-		AuthService.getUserInformation()
-		.then((response) => {
-			if (response !== undefined){
-				if(JSON.stringify(response.data.first_name).length >= 3 && JSON.stringify(response.data.middle_name).length >= 0 && JSON.stringify(response.data.last_name).length >= 3)
-					setName(JSON.stringify(response.data.first_name + " " + response.data.middle_name + " " + response.data.last_name).slice(1,-1));
-				if(JSON.stringify(response.data.address).length >= 3)
-					setAddress(JSON.stringify(response.data.address).slice(1,-1));
-				// if(JSON.stringify(response.data.email).length >= 3)
-				// 	setEmail(JSON.stringify(response.data.email).slice(1,-1));
-				// if(JSON.stringify(response.data.mobile_number).length >= 3)
-				// 	setContactNumber(JSON.stringify(response.data.mobile_number).slice(1,-1));
-				setGetInfoCheck(true);
-            }
-		})
-	}
+    const [information, setInformation] = useState({
+        name: residency.name,
+        address: residency.address
+    });
     const handleSubmit = (e) =>{
         let setChecker = true
         e.preventDefault()
         
-        // setNameError(false)
-        // if(name == ''){
-        //     setNameError(true)
-        //     setChecker = false
-        // }
+        setNameError(false)
+        if(information.name == ''){
+            setNameError(true)
+            setChecker = false
+        }
 
-        // setAddressError(false)
-        // if(address == ''){
-        //     setAddressError(true)
-        //     setChecker = false
-        // }
+        setAddressError(false)
+        if(information.address == ''){
+            setAddressError(true)
+            setChecker = false
+        }
 
         if(setChecker){
             //function to save the data in the form to the database
+            handleChange("residenceForm", information)
             handleNext()
         }
     }
@@ -99,10 +83,10 @@ const ResidencyForm = ({ activeForm, handleBack, handleNext}) => {
                                         {/* Name */}
                                         <Grid item xs={6}>
                                             <TextField
-                                                onChange={(e) => setName(e.target.value)}
+                                                onChange={(e) => setInformation({...information, name:e.target.value})}
                                                 variant="outlined"
                                                 margin="normal"
-                                                value={name}
+                                                defaultValue={residency.name}
                                                 required
                                                 fullWidth
                                                 id="name"
@@ -117,10 +101,10 @@ const ResidencyForm = ({ activeForm, handleBack, handleNext}) => {
                                         {/* Address */}
                                         <Grid item xs={6}>
                                             <TextField
-                                                onChange={(e) => setAddress(e.target.value)}
+                                                onChange={(e) => setInformation({...information, address:e.target.value})}
                                                 variant="outlined"
                                                 margin="normal"
-                                                value={address}
+                                                defaultValue={residency.address}
                                                 required
                                                 fullWidth
                                                 id="address"

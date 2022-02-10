@@ -108,11 +108,8 @@ const useStyles = makeStyles((theme) => ({
 		width: '48%',
 		textAlign: 'center',
 		left: '52%',    
-		backgroundColor: '#4054b4',
-		color: 'white',
-		'&:hover': {
-		  backgroundColor: '#b71c1c',
-		}
+		
+		
 	  },
 }));
 
@@ -350,6 +347,7 @@ function MyAccount() {
 
 									<Button
 										type="submit"
+										color="primary"
 										fullWidth
 										variant="contained"
 										className={classes.button}
@@ -406,6 +404,7 @@ function MyAccount() {
 									</Grid>
 									<Button
 										type="submit"
+										color="primary"
 										fullWidth
 										variant="contained"
 										className={classes.button}

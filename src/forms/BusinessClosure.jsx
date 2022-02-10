@@ -38,50 +38,57 @@ const useStyles = makeStyles((theme) => ({
     }
 }));
 
-const BusinessClosure = ({ activeForm, handleBack, handleNext}) => {
-    const classes = useStyles();
-    const[businessName, setBusinessName] = useState('')
-    const[businessNameError, setBusinessNameError] = useState(false)
-
-    const[businessAddress, setBusinessAddress] = useState('')
-    const[businessAddressError, setBusinessAddressError] = useState(false)
-
-    const[businessOwner, setBusinessOwner] = useState('')
-    const[businessOwnerError, setBusinessOwnerError] = useState(false)
-
-    const[natureOfBusiness, setNatureOfBusiness] = useState('')
-    const[natureOfBusinessError, setNatureOfBusinessError] = useState(false)
+const BusinessClosure = ({ activeForm, handleBack, handleNext, handleChange, businessClosure}) => {
     
+    const classes = useStyles();
+    const[businessNameError, setBusinessNameError] = useState(false)
+    const[businessAddressError, setBusinessAddressError] = useState(false)
+    const[businessOwnerError, setBusinessOwnerError] = useState(false)
+    const[natureOfBusinessError, setNatureOfBusinessError] = useState(false)
+    const[dateReceivedError, setDateReceivedError] = useState(false)
+    const [information, setInformation] = useState({
+        businessName: businessClosure.businessName,
+        businessOwner: businessClosure.businessOwner,
+        businessAddress: businessClosure.businessAddress,
+        businessNature: businessClosure.businessNature,
+        dateReceived: businessClosure.dateReceived
+    });
     const handleSubmit = (e) =>{
         let setChecker = true
         e.preventDefault()
         
         setBusinessNameError(false)
-        if(businessName == ''){
+        if(information.businessName == ''){
             setBusinessNameError(true)
             setChecker = false
         }
         
         setBusinessOwnerError(false)
-        if(businessOwner == ''){
+        if(information.businessOwner == ''){
             setBusinessOwnerError(true)
             setChecker = false
         }
 
         setBusinessAddressError(false)
-        if(businessAddress == ''){
+        if(information.businessAddress == ''){
             setBusinessAddressError(true)
             setChecker = false
         }
 
         setNatureOfBusinessError(false)
-        if(natureOfBusiness == ''){
+        if(information.natureOfBusiness == ''){
             setNatureOfBusinessError(true)
             setChecker = false
         }
 
+        setDateReceivedError(false)
+        if(information.dateReceived == ''){
+            setDateReceivedError(true)
+            setChecker = false
+        }
         if(setChecker){
             //function to save the data in the form to the database
+            handleChange("businessClosureForm", information)
             handleNext()
         }
     }
@@ -101,9 +108,10 @@ const BusinessClosure = ({ activeForm, handleBack, handleNext}) => {
                                         {/* Business Name */}
                                         <Grid item xs={6}>
                                             <TextField
-                                                onChange={(e) => setBusinessName(e.target.value)}
+                                                onChange={(e) => setInformation({...information, businessName:e.target.value})}
                                                 variant="outlined"
                                                 margin="normal"
+                                                defaultValue={businessClosure.businessName}
                                                 required
                                                 fullWidth
                                                 id="businessname"
@@ -118,16 +126,17 @@ const BusinessClosure = ({ activeForm, handleBack, handleNext}) => {
                                         {/* Business Owner */}
                                         <Grid item xs={6}>
                                             <TextField
-                                                onChange={(e) => setBusinessOwner(e.target.value)}
+                                                onChange={(e) => setInformation({...information, businessOwner:e.target.value})}
                                                 variant="outlined"
                                                 margin="normal"
+                                                defaultValue={businessClosure.businessOwner}
                                                 required
                                                 fullWidth
                                                 id="businessowner"
                                                 label="Business Owner"
                                                 name="businessowner"
                                                 autoComplete="businessowner"
-                                                autoFocus
+                                                
                                                 error={businessOwnerError}
                                             />
                                         </Grid>
@@ -135,16 +144,17 @@ const BusinessClosure = ({ activeForm, handleBack, handleNext}) => {
                                         {/* Business Address */}
                                         <Grid item xs={6}>
                                             <TextField
-                                                onChange={(e) => setBusinessAddress(e.target.value)}
+                                                onChange={(e) => setInformation({...information, businessAddress:e.target.value})}
                                                 variant="outlined"
                                                 margin="normal"
+                                                defaultValue={businessClosure.businessAddress}
                                                 required
                                                 fullWidth
                                                 id="businessaddress"
                                                 label="Business Address"
                                                 name="businessaddress"
                                                 autoComplete="businessaddress"
-                                                autoFocus
+                                                
                                                 error={businessAddressError}
                                             />
                                         </Grid>
@@ -152,16 +162,17 @@ const BusinessClosure = ({ activeForm, handleBack, handleNext}) => {
                                         {/* Nature of Business */}
                                         <Grid item xs={6}>
                                             <TextField
-                                                onChange={(e) => setNatureOfBusiness(e.target.value)}
+                                                onChange={(e) => setInformation({...information, businessNature:e.target.value})}
                                                 variant="outlined"
                                                 margin="normal"
+                                                defaultValue={businessClosure.businessNature}
                                                 required
                                                 fullWidth
                                                 id="natureofbusiness"
                                                 label="Nature of Business"
                                                 name="natureofbusiness"
                                                 autoComplete="natureofbusiness"
-                                                autoFocus
+                                                
                                                 error={natureOfBusinessError}
                                             />
                                         </Grid>
@@ -169,6 +180,23 @@ const BusinessClosure = ({ activeForm, handleBack, handleNext}) => {
                                         {/* Last Business Operation */}
                                         <Grid item xs={6}>
                                             {/* Input goes here */}
+                                            <TextField
+                                                type="date"
+                                                onChange={(e) => setInformation({...information, dateReceived:e.target.value})}
+                                                variant="outlined"
+                                                margin="normal"
+                                                required
+                                                fullWidth
+                                                id="DateReceived"
+                                                label="Date Received"
+                                                name="DateReceived"
+                                                autoComplete="DateReceived"
+                                                error={dateReceivedError}
+                                                defaultValue={businessClosure.dateReceived}
+                                                InputLabelProps={{
+                                                    shrink: true,
+                                                }}
+                                            />
                                         </Grid>
                                     </Grid>
                                 </div>

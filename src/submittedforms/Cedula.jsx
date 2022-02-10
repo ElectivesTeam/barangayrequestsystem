@@ -7,11 +7,12 @@ import Paper from '@mui/material/Paper';
 const useStyles = makeStyles((theme) => ({
     root: {
         padding: '5px 30px 0px 30px',
-      
+        fontFamily: 'Montserrat',
     },
     title:{ 
         fontWeight: 600,
         fontSize:'1.4rem',
+
     },
     info:{
         fontWeight: 500,
@@ -20,7 +21,7 @@ const useStyles = makeStyles((theme) => ({
     }
 }));
 
-function Cedula(){
+function Cedula(reviewCedula){
     const classes = useStyles();
     return (
         <>
@@ -33,17 +34,17 @@ function Cedula(){
                             <div className={classes.info}>
                                 <Grid container spacing={2}>
                                     <Grid item xs={6}>
-                                        <p>Name: Juan Dela Cruz</p>
-                                        <p>Address: Blk 38 Lot 64 Southfairway Homes Landayan San Pedro Laguna</p>
-                                        <p>Birthday: October 5, 2000</p>
-                                        <p>Birthplace: Catalan Medical Hospital</p>
-                                        <p>Civil Status: Married</p>
+                                        <p>Name: {reviewCedula.reviewCedula.name}</p>
+                                        <p>Address: {reviewCedula.reviewCedula.address}</p>
+                                        <p>Birthday: {reviewCedula.reviewCedula.birthday}</p>
+                                        <p>Birthplace: {reviewCedula.reviewCedula.birthplace}</p>
+                                        <p>Civil Status: {reviewCedula.reviewCedula.civilStatus}</p>
                                     </Grid>
                                     <Grid item xs={6}>
-                                        <p>Gender: Female</p>
-                                        <p>Nationality: Filipino</p>
-                                        <p>Profession: Engineer</p>
-                                        <p>Monthly Income: PHP 10000</p>
+                                        <p>Gender: {reviewCedula.reviewCedula.gender}</p>
+                                        <p>Nationality: {reviewCedula.reviewCedula.nationality}</p>
+                                        <p>Profession: {reviewCedula.reviewCedula.profession}</p>
+                                        <p>Monthly Income: {reviewCedula.reviewCedula.monthlyIncome}</p>
                                     </Grid>
                                 </Grid>
                             </div>

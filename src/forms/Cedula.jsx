@@ -10,7 +10,6 @@ import InputLabel from '@mui/material/InputLabel'
 import MenuItem from '@mui/material/MenuItem'
 import Select from '@mui/material/Select'
 import FormControl from '@mui/material/FormControl'
-import AuthService from "../services/auth.service";
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -42,118 +41,91 @@ const useStyles = makeStyles((theme) => ({
     }
 }));
 
-const Cedula = ({ activeForm, handleBack, handleNext}) => {
+const Cedula = ({ activeForm, handleBack, handleNext, handleChange, cedula}) => {
+    console.log(cedula)
     const classes = useStyles();
-    const[name, setName] = useState('')
     const[nameError, setNameError] = useState(false)
-
-    const[address, setAddress] = useState('')
     const[addressError, setAddressError] = useState(false)
-
-    const[birthday, setBirthday] = useState('')
     const[birthdayError, setBirthdayError] = useState(false)
-
-    const[birthPlace, setBirthPlace] = useState('')
     const[birthPlaceError, setBirthPlaceError] = useState(false)
-
-    const[civilStatus, setCivilStatus] = useState('')
     const[civilStatusError, setCivilStatusError] = useState(false)
-
-    const[gender, setGender] = useState('')
     const[genderError, setGenderError] = useState(false)
-    
-    const[nationality, setNationality] = useState('')
     const[nationalityError, setNationalityError] = useState(false)
-
-    const[profession, setProfession] = useState('')
     const[professionError, setProfessionError] = useState(false)
-
-    const[monthlyIncome, setMonthlyIncome] = useState('')
     const[monthlyIncomeError, setMonthlyIncomeError] = useState(false)
-
-    const[getInfo, setGetInfoCheck] = useState(false)
-	if (!getInfo){
-		AuthService.getUserInformation()
-		.then((response) => {
-			if (response !== undefined){
-				if(JSON.stringify(response.data.first_name).length >= 3 && JSON.stringify(response.data.middle_name).length >= 0 && JSON.stringify(response.data.last_name).length >= 3)
-					setName(JSON.stringify(response.data.first_name + " " + response.data.middle_name + " " + response.data.last_name).slice(1,-1));
-				if(JSON.stringify(response.data.address).length >= 3)
-					setAddress(JSON.stringify(response.data.address).slice(1,-1));
-                if(JSON.stringify(response.data.date_of_birth).length >= 3)
-                    setBirthday(JSON.stringify(response.data.date_of_birth).slice(1,-1));
-                if(JSON.stringify(response.data.civil_status).length >= 3)
-                    setCivilStatus(JSON.stringify(response.data.civil_status).slice(1,-1));
-                if(JSON.stringify(response.data.gender).length >= 3)
-                    setGender(JSON.stringify(response.data.gender).slice(1,-1));
-				// if(JSON.stringify(response.data.email).length >= 3)
-				// 	setEmail(JSON.stringify(response.data.email).slice(1,-1));
-				// if(JSON.stringify(response.data.mobile_number).length >= 3)
-				// 	setContactNumber(JSON.stringify(response.data.mobile_number).slice(1,-1));
-				setGetInfoCheck(true);
-            }
-		})
-	}
+    const [information, setInformation] = useState({
+        name: cedula.name,
+        address: cedula.address,
+        birthday: cedula.birthday,
+        birthplace: cedula.birthplace,
+        civilStatus: cedula.civilStatus,
+        gender: cedula.gender,
+        nationality: cedula.nationality,
+        profession: cedula.profession,
+        monthlyIncome: cedula.monthlyIncome,
+        
+    });
     const handleSubmit = (e) =>{
         let setChecker = true
         e.preventDefault()
         
-        // setNameError(false)
-        // if(name == ''){
-        //     setNameError(true)
-        //     setChecker = false
-        // }
+        setNameError(false)
+        if(information.name == ''){
+            setNameError(true)
+            setChecker = false
+        }
 
-        // setAddressError(false)
-        // if(address == ''){
-        //     setAddressError(true)
-        //     setChecker = false
-        // }
+        setAddressError(false)
+        if(information.address == ''){
+            setAddressError(true)
+            setChecker = false
+        }
 
-        // setBirthdayError(false)
-        // if(birthday == ''){
-        //     setBirthdayError(true)
-        //     setChecker = false
-        // }
+        setBirthdayError(false)
+        if(information.birthday == ''){
+            setBirthdayError(true)
+            setChecker = false
+        }
 
-        // setBirthPlaceError(false)
-        // if(birthPlace == ''){
-        //     setBirthPlaceError(true)
-        //     setChecker = false
-        // }
+        setBirthPlaceError(false)
+        if(information.birthplace == ''){
+            setBirthPlaceError(true)
+            setChecker = false
+        }
 
-        // setCivilStatusError(false)
-        // if(civilStatus == ''){
-        //     setCivilStatusError(true)
-        //     setChecker = false
-        // }
+        setCivilStatusError(false)
+        if(information.civilStatus == ''){
+            setCivilStatusError(true)
+            setChecker = false
+        }
 
-        // setGenderError(false)
-        // if(gender == ''){
-        //     setGenderError(true)
-        //     setChecker = false
-        // }
+        setGenderError(false)
+        if(information.gender == ''){
+            setGenderError(true)
+            setChecker = false
+        }
 
         setNationalityError(false)
-        if(nationality == ''){
+        if(information.nationality == ''){
             setNationalityError(true)
             setChecker = false
         }
 
         setProfessionError(false)
-        if(profession == ''){
+        if(information.profession == ''){
             setProfessionError(true)
             setChecker = false
         }
 
         setMonthlyIncomeError(false)
-        if(monthlyIncome == ''){
+        if(information.monthlyIncome == ''){
             setMonthlyIncomeError(true)
             setChecker = false
         }
 
         if(setChecker){
             //function to save the data in the form to the database
+            handleChange("cedulaForm", information)
             handleNext()
         }
     }
@@ -173,10 +145,10 @@ const Cedula = ({ activeForm, handleBack, handleNext}) => {
                                         {/* Name */}
                                         <Grid item xs={6}>
                                             <TextField
-                                                onChange={(e) => setName(e.target.value)}
+                                                onChange={(e) => setInformation({...information, name:e.target.value})}
                                                 variant="outlined"
                                                 margin="normal"
-                                                value={name}
+                                                defaultValue={cedula.name}
                                                 required
                                                 fullWidth
                                                 id="name"
@@ -191,10 +163,10 @@ const Cedula = ({ activeForm, handleBack, handleNext}) => {
                                         {/* Address */}
                                         <Grid item xs={6}>
                                             <TextField
-                                                onChange={(e) => setAddress(e.target.value)}
+                                                onChange={(e) => setInformation({...information, address:e.target.value})}
                                                 variant="outlined"
                                                 margin="normal"
-                                                value={address}
+                                                defaultValue={cedula.address}
                                                 required
                                                 fullWidth
                                                 id="address"
@@ -210,10 +182,10 @@ const Cedula = ({ activeForm, handleBack, handleNext}) => {
                                         <Grid item xs={6}>
                                             <TextField
                                                 type="date"
-                                                onChange={(e) => setBirthday(e.target.value)}
+                                                onChange={(e) => setInformation({...information, birthday:e.target.value})}
                                                 variant="outlined"
                                                 margin="normal"
-                                                value={birthday}
+                                                defaultValue={cedula.birthday}
                                                 required
                                                 fullWidth
                                                 id="birthday"
@@ -232,10 +204,10 @@ const Cedula = ({ activeForm, handleBack, handleNext}) => {
                                         {/* Birth Place */}
                                         <Grid item xs={6}>
                                             <TextField
-                                                onChange={(e) => setBirthPlace(e.target.value)}
+                                                onChange={(e) => setInformation({...information, birthplace:e.target.value})}
                                                 variant="outlined"
                                                 margin="normal"
-                                                value={"Laguna"}
+                                                defaultValue={cedula.birthplace}
                                                 required
                                                 fullWidth
                                                 id="birthplace"
@@ -243,82 +215,55 @@ const Cedula = ({ activeForm, handleBack, handleNext}) => {
                                                 name="Birthplace"
                                                 autoComplete="birthplace"
                                                 autoFocus
-                                                // error={birthPlaceError}
+                                                error={birthPlaceError}
                                             />
                                         </Grid>
                                         
                                         {/* Civil Status */}
                                         <Grid item xs={6}>
-                                            <TextField
-                                                onChange={(e) => setCivilStatus(e.target.value)}
-                                                variant="outlined"
-                                                margin="normal"
-                                                value={civilStatus}
-                                                required
-                                                fullWidth
-                                                id="demo-simple-select"
-                                                label="Civil Status"
-                                                name="Civil Status"
-                                                autoComplete="civilstatus"
-                                                autoFocus
-                                                // error={civilStatusError}
-                                            />
-                                            {/* <FormControl fullWidth>
+                                            <FormControl fullWidth>
                                                 <InputLabel id="demo-simple-select-label">Civil Status</InputLabel>
                                                 <Select
                                                     labelId="demo-simple-select-label"
                                                     id="demo-simple-select"
-                                                    value={status_info}
+                                                    defaultValue={cedula.civilStatus}
                                                     label="Civil Status"
-                                                    onChange={(e) => setCivilStatus(e.target.value)}
+                                                    onChange={(e) => setInformation({...information, civilStatus:e.target.value})}
                                                     error={civilStatusError}
                                                 >
-                                                <MenuItem value={'Single'}>Single</MenuItem>
-                                                <MenuItem value={'Married'}>Married</MenuItem>
-                                                <MenuItem value={'Widowed'}>Widowed</MenuItem>
-                                                <MenuItem value={'Divorced'}>Divorced</MenuItem>
+                                                <MenuItem value={'SINGLE'}>Single</MenuItem>
+                                                <MenuItem value={'MARRIED'}>Married</MenuItem>
+                                                <MenuItem value={'WIDOWED'}>Widowed</MenuItem>
+                                                <MenuItem value={'DIVORCED'}>Divorced</MenuItem>
                                                 </Select>
-                                            </FormControl> */}
+                                            </FormControl>
                                         </Grid> 
 
                                         {/* Gender */}
                                         <Grid item xs={6}>
-                                            <TextField
-                                                onChange={(e) => setCivilStatus(e.target.value)}
-                                                variant="outlined"
-                                                margin="normal"
-                                                value={gender}
-                                                required
-                                                fullWidth
-                                                id="demo-simple-select"
-                                                label="Gender"
-                                                name="Gender"
-                                                autoComplete="gender"
-                                                autoFocus
-                                                // error={genderError}
-                                            />
-                                            {/* <FormControl fullWidth>
+                                            <FormControl fullWidth>
                                                 <InputLabel id="demo-simple-select-label">Gender</InputLabel>
                                                 <Select
                                                     labelId="demo-simple-select-label"
                                                     id="demo-simple-select"
-                                                    value={civilStatus}
+                                                    defaultValue={cedula.gender}
                                                     label="Gender"
-                                                    onChange={(e) => setGender(e.target.value)}
+                                                    onChange={(e) => setInformation({...information, gender:e.target.value})}
                                                     error={genderError}
                                                 >
-                                                <MenuItem value={'Female'}>Female</MenuItem>
-                                                <MenuItem value={'Male'}>Male</MenuItem>
+                                                <MenuItem value={'FEMALE'}>Female</MenuItem>
+                                                <MenuItem value={'MALE'}>Male</MenuItem>
                                                 </Select>
-                                            </FormControl> */}
+                                            </FormControl>
                                         </Grid>
 
                                         {/* Nationality */}
                                         <Grid item xs={6}>
                                             <TextField
-                                                onChange={(e) => setNationality(e.target.value)}
+                                                onChange={(e) => setInformation({...information, nationality:e.target.value})}
                                                 variant="outlined"
                                                 margin="normal"
+                                                defaultValue={cedula.nationality}
                                                 required
                                                 fullWidth
                                                 id="nationality"
@@ -333,9 +278,10 @@ const Cedula = ({ activeForm, handleBack, handleNext}) => {
                                         {/* Profession */}
                                         <Grid item xs={6}>
                                             <TextField
-                                                onChange={(e) => setProfession(e.target.value)}
+                                                onChange={(e) => setInformation({...information, profession:e.target.value})}
                                                 variant="outlined"
                                                 margin="normal"
+                                                defaultValue={cedula.profession}
                                                 required
                                                 fullWidth
                                                 id="profession"
@@ -349,9 +295,10 @@ const Cedula = ({ activeForm, handleBack, handleNext}) => {
                                         {/* Monthly Income */}
                                         <Grid item xs={6}>
                                             <TextField
-                                                onChange={(e) => setMonthlyIncome(e.target.value)}
+                                                onChange={(e) => setInformation({...information, monthlyIncome:e.target.value})}
                                                 variant="outlined"
                                                 margin="normal"
+                                                defaultValue={cedula.monthlyIncome}
                                                 required
                                                 fullWidth
                                                 id="monthlyincome"

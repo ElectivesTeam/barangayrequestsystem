@@ -7,7 +7,7 @@ import Paper from '@mui/material/Paper';
 const useStyles = makeStyles((theme) => ({
     root: {
         padding: '5px 30px 0px 30px',
-      
+        fontFamily: 'Montserrat'
     },
     title:{ 
         fontWeight: 600,
@@ -20,7 +20,7 @@ const useStyles = makeStyles((theme) => ({
     }
 }));
 
-function BuildingClearance(){
+function BuildingClearance(reviewBuildingClearance){
     const classes = useStyles();
     return (
         <>
@@ -33,11 +33,11 @@ function BuildingClearance(){
                             <div className={classes.info}>
                                 <Grid container spacing={2}>
                                     <Grid item xs={6}>
-                                        <p>Name: Juan Dela Cruz</p>
-                                        <p>Address: Blk 38 Lot 64 Southfairway Homes Landayan San Pedro Laguna</p>
+                                        <p>Name: {reviewBuildingClearance.reviewBuildingClearance.name}</p>
+                                        <p>Address: {reviewBuildingClearance.reviewBuildingClearance.address}</p>
                                     </Grid>
                                     <Grid item xs={6}>
-                                        <p>Type: Repair</p>
+                                        <p>Type: {reviewBuildingClearance.reviewBuildingClearance.type}</p>
                                     </Grid>
                                 </Grid>
                             </div>

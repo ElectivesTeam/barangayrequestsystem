@@ -7,7 +7,7 @@ import Paper from '@mui/material/Paper';
 const useStyles = makeStyles((theme) => ({
     root: {
         padding: '5px 30px 0px 30px',
-      
+        fontFamily: 'Montserrat'
     },
     title:{ 
         fontWeight: 600,
@@ -20,7 +20,7 @@ const useStyles = makeStyles((theme) => ({
     }
 }));
 
-function VoucherForm(){
+function VoucherForm(reviewVoucher){
     const classes = useStyles();
     return (
         <>
@@ -33,13 +33,13 @@ function VoucherForm(){
                             <div className={classes.info}>
                                 <Grid container spacing={2}>
                                     <Grid item xs={6}>
-                                        <p>Student Name: Juan Dela Cruz</p>
-                                        <p>Parent Name: Pedro Dela Cruz</p>
-                                        <p>Address: Blk 38 Lot 64 Southfairway Homes Landayan San Pedro Laguna</p>
+                                        <p>Student Name: {reviewVoucher.reviewVoucher.studentName}</p>
+                                        <p>Parent Name: {reviewVoucher.reviewVoucher.parentName}</p>
+                                        <p>Address: {reviewVoucher.reviewVoucher.schoolAddress}</p>
                                     </Grid>
                                     <Grid item xs={6}>
-                                        <p>School: Polytechnic University of the Philippines</p>
-                                        <p>Grade or Year: Grade 12</p>
+                                        <p>School: {reviewVoucher.reviewVoucher.school}</p>
+                                        <p>Grade or Year: {reviewVoucher.reviewVoucher.grade}</p>
                                     </Grid>
                                 </Grid>
                             </div>

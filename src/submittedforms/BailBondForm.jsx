@@ -3,11 +3,10 @@ import Box from '@mui/material/Box';
 import Grid from '@material-ui/core/Grid';
 import { makeStyles } from '@material-ui/core/styles';
 import Paper from '@mui/material/Paper';
-
 const useStyles = makeStyles((theme) => ({
     root: {
         padding: '5px 30px 0px 30px',
-      
+        fontFamily: 'Montserrat'
     },
     title:{ 
         fontWeight: 600,
@@ -20,7 +19,7 @@ const useStyles = makeStyles((theme) => ({
     }
 }));
 
-function BailBondForm(){
+function BailBondForm(reviewBailBond){
     const classes = useStyles();
     return (
         <>
@@ -33,11 +32,12 @@ function BailBondForm(){
                             <div className={classes.info}>
                                 <Grid container spacing={2}>
                                     <Grid item xs={6}>
-                                        <p>Name: Juan Dela Cruz</p>
-                                        <p>Address: Blk 38 Lot 64 Southfairway Homes Landayan San Pedro Laguna</p>
+                                        <p>Name: {reviewBailBond.reviewBailBond.name}</p>
+                                        <p>Address: {reviewBailBond.reviewBailBond.address}</p>
                                     </Grid>
                                     <Grid item xs={6}>
-                                        <p>Case Number: 123456789</p>
+                                        <p>Case Number: {reviewBailBond.reviewBailBond.caseNumber}</p>
+                                        
                                     </Grid>
                                 </Grid>
                             </div>

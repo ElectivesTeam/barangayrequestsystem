@@ -7,7 +7,7 @@ import Paper from '@mui/material/Paper';
 const useStyles = makeStyles((theme) => ({
     root: {
         padding: '5px 30px 0px 30px',
-      
+        fontFamily: 'Montserrat'
     },
     title:{ 
         fontWeight: 600,
@@ -20,7 +20,7 @@ const useStyles = makeStyles((theme) => ({
     }
 }));
 
-function ResidencyForm(){
+function ResidencyForm(reviewResidency){
     const classes = useStyles();
     return (
         <>
@@ -33,8 +33,8 @@ function ResidencyForm(){
                             <div className={classes.info}>
                                 <Grid container spacing={2}>
                                     <Grid item xs={6}>
-                                        <p>Name: Juan Dela Cruz</p>
-                                        <p>Address: Blk 38 Lot 64 Southfairway Homes Landayan San Pedro Laguna</p>
+                                        <p>Name: {reviewResidency.reviewResidency.name}</p>
+                                        <p>Address: {reviewResidency.reviewResidency.address}</p>
                                     </Grid>
                                 </Grid>
                             </div>

@@ -1,5 +1,5 @@
 import { makeStyles } from '@material-ui/core/styles';
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { DataGrid } from '@material-ui/data-grid';
 import Grid from '@material-ui/core/Grid';
 import Box from '@material-ui/core/Box';
@@ -115,7 +115,267 @@ function Request() {
 
     const [selectedRequest, setSelectedRequest] = React.useState([])
     const requestId = selectedRequest.selectionModel;
+    const [apiFormsData, setAPIFormsData] = useState({
 
+    })
+
+    useEffect(async() => {
+		
+        await AuthService.getUserInformation()
+            .then((response) => {
+                if (response !== undefined){
+                    if(JSON.stringify(response.data.first_name).length >= 3 && JSON.stringify(response.data.middle_name).length >= 0 && JSON.stringify(response.data.last_name).length >= 3)
+                        setAPIFormsData({...apiFormsData, 
+                            bailBondData: {
+                                name:JSON.stringify(response.data.first_name + " " + response.data.middle_name + " " + response.data.last_name).slice(1,-1), 
+                                address:JSON.stringify(response.data.address).slice(1,-1),
+                                caseNumber: ''
+                            },
+                            barangayClearanceData: {
+                                name:JSON.stringify(response.data.first_name + " " + response.data.middle_name + " " + response.data.last_name).slice(1,-1), 
+                                address:JSON.stringify(response.data.address).slice(1,-1),
+                                purpose: ''
+                            },
+                            buildingClearanceData: {
+                                name:JSON.stringify(response.data.first_name + " " + response.data.middle_name + " " + response.data.last_name).slice(1,-1), 
+                                address:JSON.stringify(response.data.address).slice(1,-1),
+                                type: ''
+                            },
+                            businessClearanceData: {
+                                businessName: '',
+                                businessOwner: '',
+                                businessAddress: '',
+                                businessNature: ''
+                            },
+                            businessClosureData: {
+                                businessName: '',
+                                businessOwner: '',
+                                businessAddress: '',
+                                businessNature: '',
+                                dateReceived: ''
+                            },
+                            cedulaData: {
+                                name:JSON.stringify(response.data.first_name + " " + response.data.middle_name + " " + response.data.last_name).slice(1,-1), 
+                                address:JSON.stringify(response.data.address).slice(1,-1),
+                                birthday:JSON.stringify(response.data.date_of_birth).slice(1,-1),
+                                birthplace: 'Laguna',
+                                civilStatus:JSON.stringify(response.data.civil_status).slice(1,-1),
+                                gender:JSON.stringify(response.data.gender).slice(1,-1),
+                                nationality: '',
+                                profession: '',
+                                monthlyIncome: ''
+                            },
+                            comelecData: {
+                                name:JSON.stringify(response.data.first_name + " " + response.data.middle_name + " " + response.data.last_name).slice(1,-1), 
+                                address:JSON.stringify(response.data.address).slice(1,-1)
+                            },
+                            constituentIdData: {
+                                last_name:JSON.stringify(response.data.last_name).slice(1,-1),
+                                middle_name:JSON.stringify(response.data.middle_name).slice(1,-1),
+                                first_name:JSON.stringify(response.data.first_name).slice(1,-1),
+                                address:JSON.stringify(response.data.address).slice(1,-1),
+                                civilStatus:JSON.stringify(response.data.civil_status).slice(1,-1),
+                                birthplace: 'Laguna',
+                                contactNumber:JSON.stringify(response.data.mobile_number).slice(1,-1),
+                                dateReceived: ''
+                            },
+                            dentalServiceData: {
+                                last_name:JSON.stringify(response.data.last_name).slice(1,-1),
+                                middle_name:JSON.stringify(response.data.middle_name).slice(1,-1),
+                                first_name:JSON.stringify(response.data.first_name).slice(1,-1),
+                                address:JSON.stringify(response.data.address).slice(1,-1),
+                                birthday:JSON.stringify(response.data.date_of_birth).slice(1,-1),
+                                civilStatus:JSON.stringify(response.data.civil_status).slice(1,-1),
+                                birthplace: 'Laguna',
+                                contactNumber:JSON.stringify(response.data.mobile_number).slice(1,-1),
+                                dateReceived: ''
+                            },
+                            guardianshipData: {
+                                name:JSON.stringify(response.data.first_name + " " + response.data.middle_name + " " + response.data.last_name).slice(1,-1), 
+                                address:JSON.stringify(response.data.address).slice(1,-1),
+                                guardian: ''
+                            },
+                            immunizationData: {
+                                name:JSON.stringify(response.data.first_name + " " + response.data.middle_name + " " + response.data.last_name).slice(1,-1), 
+                                address:JSON.stringify(response.data.address).slice(1,-1),
+                                guardian: ''
+                            },
+                            indigencyClearanceData: {
+                                name:JSON.stringify(response.data.first_name + " " + response.data.middle_name + " " + response.data.last_name).slice(1,-1), 
+                                address:JSON.stringify(response.data.address).slice(1,-1),
+                                purpose: ''
+                            },
+                            maternalCareData: {
+                                name:JSON.stringify(response.data.first_name + " " + response.data.middle_name + " " + response.data.last_name).slice(1,-1), 
+                                address:JSON.stringify(response.data.address).slice(1,-1),
+                                guardian: ''
+                            },
+                            residenceData: {
+                                name:JSON.stringify(response.data.first_name + " " + response.data.middle_name + " " + response.data.last_name).slice(1,-1), 
+                                address:JSON.stringify(response.data.address).slice(1,-1)
+                                // type:''
+                            },
+                            voucherData: {
+                                studentName: '',
+                                parentName: '',
+                                school: '',
+                                schoolAddress: '',
+                                grade: ''
+                            },
+                        })
+                }
+            })
+        
+    }, [])
+    const handleAPIFormsDataChange = (formName, formData) => {
+        switch (formName) {
+            case "bailBondForm" : 
+                return setAPIFormsData({...apiFormsData, 
+                    bailBondData: {
+                        name:formData.name, 
+                        address:formData.address,
+                        caseNumber: formData.caseNumber
+                    }
+                 })
+                 
+            case "barangayClearanceForm" :
+                return setAPIFormsData({...apiFormsData, 
+                    barangayClearanceData: {
+                        name:formData.name, 
+                        address:formData.address,
+                        purpose: formData.purpose
+                    }
+                 })
+            
+            case "buildingClearanceForm" :
+                return setAPIFormsData({...apiFormsData, 
+                    buildingClearanceData: {
+                        name:formData.name, 
+                        address:formData.address,
+                        type: formData.type
+                    }
+                })
+            case "businessClearanceForm" :
+                return setAPIFormsData({...apiFormsData, 
+                    businessClearanceData: {
+                        businessName: formData.businessName,
+                        businessAddress: formData.businessAddress,
+                        businessOwner: formData.businessOwner,
+                        businessNature: formData.businessNature,
+                    }
+                })
+            case "businessClosureForm" :
+                return setAPIFormsData({...apiFormsData, 
+                    businessClosureData: {
+                        businessName: formData.businessName,
+                        businessAddress: formData.businessAddress,
+                        businessOwner: formData.businessOwner,
+                        businessNature: formData.businessNature,
+                        dateReceived:formData.dateReceived
+                    }
+                })
+            case "cedulaForm" :
+                return setAPIFormsData({...apiFormsData, 
+                    cedulaData: {
+                        name:formData.name, 
+                        address:formData.address,
+                        birthday:formData.birthday,
+                        birthplace:formData.birthplace,
+                        civilStatus:formData.civilStatus,
+                        gender:formData.gender,
+                        nationality:formData.nationality,
+                        profession:formData.profession,
+                        monthlyIncome:formData.monthlyIncome,
+                    }
+                })
+            case "comelecForm" :
+                return setAPIFormsData({...apiFormsData, 
+                    comelecData: {
+                        name:formData.name, 
+                        address:formData.address
+                    }
+                })
+            case "constituentIdForm" :
+                return setAPIFormsData({...apiFormsData, 
+                    constituentIdData: {
+                        last_name:formData.last_name, 
+                        middle_name:formData.middle_name, 
+                        first_name:formData.first_name, 
+                        address:formData.address,
+                        civilStatus:formData.civilStatus,
+                        birthplace:formData.birthplace,
+                        contactNumber:formData.contactNumber,
+                        dateReceived:formData.dateReceived
+                    }
+                })
+            case "dentalServiceForm" :
+                return setAPIFormsData({...apiFormsData, 
+                    dentalServiceData: {
+                        last_name:formData.last_name, 
+                        middle_name:formData.middle_name, 
+                        first_name:formData.first_name,
+                        birthday:formData.birthday, 
+                        address:formData.address,
+                        civilStatus:formData.civilStatus,
+                        birthplace:formData.birthplace,
+                        contactNumber:formData.contactNumber,
+                        dateReceived:formData.dateReceived
+                    }
+                })
+            case "guardianshipForm" :
+                return setAPIFormsData({...apiFormsData, 
+                    guardianshipData: {
+                        name:formData.name, 
+                        address:formData.address,
+                        guardian:formData.guardian
+                    }
+                })
+            case "immunizationForm" :
+                return setAPIFormsData({...apiFormsData, 
+                    immunizationData: {
+                        name:formData.name, 
+                        address:formData.address,
+                        guardian:formData.guardian
+                    }
+                })
+            case "indigencyClearanceForm" :
+                return setAPIFormsData({...apiFormsData, 
+                    indigencyClearanceData: {
+                        name:formData.name, 
+                        address:formData.address,
+                        guardian:formData.guardian
+                    }
+                })
+            case "maternalCareForm" :
+                return setAPIFormsData({...apiFormsData, 
+                    maternalCareData: {
+                        name:formData.name, 
+                        address:formData.address,
+                        guardian:formData.guardian
+                    }
+                })
+            case "residenceForm" :
+                return setAPIFormsData({...apiFormsData, 
+                    residenceData: {
+                        name:formData.name, 
+                        address:formData.address,
+                        // type: formData.type
+                    }
+                })
+            case "voucherForm" :
+                return setAPIFormsData({...apiFormsData, 
+                    voucherData: {
+                        studentName:formData.studentName,
+                        parentName:formData.parentName,
+                        school:formData.school,
+                        schoolAddress:formData.schoolAddress,
+                        grade:formData.grade,
+                    }
+                })
+        }
+        
+    }
+    
     const handleSubmit = (e) =>{
         e.preventDefault()
         console.log(requestId);
@@ -126,7 +386,7 @@ function Request() {
 
     if (AuthService.getCurrentUser()) {
         return submitted ? (
-        <ListOfRequest selectedRequest={requestId}/>
+        <ListOfRequest selectedRequest={requestId} apiFormsData = {apiFormsData} handleAPIFormsDataChange= {handleAPIFormsDataChange}/>
     ): (
         <>
             <Grid container component="main" className={classes.root}>

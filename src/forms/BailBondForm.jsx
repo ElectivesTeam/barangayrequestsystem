@@ -6,7 +6,7 @@ import Grid from '@material-ui/core/Grid';
 import { makeStyles } from '@material-ui/core/styles'
 import Paper from '@mui/material/Paper';
 import Box from '@mui/material/Box';
-import AuthService from "../services/auth.service";
+
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -38,60 +38,42 @@ const useStyles = makeStyles((theme) => ({
     }
 }));
 
-const BailBondForm = ({ activeForm, handleBack, handleNext}) => {
+const BailBondForm = ({ activeForm, handleBack, handleNext, handleChange, bailBond}) => {
     console.log(activeForm)
     const classes = useStyles();
-    const[name, setName] = useState('')
     const[nameError, setNameError] = useState(false)
-
-    const[address, setAddress] = useState('')
     const[addressError, setAddressError] = useState(false)
-
-    const[caseNumber, setCaseNumber] = useState('')
     const[caseNumberError, setCaseNumberError] = useState(false)
-    const[getInfo, setGetInfoCheck] = useState(false)
-	if (!getInfo){
-		AuthService.getUserInformation()
-		.then((response) => {
-			if (response !== undefined){
-				if(JSON.stringify(response.data.first_name).length >= 3 && JSON.stringify(response.data.middle_name).length >= 0 && JSON.stringify(response.data.last_name).length >= 3)
-					setName(JSON.stringify(response.data.first_name + " " + response.data.middle_name + " " + response.data.last_name).slice(1,-1));
-				if(JSON.stringify(response.data.address).length >= 3)
-					setAddress(JSON.stringify(response.data.address).slice(1,-1));
-				// if(JSON.stringify(response.data.email).length >= 3)
-				// 	setEmail(JSON.stringify(response.data.email).slice(1,-1));
-				// if(JSON.stringify(response.data.mobile_number).length >= 3)
-				// 	setContactNumber(JSON.stringify(response.data.mobile_number).slice(1,-1));
-				setGetInfoCheck(true);
-            }
-		})
-	}
 
-
+    const [information, setInformation] = useState({
+        name: bailBond.name,
+        address: bailBond.address,
+        caseNumber: bailBond.caseNumber
+    });
     const handleSubmit = (e) =>{
         let setChecker = true
         e.preventDefault()
         
-        // setNameError(false)
-        // if(name == ''){
-        //     setNameError(true)
-        //     setChecker = false
-        // }
+        setNameError(false)
+        if(information.name == ''){
+            setNameError(true)
+            setChecker = false
+        }
 
-        // setAddressError(false)
-        // if(address == ''){
-        //     setAddressError(true)
-        //     setChecker = false
-        // }
-
+        setAddressError(false)
+        if(information.address == ''){
+            setAddressError(true)
+            setChecker = false
+        }
         setCaseNumberError(false)
-        if(caseNumber == ''){
+        if(information.caseNumber == ''){
             setCaseNumberError(true)
             setChecker = false
         }
 
         if(setChecker){
             //function to save the data in the form to the database
+            handleChange("bailBondForm",information)
             handleNext()
         }
     }
@@ -111,10 +93,10 @@ const BailBondForm = ({ activeForm, handleBack, handleNext}) => {
                                         {/* Name */}
                                         <Grid item xs={6}>
                                             <TextField
-                                                onChange={(e) => setName(e.target.value)}
+                                                onChange={(e) => setInformation({...information, name:e.target.value})}
                                                 variant="outlined"
                                                 margin="normal"
-                                                value={name}
+                                                defaultValue={bailBond.name}
                                                 required
                                                 fullWidth
                                                 id="name"
@@ -122,17 +104,17 @@ const BailBondForm = ({ activeForm, handleBack, handleNext}) => {
                                                 name="name"
                                                 autoComplete="name"
                                                 autoFocus
-                                                // error={nameError}
+                                                error={nameError}
                                             />
                                         </Grid>
                                         
                                         {/* Address */}
                                         <Grid item xs={6}>
                                             <TextField
-                                                onChange={(e) => setAddress(e.target.value)}
+                                                onChange={(e) => setInformation({...information, address:e.target.value})}
                                                 variant="outlined"
                                                 margin="normal"
-                                                value={address}
+                                                defaultValue = {bailBond.address}
                                                 required
                                                 fullWidth
                                                 id="address"
@@ -140,16 +122,17 @@ const BailBondForm = ({ activeForm, handleBack, handleNext}) => {
                                                 name="address"
                                                 autoComplete="address"
                                                 autoFocus
-                                                // error={addressError}
+                                                error={addressError}
                                             />
                                         </Grid>
                                         
                                         {/* Case Number */}
                                         <Grid item xs={6}>
                                             <TextField
-                                                onChange={(e) => setCaseNumber(e.target.value)}
+                                                onChange={(e) => setInformation({...information, caseNumber:e.target.value})}
                                                 variant="outlined"
                                                 margin="normal"
+                                                defaultValue = {bailBond.caseNumber}
                                                 required
                                                 fullWidth
                                                 id="casenumber"
