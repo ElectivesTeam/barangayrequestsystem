@@ -7,7 +7,7 @@ import Paper from '@mui/material/Paper';
 const useStyles = makeStyles((theme) => ({
     root: {
         padding: '5px 30px 0px 30px',
-      
+        fontFamily: 'Montserrat'
     },
     title:{ 
         fontWeight: 600,
@@ -20,7 +20,7 @@ const useStyles = makeStyles((theme) => ({
     }
 }));
 
-function DentalServiceForm(){
+function DentalServiceForm(reviewDentalService){
     const classes = useStyles();
     return (
         <>
@@ -33,17 +33,17 @@ function DentalServiceForm(){
                             <div className={classes.info}>
                                 <Grid container spacing={2}>
                                     <Grid item xs={6}>
-                                        {/* <p>Last Name: Dela Cruz</p>
-                                        <p>First Name: Juan</p>
-                                        <p>Middle Name: Valdez</p>
-                                        <p>Birthday: October 5, 2000</p>
-                                        <p>Address: Blk 38 Lot 64 Southfairway Homes Landayan San Pedro Laguna</p> */}
+                                        <p>Last Name: {reviewDentalService.reviewDentalService.last_name}</p>
+                                        <p>First Name: {reviewDentalService.reviewDentalService.first_name}</p>
+                                        <p>Middle Name: {reviewDentalService.reviewDentalService.middle_name}</p>
+                                        <p>Birthday: {reviewDentalService.reviewDentalService.birthday}</p>
+                                        <p>Address: {reviewDentalService.reviewDentalService.address}</p>
                                     </Grid>
                                     <Grid item xs={6}>
-                                        {/* <p>Civil Status: Married</p>
-                                        <p>Birthplace: Catalan Medical Hospital</p>
-                                        <p>Contact Number: 09392948571</p>
-                                        <p>Date Received: November 9, 2021</p> */}
+                                        <p>Civil Status: {reviewDentalService.reviewDentalService.civilStatus}</p>
+                                        <p>Birthplace: {reviewDentalService.reviewDentalService.birthplace}</p>
+                                        <p>Contact Number: {reviewDentalService.reviewDentalService.contactNumber}</p>
+                                        <p>Date Received: {reviewDentalService.reviewDentalService.dateReceived}</p>
                                     </Grid>
                                 </Grid>
                             </div>

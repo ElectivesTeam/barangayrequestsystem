@@ -38,42 +38,42 @@ const useStyles = makeStyles((theme) => ({
     }
 }));
 
-const BailBondForm = ({ activeForm, handleBack, handleNext}) => {
+const BailBondForm = ({ activeForm, handleBack, handleNext, handleChange, bailBond}) => {
     console.log(activeForm)
     const classes = useStyles();
-    const[name, setName] = useState('')
     const[nameError, setNameError] = useState(false)
-
-    const[address, setAddress] = useState('')
     const[addressError, setAddressError] = useState(false)
-
-    const[caseNumber, setCaseNumber] = useState('')
     const[caseNumberError, setCaseNumberError] = useState(false)
-    
+
+    const [information, setInformation] = useState({
+        name: bailBond.name,
+        address: bailBond.address,
+        caseNumber: bailBond.caseNumber
+    });
     const handleSubmit = (e) =>{
         let setChecker = true
         e.preventDefault()
         
         setNameError(false)
-        if(name == ''){
+        if(information.name == ''){
             setNameError(true)
             setChecker = false
         }
 
         setAddressError(false)
-        if(address == ''){
+        if(information.address == ''){
             setAddressError(true)
             setChecker = false
         }
-
         setCaseNumberError(false)
-        if(caseNumber == ''){
+        if(information.caseNumber == ''){
             setCaseNumberError(true)
             setChecker = false
         }
 
         if(setChecker){
             //function to save the data in the form to the database
+            handleChange("bailBondForm",information)
             handleNext()
         }
     }
@@ -93,9 +93,10 @@ const BailBondForm = ({ activeForm, handleBack, handleNext}) => {
                                         {/* Name */}
                                         <Grid item xs={6}>
                                             <TextField
-                                                onChange={(e) => setName(e.target.value)}
+                                                onChange={(e) => setInformation({...information, name:e.target.value})}
                                                 variant="outlined"
                                                 margin="normal"
+                                                defaultValue={bailBond.name}
                                                 required
                                                 fullWidth
                                                 id="name"
@@ -110,9 +111,10 @@ const BailBondForm = ({ activeForm, handleBack, handleNext}) => {
                                         {/* Address */}
                                         <Grid item xs={6}>
                                             <TextField
-                                                onChange={(e) => setAddress(e.target.value)}
+                                                onChange={(e) => setInformation({...information, address:e.target.value})}
                                                 variant="outlined"
                                                 margin="normal"
+                                                defaultValue = {bailBond.address}
                                                 required
                                                 fullWidth
                                                 id="address"
@@ -127,9 +129,10 @@ const BailBondForm = ({ activeForm, handleBack, handleNext}) => {
                                         {/* Case Number */}
                                         <Grid item xs={6}>
                                             <TextField
-                                                onChange={(e) => setCaseNumber(e.target.value)}
+                                                onChange={(e) => setInformation({...information, caseNumber:e.target.value})}
                                                 variant="outlined"
                                                 margin="normal"
+                                                defaultValue = {bailBond.caseNumber}
                                                 required
                                                 fullWidth
                                                 id="casenumber"
@@ -137,7 +140,7 @@ const BailBondForm = ({ activeForm, handleBack, handleNext}) => {
                                                 name="casenumber"
                                                 autoComplete="casenumber"
                                                 autoFocus
-                                                error={addressError}
+                                                error={caseNumberError}
                                             />
                                         </Grid>
                                     </Grid>

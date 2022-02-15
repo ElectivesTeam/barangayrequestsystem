@@ -38,59 +38,58 @@ const useStyles = makeStyles((theme) => ({
     }
 }));
 
-const VoucherForm = ({ activeForm, handleBack, handleNext}) => {
+const VoucherForm = ({ activeForm, handleBack, handleNext,handleChange, voucher}) => {
     const classes = useStyles();
-    const[studentName, setStudentName] = useState('')
     const[studentNameError, setStudentNameError] = useState(false)
-
-    const[parentName, setParentName] = useState('')
     const[parentNameError, setParentNameError] = useState(false)
-
-    const[school, setSchool] = useState('')
     const[schoolError, setSchoolError] = useState(false)
-
-    const[schoolAddress, setSchoolAddress] = useState('')
     const[schoolAddressError, setSchoolAddressError] = useState(false)
-
-    const[grade, setGrade] = useState('')
     const[gradeError, setGradeError] = useState(false)
+    const [information, setInformation] = useState({
+        studentName: voucher.studentName,
+        parentName: voucher.parentName,
+        school: voucher.school,
+        schoolAddress: voucher.schoolAddress,
+        grade: voucher.grade,
+    });
     
     const handleSubmit = (e) =>{
         let setChecker = true
         e.preventDefault()
         
         setStudentNameError(false)
-        if(studentName == ''){
+        if(information.studentName == ''){
             setStudentNameError(true)
             setChecker = false
         }
 
         setParentNameError(false)
-        if(parentName == ''){
+        if(information.parentName == ''){
             setParentNameError(true)
             setChecker = false
         }
 
         setSchoolError(false)
-        if(school == ''){
+        if(information.school == ''){
             setSchoolError(true)
             setChecker = false
         }
 
         setSchoolAddressError(false)
-        if(schoolAddress == ''){
+        if(information.schoolAddress == ''){
             setSchoolAddressError(true)
             setChecker = false
         }
 
         setGradeError(false)
-        if(grade == ''){
+        if(information.grade == ''){
             setGradeError(true)
             setChecker = false
         }
 
         if(setChecker){
             //function to save the data in the form to the database
+            handleChange("voucherForm", information)
             handleNext()
         }
     }
@@ -110,9 +109,10 @@ const VoucherForm = ({ activeForm, handleBack, handleNext}) => {
                                         {/* Student Name */}
                                         <Grid item xs={6}>
                                             <TextField
-                                                onChange={(e) => setStudentName(e.target.value)}
+                                                onChange={(e) => setInformation({...information, studentName:e.target.value})}
                                                 variant="outlined"
                                                 margin="normal"
+                                                defaultValue={voucher.studentName}
                                                 required
                                                 fullWidth
                                                 id="studentname"
@@ -127,16 +127,17 @@ const VoucherForm = ({ activeForm, handleBack, handleNext}) => {
                                         {/* Parent Name */}
                                         <Grid item xs={6}>
                                             <TextField
-                                                onChange={(e) => setParentName(e.target.value)}
+                                                onChange={(e) => setInformation({...information, parentName:e.target.value})}
                                                 variant="outlined"
                                                 margin="normal"
+                                                defaultValue={voucher.parentName}
                                                 required
                                                 fullWidth
                                                 id="parentName"
                                                 label="Parent Name"
                                                 name="parentname"
                                                 autoComplete="parentname"
-                                                autoFocus
+                                                
                                                 error={parentNameError}
                                             />
                                         </Grid>
@@ -144,16 +145,17 @@ const VoucherForm = ({ activeForm, handleBack, handleNext}) => {
                                         {/* School */}
                                         <Grid item xs={6}>
                                             <TextField
-                                                onChange={(e) => setSchool(e.target.value)}
+                                                onChange={(e) => setInformation({...information, school:e.target.value})}
                                                 variant="outlined"
                                                 margin="normal"
+                                                defaultValue={voucher.school}
                                                 required
                                                 fullWidth
                                                 id="school"
                                                 label="School"
                                                 name="school"
                                                 autoComplete="school"
-                                                autoFocus
+                                                
                                                 error={schoolError}
                                             />
                                         </Grid>
@@ -161,16 +163,17 @@ const VoucherForm = ({ activeForm, handleBack, handleNext}) => {
                                         {/* School Address */}
                                         <Grid item xs={6}>
                                             <TextField
-                                                onChange={(e) => setSchoolAddress(e.target.value)}
+                                                onChange={(e) => setInformation({...information, schoolAddress:e.target.value})}
                                                 variant="outlined"
                                                 margin="normal"
+                                                defaultValue={voucher.schoolAddress}
                                                 required
                                                 fullWidth
                                                 id="schooladdress"
                                                 label="School Address"
                                                 name="schooladdress"
                                                 autoComplete="schooladdress"
-                                                autoFocus
+                                                
                                                 error={schoolAddressError}
                                             />
                                         </Grid>
@@ -178,16 +181,17 @@ const VoucherForm = ({ activeForm, handleBack, handleNext}) => {
                                         {/* Grade */}
                                         <Grid item xs={6}>
                                             <TextField
-                                                onChange={(e) => setGrade(e.target.value)}
+                                                onChange={(e) => setInformation({...information, grade:e.target.value})}
                                                 variant="outlined"
                                                 margin="normal"
+                                                defaultValue={voucher.grade}
                                                 required
                                                 fullWidth
                                                 id="grade"
                                                 label="Grade"
                                                 name="grade"
                                                 autoComplete="grade"
-                                                autoFocus
+                                                
                                                 error={gradeError}
                                             />
                                         </Grid>

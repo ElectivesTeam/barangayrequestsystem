@@ -6,7 +6,10 @@ import Grid from '@material-ui/core/Grid';
 import { makeStyles } from '@material-ui/core/styles'
 import Paper from '@mui/material/Paper';
 import Box from '@mui/material/Box';
-
+import InputLabel from '@mui/material/InputLabel'
+import MenuItem from '@mui/material/MenuItem'
+import Select from '@mui/material/Select'
+import FormControl from '@mui/material/FormControl'
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -38,32 +41,90 @@ const useStyles = makeStyles((theme) => ({
     }
 }));
 
-const DentalServiceForm = ({ activeForm, handleBack, handleNext}) => {
+const DentalServiceForm = ({ activeForm, handleBack, handleNext, handleChange, dentalService}) => {
     const classes = useStyles();
-    const[name, setName] = useState('')
-    const[nameError, setNameError] = useState(false)
-
-    const[address, setAddress] = useState('')
+    const[lastNameError, setLastNameError] = useState(false)
+    const[middleNameError, setMiddleNameError] = useState(false)
+    const[firstNameError, setFirstNameError] = useState(false)
     const[addressError, setAddressError] = useState(false)
-    
+    const[civilStatusError, setCivilStatusError] = useState(false)
+    const[birthdayError, setBirthdayError] = useState(false)
+    const[birthPlaceError, setBirthPlaceError] = useState(false)
+    const[contactNumberError, setContactNumberError] = useState(false)
+    const[dateReceivedError, setDateReceivedError] = useState(false)
+    const [information, setInformation] = useState({
+        last_name: dentalService.last_name,
+        middle_name: dentalService.middle_name,
+        first_name: dentalService.first_name,
+        address: dentalService.address,
+        birthday: dentalService.birthday,
+        civilStatus: dentalService.civilStatus,
+        birthplace: dentalService.birthplace,
+        contactNumber: dentalService.contactNumber,
+        dateReceived: dentalService.dateReceived
+    });
     const handleSubmit = (e) =>{
         let setChecker = true
         e.preventDefault()
         
-        setNameError(false)
-        if(name == ''){
-            setNameError(true)
+        setLastNameError(false)
+        if(information.last_name == ''){
+            setLastNameError(true)
+            setChecker = false
+        }
+
+        setMiddleNameError(false)
+        if(information.middle_name == ''){
+            setMiddleNameError(true)
+            setChecker = false
+        }
+
+        setFirstNameError(false)
+        if(information.first_name == ''){
+            setFirstNameError(true)
+            setChecker = false
+        }
+
+        setBirthdayError(false)
+        if(information.birthday == ''){
+            setBirthdayError(true)
             setChecker = false
         }
 
         setAddressError(false)
-        if(address == ''){
+        if(information.address == ''){
             setAddressError(true)
+            setChecker = false
+        }
+
+        setCivilStatusError(false)
+        if(information.civilStatus == ''){
+            setCivilStatusError(true)
+            setChecker = false
+        }
+
+        setBirthPlaceError(false)
+        if(information.birthplace == ''){
+            setBirthPlaceError(true)
+            setChecker = false
+        }
+
+        setContactNumberError(false)
+        if(information.contactNumber == ''){
+            setContactNumberError(true)
+            setChecker = false
+        }
+
+        setDateReceivedError(false)
+        if(information.dateReceived == ''){
+            setDateReceivedError(true)
             setChecker = false
         }
 
         if(setChecker){
             //function to save the data in the form to the database
+            console.log(information)
+            handleChange("dentalServiceForm", information)
             handleNext()
         }
     }
@@ -80,29 +141,87 @@ const DentalServiceForm = ({ activeForm, handleBack, handleNext}) => {
                                 <div className={classes.info}>
                                     <Grid container spacing={2}>
 
-                                        {/* Name */}
+                                        {/* Last Name */}
                                         <Grid item xs={6}>
                                             <TextField
-                                                onChange={(e) => setName(e.target.value)}
+                                                onChange={(e) => setInformation({...information, last_name:e.target.value})}
                                                 variant="outlined"
                                                 margin="normal"
+                                                defaultValue={dentalService.last_name}
                                                 required
                                                 fullWidth
-                                                id="name"
-                                                label="Name"
-                                                name="name"
-                                                autoComplete="name"
+                                                id="lastname"
+                                                label="Last Name"
+                                                name="lastname"
+                                                autoComplete="lastname"
                                                 autoFocus
-                                                error={nameError}
+                                                error={lastNameError}
                                             />
                                         </Grid>
-                                        
+
+                                        {/* Middle Name */}
+                                        <Grid item xs={6}>
+                                            <TextField
+                                                onChange={(e) => setInformation({...information, middle_name:e.target.value})}
+                                                variant="outlined"
+                                                margin="normal"
+                                                defaultValue={dentalService.middle_name}
+                                                required
+                                                fullWidth
+                                                id="middlename"
+                                                label="Middle Name"
+                                                name="middlename"
+                                                autoComplete="middlename"
+                                                autoFocus
+                                                error={middleNameError}
+                                            />
+                                        </Grid>
+
+                                        {/* First Name */}
+                                        <Grid item xs={6}>
+                                            <TextField
+                                                onChange={(e) => setInformation({...information, first_name:e.target.value})}
+                                                variant="outlined"
+                                                margin="normal"
+                                                defaultValue={dentalService.first_name}
+                                                required
+                                                fullWidth
+                                                id="firstname"
+                                                label="First Name"
+                                                name="firstname"
+                                                autoComplete="firstname"
+                                                autoFocus
+                                                error={firstNameError}
+                                            />
+                                        </Grid>
+                                        {/* Birthday */}
+                                        <Grid item xs={6}>
+                                            <TextField
+                                                type="date"
+                                                onChange={(e) => setInformation({...information, birthday:e.target.value})}
+                                                variant="outlined"
+                                                margin="normal"
+                                                defaultValue={dentalService.birthday}
+                                                required
+                                                fullWidth
+                                                id="birthday"
+                                                label="Birthday"
+                                                name="birthday"
+                                                autoComplete="birthday"
+                                                autoFocus
+                                                error={birthdayError}
+                                                InputLabelProps={{
+                                                    shrink: true,
+                                                }}
+                                            />
+                                        </Grid>
                                         {/* Address */}
                                         <Grid item xs={6}>
                                             <TextField
-                                                onChange={(e) => setAddress(e.target.value)}
+                                                onChange={(e) => setInformation({...information, address:e.target.value})}
                                                 variant="outlined"
                                                 margin="normal"
+                                                defaultValue={dentalService.address}
                                                 required
                                                 fullWidth
                                                 id="address"
@@ -113,12 +232,85 @@ const DentalServiceForm = ({ activeForm, handleBack, handleNext}) => {
                                                 error={addressError}
                                             />
                                         </Grid>
-                                        
-                                        {/* Other Field */}
+
+                                        {/* Civil Status */}
                                         <Grid item xs={6}>
-                                            {/* Input goes here */}
+                                            <FormControl fullWidth>
+                                                <InputLabel id="demo-simple-select-label">Civil Status</InputLabel>
+                                                <Select
+                                                    labelId="demo-simple-select-label"
+                                                    id="demo-simple-select"
+                                                    defaultValue={dentalService.civilStatus}
+                                                    label="Civil Status"
+                                                    onChange={(e) => setInformation({...information, civilStatus:e.target.value})}
+                                                    error={civilStatusError}
+                                                >
+                                                <MenuItem value={'Single'}>Single</MenuItem>
+                                                <MenuItem value={'Married'}>Married</MenuItem>
+                                                <MenuItem value={'Widowed'}>Widowed</MenuItem>
+                                                <MenuItem value={'Divorced'}>Divorced</MenuItem>
+                                                </Select>
+                                            </FormControl>
                                         </Grid>
-                                    </Grid>
+                                        
+                                        {/* Birth Place */}
+                                        <Grid item xs={6}>
+                                            <TextField
+                                                onChange={(e) => setInformation({...information, birthplace:e.target.value})}
+                                                variant="outlined"
+                                                margin="normal"
+                                                defaultValue={dentalService.birthplace}
+                                                required
+                                                fullWidth
+                                                id="birthplace"
+                                                label="Birthplace"
+                                                name="Birthplace"
+                                                autoComplete="birthplace"
+                                                autoFocus
+                                                error={birthPlaceError}
+                                            />
+                                        </Grid>
+
+                                        {/* Contact Number */}
+                                        <Grid item xs={6}>
+                                            <TextField
+                                                onChange={(e) => setInformation({...information, contactNumber:e.target.value})}
+                                                variant="outlined"
+                                                margin="normal"
+                                                defaultValue={dentalService.contactNumber}
+                                                required
+                                                fullWidth
+                                                id="contactnumber"
+                                                label="Contact Number"
+                                                name="contactnumber"
+                                                autoComplete="ContactNumber"
+                                                autoFocus
+                                                error={contactNumberError}
+                                            />
+                                        </Grid>
+
+                                        {/* Date Received */}
+                                        <Grid item xs={6}>
+                                            <TextField
+                                                type="date"
+                                                onChange={(e) => setInformation({...information, dateReceived:e.target.value})}
+                                                variant="outlined"
+                                                margin="normal"
+                                                required
+                                                fullWidth
+                                                id="DateReceived"
+                                                label="Date Received"
+                                                name="DateReceived"
+                                                autoComplete="DateReceived"
+                                                autoFocus
+                                                error={dateReceivedError}
+                                                defaultValue={dentalService.dateReceived}
+                                                InputLabelProps={{
+                                                    shrink: true,
+                                                }}
+                                            />
+                                        </Grid>
+                                        </Grid>
                                 </div>
 
                                 {/* Buttons */}

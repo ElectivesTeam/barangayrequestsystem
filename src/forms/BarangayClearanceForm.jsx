@@ -11,7 +11,6 @@ import MenuItem from '@mui/material/MenuItem'
 import Select from '@mui/material/Select'
 import FormControl from '@mui/material/FormControl'
 
-
 const useStyles = makeStyles((theme) => ({
     root: {
         padding: '5px 30px 0px 30px',
@@ -42,42 +41,41 @@ const useStyles = makeStyles((theme) => ({
     }
 }));
 
-const BarangayClearanceForm = ({ activeForm, handleBack, handleNext}) => {
+const BarangayClearanceForm = ({ activeForm, handleBack, handleNext, handleChange, barangayClearance }) => {
     const classes = useStyles();
-    const[name, setName] = useState('')
     const[nameError, setNameError] = useState(false)
-
-    const[address, setAddress] = useState('')
     const[addressError, setAddressError] = useState(false)
-
-    const[purpose, setPurpose] = useState('')
     const[purposeError, setPurposeError] = useState(false)
-
-    
+    const [information, setInformation] = useState({
+        name: barangayClearance.name,
+        address: barangayClearance.address,
+        purpose: barangayClearance.purpose
+    });
     const handleSubmit = (e) =>{
         let setChecker = true
         e.preventDefault()
         
         setNameError(false)
-        if(name == ''){
+        if(information.name == ''){
             setNameError(true)
             setChecker = false
         }
 
         setAddressError(false)
-        if(address == ''){
+        if(information.address == ''){
             setAddressError(true)
             setChecker = false
         }
 
         setPurposeError(false)
-        if(purpose == ''){
+        if(information.purpose == ''){
             setPurposeError(true)
             setChecker = false
         }
 
         if(setChecker){
             //function to save the data in the form to the database
+            handleChange("barangayClearanceForm",information)
             handleNext()
         }
     }
@@ -97,9 +95,10 @@ const BarangayClearanceForm = ({ activeForm, handleBack, handleNext}) => {
                                         {/* Name */}
                                         <Grid item xs={6}>
                                             <TextField
-                                                onChange={(e) => setName(e.target.value)}
+                                                onChange={(e) => setInformation({...information, name:e.target.value})}
                                                 variant="outlined"
                                                 margin="normal"
+                                                defaultValue={barangayClearance.name}
                                                 required
                                                 fullWidth
                                                 id="name"
@@ -114,9 +113,10 @@ const BarangayClearanceForm = ({ activeForm, handleBack, handleNext}) => {
                                         {/* Address */}
                                         <Grid item xs={6}>
                                             <TextField
-                                                onChange={(e) => setAddress(e.target.value)}
+                                                onChange={(e) => setInformation({...information, address:e.target.value})}
                                                 variant="outlined"
                                                 margin="normal"
+                                                defaultValue={barangayClearance.address}
                                                 required
                                                 fullWidth
                                                 id="address"
@@ -135,14 +135,14 @@ const BarangayClearanceForm = ({ activeForm, handleBack, handleNext}) => {
                                                 <Select
                                                     labelId="demo-simple-select-label"
                                                     id="demo-simple-select"
-                                                    value={purpose}
+                                                    defaultValue={barangayClearance.purpose}
                                                     label="Purpose"
-                                                    onChange={(e) => setPurpose(e.target.value)}
+                                                    onChange={(e) => setInformation({...information, purpose:e.target.value})}
                                                     error={purposeError}
                                                 >
-                                                <MenuItem value={'N/A'}>N/A</MenuItem>
-                                                <MenuItem value={'N/A'}>N/A</MenuItem>
-                                                <MenuItem value={'N/A'}>N/A</MenuItem>
+                                                <MenuItem value={'one'}>one</MenuItem>
+                                                <MenuItem value={'two'}>two</MenuItem>
+                                                <MenuItem value={'three'}>three</MenuItem>
                                                 </Select>
                                             </FormControl>
                                         </Grid> 

@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState } from 'react'
 import Button  from '@material-ui/core/Button';
 import Dialog from '@mui/material/Dialog';
 import DialogActions from '@mui/material/DialogActions';
@@ -40,7 +40,7 @@ const useStyles = makeStyles((theme) => ({
     }
 }));
 
-const ReviewRequest = ({ handleBack, selectedRequest }) => {
+const ReviewRequest = ({ handleBack, selectedRequest, apiFormsData }) => {
     const classes = useStyles();
     const bailbondform = selectedRequest.indexOf('bailbondform')
     const barangayclearanceform = selectedRequest.indexOf('barangayclearanceform')
@@ -62,6 +62,7 @@ const ReviewRequest = ({ handleBack, selectedRequest }) => {
     const [open, setOpen] = React.useState(false);
     const history = useHistory();
     const handleSubmit = () => {
+
         setOpen(true);
         history.push('/')
     }
@@ -77,21 +78,21 @@ const ReviewRequest = ({ handleBack, selectedRequest }) => {
     return (
         <>
             <FormHeader formTitle={'Review Request'}/>
-                {cedula !== -1 && <Cedula/>}
-                {buildingclearance !== -1 && <BuildingClearance/>}
-                {businessclearance !== -1 && <BusinessClearanceForm/>}
-                {constituentidform !== -1 && <ConstituentIdForm/>}
-                {residencyform !== -1 && <ResidencyForm/>}
-                {barangayclearanceform !== -1 && <BarangayClearanceForm/>}
-                {comelecform !== -1 && <ComelecForm/>}
-                {businessclosure !== -1 && <BusinessClosure/>}
-                {bailbondform !== -1 && <BailBondForm/>}
-                {guardianshipform !== -1 && <GuardianshipForm/>}
-                {indigencyclearance !== -1 && <IndigencyClearance/>}
-                {voucherform !== -1 && <VoucherForm/>}
-                {immunizationform !== -1 && <ImmunizationForm/>}
-                {dentalserviceform !== -1 && <DentalServiceForm/>}
-                {maternalcareform !== -1 && <MaternalCareForm/>}
+                {cedula !== -1 && <Cedula reviewCedula = {apiFormsData.cedulaData}/>}
+                {buildingclearance !== -1 && <BuildingClearance reviewBuildingClearance = {apiFormsData.buildingClearanceData}/>}
+                {businessclearance !== -1 && <BusinessClearanceForm reviewBusinessClearance = {apiFormsData.businessClearanceData}/>}
+                {constituentidform !== -1 && <ConstituentIdForm reviewConstituentId = {apiFormsData.constituentIdData}/>}
+                {residencyform !== -1 && <ResidencyForm reviewResidency = {apiFormsData.residenceData}/>}
+                {barangayclearanceform !== -1 && <BarangayClearanceForm reviewBarangayClearance = {apiFormsData.barangayClearanceData}/>}
+                {comelecform !== -1 && <ComelecForm reviewComelec = {apiFormsData.comelecData}/>}
+                {businessclosure !== -1 && <BusinessClosure reviewBusinessClosure = {apiFormsData.businessClosureData}/>}
+                {bailbondform !== -1 && <BailBondForm reviewBailBond = {apiFormsData.bailBondData}/>}
+                {guardianshipform !== -1 && <GuardianshipForm reviewGuardianship = {apiFormsData.guardianshipData}/>}
+                {indigencyclearance !== -1 && <IndigencyClearance reviewIndigencyClearance = {apiFormsData.indigencyClearanceData}/>}
+                {voucherform !== -1 && <VoucherForm reviewVoucher = {apiFormsData.voucherData}/>}
+                {immunizationform !== -1 && <ImmunizationForm reviewImmunization = {apiFormsData.immunizationData}/>}
+                {dentalserviceform !== -1 && <DentalServiceForm reviewDentalService = {apiFormsData.dentalServiceData}/>}
+                {maternalcareform !== -1 && <MaternalCareForm reviewMaternalCare = {apiFormsData.maternalCareData}/>}
                 
                 
 

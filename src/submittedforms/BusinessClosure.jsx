@@ -7,7 +7,7 @@ import Paper from '@mui/material/Paper';
 const useStyles = makeStyles((theme) => ({
     root: {
         padding: '5px 30px 0px 30px',
-      
+        fontFamily: 'Montserrat'
     },
     title:{ 
         fontWeight: 600,
@@ -20,7 +20,7 @@ const useStyles = makeStyles((theme) => ({
     }
 }));
 
-function BusinessClosureForm(){
+function BusinessClosureForm(reviewBusinessClosure){
     const classes = useStyles();
     return (
         <>
@@ -33,13 +33,13 @@ function BusinessClosureForm(){
                             <div className={classes.info}>
                                 <Grid container spacing={2}>
                                     <Grid item xs={6}>
-                                        <p>Business Name: AWS123</p>
-                                        <p>Business Owner: Juan Dela Cruz</p>
-                                        <p>Business Address: Blk 38 Lot 64 Southfairway Homes Landayan San Pedro Laguna</p>
+                                        <p>Business Name: {reviewBusinessClosure.reviewBusinessClosure.businessName}</p>
+                                        <p>Business Owner: {reviewBusinessClosure.reviewBusinessClosure.businessOwner}</p>
+                                        <p>Business Address: {reviewBusinessClosure.reviewBusinessClosure.businessAddress}</p>
                                     </Grid>
                                     <Grid item xs={6}>
-                                        <p>Nature of Business: Electronics</p>
-                                        <p>Last Business Operation: August 12, 2020</p>
+                                        <p>Nature of Business: {reviewBusinessClosure.reviewBusinessClosure.businessNature}</p>
+                                        <p>Last Business Operation: {reviewBusinessClosure.reviewBusinessClosure.dateReceived}</p>
                                     </Grid>
                                 </Grid>
                             </div>

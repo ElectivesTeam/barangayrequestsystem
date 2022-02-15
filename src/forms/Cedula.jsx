@@ -11,7 +11,6 @@ import MenuItem from '@mui/material/MenuItem'
 import Select from '@mui/material/Select'
 import FormControl from '@mui/material/FormControl'
 
-
 const useStyles = makeStyles((theme) => ({
     root: {
         padding: '5px 30px 0px 30px',
@@ -42,95 +41,91 @@ const useStyles = makeStyles((theme) => ({
     }
 }));
 
-const Cedula = ({ activeForm, handleBack, handleNext}) => {
+const Cedula = ({ activeForm, handleBack, handleNext, handleChange, cedula}) => {
+    console.log(cedula)
     const classes = useStyles();
-    const[name, setName] = useState('')
     const[nameError, setNameError] = useState(false)
-
-    const[address, setAddress] = useState('')
     const[addressError, setAddressError] = useState(false)
-
-    const[birthday, setBirthday] = useState('')
     const[birthdayError, setBirthdayError] = useState(false)
-
-    const[birthPlace, setBirthPlace] = useState('')
     const[birthPlaceError, setBirthPlaceError] = useState(false)
-
-    const[civilStatus, setCivilStatus] = useState('')
     const[civilStatusError, setCivilStatusError] = useState(false)
-
-    const[gender, setGender] = useState('')
     const[genderError, setGenderError] = useState(false)
-    
-    const[nationality, setNationality] = useState('')
     const[nationalityError, setNationalityError] = useState(false)
-
-    const[profession, setProfession] = useState('')
     const[professionError, setProfessionError] = useState(false)
-
-    const[monthlyIncome, setMonthlyIncome] = useState('')
     const[monthlyIncomeError, setMonthlyIncomeError] = useState(false)
-
+    const [information, setInformation] = useState({
+        name: cedula.name,
+        address: cedula.address,
+        birthday: cedula.birthday,
+        birthplace: cedula.birthplace,
+        civilStatus: cedula.civilStatus,
+        gender: cedula.gender,
+        nationality: cedula.nationality,
+        profession: cedula.profession,
+        monthlyIncome: cedula.monthlyIncome,
+        
+    });
     const handleSubmit = (e) =>{
         let setChecker = true
         e.preventDefault()
         
         setNameError(false)
-        if(name == ''){
+        if(information.name == ''){
             setNameError(true)
             setChecker = false
         }
 
         setAddressError(false)
-        if(address == ''){
+        if(information.address == ''){
             setAddressError(true)
             setChecker = false
         }
 
         setBirthdayError(false)
-        if(birthday == ''){
+        if(information.birthday == ''){
             setBirthdayError(true)
             setChecker = false
         }
 
         setBirthPlaceError(false)
-        if(birthPlace == ''){
+        if(information.birthplace == ''){
             setBirthPlaceError(true)
             setChecker = false
         }
 
         setCivilStatusError(false)
-        if(civilStatus == ''){
+        if(information.civilStatus == ''){
             setCivilStatusError(true)
             setChecker = false
         }
 
         setGenderError(false)
-        if(gender == ''){
+        if(information.gender == ''){
             setGenderError(true)
             setChecker = false
         }
 
         setNationalityError(false)
-        if(nationality == ''){
+        if(information.nationality == ''){
             setNationalityError(true)
             setChecker = false
         }
 
         setProfessionError(false)
-        if(profession == ''){
+        if(information.profession == ''){
             setProfessionError(true)
             setChecker = false
         }
 
         setMonthlyIncomeError(false)
-        if(monthlyIncome == ''){
+        if(information.monthlyIncome == ''){
             setMonthlyIncomeError(true)
             setChecker = false
         }
 
         if(setChecker){
             //function to save the data in the form to the database
+            handleChange("cedulaForm", information)
             handleNext()
         }
     }
@@ -150,9 +145,10 @@ const Cedula = ({ activeForm, handleBack, handleNext}) => {
                                         {/* Name */}
                                         <Grid item xs={6}>
                                             <TextField
-                                                onChange={(e) => setName(e.target.value)}
+                                                onChange={(e) => setInformation({...information, name:e.target.value})}
                                                 variant="outlined"
                                                 margin="normal"
+                                                defaultValue={cedula.name}
                                                 required
                                                 fullWidth
                                                 id="name"
@@ -167,9 +163,10 @@ const Cedula = ({ activeForm, handleBack, handleNext}) => {
                                         {/* Address */}
                                         <Grid item xs={6}>
                                             <TextField
-                                                onChange={(e) => setAddress(e.target.value)}
+                                                onChange={(e) => setInformation({...information, address:e.target.value})}
                                                 variant="outlined"
                                                 margin="normal"
+                                                defaultValue={cedula.address}
                                                 required
                                                 fullWidth
                                                 id="address"
@@ -185,9 +182,10 @@ const Cedula = ({ activeForm, handleBack, handleNext}) => {
                                         <Grid item xs={6}>
                                             <TextField
                                                 type="date"
-                                                onChange={(e) => setBirthday(e.target.value)}
+                                                onChange={(e) => setInformation({...information, birthday:e.target.value})}
                                                 variant="outlined"
                                                 margin="normal"
+                                                defaultValue={cedula.birthday}
                                                 required
                                                 fullWidth
                                                 id="birthday"
@@ -206,9 +204,10 @@ const Cedula = ({ activeForm, handleBack, handleNext}) => {
                                         {/* Birth Place */}
                                         <Grid item xs={6}>
                                             <TextField
-                                                onChange={(e) => setBirthPlace(e.target.value)}
+                                                onChange={(e) => setInformation({...information, birthplace:e.target.value})}
                                                 variant="outlined"
                                                 margin="normal"
+                                                defaultValue={cedula.birthplace}
                                                 required
                                                 fullWidth
                                                 id="birthplace"
@@ -227,15 +226,15 @@ const Cedula = ({ activeForm, handleBack, handleNext}) => {
                                                 <Select
                                                     labelId="demo-simple-select-label"
                                                     id="demo-simple-select"
-                                                    value={civilStatus}
+                                                    defaultValue={cedula.civilStatus}
                                                     label="Civil Status"
-                                                    onChange={(e) => setCivilStatus(e.target.value)}
+                                                    onChange={(e) => setInformation({...information, civilStatus:e.target.value})}
                                                     error={civilStatusError}
                                                 >
-                                                <MenuItem value={'Single'}>Single</MenuItem>
-                                                <MenuItem value={'Married'}>Married</MenuItem>
-                                                <MenuItem value={'Widowed'}>Widowed</MenuItem>
-                                                <MenuItem value={'Divorced'}>Divorced</MenuItem>
+                                                <MenuItem value={'SINGLE'}>Single</MenuItem>
+                                                <MenuItem value={'MARRIED'}>Married</MenuItem>
+                                                <MenuItem value={'WIDOWED'}>Widowed</MenuItem>
+                                                <MenuItem value={'DIVORCED'}>Divorced</MenuItem>
                                                 </Select>
                                             </FormControl>
                                         </Grid> 
@@ -247,13 +246,13 @@ const Cedula = ({ activeForm, handleBack, handleNext}) => {
                                                 <Select
                                                     labelId="demo-simple-select-label"
                                                     id="demo-simple-select"
-                                                    value={civilStatus}
+                                                    defaultValue={cedula.gender}
                                                     label="Gender"
-                                                    onChange={(e) => setGender(e.target.value)}
+                                                    onChange={(e) => setInformation({...information, gender:e.target.value})}
                                                     error={genderError}
                                                 >
-                                                <MenuItem value={'Female'}>Female</MenuItem>
-                                                <MenuItem value={'Male'}>Male</MenuItem>
+                                                <MenuItem value={'FEMALE'}>Female</MenuItem>
+                                                <MenuItem value={'MALE'}>Male</MenuItem>
                                                 </Select>
                                             </FormControl>
                                         </Grid>
@@ -261,9 +260,10 @@ const Cedula = ({ activeForm, handleBack, handleNext}) => {
                                         {/* Nationality */}
                                         <Grid item xs={6}>
                                             <TextField
-                                                onChange={(e) => setNationality(e.target.value)}
+                                                onChange={(e) => setInformation({...information, nationality:e.target.value})}
                                                 variant="outlined"
                                                 margin="normal"
+                                                defaultValue={cedula.nationality}
                                                 required
                                                 fullWidth
                                                 id="nationality"
@@ -278,9 +278,10 @@ const Cedula = ({ activeForm, handleBack, handleNext}) => {
                                         {/* Profession */}
                                         <Grid item xs={6}>
                                             <TextField
-                                                onChange={(e) => setProfession(e.target.value)}
+                                                onChange={(e) => setInformation({...information, profession:e.target.value})}
                                                 variant="outlined"
                                                 margin="normal"
+                                                defaultValue={cedula.profession}
                                                 required
                                                 fullWidth
                                                 id="profession"
@@ -294,9 +295,10 @@ const Cedula = ({ activeForm, handleBack, handleNext}) => {
                                         {/* Monthly Income */}
                                         <Grid item xs={6}>
                                             <TextField
-                                                onChange={(e) => setMonthlyIncome(e.target.value)}
+                                                onChange={(e) => setInformation({...information, monthlyIncome:e.target.value})}
                                                 variant="outlined"
                                                 margin="normal"
+                                                defaultValue={cedula.monthlyIncome}
                                                 required
                                                 fullWidth
                                                 id="monthlyincome"

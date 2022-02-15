@@ -11,7 +11,6 @@ import MenuItem from '@mui/material/MenuItem'
 import Select from '@mui/material/Select'
 import FormControl from '@mui/material/FormControl'
 
-
 const useStyles = makeStyles((theme) => ({
     root: {
         padding: '5px 30px 0px 30px',
@@ -42,86 +41,83 @@ const useStyles = makeStyles((theme) => ({
     }
 }));
 
-const ConstituentIdForm = ({ activeForm, handleBack, handleNext}) => {
+const ConstituentIdForm = ({ activeForm, handleBack, handleNext, handleChange, constituentId}) => {
     const classes = useStyles();
-    const[lastName, setLastName] = useState('')
     const[lastNameError, setLastNameError] = useState(false)
-
-    const[middleName, setMiddleName] = useState('')
     const[middleNameError, setMiddleNameError] = useState(false)
-
-    const[firstName, setFirstName] = useState('')
     const[firstNameError, setFirstNameError] = useState(false)
-
-    const[address, setAddress] = useState('')
     const[addressError, setAddressError] = useState(false)
-
-    const[civilStatus, setCivilStatus] = useState('')
     const[civilStatusError, setCivilStatusError] = useState(false)
-
-    const[birthPlace, setBirthPlace] = useState('')
     const[birthPlaceError, setBirthPlaceError] = useState(false)
-
-    const[contactNumber, setContactNumber] = useState('')
     const[contactNumberError, setContactNumberError] = useState(false)
-
-    const[dateReceived, setDateReceived] = useState('')
     const[dateReceivedError, setDateReceivedError] = useState(false)
-    
+    const [information, setInformation] = useState({
+        last_name: constituentId.last_name,
+        middle_name: constituentId.middle_name,
+        first_name: constituentId.first_name,
+        address: constituentId.address,
+        civilStatus: constituentId.civilStatus,
+        birthplace: constituentId.birthplace,
+        contactNumber: constituentId.contactNumber,
+        dateReceived: constituentId.dateReceived
+        
+    });
     const handleSubmit = (e) =>{
         let setChecker = true
         e.preventDefault()
         
         setLastNameError(false)
-        if(lastName == ''){
+        if(information.last_name == ''){
             setLastNameError(true)
             setChecker = false
         }
 
         setMiddleNameError(false)
-        if(middleName == ''){
+        if(information.middle_name == ''){
             setMiddleNameError(true)
             setChecker = false
         }
 
         setFirstNameError(false)
-        if(firstName == ''){
+        if(information.first_name == ''){
             setFirstNameError(true)
             setChecker = false
         }
 
         setAddressError(false)
-        if(address == ''){
+        if(information.address == ''){
             setAddressError(true)
             setChecker = false
         }
 
         setCivilStatusError(false)
-        if(civilStatus == ''){
+        if(information.civilStatus == ''){
             setCivilStatusError(true)
             setChecker = false
         }
 
         setBirthPlaceError(false)
-        if(birthPlace == ''){
+        if(information.birthplace == ''){
             setBirthPlaceError(true)
             setChecker = false
         }
 
         setContactNumberError(false)
-        if(contactNumber == ''){
+        if(information.contactNumber == ''){
             setContactNumberError(true)
             setChecker = false
         }
 
         setDateReceivedError(false)
-        if(dateReceived == ''){
+        if(information.dateReceived == ''){
             setDateReceivedError(true)
             setChecker = false
         }
 
         if(setChecker){
             //function to save the data in the form to the database
+            console.log(information)
+            handleChange("constituentIdForm", information)
             handleNext()
         }
     }
@@ -141,9 +137,10 @@ const ConstituentIdForm = ({ activeForm, handleBack, handleNext}) => {
                                         {/* Last Name */}
                                         <Grid item xs={6}>
                                             <TextField
-                                                onChange={(e) => setLastName(e.target.value)}
+                                                onChange={(e) => setInformation({...information, last_name:e.target.value})}
                                                 variant="outlined"
                                                 margin="normal"
+                                                defaultValue={constituentId.last_name}
                                                 required
                                                 fullWidth
                                                 id="lastname"
@@ -158,9 +155,10 @@ const ConstituentIdForm = ({ activeForm, handleBack, handleNext}) => {
                                         {/* Middle Name */}
                                         <Grid item xs={6}>
                                             <TextField
-                                                onChange={(e) => setMiddleName(e.target.value)}
+                                                onChange={(e) => setInformation({...information, middle_name:e.target.value})}
                                                 variant="outlined"
                                                 margin="normal"
+                                                defaultValue={constituentId.middle_name}
                                                 required
                                                 fullWidth
                                                 id="middlename"
@@ -175,9 +173,10 @@ const ConstituentIdForm = ({ activeForm, handleBack, handleNext}) => {
                                         {/* First Name */}
                                         <Grid item xs={6}>
                                             <TextField
-                                                onChange={(e) => setFirstName(e.target.value)}
+                                                onChange={(e) => setInformation({...information, first_name:e.target.value})}
                                                 variant="outlined"
                                                 margin="normal"
+                                                defaultValue={constituentId.first_name}
                                                 required
                                                 fullWidth
                                                 id="firstname"
@@ -192,9 +191,10 @@ const ConstituentIdForm = ({ activeForm, handleBack, handleNext}) => {
                                         {/* Address */}
                                         <Grid item xs={6}>
                                             <TextField
-                                                onChange={(e) => setAddress(e.target.value)}
+                                                onChange={(e) => setInformation({...information, address:e.target.value})}
                                                 variant="outlined"
                                                 margin="normal"
+                                                defaultValue={constituentId.address}
                                                 required
                                                 fullWidth
                                                 id="address"
@@ -213,15 +213,15 @@ const ConstituentIdForm = ({ activeForm, handleBack, handleNext}) => {
                                                 <Select
                                                     labelId="demo-simple-select-label"
                                                     id="demo-simple-select"
-                                                    value={civilStatus}
+                                                    defaultValue={constituentId.civilStatus}
                                                     label="Civil Status"
-                                                    onChange={(e) => setCivilStatus(e.target.value)}
+                                                    onChange={(e) => setInformation({...information, civilStatus:e.target.value})}
                                                     error={civilStatusError}
                                                 >
-                                                <MenuItem value={'Single'}>Single</MenuItem>
-                                                <MenuItem value={'Married'}>Married</MenuItem>
-                                                <MenuItem value={'Widowed'}>Widowed</MenuItem>
-                                                <MenuItem value={'Divorced'}>Divorced</MenuItem>
+                                                <MenuItem value={'SINGLE'}>Single</MenuItem>
+                                                <MenuItem value={'MARRIED'}>Married</MenuItem>
+                                                <MenuItem value={'WIDOWED'}>Widowed</MenuItem>
+                                                <MenuItem value={'DIVORCED'}>Divorced</MenuItem>
                                                 </Select>
                                             </FormControl>
                                         </Grid>
@@ -229,9 +229,10 @@ const ConstituentIdForm = ({ activeForm, handleBack, handleNext}) => {
                                         {/* Birth Place */}
                                         <Grid item xs={6}>
                                             <TextField
-                                                onChange={(e) => setBirthPlace(e.target.value)}
+                                                onChange={(e) => setInformation({...information, birthplace:e.target.value})}
                                                 variant="outlined"
                                                 margin="normal"
+                                                defaultValue={constituentId.birthplace}
                                                 required
                                                 fullWidth
                                                 id="birthplace"
@@ -246,9 +247,10 @@ const ConstituentIdForm = ({ activeForm, handleBack, handleNext}) => {
                                         {/* Contact Number */}
                                         <Grid item xs={6}>
                                             <TextField
-                                                onChange={(e) => setContactNumber(e.target.value)}
+                                                onChange={(e) => setInformation({...information, contactNumber:e.target.value})}
                                                 variant="outlined"
                                                 margin="normal"
+                                                defaultValue={constituentId.contactNumber}
                                                 required
                                                 fullWidth
                                                 id="contactnumber"
@@ -264,7 +266,7 @@ const ConstituentIdForm = ({ activeForm, handleBack, handleNext}) => {
                                         <Grid item xs={6}>
                                             <TextField
                                                 type="date"
-                                                onChange={(e) => setDateReceived(e.target.value)}
+                                                onChange={(e) => setInformation({...information, dateReceived:e.target.value})}
                                                 variant="outlined"
                                                 margin="normal"
                                                 required
@@ -275,7 +277,7 @@ const ConstituentIdForm = ({ activeForm, handleBack, handleNext}) => {
                                                 autoComplete="DateReceived"
                                                 autoFocus
                                                 error={dateReceivedError}
-                                                defaultValue="2017-05-24"
+                                                defaultValue={constituentId.dateReceived}
                                                 InputLabelProps={{
                                                     shrink: true,
                                                 }}

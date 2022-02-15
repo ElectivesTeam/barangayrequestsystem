@@ -38,32 +38,51 @@ const useStyles = makeStyles((theme) => ({
     }
 }));
 
-const BusinessClearanceForm = ({ activeForm, handleBack, handleNext}) => {
+const BusinessClearanceForm = ({ activeForm, handleBack, handleNext, handleChange, businessClearance}) => {
     const classes = useStyles();
-    const[name, setName] = useState('')
     const[nameError, setNameError] = useState(false)
-
-    const[address, setAddress] = useState('')
     const[addressError, setAddressError] = useState(false)
+    const[ownerError, setOwnerError] = useState(false)
+    const[natureError, setNatureError] = useState(false)
+    const [information, setInformation] = useState({
+        businessName: businessClearance.businessName,
+        businessOwner: businessClearance.businessOwner,
+        businessAddress: businessClearance.businessAddress,
+        businessNature: businessClearance.businessNature
+    });
     
     const handleSubmit = (e) =>{
         let setChecker = true
         e.preventDefault()
         
         setNameError(false)
-        if(name == ''){
+        if(information.businessName == ''){
             setNameError(true)
             setChecker = false
         }
 
         setAddressError(false)
-        if(address == ''){
+        if(information.businessAddress == ''){
             setAddressError(true)
+            setChecker = false
+        }
+
+        setOwnerError(false)
+        if(information.businessOwner == ''){
+            setOwnerError(true)
+            setChecker = false
+        }
+
+        setNatureError(false)
+        if(information.businessNature == ''){
+            setNatureError(true)
             setChecker = false
         }
 
         if(setChecker){
             //function to save the data in the form to the database
+            handleChange("businessClearanceForm",information)
+            console.log(information)
             handleNext()
         }
     }
@@ -80,16 +99,17 @@ const BusinessClearanceForm = ({ activeForm, handleBack, handleNext}) => {
                                 <div className={classes.info}>
                                     <Grid container spacing={2}>
 
-                                        {/* Name */}
+                                        {/* Business Name */}
                                         <Grid item xs={6}>
                                             <TextField
-                                                onChange={(e) => setName(e.target.value)}
+                                                onChange={(e) => setInformation({...information, businessName:e.target.value})}
                                                 variant="outlined"
                                                 margin="normal"
+                                                defaultValue={businessClearance.businessName}
                                                 required
                                                 fullWidth
                                                 id="name"
-                                                label="Name"
+                                                label="Business Name"
                                                 name="name"
                                                 autoComplete="name"
                                                 autoFocus
@@ -97,20 +117,54 @@ const BusinessClearanceForm = ({ activeForm, handleBack, handleNext}) => {
                                             />
                                         </Grid>
                                         
-                                        {/* Address */}
+                                        {/* Business Address */}
                                         <Grid item xs={6}>
                                             <TextField
-                                                onChange={(e) => setAddress(e.target.value)}
+                                                onChange={(e) => setInformation({...information, businessAddress:e.target.value})}
                                                 variant="outlined"
                                                 margin="normal"
+                                                defaultValue={businessClearance.businessAddress}
                                                 required
                                                 fullWidth
                                                 id="address"
-                                                label="Address"
+                                                label="Business Address"
                                                 name="address"
                                                 autoComplete="address"
-                                                autoFocus
                                                 error={addressError}
+                                            />
+                                        </Grid>
+
+                                        {/* Business Owner */}
+                                        <Grid item xs={6}>
+                                            <TextField
+                                                onChange={(e) => setInformation({...information, businessOwner:e.target.value})}
+                                                variant="outlined"
+                                                margin="normal"
+                                                defaultValue={businessClearance.businessOwner}
+                                                required
+                                                fullWidth
+                                                id="owner"
+                                                label="Business Owner"
+                                                name="owner"
+                                                autoComplete="owner"                                               
+                                                error={ownerError}
+                                            />
+                                        </Grid>
+
+                                        {/* Business Nature */}
+                                        <Grid item xs={6}>
+                                            <TextField
+                                                onChange={(e) => setInformation({...information, businessNature:e.target.value})}
+                                                variant="outlined"
+                                                margin="normal"
+                                                defaultValue={businessClearance.businessNature}
+                                                required
+                                                fullWidth
+                                                id="nature"
+                                                label="Business Nature"
+                                                name="nature"
+                                                autoComplete="nature"
+                                                error={natureError}
                                             />
                                         </Grid>
                                     </Grid>

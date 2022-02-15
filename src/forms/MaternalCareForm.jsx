@@ -7,7 +7,6 @@ import { makeStyles } from '@material-ui/core/styles'
 import Paper from '@mui/material/Paper';
 import Box from '@mui/material/Box';
 
-
 const useStyles = makeStyles((theme) => ({
     root: {
         padding: '5px 30px 0px 30px',
@@ -38,32 +37,41 @@ const useStyles = makeStyles((theme) => ({
     }
 }));
 
-const MaternalCareForm = ({ activeForm, handleBack, handleNext}) => {
+const MaternalCareForm = ({ activeForm, handleBack, handleNext, handleChange, maternalCare}) => {
     const classes = useStyles();
-    const[name, setName] = useState('')
     const[nameError, setNameError] = useState(false)
-
-    const[address, setAddress] = useState('')
     const[addressError, setAddressError] = useState(false)
-    
+    const[guardianError, setGuardianError] = useState(false)
+    const [information, setInformation] = useState({
+        name: maternalCare.name,
+        address: maternalCare.address,
+        guardian: maternalCare.guardian
+    });
+
     const handleSubmit = (e) =>{
         let setChecker = true
         e.preventDefault()
         
         setNameError(false)
-        if(name == ''){
+        if(information.name == ''){
             setNameError(true)
             setChecker = false
         }
 
         setAddressError(false)
-        if(address == ''){
+        if(information.address == ''){
             setAddressError(true)
+            setChecker = false
+        }
+        setGuardianError(false)
+        if(information.guardian == ''){
+            setGuardianError(true)
             setChecker = false
         }
 
         if(setChecker){
             //function to save the data in the form to the database
+            handleChange("maternalCareForm", information)
             handleNext()
         }
     }
@@ -83,9 +91,10 @@ const MaternalCareForm = ({ activeForm, handleBack, handleNext}) => {
                                         {/* Name */}
                                         <Grid item xs={6}>
                                             <TextField
-                                                onChange={(e) => setName(e.target.value)}
+                                                onChange={(e) => setInformation({...information, name:e.target.value})}
                                                 variant="outlined"
                                                 margin="normal"
+                                                defaultValue={maternalCare.name}
                                                 required
                                                 fullWidth
                                                 id="name"
@@ -100,9 +109,10 @@ const MaternalCareForm = ({ activeForm, handleBack, handleNext}) => {
                                         {/* Address */}
                                         <Grid item xs={6}>
                                             <TextField
-                                                onChange={(e) => setAddress(e.target.value)}
+                                                onChange={(e) => setInformation({...information, name:e.target.value})}
                                                 variant="outlined"
                                                 margin="normal"
+                                                defaultValue={maternalCare.address}
                                                 required
                                                 fullWidth
                                                 id="address"
@@ -113,7 +123,24 @@ const MaternalCareForm = ({ activeForm, handleBack, handleNext}) => {
                                                 error={addressError}
                                             />
                                         </Grid>
-                                        
+
+                                        {/* Guardian */}
+                                        <Grid item xs={6}>
+                                            <TextField
+                                                onChange={(e) => setInformation({...information, guardian:e.target.value})}
+                                                variant="outlined"
+                                                margin="normal"
+                                                defaultValue={maternalCare.guardian}
+                                                required
+                                                fullWidth
+                                                id="guardian"
+                                                label="Guardian"
+                                                name="guardian"
+                                                autoComplete="guardian"
+                                                autoFocus
+                                                error={guardianError}
+                                            />
+                                        </Grid>
                                         {/* Other Field */}
                                         <Grid item xs={6}>
                                             {/* Input goes here */}

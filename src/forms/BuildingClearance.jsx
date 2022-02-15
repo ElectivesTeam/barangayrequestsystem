@@ -11,7 +11,6 @@ import MenuItem from '@mui/material/MenuItem'
 import Select from '@mui/material/Select'
 import FormControl from '@mui/material/FormControl'
 
-
 const useStyles = makeStyles((theme) => ({
     root: {
         padding: '5px 30px 0px 30px',
@@ -42,41 +41,42 @@ const useStyles = makeStyles((theme) => ({
     }
 }));
 
-const BuildingClearance = ({ activeForm, handleBack, handleNext}) => {
+const BuildingClearance = ({ activeForm, handleBack, handleNext, handleChange, buildingClearance}) => {
     const classes = useStyles();
-    const[name, setName] = useState('')
     const[nameError, setNameError] = useState(false)
-
-    const[address, setAddress] = useState('')
     const[addressError, setAddressError] = useState(false)
-
-    const[type, setType] = useState('')
     const[typeError, setTypeError] = useState(false)
     
+    const [information, setInformation] = useState({
+        name: buildingClearance.name,
+        address: buildingClearance.address,
+        type: buildingClearance.type
+    });
     const handleSubmit = (e) =>{
         let setChecker = true
         e.preventDefault()
         
         setNameError(false)
-        if(name == ''){
+        if(information.name == ''){
             setNameError(true)
             setChecker = false
         }
 
         setAddressError(false)
-        if(address == ''){
+        if(information.address == ''){
             setAddressError(true)
             setChecker = false
         }
 
         setTypeError(false)
-        if(type == ''){
+        if(information.type == ''){
             setTypeError(true)
             setChecker = false
         }
 
         if(setChecker){
             //function to save the data in the form to the database
+            handleChange("buildingClearanceForm",information)
             handleNext()
         }
     }
@@ -96,9 +96,10 @@ const BuildingClearance = ({ activeForm, handleBack, handleNext}) => {
                                         {/* Name */}
                                         <Grid item xs={6}>
                                             <TextField
-                                                onChange={(e) => setName(e.target.value)}
+                                                onChange={(e) => setInformation({...information, name:e.target.value})}
                                                 variant="outlined"
                                                 margin="normal"
+                                                defaultValue={buildingClearance.name}
                                                 required
                                                 fullWidth
                                                 id="name"
@@ -113,9 +114,10 @@ const BuildingClearance = ({ activeForm, handleBack, handleNext}) => {
                                         {/* Address */}
                                         <Grid item xs={6}>
                                             <TextField
-                                                onChange={(e) => setAddress(e.target.value)}
+                                                onChange={(e) => setInformation({...information, address:e.target.value})}
                                                 variant="outlined"
                                                 margin="normal"
+                                                defaultValue={buildingClearance.address}
                                                 required
                                                 fullWidth
                                                 id="address"
@@ -134,9 +136,9 @@ const BuildingClearance = ({ activeForm, handleBack, handleNext}) => {
                                                 <Select
                                                     labelId="demo-simple-select-label"
                                                     id="demo-simple-select"
-                                                    value={type}
+                                                    defaultValue={buildingClearance.type}
                                                     label="Type"
-                                                    onChange={(e) => setType(e.target.value)}
+                                                    onChange={(e) => setInformation({...information, type:e.target.value})}
                                                     error={typeError}
                                                 >
                                                 <MenuItem value={'Repair'}>Repair</MenuItem>

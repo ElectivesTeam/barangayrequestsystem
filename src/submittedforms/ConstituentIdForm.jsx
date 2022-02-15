@@ -7,7 +7,7 @@ import Paper from '@mui/material/Paper';
 const useStyles = makeStyles((theme) => ({
     root: {
         padding: '5px 30px 0px 30px',
-      
+        fontFamily: 'Montserrat'
     },
     title:{ 
         fontWeight: 600,
@@ -20,7 +20,7 @@ const useStyles = makeStyles((theme) => ({
     }
 }));
 
-function ConstituentIdForm(){
+function ConstituentIdForm(reviewConstituentId){
     const classes = useStyles();
     return (
         <>
@@ -33,17 +33,16 @@ function ConstituentIdForm(){
                             <div className={classes.info}>
                                 <Grid container spacing={2}>
                                     <Grid item xs={6}>
-                                        <p>Last Name: Dela Cruz</p>
-                                        <p>First Name: Juan</p>
-                                        <p>Middle Name: Valdez</p>
-                                        <p>Birthday: October 5, 2000</p>
-                                        <p>Address: Blk 38 Lot 64 Southfairway Homes Landayan San Pedro Laguna</p>
+                                        <p>Last Name: {reviewConstituentId.reviewConstituentId.last_name}</p>
+                                        <p>First Name: {reviewConstituentId.reviewConstituentId.first_name}</p>
+                                        <p>Middle Name: {reviewConstituentId.reviewConstituentId.middle_name}</p>
+                                        <p>Address: {reviewConstituentId.reviewConstituentId.address}</p>
                                     </Grid>
                                     <Grid item xs={6}>
-                                        <p>Civil Status: Married</p>
-                                        <p>Birthplace: Catalan Medical Hospital</p>
-                                        <p>Contact Number: 09392948571</p>
-                                        <p>Date Received: November 9, 2021</p>
+                                        <p>Civil Status: {reviewConstituentId.reviewConstituentId.civilStatus}</p>
+                                        <p>Birthplace: {reviewConstituentId.reviewConstituentId.birthplace}</p>
+                                        <p>Contact Number: {reviewConstituentId.reviewConstituentId.contactNumber}</p>
+                                        <p>Date Received: {reviewConstituentId.reviewConstituentId.dateReceived}</p>
                                     </Grid>
                                 </Grid>
                             </div>
