@@ -15,6 +15,9 @@ import { makeStyles } from '@material-ui/core/styles';
 import MailOutlineIcon from '@material-ui/icons/MailOutline';
 import InputAdornment from '@material-ui/core/InputAdornment';
 import LockOpenIcon from '@material-ui/icons/LockOpen';
+import IconButton from '@material-ui/core/IconButton';
+import Visibility from '@material-ui/icons/Visibility';
+import VisibilityOff from '@material-ui/icons/VisibilityOff';
 
 import AuthService from "../services/auth.service";
 import { useHistory } from "react-router-dom";
@@ -109,6 +112,15 @@ const useStyles = makeStyles((theme) => ({
 
 function SignInSide() {
   const classes = useStyles();
+
+  const [values, setValues] = useState({
+    password: '',
+    showPassword: false,
+    });
+
+    const handleClickShowPassword = () => {
+      setValues({ ...values, showPassword: !values.showPassword });
+    };
 
   const[email, setEmail] = useState('')
   const[password, setPassword] = useState('')
@@ -207,7 +219,7 @@ function SignInSide() {
                 fullWidth
                 name="password"
                 label="Password"
-                type="password"
+                type={values.showPassword ? 'text' : 'password'}
                 id="password"
                 autoComplete="current-password"
                 error={passwordError}
@@ -215,6 +227,17 @@ function SignInSide() {
                   startAdornment: (
                     <InputAdornment position="start">
                       <LockOpenIcon />
+                    </InputAdornment>
+                  ),
+                  endAdornment: (
+                    <InputAdornment position="end">
+                      <IconButton
+                        aria-label="toggle password visibility"
+                          onClick={handleClickShowPassword}
+                          edge="end"
+                      >
+                        {values.showPassword ? <Visibility /> : <VisibilityOff />}
+                      </IconButton>
                     </InputAdornment>
                   ),
                 }}
