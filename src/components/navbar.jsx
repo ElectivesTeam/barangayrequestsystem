@@ -14,6 +14,9 @@ import Tooltip from '@material-ui/core/Tooltip';
 import Button from '@material-ui/core/Button';
 import NoteAddIcon from '@material-ui/icons/NoteAdd';
 
+import AuthService from "../services/auth.service";
+import { useHistory } from "react-router-dom";
+
 const useStyles = makeStyles((theme) => ({
   root: {
     flexGrow: 1,
@@ -77,6 +80,81 @@ export default function MenuAppBar() {
     setAnchorEl(null);
   };
 
+  const Logout = () => {
+    setAnchorEl(null);
+    AuthService.logout();
+  };
+
+  const user = AuthService.getCurrentUser()
+  
+  const loginButton = () => {
+    if(user){
+    }else{
+      return <Tooltip title="Login" color="inherit"> 
+        <IconButton
+          href="/login"
+        >
+          <VpnKeyIcon />
+        </IconButton>
+      </Tooltip>
+    }
+  }
+  
+  const profileMenu = () => {
+    if(user){
+      return <div style={{display: "contents"}}>
+        <Tooltip title="Menu" color="inherit">
+          <IconButton
+            aria-label="account of current user"
+            aria-controls="menu-appbar"
+            aria-haspopup="true"
+            onClick={handleMenu}                  
+          >
+            <AccountCircle />
+          </IconButton>
+        </Tooltip>
+        <Menu
+          className={classes.styledMenu}
+          id="menu-appbar"
+          anchorEl={anchorEl}
+          anchorOrigin={{
+            vertical: 'top',
+            horizontal: 'right',
+          }}
+          keepMounted
+          transformOrigin={{
+            vertical: 'top',
+            horizontal: 'right',
+          }}
+          open={open}
+          onClose={handleClose}
+        >
+          <MenuItem
+            className={classes.styledMenuItem}  
+            onClick={handleClose}
+            component={Link}
+            to="/myaccount"
+            >                   
+          My Account</MenuItem>
+          <MenuItem
+            className={classes.styledMenuItem}  
+            onClick={handleClose}
+            component={Link}
+            to="#"
+            >                   
+          My Requests</MenuItem>
+          <MenuItem 
+            className={classes.styledMenuItem} 
+            onClick={Logout}
+            component={Link}
+            to="/"
+            >                   
+          Logout</MenuItem>
+        </Menu>
+      </div>
+    }
+  }
+
   return (
     <div className={classes.root}>
       <AppBar position="static" className={classes.navbar} color="primary">
@@ -84,11 +162,9 @@ export default function MenuAppBar() {
           <Button href="/">
           <img src="../img/Brgy Landayan Logo.png" className={classes.logo} alt=""  />
           </Button>
-          
           <Typography variant="h6" className={classes.title} >
             Online Document Request
           </Typography>
-          
           { (
             <div className={classes.divTool}> 
               <Tooltip title="Home" color="inherit">
@@ -98,76 +174,16 @@ export default function MenuAppBar() {
                 <HomeIcon />
                 </IconButton>
               </Tooltip>
-              
-              <Tooltip title="Login" color="inherit"> 
-                <IconButton
-                  href="/login"
-                  
-                >
-                  <VpnKeyIcon />
-                </IconButton>
-              </Tooltip>
-
+              {loginButton()}
               <Tooltip title="Request" color="inherit"> 
                 <IconButton
                   href="/requests"
-                  
                 >
                   <NoteAddIcon />
                 </IconButton>
               </Tooltip>
-              
-              <Tooltip title="Menu" color="inherit">
-                <IconButton
-                  aria-label="account of current user"
-                  aria-controls="menu-appbar"
-                  aria-haspopup="true"
-                  onClick={handleMenu}
-                  
-                >
-                  <AccountCircle />
-                </IconButton>
-              </Tooltip>
-              
-              <Menu
-                className={classes.styledMenu}
-                id="menu-appbar"
-                anchorEl={anchorEl}
-                anchorOrigin={{
-                  vertical: 'top',
-                  horizontal: 'right',
-                }}
-                keepMounted
-                transformOrigin={{
-                  vertical: 'top',
-                  horizontal: 'right',
-                }}
-                open={open}
-                onClose={handleClose}
-              >
-                <MenuItem
-                  className={classes.styledMenuItem}  
-                  onClick={handleClose}
-                  component={Link}
-                  to="/myaccount"
-                  >                   
-                My Account</MenuItem>
-                <MenuItem
-                  className={classes.styledMenuItem}  
-                  onClick={handleClose}
-                  component={Link}
-                  to="#"
-                  >                   
-                My Requests</MenuItem>
-                <MenuItem 
-                  className={classes.styledMenuItem} 
-                  onClick={handleClose}
-                  component={Link}
-                  to="#"
-                  >                   
-                Logout</MenuItem>
-              </Menu>
-                  
+              {profileMenu()}       
+                   
             </div>
           )}
         </Toolbar>

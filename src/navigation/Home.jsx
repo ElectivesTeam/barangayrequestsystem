@@ -8,6 +8,7 @@ import CardContent from '@material-ui/core/CardContent';
 import CardMedia from '@material-ui/core/CardMedia';
 import Button from '@material-ui/core/Button';
 import Divider from '@material-ui/core/Divider';
+import AuthService from "../services/auth.service";
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -143,8 +144,24 @@ const useStyles = makeStyles((theme) => ({
 
     
 }));
+
+const user = AuthService.getCurrentUser()
+
 function Home() {
     const classes = useStyles();
+    const getStarted = () => {
+        if (!user) {
+            return <div style={{display: "contents"}}>
+                <Button href="/register" variant="contained" className={classes.styledButton} color = "primary" >
+                            Get Started
+                </Button>
+            </div>
+        }
+        else {
+            return 
+        }
+    }
+
     return (
         
     <Grid container spacing={2} className={classes.root}>
@@ -165,9 +182,7 @@ function Home() {
                     <Typography variant="h5" className={classes.styledTypography}>
                         Request, Pay, Submit the Requirements, & Claim.
                     </Typography>
-                    <Button href="/register" variant="contained" className={classes.styledButton} color = "primary">
-                        Get Started
-                    </Button>
+                    {getStarted()}
                 </div>
             </div>    
                 
