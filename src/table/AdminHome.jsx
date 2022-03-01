@@ -25,6 +25,11 @@ import ViewColumn from '@material-ui/icons/ViewColumn';
 
 import ArticleOutlinedIcon from '@mui/icons-material/ArticleOutlined';
 import DeleteOutlinedIcon from '@mui/icons-material/DeleteOutlined';
+import CheckIcon from '@mui/icons-material/Check';
+import ReceiptLongIcon from '@mui/icons-material/ReceiptLong';
+import AssignmentLateOutlinedIcon from '@mui/icons-material/AssignmentLateOutlined';
+import CloseOutlinedIcon from '@mui/icons-material/CloseOutlined';
+import QuestionMarkIcon from '@mui/icons-material/QuestionMark';
 
 const tableIcons = {
   Add: forwardRef((props, ref) => <AddBox {...props} ref={ref} />),
@@ -61,29 +66,27 @@ const style = {
 //dummy data
 const data = [
   {
-      userId: "20",
-      name: "Juan Dela Cruz",
-      dateCreated: "08-18-2022"
+    userId: "20",
+    name: "Juan Dela Cruz",
+    date: "10-05-2022",
+    time: "10:30"
   },
   {
-      userId: "21",
-      name: "Juan Dela Cruz",
-      dateCreated: "10-05-2022"
-  },
-  {
-      userId: "21",
-      name: "Juan Dela Cruz",
-      dateCreated: "01-17-2022"
+    userId: "21",
+    name: "Juan Dela Cruz",
+    date: "08-18-2022",
+    time: "11:30"
   }
 ]
 
-function AdminListofUser() {
-    //modal
-    const [open, setOpen] = useState(false);
-    const handleOpen = () => setOpen(true);
-    const handleClose = () => setOpen(false);
-    
-    const [dataInTable, setDataInTable] = useState(data)
+function AdminHome() {
+  //modal
+  const [open, setOpen] = useState(false);
+  const handleOpen = () => setOpen(true);
+  const handleClose = () => setOpen(false);
+  
+  const [dataInTable, setDataInTable] = useState(data)
+
   return (
     <>
         <div style={{
@@ -93,7 +96,7 @@ function AdminListofUser() {
             marginTop: "30px"
         }}>
             <MaterialTable
-                title="List of Users"
+                title="Activity Log"
                 icons={tableIcons}
                 columns ={[
                     { 
@@ -105,13 +108,13 @@ function AdminListofUser() {
                         field: "name" 
                     },
                     { 
-                        title: "Date Created", 
-                        field: "dateCreated" 
+                        title: "Date Logged In", 
+                        field: "date" 
+                    },
+                    { 
+                        title: "Time Logged In", 
+                        field: "time"
                     }
-                    // { 
-                    //     title: "Payment Status", 
-                    //     field: "paymentStatus" 
-                    // },
                     
                 ]}
                 data = {dataInTable}
@@ -156,8 +159,7 @@ function AdminListofUser() {
             </Modal>
         </div>
     </>
-
   )
 }
 
-export default AdminListofUser
+export default AdminHome

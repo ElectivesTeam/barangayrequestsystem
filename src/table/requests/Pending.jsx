@@ -31,115 +31,59 @@ import AssignmentLateOutlinedIcon from '@mui/icons-material/AssignmentLateOutlin
 import CloseOutlinedIcon from '@mui/icons-material/CloseOutlined';
 import QuestionMarkIcon from '@mui/icons-material/QuestionMark';
 
-
 const tableIcons = {
-    Add: forwardRef((props, ref) => <AddBox {...props} ref={ref} />),
-    Check: forwardRef((props, ref) => <Check {...props} ref={ref} />),
-    Clear: forwardRef((props, ref) => <Clear {...props} ref={ref} />),
-    Delete: forwardRef((props, ref) => <DeleteOutline {...props} ref={ref} />),
-    DetailPanel: forwardRef((props, ref) => <ChevronRight {...props} ref={ref} />),
-    Edit: forwardRef((props, ref) => <Edit {...props} ref={ref} />),
-    Export: forwardRef((props, ref) => <SaveAlt {...props} ref={ref} />),
-    Filter: forwardRef((props, ref) => <FilterList {...props} ref={ref} />),
-    FirstPage: forwardRef((props, ref) => <FirstPage {...props} ref={ref} />),
-    LastPage: forwardRef((props, ref) => <LastPage {...props} ref={ref} />),
-    NextPage: forwardRef((props, ref) => <ChevronRight {...props} ref={ref} />),
-    PreviousPage: forwardRef((props, ref) => <ChevronLeft {...props} ref={ref} />),
-    ResetSearch: forwardRef((props, ref) => <Clear {...props} ref={ref} />),
-    Search: forwardRef((props, ref) => <Search {...props} ref={ref} />),
-    SortArrow: forwardRef((props, ref) => <ArrowDownward {...props} ref={ref} />),
-    ThirdStateCheck: forwardRef((props, ref) => <Remove {...props} ref={ref} />),
-    ViewColumn: forwardRef((props, ref) => <ViewColumn {...props} ref={ref} />)
-  };
+  Add: forwardRef((props, ref) => <AddBox {...props} ref={ref} />),
+  Check: forwardRef((props, ref) => <Check {...props} ref={ref} />),
+  Clear: forwardRef((props, ref) => <Clear {...props} ref={ref} />),
+  Delete: forwardRef((props, ref) => <DeleteOutline {...props} ref={ref} />),
+  DetailPanel: forwardRef((props, ref) => <ChevronRight {...props} ref={ref} />),
+  Edit: forwardRef((props, ref) => <Edit {...props} ref={ref} />),
+  Export: forwardRef((props, ref) => <SaveAlt {...props} ref={ref} />),
+  Filter: forwardRef((props, ref) => <FilterList {...props} ref={ref} />),
+  FirstPage: forwardRef((props, ref) => <FirstPage {...props} ref={ref} />),
+  LastPage: forwardRef((props, ref) => <LastPage {...props} ref={ref} />),
+  NextPage: forwardRef((props, ref) => <ChevronRight {...props} ref={ref} />),
+  PreviousPage: forwardRef((props, ref) => <ChevronLeft {...props} ref={ref} />),
+  ResetSearch: forwardRef((props, ref) => <Clear {...props} ref={ref} />),
+  Search: forwardRef((props, ref) => <Search {...props} ref={ref} />),
+  SortArrow: forwardRef((props, ref) => <ArrowDownward {...props} ref={ref} />),
+  ThirdStateCheck: forwardRef((props, ref) => <Remove {...props} ref={ref} />),
+  ViewColumn: forwardRef((props, ref) => <ViewColumn {...props} ref={ref} />)
+};
 
-//modal design
 const style = {
-    position: 'absolute',
-    top: '50%',
-    left: '50%',
-    transform: 'translate(-50%, -50%)',
-    width: 400,
-    bgcolor: 'background.paper',
-    border: '2px solid #000',
-    boxShadow: 24,
-    p: 4,
+  position: 'absolute',
+  top: '50%',
+  left: '50%',
+  transform: 'translate(-50%, -50%)',
+  width: 400,
+  bgcolor: 'background.paper',
+  border: '2px solid #000',
+  boxShadow: 24,
+  p: 4,
 };
 
 //dummy data
 const data = [
-    {
-        requestId: "123456",
-        document: "Cedula",
-        dateOfRequest: "02-22-22",
-        paymentStatus: "Paid",
-        requestStatus: "Approved"
-    },
-    {
-        requestId: "4578",
-        document: "Barangay Indigency",
-        dateOfRequest: "02-22-22",
-        paymentStatus: "Free",
-        requestStatus: "Rejected"
-    },
-    {
-        requestId: "657382",
-        document: "Bail Bond Form",
-        dateOfRequest: "02-22-22",
-        paymentStatus: "Paid",
-        requestStatus: "Released"
-    },
-    {
-        requestId: "657382",
-        document: "Barangay Certificate",
-        dateOfRequest: "02-22-22",
-        paymentStatus: "Not Paid",
-        requestStatus: "Approved"
-    },
-    {
-        requestId: "123456",
-        document: "Cedula",
-        dateOfRequest: "02-22-22",
-        paymentStatus: "Paid",
-        requestStatus: "Pending"
-    },
-    {
-        requestId: "4578",
-        document: "Barangay Indigency",
-        dateOfRequest: "02-22-22",
-        paymentStatus: "Free",
-        requestStatus: "Rejected"
-    },
-    {
-        requestId: "657382",
-        document: "Bail Bond Form",
-        dateOfRequest: "02-22-22",
-        paymentStatus: "Paid",
-        requestStatus: "Rejected"
-    },
-    {
-        requestId: "657382",
-        document: "Barangay Certificate",
-        dateOfRequest: "02-22-22",
-        paymentStatus: "Not Paid",
-        requestStatus: "Released"
-    },
-    {
-        requestId: "657382",
-        document: "Bail Bond Form",
-        dateOfRequest: "02-22-22",
-        paymentStatus: "Paid",
-        requestStatus: "Pending"
-    },
-    {
-        requestId: "657382",
-        document: "Barangay Certificate",
-        dateOfRequest: "02-22-22",
-        paymentStatus: "Not Paid",
-        requestStatus: "Approved"
-    }
+  {
+      requestId: "123456",
+      name: "Juan Dela Cruz",
+      document: "Cedula",
+      dateOfRequest: "02-22-22",
+      paymentStatus: "Paid",
+      requestStatus: "Pending"
+  },
+  {
+      requestId: "4578",
+      name: "Juan Dela Cruz",
+      document: "Barangay Indigency",
+      dateOfRequest: "02-22-22",
+      paymentStatus: "Free",
+      requestStatus: "Pending"
+  }
 ]
 
-function MyRequests() {
+function Pending() {
     //modal
     const [open, setOpen] = useState(false);
     const handleOpen = () => setOpen(true);
@@ -155,12 +99,16 @@ function MyRequests() {
             marginTop: "30px"
         }}>
             <MaterialTable
-                title="My Requests"
+                title="Pending Requests"
                 icons={tableIcons}
                 columns ={[
                     { 
                         title: "Request ID", 
                         field: "requestId"
+                    },
+                    { 
+                        title: "Name", 
+                        field: "name" 
                     },
                     { 
                         title: "Document", 
@@ -189,6 +137,34 @@ function MyRequests() {
                 ]}
                 data = {dataInTable}
                 actions={[
+                    {
+                        icon: () => <CheckIcon color='secondary'/>,
+                        tooltip: 'Mark as Approved',
+                        onClick: (event, rowData) => {
+                            //frontend magic
+                            const index = rowData.tableData.id;
+                            const updatedRows = [...dataInTable]
+                            if(window.confirm("Do you want to Approve this Document?")){
+                                console.log(index)
+                                updatedRows.splice(index, 1)
+                                setDataInTable(updatedRows)
+                            }
+                        },
+                    },
+                    {
+                        icon: () => <CloseOutlinedIcon color='secondary'/>,
+                        tooltip: 'Mark as Rejected',
+                        onClick: (event, rowData) => {
+                            //frontend magic
+                            const index = rowData.tableData.id;
+                            const updatedRows = [...dataInTable]
+                            if(window.confirm("Do you want to Reject this Document?")){
+                                console.log(index)
+                                updatedRows.splice(index, 1)
+                                setDataInTable(updatedRows)
+                            }
+                        },
+                    },
                     {
                         icon: () => <ArticleOutlinedIcon color="primary" onClick={handleOpen}/>,
                         tooltip: 'Show Details',
@@ -229,8 +205,8 @@ function MyRequests() {
             </Modal>
         </div>
     </>
-    
+
   )
 }
 
-export default MyRequests
+export default Pending
