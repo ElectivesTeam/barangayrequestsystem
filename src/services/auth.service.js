@@ -1,6 +1,6 @@
 import axios from "axios";
 
-const API_URL = "https://brgy-landayan-odrs-app-backend.herokuapp.com/api/users/";
+const API_URL = "http://127.0.0.1:8000/api/users/";
 
 class AuthService {
     login(email, password) {
