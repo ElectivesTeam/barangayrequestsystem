@@ -125,6 +125,82 @@ function MyAccount() {
 	const[email, setEmail] = useState([]);
 	const[contact_number, setContactNumber] = useState([]);
 	const[getInfo, setGetInfoCheck] = useState(false)
+
+	const[lastnameError, setLastnameError] = useState(false)
+    const[firstnameError, setFirstnameError] = useState(false)
+    const[middlenameError, setMiddlenameError] = useState(false)	
+    const[contactnumberError, setContactnumberError] = useState(false)
+    const[emailError, setEmailError] = useState(false)
+
+	const handleSave = (e) => {
+		console.log("Save")
+		e.preventDefault()
+
+		setLastnameError(false)
+		setFirstnameError(false)
+		setMiddlenameError(false)
+		setContactnumberError(false)
+		setEmailError(false)
+
+		let setChecker = true
+
+		if(last_name == ''){
+			setLastnameError(true)
+			setChecker = false
+		}
+
+		if(first_name == ''){
+		setFirstnameError(true)
+		setChecker = false
+		}
+
+		if(middle_name == ''){
+		setMiddlenameError(true)
+		setChecker = false
+		}
+  
+		if(contact_number === ''){
+		  setContactnumberError(true)
+		  setChecker = false
+		}
+	
+		if(email === ''){
+		  setEmailError(true)
+		  setChecker = false
+		}
+
+		if(setChecker){
+			AuthService.updateProfile(
+				email,
+				first_name,
+				last_name,
+				middle_name,
+				contact_number
+			)
+			.then((response) => {
+				if (response !== undefined){
+					console.log('Update Success')
+					window.location.reload(true);
+				}
+			})
+			.catch(error => {
+			if (error.response != undefined){
+				if (error.response.status === 400) {
+				setLastnameError(JSON.stringify(error.response.data.last_name));
+				setFirstnameError(JSON.stringify(error.response.data.first_name));
+				// setResidentNumberError(JSON.stringify(error.response.data.resident_number));
+				// setCivilstatusError(JSON.stringify(error.response.data.civil_status));
+				setEmailError(JSON.stringify(error.response.data.email))
+				setContactnumberError(JSON.stringify(error.response.data.mobile_number))
+				//   setPasswordError(JSON.stringify(error.response.data.password))
+				}
+				else console.log("Something went wrong. Please try again later.");
+				}
+			}
+			)
+		}
+	}
+
 	if (!getInfo){
 		AuthService.getUserInformation()
 		.then((response) => {
@@ -274,6 +350,7 @@ function MyAccount() {
 										name="first_name"
 										autoComplete="first_name"
 										autoFocus
+										error={firstnameError}
 										/>
 									</Grid>
 	
@@ -291,6 +368,7 @@ function MyAccount() {
 										name="last_name"
 										autoComplete="last_name"
 										autoFocus
+										error={lastnameError}
 										/>
 									</Grid>
 	
@@ -308,6 +386,7 @@ function MyAccount() {
 										name="Middle Name"
 										autoComplete="middle_name"
 										autoFocus
+										error={middlenameError}
 										/>
 									</Grid>
 	
@@ -325,6 +404,7 @@ function MyAccount() {
 										name="email"
 										autoComplete="email"
 										autoFocus
+										error={emailError}
 										/>
 									</Grid>
 	
@@ -342,6 +422,7 @@ function MyAccount() {
 										name="contact_number"
 										autoComplete="contact_number"
 										autoFocus
+										error={contactnumberError}
 										/>
 									</Grid>
 

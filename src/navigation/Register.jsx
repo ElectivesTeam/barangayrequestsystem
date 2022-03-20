@@ -782,9 +782,11 @@ function Register() {
 
                           {/* Submit Button */}
                           <div className={classes.divtest}>			    
-                            <Button variant="outlined" color="primary" onClick={handleSubmit}
+                            <Button 
+                                variant="outlined" 
+                                color="primary" 
+                                onClick={handleSubmit}
                                 fullWidth
-                                variant="contained"
                                 className={classes.button}
                             >
 				                        Submit

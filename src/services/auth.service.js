@@ -5,45 +5,45 @@ const API_URL = "https://brgy-landayan-odrs-app-backend.herokuapp.com/api/users/
 class AuthService {
     login(email, password) {
         return axios
-        .post(API_URL + "login/", {
-            email,
-            password
-        })
-        .then(response => {
-            localStorage.setItem("user", JSON.stringify(response.data));
-            return response.data;
-        })
+            .post(API_URL + "login/", {
+                email,
+                password
+            })
+            .then(response => {
+                localStorage.setItem("user", JSON.stringify(response.data));
+                return response.data;
+            })
     }
 
     logout() {
         var token = JSON.parse(localStorage.getItem('user')).refresh;
         var access = JSON.parse(localStorage.getItem('user')).access;
-        return axios.post(API_URL +"logout/", {"refresh": token}, {
-            headers:{
+        return axios.post(API_URL + "logout/", { "refresh": token }, {
+            headers: {
                 Accept: 'application/json',
                 Authorization: 'Bearer ' + access
             }
         })
-        .then(
-            localStorage.removeItem("user")
-        )
+            .then(
+                localStorage.removeItem("user")
+            )
     }
 
     register(
-            email,
-            first_name,
-            middle_name,
-            last_name,
-            password,
-            address,
-            mobile_number,
-            resident_number,
-            date_of_birth,
-            age,
-            gender,
-            province,
-            civil_status 
-            ) {
+        email,
+        first_name,
+        middle_name,
+        last_name,
+        password,
+        address,
+        mobile_number,
+        resident_number,
+        date_of_birth,
+        age,
+        gender,
+        province,
+        civil_status
+    ) {
         return axios.post(API_URL + "register/", {
             "email": email,
             "first_name": first_name,
@@ -61,35 +61,50 @@ class AuthService {
         });
     }
 
+    updateProfile(
+        first_name,
+        last_name,
+        middle_name,
+        email,
+        mobile_number) {
+        return axios.put(API_URL + "", {
+            "email": email,
+            "first_name": first_name,
+            "middle_name": middle_name,
+            "last_name": last_name,
+            "mobile_number": mobile_number,
+        })
+    }
+
     getCurrentUser() {
-        if(localStorage.getItem('user') != null){
-            if(JSON.parse(localStorage.getItem('user')).access != null && JSON.parse(localStorage.getItem('user')).refresh != null){
+        if (localStorage.getItem('user') != null) {
+            if (JSON.parse(localStorage.getItem('user')).access != null && JSON.parse(localStorage.getItem('user')).refresh != null) {
                 return JSON.parse(localStorage.getItem('user'));
-            }else{
+            } else {
                 localStorage.removeItem('user')
             }
         }
     }
 
-    getUserInformation(){
+    getUserInformation() {
         var token = JSON.parse(localStorage.getItem('user')).access;
         return axios.get(API_URL + "getuser/", {
-            headers:{
+            headers: {
                 Accept: 'application/json',
                 Authorization: 'Bearer ' + token
             }
         })
-        .then(response =>{
-            console.log("info fetched")
-            return response;
-        })
+            .then(response => {
+                console.log("info fetched")
+                return response;
+            })
     }
 
-    verifyToken(token){
-        if (token === "refresh"){
+    verifyToken(token) {
+        if (token === "refresh") {
             token = JSON.parse(localStorage.getItem('user')).refresh;
         }
-        if (token === "access"){
+        if (token === "access") {
             token = JSON.parse(localStorage.getItem('user')).access;
         }
         return axios
@@ -101,19 +116,19 @@ class AuthService {
             })
     }
 
-    refreshAccess(){
+    refreshAccess() {
         var user = localStorage.getItem('user');
         var token = JSON.parse(localStorage.getItem('user')).refresh;
-        if(user){
+        if (user) {
             return axios
-            .post(API_URL + "token/refresh/", {
-                "refresh": token
-            })
-            .then(response => {
-                localStorage.setItem("user", '{"refresh":"' + token +'","access":' + JSON.stringify(response.data.access) + '}');
-                return response;
-            })
-        }else{
+                .post(API_URL + "token/refresh/", {
+                    "refresh": token
+                })
+                .then(response => {
+                    localStorage.setItem("user", '{"refresh":"' + token + '","access":' + JSON.stringify(response.data.access) + '}');
+                    return response;
+                })
+        } else {
             console.log("getCurrentUser error")
         }
     }
