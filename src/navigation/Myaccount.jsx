@@ -164,7 +164,10 @@ function MyAccount() {
 								if(JSON.stringify(response.data.mobile_number).length >= 3)
 									setContactNumber(JSON.stringify(response.data.mobile_number).slice(1,-1));
 								if(JSON.stringify(response.data.profile_pic).length >= 3)
-									setProfilePic(JSON.stringify(AuthService.baseURL() + response.data.profile_pic).slice(1,-1))
+									if(response.data.profile_pic != null)
+										setProfilePic(JSON.stringify(AuthService.baseURL() + response.data.profile_pic).slice(1,-1))
+									else
+										setProfilePic('')
 							}
 						})
 						.catch(error => {
