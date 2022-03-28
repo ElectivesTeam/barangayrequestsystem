@@ -124,25 +124,7 @@ function MyAccount() {
 	const[middle_name, setMiddleName] = useState([]);
 	const[email, setEmail] = useState([]);
 	const[contact_number, setContactNumber] = useState([]);
-	const[getInfo, setGetInfoCheck] = useState(false)
-	if (!getInfo){
-		AuthService.getUserInformation()
-		.then((response) => {
-			if (response !== undefined){
-				if(JSON.stringify(response.data.first_name).length >= 3)
-					setFirstName(JSON.stringify(response.data.first_name).slice(1,-1));
-				if(JSON.stringify(response.data.last_name).length >= 3)
-					setLastName(JSON.stringify(response.data.last_name).slice(1,-1));
-				if(JSON.stringify(response.data.middle_name).length >= 3)
-					setMiddleName(JSON.stringify(response.data.middle_name).slice(1,-1));
-				if(JSON.stringify(response.data.email).length >= 3)
-					setEmail(JSON.stringify(response.data.email).slice(1,-1));
-				if(JSON.stringify(response.data.mobile_number).length >= 3)
-					setContactNumber(JSON.stringify(response.data.mobile_number).slice(1,-1));
-				setGetInfoCheck(true);
-            }
-		})
-	}
+	const[profile_pic, setProfilePic] = useState([]);
 
 	//run once
 	useEffect(async() => {
@@ -181,10 +163,12 @@ function MyAccount() {
 									setEmail(JSON.stringify(response.data.email).slice(1,-1));
 								if(JSON.stringify(response.data.mobile_number).length >= 3)
 									setContactNumber(JSON.stringify(response.data.mobile_number).slice(1,-1));
+								if(JSON.stringify(response.data.profile_pic).length >= 3)
+									setProfilePic(JSON.stringify(AuthService.baseURL() + response.data.profile_pic).slice(1,-1))
 							}
 						})
 						.catch(error => {
-							console.log("getInfoFailed")
+							console.log("get Info Failed")
 						}
 						)
 						console.log("access verified")
@@ -419,7 +403,7 @@ function MyAccount() {
 									<Grid item xs={12} sm={12} className={classes.uploadContainer}>
 										Upload your selfie 
 										<div className={classes.divtest}>
-											<img src="https://image.flaticon.com/icons/png/512/149/149092.png" width = "170px" height = "150px"></img>
+											<img src={profile_pic=='' ? '../img/image.png': profile_pic} width = "170px" height = "150px"></img>
 											<Grid item xs={12} sm={2}>
 												<div className={classes.picture}>
 													<Button 

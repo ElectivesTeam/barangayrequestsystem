@@ -1,8 +1,13 @@
 import axios from "axios";
 
-const API_URL = "https://brgy-landayan-odrs-app-backend.herokuapp.com/api/users/";
+// const API_URL = "https://brgy-landayan-odrs-app-backend.herokuapp.com/api/users/";
+const API_URL = "http://localhost:8000/api/users/"
+const BASE_URL = "http://localhost:8000"
 
 class AuthService {
+    baseURL(){
+        return BASE_URL
+    }
     login(email, password) {
         return axios
         .post(API_URL + "login/", {
@@ -42,32 +47,33 @@ class AuthService {
             age,
             gender,
             province,
-            civil_status 
+            civil_status,
+            profile_pic,
+            id_pic
             ) {
-        return axios.post(API_URL + "register/", {
-            "email": email,
-            "first_name": first_name,
-            "middle_name": middle_name,
-            "last_name": last_name,
-            "password": password,
-            "address": address,
-            "mobile_number": mobile_number,
-            "resident_number": resident_number,
-            "date_of_birth": date_of_birth,
-            "age": age,
-            "gender": gender.toUpperCase(),
-            "province": province,
-            "civil_status": civil_status.toUpperCase()
-        });
+        const config = {headers: { 'Content-Type': 'multipart/form-data'}};
+        let formData = new FormData();
+        formData.append("email", email);
+        formData.append("first_name", first_name);
+        formData.append("middle_name", middle_name);
+        formData.append("last_name", last_name);
+        formData.append("password", password);
+        formData.append("address", address);
+        formData.append("mobile_number", mobile_number);
+        formData.append("resident_number", resident_number);
+        formData.append("date_of_birth", date_of_birth);
+        formData.append("age", age);
+        formData.append("gender", gender.toUpperCase());
+        formData.append("province", province);
+        formData.append("civil_status", civil_status.toUpperCase());
+        formData.append("profile_pic", profile_pic);
+        formData.append("id_pic", id_pic);
+        return axios.post(API_URL + "register/", formData, config);
     }
 
     getCurrentUser() {
         if(localStorage.getItem('user') != null){
-            if(JSON.parse(localStorage.getItem('user')).access != null && JSON.parse(localStorage.getItem('user')).refresh != null){
-                return JSON.parse(localStorage.getItem('user'));
-            }else{
-                localStorage.removeItem('user')
-            }
+            return JSON.parse(localStorage.getItem('user'));
         }
     }
 

@@ -172,24 +172,37 @@ const useStyles = makeStyles((theme) => ({
 
 
 function Register() {
-    //Date Picker
-    const [selectedDate, setSelectedDate] = useState();
-    const [dateValue, setDateValue] = useState();
-
     const handleDateChange = (date, value) => {
       setSelectedDate(date);
       setDateValue(value);
     };
 
-     //form Validation
+     //form Values
     const[lastname, setLastname] = useState('')
     const[firstname, setFirstname] = useState('')
     const[middlename, setMiddlename] = useState('')
+    const [selectedDate, setSelectedDate] = useState();
+    const [dateValue, setDateValue] = useState();
+    const[age, setAge] = useState(0);
     const[gender, setGender] = useState('');
     const[address, setAddress] = useState('');
     const[residentnumber, setResidentNumber] = useState('');
-    const[age, setAge] = useState(0);
+    const[birthplace, setBirthplace] = useState('')
+    const[barangay, setBarangay] = useState('');
+    const[contactnumber, setContactnumber] = useState('');
+    const ph_country_code = "+63";
+    const[civilstatus, setCivilstatus] = useState('');
+    const[email, setEmail] = useState('');
+    const [values, setValues] = useState({
+      password: '',
+      showPassword: false,
+      });
+    const[ImageID, setImageID] = useState('')
+    const[ImageSelfie, setImageSelfie] = useState('')
+    const[ImageIDURL, setImageIDURL] = useState('')
+    const[ImageSelfieURL, setImageSelfieURL] = useState('')
 
+    //error messages
     const[lastnameError, setLastnameError] = useState(false)
     const[firstnameError, setFirstnameError] = useState(false)
     const[middlenameError, setMiddlenameError] = useState(false)
@@ -197,35 +210,41 @@ function Register() {
     const[addressError, setAddressError] = useState(false)
     const[residentNumberError, setResidentNumberError] = useState(false)
     const[ageError, setAgeError] = useState(false)
-    
-
-    //from Register2nd
-    const [values, setValues] = useState({
-      password: '',
-      showPassword: false,
-      });
-    
-      const handleChange = (prop) => (event) => {
-        setValues({ ...values, [prop]: event.target.value });
-      };
-
-    const[open, setOpen] = useState(false);
-
-    const[birthplace, setBirthplace] = useState('')
-    const[barangay, setBarangay] = useState('');
-    const[civilstatus, setCivilstatus] = useState('');
-    const[contactnumber, setContactnumber] = useState('');
-    const[email, setEmail] = useState('');
-  
     const[birthplaceError, setBirthplaceError] = useState(false)
     const[barangayError, setBarangayError] = useState(false)
     const[civilstatusError, setCivilstatusError] = useState(false)
     const[contactnumberError, setContactnumberError] = useState(false)
     const[emailError, setEmailError] = useState(false)
     const[passwordError, setPasswordError] = useState(false)
+    
+    //password handler
+    const handleChange = (prop) => (event) => {
+      setValues({ ...values, [prop]: event.target.value });
+    };
 
-    //default contry code
-    const ph_country_code = "+63";
+    const[open, setOpen] = useState(false);
+
+    function handleIDUpload(e) {
+      setImageID(e.target.files[0]);
+      let url = URL.createObjectURL(e.target.files[0]);
+      setImageIDURL(url)
+    }
+
+    function handleIDRemove() {
+      setImageID('');
+      setImageIDURL('')
+    }
+
+    function handleSelfieUpload(e) {
+      setImageSelfie(e.target.files[0]);
+      let url = URL.createObjectURL(e.target.files[0]);
+      setImageSelfieURL(url)
+    }
+
+    function handleSelfieRemove() {
+      setImageSelfie('');
+      setImageSelfieURL('')
+    }
 
     const handleSubmit = (e) =>{
       e.preventDefault()
@@ -237,8 +256,6 @@ function Register() {
       setAddressError(false)
       setResidentNumberError(false)
       setAgeError(false)
-
-      //from Register2nd
       setBirthplaceError(false)
       // setBarangayError(false)
       setCivilstatusError(false)
@@ -282,9 +299,6 @@ function Register() {
         setChecker = false
       }
 
-      
-      
-      //from Register2nd
       if(birthplace === ''){
         setBirthplaceError(true)
         setChecker = false
@@ -331,7 +345,8 @@ function Register() {
           gender.toUpperCase(),
           birthplace, //province
           civilstatus.toUpperCase(),
-          
+          ImageSelfie,
+          ImageID
         )
         .then((response) => {
             if (response !== undefined){
@@ -352,7 +367,7 @@ function Register() {
               setContactnumberError(JSON.stringify(error.response.data.mobile_number))
               setPasswordError(JSON.stringify(error.response.data.password))
             }
-              else console.log("Something went wrong. Please try again later.");
+              else console.log(error.response);
             }
           }
         )
@@ -721,20 +736,27 @@ function Register() {
                           <Grid item xs={12} sm={3} component={Paper} elevation={2} square className={classes.uploadContainer}>
                             Upload your selfie 
                             <div className={classes.divtest}>
-                            <img src="https://image.flaticon.com/icons/png/512/149/149092.png" width = "170px" height = "150px"></img>
+                            <img width = "170px" height = "150px" src={ImageSelfie=='' ? '../img/image.png': ImageSelfieURL}></img>
                              <Grid item xs={12} sm={1}>
                               <div className={classes.picture}>
                                 <Button 
-                                  type="submit"
+                                  component="label"
                                   fullWidth
                                   variant="contained"
                                   className={classes.buttonUpload}
                                   href="#"
                                 >
+                                  <input 
+                                    accept="image/*"
+                                    type="file"
+                                    hidden 
+                                    onChange={handleSelfieUpload}
+                                  />
                                   UPLOAD
                                 </Button>
                                 <Button 
-                                  type="submit"
+                                  component="label"
+                                  onClick={handleSelfieRemove}
                                   fullWidth
                                   variant="contained"
                                   className={classes.buttonUpload}
@@ -751,20 +773,27 @@ function Register() {
                           <Grid item xs={12} sm={3} component={Paper} elevation={2} square className={classes.uploadContainer}>
                             Upload your valid ID 
                             <div className={classes.divtest}>
-                            <img src="https://image.flaticon.com/icons/png/512/149/149092.png" width = "170px" height = "150px"></img>
+                            <img width = "170px" height = "150px" src={ImageID=='' ? '../img/image.png': ImageIDURL}></img>
                              <Grid item xs={12} sm={1}>
                               <div className={classes.picture}>
                                 <Button 
-                                  type="submit"
+                                  component="label"
                                   fullWidth
                                   variant="contained"
                                   className={classes.buttonUpload}
                                   href="#"
                                 >
+                                  <input 
+                                    accept="image/*"
+                                    type="file"
+                                    hidden 
+                                    onChange={handleIDUpload}
+                                  />
                                   UPLOAD
                                 </Button>
                                 <Button 
-                                  type="submit"
+                                  component="label"
+                                  onClick={handleIDRemove}
                                   fullWidth
                                   variant="contained"
                                   className={classes.buttonUpload}
@@ -784,7 +813,6 @@ function Register() {
                           <div className={classes.divtest}>			    
                             <Button variant="outlined" color="primary" onClick={handleSubmit}
                                 fullWidth
-                                variant="contained"
                                 className={classes.button}
                             >
 				                        Submit
