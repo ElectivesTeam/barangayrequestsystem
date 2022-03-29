@@ -67,7 +67,7 @@ class AuthService {
         middle_name,
         email,
         mobile_number) {
-        return axios.put(API_URL + "", {
+        return axios.put(API_URL + "updateuser/", {
             "email": email,
             "first_name": first_name,
             "middle_name": middle_name,
