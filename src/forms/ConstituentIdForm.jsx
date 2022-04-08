@@ -47,70 +47,77 @@ const ConstituentIdForm = ({ activeForm, handleBack, handleNext, handleChange, c
     const[middleNameError, setMiddleNameError] = useState(false)
     const[firstNameError, setFirstNameError] = useState(false)
     const[addressError, setAddressError] = useState(false)
-    const[civilStatusError, setCivilStatusError] = useState(false)
-    const[birthPlaceError, setBirthPlaceError] = useState(false)
-    const[contactNumberError, setContactNumberError] = useState(false)
+    // const[civilStatusError, setCivilStatusError] = useState(false)
+    // const[birthPlaceError, setBirthPlaceError] = useState(false)
+    // const[contactNumberError, setContactNumberError] = useState(false)
     const[dateReceivedError, setDateReceivedError] = useState(false)
+    const[idNumberError, setIdNumberError] = useState(false)
     const [information, setInformation] = useState({
         last_name: constituentId.last_name,
         middle_name: constituentId.middle_name,
         first_name: constituentId.first_name,
         address: constituentId.address,
-        civilStatus: constituentId.civilStatus,
-        birthplace: constituentId.birthplace,
-        contactNumber: constituentId.contactNumber,
-        dateReceived: constituentId.dateReceived
-        
+        // civilStatus: constituentId.civilStatus,
+        // birthplace: constituentId.birthplace,
+        // contactNumber: constituentId.contactNumber,
+        dateReceived: constituentId.dateReceived,
+        id_number: constituentId.id_number
     });
     const handleSubmit = (e) =>{
         let setChecker = true
         e.preventDefault()
         
-        setLastNameError(false)
-        if(information.last_name == ''){
-            setLastNameError(true)
-            setChecker = false
-        }
+        // setLastNameError(false)
+        // if(information.last_name == ''){
+        //     setLastNameError(true)
+        //     setChecker = false
+        // }
 
-        setMiddleNameError(false)
-        if(information.middle_name == ''){
-            setMiddleNameError(true)
-            setChecker = false
-        }
+        // setMiddleNameError(false)
+        // if(information.middle_name == ''){
+        //     setMiddleNameError(true)
+        //     setChecker = false
+        // }
 
-        setFirstNameError(false)
-        if(information.first_name == ''){
-            setFirstNameError(true)
-            setChecker = false
-        }
+        // setFirstNameError(false)
+        // if(information.first_name == ''){
+        //     setFirstNameError(true)
+        //     setChecker = false
+        // }
 
-        setAddressError(false)
-        if(information.address == ''){
-            setAddressError(true)
-            setChecker = false
-        }
+        // setAddressError(false)
+        // if(information.address == ''){
+        //     setAddressError(true)
+        //     setChecker = false
+        // }
 
-        setCivilStatusError(false)
-        if(information.civilStatus == ''){
-            setCivilStatusError(true)
-            setChecker = false
-        }
+        // setCivilStatusError(false)
+        // if(information.civilStatus == ''){
+        //     setCivilStatusError(true)
+        //     setChecker = false
+        // }
 
-        setBirthPlaceError(false)
-        if(information.birthplace == ''){
-            setBirthPlaceError(true)
-            setChecker = false
-        }
+        // setBirthPlaceError(false)
+        // if(information.birthplace == ''){
+        //     setBirthPlaceError(true)
+        //     setChecker = false
+        // }
 
-        setContactNumberError(false)
-        if(information.contactNumber == ''){
-            setContactNumberError(true)
-            setChecker = false
-        }
+        // setContactNumberError(false)
+        // if(information.contactNumber == ''){
+        //     setContactNumberError(true)
+        //     setChecker = false
+        // }
 
         setDateReceivedError(false)
         if(information.dateReceived == ''){
             setDateReceivedError(true)
+            setChecker = false
+        }
+
+        setIdNumberError(false)
+        if(information.id_number == ''){
+            setIdNumberError(true)
             setChecker = false
         }
 
@@ -207,7 +214,7 @@ const ConstituentIdForm = ({ activeForm, handleBack, handleNext, handleChange, c
                                         </Grid>
 
                                         {/* Civil Status */}
-                                        <Grid item xs={6}>
+                                        {/* <Grid item xs={6}>
                                             <FormControl fullWidth>
                                                 <InputLabel id="demo-simple-select-label">Civil Status</InputLabel>
                                                 <Select
@@ -224,10 +231,10 @@ const ConstituentIdForm = ({ activeForm, handleBack, handleNext, handleChange, c
                                                 <MenuItem value={'DIVORCED'}>Divorced</MenuItem>
                                                 </Select>
                                             </FormControl>
-                                        </Grid>
+                                        </Grid> */}
                                         
                                         {/* Birth Place */}
-                                        <Grid item xs={6}>
+                                        {/* <Grid item xs={6}>
                                             <TextField
                                                 onChange={(e) => setInformation({...information, birthplace:e.target.value})}
                                                 variant="outlined"
@@ -242,10 +249,10 @@ const ConstituentIdForm = ({ activeForm, handleBack, handleNext, handleChange, c
                                                 autoFocus
                                                 error={birthPlaceError}
                                             />
-                                        </Grid>
+                                        </Grid> */}
 
                                         {/* Contact Number */}
-                                        <Grid item xs={6}>
+                                        {/* <Grid item xs={6}>
                                             <TextField
                                                 onChange={(e) => setInformation({...information, contactNumber:e.target.value})}
                                                 variant="outlined"
@@ -259,6 +266,23 @@ const ConstituentIdForm = ({ activeForm, handleBack, handleNext, handleChange, c
                                                 autoComplete="ContactNumber"
                                                 autoFocus
                                                 error={contactNumberError}
+                                            />
+                                        </Grid> */}
+                                        {/* ID Number */}
+                                        <Grid item xs={6}>
+                                            <TextField
+                                                onChange={(e) => setInformation({...information, id_number:e.target.value})}
+                                                variant="outlined"
+                                                margin="normal"
+                                                defaultValue={constituentId.id_number}
+                                                required
+                                                fullWidth
+                                                id="id_number"
+                                                label="ID Number"
+                                                name="id_number"
+                                                autoComplete="id_number"
+                                                autoFocus
+                                                error={idNumberError}
                                             />
                                         </Grid>
 
@@ -275,7 +299,6 @@ const ConstituentIdForm = ({ activeForm, handleBack, handleNext, handleChange, c
                                                 label="Date Received"
                                                 name="DateReceived"
                                                 autoComplete="DateReceived"
-                                                autoFocus
                                                 error={dateReceivedError}
                                                 defaultValue={constituentId.dateReceived}
                                                 InputLabelProps={{
@@ -283,6 +306,8 @@ const ConstituentIdForm = ({ activeForm, handleBack, handleNext, handleChange, c
                                                 }}
                                             />
                                         </Grid>
+
+                                        
                                     </Grid>
                                 </div>
 

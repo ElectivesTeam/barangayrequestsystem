@@ -1,5 +1,7 @@
 import { makeStyles } from '@material-ui/core/styles';
 import React, { useState, useEffect } from 'react';
+import { useHistory } from "react-router-dom";
+
 import { DataGrid } from '@material-ui/data-grid';
 import Grid from '@material-ui/core/Grid';
 import Box from '@material-ui/core/Box';
@@ -14,16 +16,13 @@ import Select from '@material-ui/core/Select';
 import Button from '@material-ui/core/Button';
 import ListOfRequest from './ListOfRequest'
 
-
-
 import AuthService from "../services/auth.service";
-import { useHistory } from "react-router-dom";
 
 const columns = [
   
     {
       field: 'requestList',
-      headerName: 'Click the document/s you want to request)',
+      headerName: 'Click the document/s you want to request',
       width: 380,
       
     },
@@ -115,9 +114,7 @@ function Request() {
 
     const [selectedRequest, setSelectedRequest] = React.useState([])
     const requestId = selectedRequest.selectionModel;
-    const [apiFormsData, setAPIFormsData] = useState({
-
-    })
+    const [apiFormsData, setAPIFormsData] = useState({})
 
     useEffect(async() => {
 		
@@ -129,6 +126,7 @@ function Request() {
                             bailBondData: {
                                 name:JSON.stringify(response.data.first_name + " " + response.data.middle_name + " " + response.data.last_name).slice(1,-1), 
                                 address:JSON.stringify(response.data.address).slice(1,-1),
+                                resident_number:JSON.stringify(response.data.resident_number).slice(1,-1),
                                 caseNumber: ''
                             },
                             barangayClearanceData: {
@@ -145,14 +143,15 @@ function Request() {
                                 businessName: '',
                                 businessOwner: '',
                                 businessAddress: '',
-                                businessNature: ''
+                                businessNature: '',
+                                start_business_operated: ''
                             },
                             businessClosureData: {
                                 businessName: '',
                                 businessOwner: '',
                                 businessAddress: '',
                                 businessNature: '',
-                                dateReceived: ''
+                                last_business_operated: ''
                             },
                             cedulaData: {
                                 name:JSON.stringify(response.data.first_name + " " + response.data.middle_name + " " + response.data.last_name).slice(1,-1), 
@@ -174,10 +173,11 @@ function Request() {
                                 middle_name:JSON.stringify(response.data.middle_name).slice(1,-1),
                                 first_name:JSON.stringify(response.data.first_name).slice(1,-1),
                                 address:JSON.stringify(response.data.address).slice(1,-1),
-                                civilStatus:JSON.stringify(response.data.civil_status).slice(1,-1),
-                                birthplace: 'Laguna',
-                                contactNumber:JSON.stringify(response.data.mobile_number).slice(1,-1),
-                                dateReceived: ''
+                                // civilStatus:JSON.stringify(response.data.civil_status).slice(1,-1),
+                                // birthplace: 'Laguna',
+                                // contactNumber:JSON.stringify(response.data.mobile_number).slice(1,-1),
+                                id_number:'',
+                                dateReceived: '',
                             },
                             dentalServiceData: {
                                 last_name:JSON.stringify(response.data.last_name).slice(1,-1),
@@ -198,17 +198,25 @@ function Request() {
                             immunizationData: {
                                 name:JSON.stringify(response.data.first_name + " " + response.data.middle_name + " " + response.data.last_name).slice(1,-1), 
                                 address:JSON.stringify(response.data.address).slice(1,-1),
-                                guardian: ''
+                                mother_name: '',
+                                father_name: '',
+                                birth_height: '',
+                                birth_weight: ''
                             },
                             indigencyClearanceData: {
                                 name:JSON.stringify(response.data.first_name + " " + response.data.middle_name + " " + response.data.last_name).slice(1,-1), 
                                 address:JSON.stringify(response.data.address).slice(1,-1),
-                                purpose: ''
+                                patient_relationship: '',
+                                patient_name: '',
+                                purpose: '',
+                                passed_onto_whom: ''
                             },
                             maternalCareData: {
                                 name:JSON.stringify(response.data.first_name + " " + response.data.middle_name + " " + response.data.last_name).slice(1,-1), 
                                 address:JSON.stringify(response.data.address).slice(1,-1),
-                                guardian: ''
+                                child_name: '',
+                                date_of_birth: '',
+                                birthplace: 'Laguna'
                             },
                             residenceData: {
                                 name:JSON.stringify(response.data.first_name + " " + response.data.middle_name + " " + response.data.last_name).slice(1,-1), 
@@ -227,13 +235,16 @@ function Request() {
             })
         
     }, [])
+    //console.log(apiFormsData?.bailBondData?.resident_number)
     const handleAPIFormsDataChange = (formName, formData) => {
+        
         switch (formName) {
             case "bailBondForm" : 
                 return setAPIFormsData({...apiFormsData, 
                     bailBondData: {
                         name:formData.name, 
                         address:formData.address,
+                        resident_number: formData.resident_number,
                         caseNumber: formData.caseNumber
                     }
                  })
@@ -262,6 +273,7 @@ function Request() {
                         businessAddress: formData.businessAddress,
                         businessOwner: formData.businessOwner,
                         businessNature: formData.businessNature,
+                        start_business_operated: formData.start_business_operated
                     }
                 })
             case "businessClosureForm" :
@@ -305,6 +317,7 @@ function Request() {
                         civilStatus:formData.civilStatus,
                         birthplace:formData.birthplace,
                         contactNumber:formData.contactNumber,
+                        id_number:formData.id_number,
                         dateReceived:formData.dateReceived
                     }
                 })
@@ -335,7 +348,10 @@ function Request() {
                     immunizationData: {
                         name:formData.name, 
                         address:formData.address,
-                        guardian:formData.guardian
+                        mother_name:formData.mother_name,
+                        father_name:formData.father_name,
+                        birth_height:formData.birth_height,
+                        birth_weight:formData.birth_weight
                     }
                 })
             case "indigencyClearanceForm" :
@@ -343,7 +359,10 @@ function Request() {
                     indigencyClearanceData: {
                         name:formData.name, 
                         address:formData.address,
-                        guardian:formData.guardian
+                        patient_relationship:formData.patient_relationship,
+                        patient_name:formData.patient_name,
+                        purpose:formData.purpose,
+                        passed_onto_whom:formData.passed_onto_whom
                     }
                 })
             case "maternalCareForm" :
@@ -351,7 +370,9 @@ function Request() {
                     maternalCareData: {
                         name:formData.name, 
                         address:formData.address,
-                        guardian:formData.guardian
+                        child_name:formData.child_name,
+                        date_of_birth:formData.date_of_birth,
+                        birthplace:formData.birthplace
                     }
                 })
             case "residenceForm" :

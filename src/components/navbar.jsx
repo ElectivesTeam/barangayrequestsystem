@@ -83,6 +83,7 @@ export default function MenuAppBar() {
   const Logout = () => {
     setAnchorEl(null);
     AuthService.logout();
+    window.location.reload();
   };
 
   const user = AuthService.getCurrentUser()

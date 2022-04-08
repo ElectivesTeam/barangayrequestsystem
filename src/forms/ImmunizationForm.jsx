@@ -41,11 +41,17 @@ const ImmunizationForm = ({ activeForm, handleBack, handleNext, handleChange, im
     const classes = useStyles();
     const[nameError, setNameError] = useState(false)
     const[addressError, setAddressError] = useState(false)
-    const[guardianError, setGuardianError] = useState(false)
+    const[motherNameError, setMotherNameError] = useState(false)
+    const[fatherNameError, setFatherNameError] = useState(false)
+    const[birthHeightError, setBirthHeightError] = useState(false)
+    const[birthWeightError, setBirthWeightError] = useState(false)
     const [information, setInformation] = useState({
         name: immunization.name,
         address: immunization.address,
-        guardian: immunization.guardian
+        mother_name:immunization.mother_name,
+        father_name:immunization.father_name,
+        birth_height:immunization.birth_height,
+        birth_weight:immunization.birth_weight
     });
     
     const handleSubmit = (e) =>{
@@ -64,9 +70,27 @@ const ImmunizationForm = ({ activeForm, handleBack, handleNext, handleChange, im
             setChecker = false
         }
 
-        setGuardianError(false)
-        if(information.gender == ''){
-            setGuardianError(true)
+        setMotherNameError(false)
+        if(information.mother_name == ''){
+            setMotherNameError(true)
+            setChecker = false
+        }
+
+        setFatherNameError(false)
+        if(information.father_name == ''){
+            setFatherNameError(true)
+            setChecker = false
+        }
+
+        setBirthHeightError(false)
+        if(information.birth_height == ''){
+            setBirthHeightError(true)
+            setChecker = false
+        }
+
+        setBirthWeightError(false)
+        if(information.birth_weight == ''){
+            setBirthWeightError(true)
             setChecker = false
         }
 
@@ -102,7 +126,6 @@ const ImmunizationForm = ({ activeForm, handleBack, handleNext, handleChange, im
                                                 label="Name"
                                                 name="name"
                                                 autoComplete="name"
-                                                autoFocus
                                                 error={nameError}
                                             />
                                         </Grid>
@@ -125,22 +148,76 @@ const ImmunizationForm = ({ activeForm, handleBack, handleNext, handleChange, im
                                             />
                                         </Grid>
 
-                                        {/* Gender */}
+                                        {/* Mother Name */}
                                         <Grid item xs={6}>
                                             <TextField
-                                                onChange={(e) => setInformation({...information, guardian:e.target.value})}
+                                                onChange={(e) => setInformation({...information, mother_name:e.target.value})}
                                                 variant="outlined"
                                                 margin="normal"
-                                                defaultValue={immunization.guardian}
+                                                defaultValue={immunization.mother_name}
                                                 required
                                                 fullWidth
-                                                id="guardian"
-                                                label="Guardian"
-                                                name="guardian"
-                                                autoComplete="guardian"
-                                                error={guardianError}
+                                                id="mother_name"
+                                                label="Mother's Name"
+                                                name="mother_name"
+                                                autoComplete="mother_name"
+                                                autoFocus
+                                                error={motherNameError}
                                             />
                                         </Grid>
+
+                                        {/* Father Name */}
+                                        <Grid item xs={6}>
+                                            <TextField
+                                                onChange={(e) => setInformation({...information, father_name:e.target.value})}
+                                                variant="outlined"
+                                                margin="normal"
+                                                defaultValue={immunization.father_name}
+                                                required
+                                                fullWidth
+                                                id="father_name"
+                                                label="Father's Name"
+                                                name="father_name"
+                                                autoComplete="father_name"
+                                                error={fatherNameError}
+                                            />
+                                        </Grid>
+                                        
+                                        {/* Birth Height */}
+                                        <Grid item xs={6}>
+                                            <TextField
+                                                onChange={(e) => setInformation({...information, birth_height:e.target.value})}
+                                                variant="outlined"
+                                                margin="normal"
+                                                defaultValue={immunization.birth_height}
+                                                required
+                                                fullWidth
+                                                id="birth_height"
+                                                label="Height (meter)"
+                                                name="birth_height"
+                                                autoComplete="birth_height"
+                                                error={birthHeightError}
+                                            />
+                                        </Grid>
+
+                                        {/* Birth Weight */}
+                                        <Grid item xs={6}>
+                                            <TextField
+                                                onChange={(e) => setInformation({...information, birth_weight:e.target.value})}
+                                                variant="outlined"
+                                                margin="normal"
+                                                defaultValue={immunization.birth_weight}
+                                                required
+                                                fullWidth
+                                                id="birth_weight"
+                                                label="Weight"
+                                                name="birth_weight"
+                                                autoComplete="birth_weight"
+                                                error={birthWeightError}
+                                            />
+                                        </Grid>
+
+                                        
                                         
                                         {/* Other Field */}
                                         <Grid item xs={6}>

@@ -83,6 +83,7 @@ class AuthService {
             console.log("info fetched")
             return response;
         })
+
     }
 
     verifyToken(token){

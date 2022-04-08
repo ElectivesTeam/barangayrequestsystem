@@ -36,12 +36,11 @@ function ConstituentIdForm(reviewConstituentId){
                                         <p>Last Name: {reviewConstituentId.reviewConstituentId.last_name}</p>
                                         <p>First Name: {reviewConstituentId.reviewConstituentId.first_name}</p>
                                         <p>Middle Name: {reviewConstituentId.reviewConstituentId.middle_name}</p>
-                                        <p>Address: {reviewConstituentId.reviewConstituentId.address}</p>
+                                        
                                     </Grid>
                                     <Grid item xs={6}>
-                                        <p>Civil Status: {reviewConstituentId.reviewConstituentId.civilStatus}</p>
-                                        <p>Birthplace: {reviewConstituentId.reviewConstituentId.birthplace}</p>
-                                        <p>Contact Number: {reviewConstituentId.reviewConstituentId.contactNumber}</p>
+                                        <p>Address: {reviewConstituentId.reviewConstituentId.address}</p>
+                                        <p>ID Number: {reviewConstituentId.reviewConstituentId.id_number}</p>
                                         <p>Date Received: {reviewConstituentId.reviewConstituentId.dateReceived}</p>
                                     </Grid>
                                 </Grid>

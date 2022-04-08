@@ -125,7 +125,7 @@ const BailBondForm = ({ activeForm, handleBack, handleNext, handleChange, bailBo
                                                 error={addressError}
                                             />
                                         </Grid>
-                                        
+
                                         {/* Case Number */}
                                         <Grid item xs={6}>
                                             <TextField

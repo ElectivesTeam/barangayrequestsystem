@@ -35,9 +35,11 @@ function MaternalCareForm(reviewMaternalCare){
                                     <Grid item xs={6}>
                                         <p>Name: {reviewMaternalCare.reviewMaternalCare.name}</p>
                                         <p>Address: {reviewMaternalCare.reviewMaternalCare.address}</p>
+                                        <p>Birthplace: {reviewMaternalCare.reviewMaternalCare.birthplace}</p>
                                     </Grid>
                                     <Grid item xs={6}>
-                                        <p>Guardian: {reviewMaternalCare.reviewMaternalCare.guardian}</p>
+                                        <p>Child's Name: {reviewMaternalCare.reviewMaternalCare.child_name}</p>
+                                        <p>Date of Birth: {reviewMaternalCare.reviewMaternalCare.date_of_birth}</p>
                                     </Grid>
                                 </Grid>
                             </div>

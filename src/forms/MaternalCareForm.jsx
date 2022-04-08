@@ -41,11 +41,15 @@ const MaternalCareForm = ({ activeForm, handleBack, handleNext, handleChange, ma
     const classes = useStyles();
     const[nameError, setNameError] = useState(false)
     const[addressError, setAddressError] = useState(false)
-    const[guardianError, setGuardianError] = useState(false)
+    const[childNameError, setChildNameError] = useState(false)
+    const[dateOfBirthError, setDateOfBirthError] = useState(false)
+    const[birthplaceError, setBirthplaceError] = useState(false)
     const [information, setInformation] = useState({
         name: maternalCare.name,
         address: maternalCare.address,
-        guardian: maternalCare.guardian
+        child_name: maternalCare.child_name,
+        date_of_birth: maternalCare.date_of_birth,
+        birthplace: maternalCare.birthplace
     });
 
     const handleSubmit = (e) =>{
@@ -63,9 +67,21 @@ const MaternalCareForm = ({ activeForm, handleBack, handleNext, handleChange, ma
             setAddressError(true)
             setChecker = false
         }
-        setGuardianError(false)
-        if(information.guardian == ''){
-            setGuardianError(true)
+        setChildNameError(false)
+        if(information.child_name == ''){
+            setChildNameError(true)
+            setChecker = false
+        }
+
+        setDateOfBirthError(false)
+        if(information.date_of_birth == ''){
+            setDateOfBirthError(true)
+            setChecker = false
+        }
+
+        setBirthplaceError(false)
+        if(information.birthplace == ''){
+            setBirthplaceError(true)
             setChecker = false
         }
 
@@ -75,7 +91,7 @@ const MaternalCareForm = ({ activeForm, handleBack, handleNext, handleChange, ma
             handleNext()
         }
     }
-
+    console.log(maternalCare)
     return (
         <>
             <FormHeader formTitle={'Maternal Care Form'}/>
@@ -101,7 +117,6 @@ const MaternalCareForm = ({ activeForm, handleBack, handleNext, handleChange, ma
                                                 label="Name"
                                                 name="name"
                                                 autoComplete="name"
-                                                autoFocus
                                                 error={nameError}
                                             />
                                         </Grid>
@@ -119,26 +134,65 @@ const MaternalCareForm = ({ activeForm, handleBack, handleNext, handleChange, ma
                                                 label="Address"
                                                 name="address"
                                                 autoComplete="address"
-                                                autoFocus
                                                 error={addressError}
                                             />
                                         </Grid>
 
-                                        {/* Guardian */}
+                                        {/* Birthplace */}
                                         <Grid item xs={6}>
                                             <TextField
-                                                onChange={(e) => setInformation({...information, guardian:e.target.value})}
+                                                onChange={(e) => setInformation({...information, birthplace:e.target.value})}
                                                 variant="outlined"
                                                 margin="normal"
-                                                defaultValue={maternalCare.guardian}
+                                                defaultValue={maternalCare.birthplace}
                                                 required
                                                 fullWidth
-                                                id="guardian"
-                                                label="Guardian"
-                                                name="guardian"
-                                                autoComplete="guardian"
+                                                id="birthplace"
+                                                label="Birthplace"
+                                                name="birthplace"
+                                                autoComplete="birthplace"
                                                 autoFocus
-                                                error={guardianError}
+                                                error={birthplaceError}
+                                            />
+                                        </Grid>
+
+                                        {/* Child Name */}
+                                        <Grid item xs={6}>
+                                            <TextField
+                                                onChange={(e) => setInformation({...information, child_name:e.target.value})}
+                                                variant="outlined"
+                                                margin="normal"
+                                                defaultValue={maternalCare.child_name}
+                                                required
+                                                fullWidth
+                                                id="child_name"
+                                                label="Child's Name"
+                                                name="child_name"
+                                                autoComplete="child_name"
+                                                autoFocus
+                                                error={childNameError}
+                                            />
+                                        </Grid>
+
+                                        {/* Date of Birth */}
+                                        <Grid item xs={6}>
+                                            {/* Input goes here */}
+                                            <TextField
+                                                type="date"
+                                                onChange={(e) => setInformation({...information, date_of_birth:e.target.value})}
+                                                variant="outlined"
+                                                margin="normal"
+                                                required
+                                                fullWidth
+                                                id="date_of_birth"
+                                                label="Date of Birth"
+                                                name="date_of_birth"
+                                                autoComplete="date_of_birth"
+                                                error={dateOfBirthError}
+                                                defaultValue={maternalCare.date_of_birth}
+                                                InputLabelProps={{
+                                                    shrink: true,
+                                                }}
                                             />
                                         </Grid>
                                         {/* Other Field */}

@@ -36,10 +36,11 @@ function BusinessClearanceForm(reviewBusinessClearance){
                                     <Grid item xs={6}>
                                         <p>Business Name: {reviewBusinessClearance.reviewBusinessClearance.businessName}</p>
                                         <p>Business Owner: {reviewBusinessClearance.reviewBusinessClearance.businessOwner}</p>
+                                        <p>Business Address: {reviewBusinessClearance.reviewBusinessClearance.businessAddress}</p>
                                     </Grid>
                                     <Grid item xs={6}>
-                                        <p>Business Address: {reviewBusinessClearance.reviewBusinessClearance.businessAddress}</p>
                                         <p>Nature of Business: {reviewBusinessClearance.reviewBusinessClearance.businessNature}</p>
+                                        <p>Start Business Operated: {reviewBusinessClearance.reviewBusinessClearance.start_business_operated}</p>
                                     </Grid>
                                 </Grid>
                             </div>

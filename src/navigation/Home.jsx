@@ -157,9 +157,6 @@ function Home() {
                 </Button>
             </div>
         }
-        else {
-            return 
-        }
     }
 
     return (

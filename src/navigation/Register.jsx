@@ -211,8 +211,8 @@ function Register() {
 
     const[open, setOpen] = useState(false);
 
-    const[birthplace, setBirthplace] = useState('')
-    const[barangay, setBarangay] = useState('');
+    const[birthplace, setBirthplace] = useState('Laguna')
+    const[barangay, setBarangay] = useState('Landayan');
     const[civilstatus, setCivilstatus] = useState('');
     const[contactnumber, setContactnumber] = useState('');
     const[email, setEmail] = useState('');
@@ -240,7 +240,7 @@ function Register() {
 
       //from Register2nd
       setBirthplaceError(false)
-      // setBarangayError(false)
+      setBarangayError(false)
       setCivilstatusError(false)
       setContactnumberError(false)
       setEmailError(false)
@@ -591,7 +591,7 @@ function Register() {
                             label="Birth Place"
                             name="birth_place"
                             autoComplete="birth_place"
-                            autoFocus
+                            defaultValue={birthplace}
                             error={birthplaceError}
                             />
                           </Grid>
@@ -608,7 +608,7 @@ function Register() {
                               label="Barangay"
                               name="barangay"
                               autoComplete="barangay"
-                              autoFocus
+                              defaultValue={barangay}
                               error={barangayError}
                             />
                           </Grid>

@@ -38,11 +38,11 @@ function Cedula(reviewCedula){
                                         <p>Address: {reviewCedula.reviewCedula.address}</p>
                                         <p>Birthday: {reviewCedula.reviewCedula.birthday}</p>
                                         <p>Birthplace: {reviewCedula.reviewCedula.birthplace}</p>
-                                        <p>Civil Status: {reviewCedula.reviewCedula.civilStatus}</p>
+                                        
                                     </Grid>
                                     <Grid item xs={6}>
                                         <p>Gender: {reviewCedula.reviewCedula.gender}</p>
-                                        <p>Nationality: {reviewCedula.reviewCedula.nationality}</p>
+                                        <p>Civil Status: {reviewCedula.reviewCedula.civilStatus}</p>
                                         <p>Profession: {reviewCedula.reviewCedula.profession}</p>
                                         <p>Monthly Income: {reviewCedula.reviewCedula.monthlyIncome}</p>
                                     </Grid>

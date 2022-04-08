@@ -76,7 +76,7 @@ const BusinessClosure = ({ activeForm, handleBack, handleNext, handleChange, bus
         }
 
         setNatureOfBusinessError(false)
-        if(information.natureOfBusiness == ''){
+        if(information.businessNature == ''){
             setNatureOfBusinessError(true)
             setChecker = false
         }
@@ -136,7 +136,6 @@ const BusinessClosure = ({ activeForm, handleBack, handleNext, handleChange, bus
                                                 label="Business Owner"
                                                 name="businessowner"
                                                 autoComplete="businessowner"
-                                                
                                                 error={businessOwnerError}
                                             />
                                         </Grid>
@@ -154,7 +153,6 @@ const BusinessClosure = ({ activeForm, handleBack, handleNext, handleChange, bus
                                                 label="Business Address"
                                                 name="businessaddress"
                                                 autoComplete="businessaddress"
-                                                
                                                 error={businessAddressError}
                                             />
                                         </Grid>
@@ -172,7 +170,6 @@ const BusinessClosure = ({ activeForm, handleBack, handleNext, handleChange, bus
                                                 label="Nature of Business"
                                                 name="natureofbusiness"
                                                 autoComplete="natureofbusiness"
-                                                
                                                 error={natureOfBusinessError}
                                             />
                                         </Grid>

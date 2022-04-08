@@ -35,9 +35,12 @@ function ImmunizationForm(reviewImmunization){
                                     <Grid item xs={6}>
                                         <p>Name: {reviewImmunization.reviewImmunization.name}</p>
                                         <p>Address: {reviewImmunization.reviewImmunization.address}</p>
+                                        <p>Father's Name: {reviewImmunization.reviewImmunization.father_name}</p>
+                                        <p>Mother's Name: {reviewImmunization.reviewImmunization.mother_name}</p>
                                     </Grid>
                                     <Grid item xs={6}>
-                                        <p>Guardian: {reviewImmunization.reviewImmunization.guardian}</p>
+                                        <p>Height: {reviewImmunization.reviewImmunization.birth_height}</p>
+                                        <p>Weight: {reviewImmunization.reviewImmunization.birth_weight}</p>
                                     </Grid>
                                 </Grid>
                             </div>

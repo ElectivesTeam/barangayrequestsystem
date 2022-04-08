@@ -45,11 +45,17 @@ const IndigencyClearance = ({ activeForm, handleBack, handleNext, handleChange, 
     const classes = useStyles();
     const[nameError, setNameError] = useState(false)
     const[addressError, setAddressError] = useState(false)
+    const[patientRelationshipError, setPatientRelationshipError] = useState(false)
+    const[patientNameError, setPatientNameError] = useState(false)
     const[purposeError, setPurposeError] = useState(false)
+    const[passedError, setPassedError] = useState(false)
     const [information, setInformation] = useState({
         name: indigencyClearance.name,
         address: indigencyClearance.address,
-        purpose: indigencyClearance.purpose
+        patient_relationship: indigencyClearance.patient_relationship,
+        patient_name: indigencyClearance.patient_name,
+        purpose: indigencyClearance.purpose,
+        passed_onto_whom: indigencyClearance.passed_onto_whom
     });
     
     const handleSubmit = (e) =>{
@@ -68,9 +74,27 @@ const IndigencyClearance = ({ activeForm, handleBack, handleNext, handleChange, 
             setChecker = false
         }
 
+        setPatientRelationshipError(false)
+        if(information.patient_relationship == ''){
+            setPatientRelationshipError(true)
+            setChecker = false
+        }
+
+        setPatientNameError(false)
+        if(information.patient_name == ''){
+            setPatientNameError(true)
+            setChecker = false
+        }
+
         setPurposeError(false)
         if(information.purpose == ''){
             setPurposeError(true)
+            setChecker = false
+        }
+
+        setPassedError(false)
+        if(information.passed_onto_whom == ''){
+            setPassedError(true)
             setChecker = false
         }
 
@@ -128,6 +152,62 @@ const IndigencyClearance = ({ activeForm, handleBack, handleNext, handleChange, 
                                                 error={addressError}
                                             />
                                         </Grid>
+
+                                        {/* Patient Name */}
+                                        <Grid item xs={6}>
+                                            <TextField
+                                                onChange={(e) => setInformation({...information, patient_name:e.target.value})}
+                                                variant="outlined"
+                                                margin="normal"
+                                                defaultValue={indigencyClearance.patient_name}
+                                                required
+                                                fullWidth
+                                                id="patient_name"
+                                                label="Patient Name"
+                                                name="patient_name"
+                                                autoComplete="patient_name"
+                                                autoFocus
+                                                error={patientNameError}
+                                            />
+                                        </Grid>
+
+                                        {/* Passed onto whom */}
+                                        <Grid item xs={6}>
+                                            <TextField
+                                                onChange={(e) => setInformation({...information, passed_onto_whom:e.target.value})}
+                                                variant="outlined"
+                                                margin="normal"
+                                                defaultValue={indigencyClearance.passed_onto_whom}
+                                                required
+                                                fullWidth
+                                                id="passed_onto_whom"
+                                                label="Passed onto whom"
+                                                name="passed_onto_whom"
+                                                autoComplete="passed_onto_whom"
+                                                error={passedError}
+                                            />
+                                        </Grid>
+
+                                        {/* Patient Relationship */}
+                                        <Grid item xs={6}>
+                                            <FormControl fullWidth>
+                                                <InputLabel id="demo-simple-select-label">Patient Relationship</InputLabel>
+                                                <Select
+                                                    labelId="demo-simple-select-label"
+                                                    id="demo-simple-select"
+                                                    defaultValue={indigencyClearance.patient_relationship}
+                                                    label="Patient Relationship"
+                                                    onChange={(e) => setInformation({...information, patient_relationship:e.target.value})}
+                                                    error={patientRelationshipError}
+                                                >
+                                                    <MenuItem value={'Father'}>Father</MenuItem>
+                                                    <MenuItem value={'Mother'}>Mother</MenuItem>
+                                                    <MenuItem value={'Son'}>Son</MenuItem>
+                                                    <MenuItem value={'Daughter'}>Daughter</MenuItem>
+                                                </Select>
+                                            </FormControl>
+                                        </Grid> 
+
                                         
                                         {/* Other Fields */}
                                         <Grid item xs={6}>
