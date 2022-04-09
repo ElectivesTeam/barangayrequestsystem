@@ -21,7 +21,6 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 function BusinessClearanceForm(reviewBusinessClearance){
-    console.log(reviewBusinessClearance)
     const classes = useStyles();
     return (
         <>

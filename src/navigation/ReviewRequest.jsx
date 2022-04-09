@@ -433,25 +433,6 @@ const ReviewRequest = ({ handleBack, selectedRequest, apiFormsData }) => {
             })
         }
 
-        
-
-        // // Building Clearance
-        // formService.buildingClearance(residentNumber, apiFormsData.buildingClearanceData.type)
-        // .then((response) => {
-        //     if (response !== undefined){
-        //         setOpen(true)
-        //         console.log('success')
-        //     }
-        // })
-        // .catch(error => {
-        //     if (error.response != undefined){
-        //       if (error.response.status === 400) {
-        //         console.log('error')
-        //       }
-        //         else console.log("Something went wrong. Please try again later.");
-        //       }
-        // }
-        // )
     };
 
     const handleClose = () => {

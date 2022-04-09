@@ -14,8 +14,9 @@ import InputLabel from '@material-ui/core/InputLabel';
 import MenuItem from '@material-ui/core/MenuItem';
 import Select from '@material-ui/core/Select';
 import Button from '@material-ui/core/Button';
-import ListOfRequest from './ListOfRequest'
 
+
+import ListOfRequest from './ListOfRequest';
 import AuthService from "../services/auth.service";
 
 const columns = [
@@ -96,7 +97,7 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 
-function Request() {
+const Request = ({ handleNextStepper, handleBackStepper }) => {
     const [submitted, setSubmitted] = React.useState(false)
     const classes = useStyles();
     const [age, setAge] = React.useState('');
@@ -399,6 +400,7 @@ function Request() {
     
     const handleSubmit = (e) =>{
         e.preventDefault()
+        handleNextStepper();
         console.log(requestId);
         setSubmitted(true)
     }
@@ -407,9 +409,10 @@ function Request() {
 
     if (AuthService.getCurrentUser()) {
         return submitted ? (
-        <ListOfRequest selectedRequest={requestId} apiFormsData = {apiFormsData} handleAPIFormsDataChange= {handleAPIFormsDataChange}/>
+        <ListOfRequest selectedRequest={requestId} apiFormsData = {apiFormsData} handleAPIFormsDataChange= {handleAPIFormsDataChange} handleNextStepper={handleNextStepper} handleBackStepper={handleBackStepper} />
     ): (
         <>
+            {/* <HorizontalLinearStepper/> */}
             <Grid container component="main" className={classes.root}>
                 <Grid item xs={12}>
                     <Box bgcolor="primary.main" color="primary.contrastText" p={2} className={classes.title}>
