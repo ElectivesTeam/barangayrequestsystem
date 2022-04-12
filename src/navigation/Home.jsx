@@ -182,79 +182,71 @@ function Home() {
         </Grid>
         
         <div className={classes.divtest}>   
-        <Grid container spacing={2} className={classes.styledGridContainer}>
-        <Card className={classes.styledCard}>
-            <CardActionArea>
-                <CardMedia
-                    component="img"
-                    alt="Document"
-                    height="175"
-                    image="../img/graph.png"
-                    title="test"
-                />
-                <CardContent>
-                    <Typography gutterBottom variant="h5" component="h2">
-                        Document Requesting
-                    </Typography>
-                    <Typography variant="body2" color="textSecondary" component="p">
-                        Requesting of documents is now available online. Create an account and upload your valid ID for verfication to get an access to the Online Document Request Page
-                    </Typography>
-                </CardContent>
-            </CardActionArea>
-            
-            
-        </Card>
-        <Card className={classes.styledCard}>
-            <CardActionArea>
-                <CardMedia
-                    component="img"
-                    alt="Payment"
-                    height="175"
-                    image="../img/payment.png"
-                    title="test"
-                />
-                <CardContent>
-                    <Typography gutterBottom variant="h5" component="h2">
-                    Easy Payment
-                    </Typography>
-                    <Typography variant="body2" color="textSecondary" component="p">
-                    Requesting of documents is now available online. Create an account and upload your valid ID for verfication to get an access to the Online Document Request Page
-                    </Typography>
-                </CardContent>
-            </CardActionArea>
-            
-            
-        </Card>
-        <Card className={classes.styledCard}>
-            <CardActionArea>
-                <CardMedia
-                    component="img"
-                    alt="Clearance"
-                    height="175"
-                    image="../img/team.png"
-                    title="test"
-                />
-                <CardContent>
-                    <Typography gutterBottom variant="h5" component="h2">
-                    Clearance Monitoring
-                    </Typography>
-                    <Typography variant="body2" color="textSecondary" component="p" >
-                    Requesting of documents is now available online. Create an account and upload your valid ID for verfication to get an access to the Online Document Request Page
-                    </Typography>
-                </CardContent>
-            </CardActionArea>
-            
-            
-        </Card>
-        
-        
-        </Grid>
+            <Grid container spacing={2} className={classes.styledGridContainer}>
+                <Card className={classes.styledCard}>
+                    <CardActionArea>
+                        <CardMedia
+                            component="img"
+                            alt="Document"
+                            height="175"
+                            image="../img/graph.png"
+                            title="test"
+                        />
+                        <CardContent>
+                            <Typography gutterBottom variant="h5" component="h2">
+                                Document Requesting
+                            </Typography>
+                            <Typography variant="body2" color="textSecondary" component="p">
+                                Requesting of documents is now available online. Create an account and upload your valid ID for verfication to get an access to the Online Document Request Page
+                            </Typography>
+                        </CardContent>
+                    </CardActionArea>
+                    
+                    
+                </Card>
+                <Card className={classes.styledCard}>
+                    <CardActionArea>
+                        <CardMedia
+                            component="img"
+                            alt="Payment"
+                            height="175"
+                            image="../img/payment.png"
+                            title="test"
+                        />
+                        <CardContent>
+                            <Typography gutterBottom variant="h5" component="h2">
+                            Easy Payment
+                            </Typography>
+                            <Typography variant="body2" color="textSecondary" component="p">
+                            Requesting of documents is now available online. Create an account and upload your valid ID for verfication to get an access to the Online Document Request Page
+                            </Typography>
+                        </CardContent>
+                    </CardActionArea>
+                    
+                    
+                </Card>
+                <Card className={classes.styledCard}>
+                    <CardActionArea>
+                        <CardMedia
+                            component="img"
+                            alt="Clearance"
+                            height="175"
+                            image="../img/team.png"
+                            title="test"
+                        />
+                        <CardContent>
+                            <Typography gutterBottom variant="h5" component="h2">
+                            Clearance Monitoring
+                            </Typography>
+                            <Typography variant="body2" color="textSecondary" component="p" >
+                            Requesting of documents is now available online. Create an account and upload your valid ID for verfication to get an access to the Online Document Request Page
+                            </Typography>
+                        </CardContent>
+                    </CardActionArea>
+                </Card>
+            </Grid>
         </div>
     </Grid>
-        
-        
-        
-        
     )
 }
 
