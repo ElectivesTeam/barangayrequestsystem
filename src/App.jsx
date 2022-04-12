@@ -15,7 +15,7 @@ import Register from './navigation/Register';
 import MenuAppBar from './components/navbar';
 import MyAccount from './navigation/Myaccount';
 import ReviewRequest from './navigation/ReviewRequest'
-import HorizontalLinearStepper from './navigation/Stepper'
+import HorizontalLinearStepper from './components/Stepper'
 
 //to remove
 import Cedula from './forms/Cedula';

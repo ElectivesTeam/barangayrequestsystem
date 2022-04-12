@@ -14,7 +14,9 @@ import InputLabel from '@material-ui/core/InputLabel';
 import MenuItem from '@material-ui/core/MenuItem';
 import Select from '@material-ui/core/Select';
 import Button from '@material-ui/core/Button';
-
+import Typography from '@material-ui/core/Typography';
+import Stack from '@mui/material/Stack';
+import ArrowCircleUpIcon from '@mui/icons-material/ArrowCircleUp';
 
 import ListOfRequest from './ListOfRequest';
 import AuthService from "../services/auth.service";
@@ -63,7 +65,7 @@ const rows = [
 
 const useStyles = makeStyles((theme) => ({
     root: {
-        padding: '15px 30px 25px 30px',
+        padding: '15px 30px 70px 30px',
       
     },
 
@@ -86,12 +88,9 @@ const useStyles = makeStyles((theme) => ({
 
         },
     },
-    totalBox:{
-        paddingRight:10
-    },
     button:{
         fontWeight:600,
-        padding:15
+        padding: '5px 0px'
     }
     
 }));
@@ -467,9 +466,20 @@ const Request = ({ handleNextStepper, handleBackStepper }) => {
                     
                     <div>
                         {notify && agree && check ? (
-                            <Button variant="contained" className={classes.button} color="primary" onClick = {handleSubmit}>Submit</Button>
+                            <Button variant="contained" color="primary" onClick = {handleSubmit} endIcon={<ArrowCircleUpIcon/>} >
+                                <Stack direction="row" alignItems="center" >
+                                    <Typography variant="button" className={classes.button}>
+                                        Submit
+                                    </Typography>
+                                </Stack>
+                                
+                            </Button>
                         ) : (
-                            <Button variant="contained" className={classes.button} color="primary" disabled>Submit</Button>
+                            <Button variant="contained" color="primary" disabled endIcon={<ArrowCircleUpIcon/>} >
+                                <Typography variant="button" className={classes.button}>
+                                    Submit
+                                </Typography>
+                            </Button>
                         )}
                         
                     </div>

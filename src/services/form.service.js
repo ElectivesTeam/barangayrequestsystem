@@ -4,6 +4,19 @@ const API_URL = "http://127.0.0.1:8000/api/forms/";
 
 
 class formService {
+    email(){
+        var token = JSON.parse(localStorage.getItem('user')).access;
+        return axios
+        .get(API_URL + "email_notification",
+            {
+                headers: {
+                    Accept: 'application/json', 
+                    Authorization: 'Bearer ' + token
+                }
+            }
+        )
+    }
+
     // Bail Bond - axios.post(url[, data[, config]])
     bailBond(resident_number, case_number) {
         var token = JSON.parse(localStorage.getItem('user')).access;

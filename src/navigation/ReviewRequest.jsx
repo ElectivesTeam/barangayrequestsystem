@@ -9,6 +9,8 @@ import DialogContentText from '@mui/material/DialogContentText';
 import DialogTitle from '@mui/material/DialogTitle';
 import Grid from '@material-ui/core/Grid';
 import Stack from '@mui/material/Stack';
+import Typography from '@material-ui/core/Typography';
+import Box from '@mui/material/Box';
 
 import BailBondForm from '../submittedforms/BailBondForm';
 import BarangayClearanceForm from '../submittedforms/BarangayClearanceForm';
@@ -26,19 +28,32 @@ import MaternalCareForm from '../submittedforms/MaternalCareForm';
 import ResidencyForm from '../submittedforms/ResidencyForm';
 import VoucherForm from '../submittedforms/VoucherForm';
 import FormHeader from '../forms/components/FormHeader';
+import InfoOutlinedIcon from '@mui/icons-material/InfoOutlined';
+import ArrowCircleUpIcon from '@mui/icons-material/ArrowCircleUp';
 
 import formService from '../services/form.service';
 import AuthService from "../services/auth.service";
 
 const useStyles = makeStyles((theme) => ({
     button: {
-        width: '10%',
-        height: '10%',   
-        left: '77%',
+        // width: '9%',
+        // height: '10%',   
+        // left: '78%',
     },
     buttondiv: {
         paddingTop: '15px',
-        paddingBottom: '15px'
+        paddingBottom: '15px',
+        alignItems: 'right'
+    },
+    h6: {
+        fontWeight: '600'
+    },
+    agree: {
+        fontWeight: '600'
+    },
+    buttonText: {
+        fontWeight:600,
+        padding: '5px 0px'
     }
 }));
 
@@ -66,8 +81,9 @@ const ReviewRequest = ({ handleBack, selectedRequest, apiFormsData }) => {
 
     const history = useHistory();
     const handleSubmit = () => {
+        
         setOpen(true);
-        history.push('/')
+        history.push('/');
         window.location.reload(false);
     }
 
@@ -86,6 +102,12 @@ const ReviewRequest = ({ handleBack, selectedRequest, apiFormsData }) => {
         //to prevent multiple clicks/post
         setDisabled(true);
 
+        //email notif
+        formService.email()
+        .then ((response) => {
+            console.log(response.data);
+        })
+        
         // Bail Bond
         if (bailbondform >= 0) {
             formService.bailBond(residentNumber, apiFormsData.bailBondData.caseNumber)
@@ -460,46 +482,62 @@ const ReviewRequest = ({ handleBack, selectedRequest, apiFormsData }) => {
                 
                 
 
-                <div className={classes.buttondiv}>
+                <Box sx={{display: 'flex', justifyContent: 'flex-end', p: 2, m: 2}}>
                     <Stack spacing={1} direction="row">
-                        <Button
-
-                            variant="contained"
-                            onClick={handleBack}
-                            color="primary"
-                            className={classes.button}
-                        >
-                            Edit
-                        </Button> 
-                        
-                        <Button
-                            variant="contained"
-                            disabled={disabled}
-                            onClick={handleOpen}
-                            color="primary"
-                            className={classes.button}
-                        >
-                            Submit
-                        </Button>
+                            <Button
+                                onClick={handleBack}
+                                color="primary"
+                                className={classes.button}
+                            >
+                                <Stack direction="row" alignItems="center">
+                                    <Typography variant="button" className={classes.buttonText}>
+                                        Edit
+                                    </Typography>
+                                </Stack>
+                            </Button> 
+                            
+                            <Button
+                                variant="contained"
+                                disabled={disabled}
+                                onClick={handleOpen}
+                                color="primary"
+                                className={classes.button}
+                                endIcon={<ArrowCircleUpIcon/>}
+                            >
+                                <Stack direction="row" alignItems="center">
+                                    <Typography variant="button" className={classes.buttonText}>
+                                        Submit
+                                    </Typography>
+                                </Stack>
+                            </Button>
                     </Stack>
-                </div>
+                </Box>
+                    
+                
 
             <Dialog
                 open={open}
                 aria-labelledby="alert-dialog-title"
                 aria-describedby="alert-dialog-description"
             >
-                <DialogTitle id="alert-dialog-title">
-                {"Notice"}
+                <DialogTitle id="alert-dialog-title" className= {classes.notice}>
+                    <Stack direction="row" alignItems="center" gap={1}>
+                        <InfoOutlinedIcon/>
+                        <Typography variant="h6" className={classes.h6}>
+                            Notice
+                        </Typography>
+                    </Stack>
                 </DialogTitle>
                 <DialogContent>
-                <DialogContentText id="alert-dialog-description">
-                    We'll notify you in your email for further instruction
-                </DialogContentText>
+                    <Typography variant="subtitle1" className={classes.subtitle}>
+                        We'll notify you in your email for further instruction
+                    </Typography>
                 </DialogContent>
                 <DialogActions>
                 <Button onClick={handleSubmit} autoFocus>
-                    Ok
+                    <Typography variant="button" className={classes.agree}>
+                        Ok
+                    </Typography>
                 </Button>
                 </DialogActions>
             </Dialog>

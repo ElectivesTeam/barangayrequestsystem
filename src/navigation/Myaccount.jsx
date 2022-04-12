@@ -1,13 +1,17 @@
 import React, { useState, Component } from 'react';
 import { useEffect } from 'react';
+import { makeStyles } from '@material-ui/core/styles';
 import Grid from '@material-ui/core/Grid'
 import Paper from '@material-ui/core/Paper'
 import CssBaseline from '@material-ui/core/CssBaseline';
 import Typography from '@material-ui/core/Typography';
 import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button'
-import { makeStyles } from '@material-ui/core/styles';
-import Box from '@material-ui/core/Box';
+import Stack from '@mui/material/Stack';
+import Snackbar from '@mui/material/Snackbar';
+import MuiAlert from '@mui/material/Alert';
+import Slide from '@mui/material/Slide';
+
 
 import AuthService from "../services/auth.service";
 import { useHistory } from "react-router-dom";
@@ -119,12 +123,14 @@ function MyAccount() {
 	//Style
 	const classes = useStyles();
 	let history = useHistory();
+	const [open, setOpen] = useState(false);
 	const[first_name, setFirstName] = useState([]);
 	const[last_name, setLastName] = useState([]);
 	const[middle_name, setMiddleName] = useState([]);
 	const[email, setEmail] = useState([]);
 	const[contact_number, setContactNumber] = useState([]);
 	const[getInfo, setGetInfoCheck] = useState(false)
+
 	if (!getInfo){
 		AuthService.getUserInformation()
 		.then((response) => {
@@ -208,6 +214,24 @@ function MyAccount() {
 			}
 		}
 	}, [])
+
+	const Alert = React.forwardRef(function Alert(props, ref) {
+		return <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />;
+	  });
+
+	const handleClick = (e) => {
+		e.preventDefault()
+		setOpen(true);
+	};
+
+	const handleClose = (event, reason) => {
+		if (reason === 'clickaway') {
+			return;
+		}
+		setOpen(false);
+	};
+	
+	  
 
 	if (AuthService.getCurrentUser()) {
 		return (
@@ -344,17 +368,23 @@ function MyAccount() {
 										autoFocus
 										/>
 									</Grid>
-
-									<Button
-										type="submit"
-										color="primary"
-										fullWidth
-										variant="contained"
-										className={classes.button}
-										href="#"
-										>
-										SAVE
-									</Button>
+									<Stack spacing={2} sx={{ width: '100%' }}>
+										<Button
+											type="submit"
+											color="primary"
+											fullWidth
+											variant="contained"
+											className={classes.button}
+											onClick={handleClick}
+											>
+											SAVE
+										</Button>
+										<Snackbar open={open} autoHideDuration={6000} onClose={handleClose} anchorOrigin={{vertical: 'bottom', horizontal: 'right'}} TransitionComponent={Slide}>
+											<Alert onClose={handleClose} severity="success" sx={{ width: '100%' }}>
+												Account updated
+											</Alert>
+										</Snackbar>
+									</Stack>
 								</Grid>
 								<Grid item xs={12} sm={1}></Grid>
 								<Grid item xs={12} sm={3}>
@@ -408,7 +438,7 @@ function MyAccount() {
 										fullWidth
 										variant="contained"
 										className={classes.button}
-										href="#"
+										onClick={handleClick}
 										>
 										CONFIRM
 									</Button>

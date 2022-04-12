@@ -30,7 +30,6 @@ const useStyles = makeStyles((theme) => ({
     },
     fontFamily: 'Montserrat',
     fontWeight: 600,
-    fontSize: 22,
     
     '@media (max-width:550px)': {
       display: 'none',
@@ -55,7 +54,7 @@ const useStyles = makeStyles((theme) => ({
     color: '#fff',
   },
   logo: {
-    height: 50,
+    height: 45,
     
   },
   divTool: {
@@ -161,7 +160,7 @@ export default function MenuAppBar() {
       <AppBar position="static" className={classes.navbar} color="primary">
         <Toolbar>
           <Button href="/">
-          <img src="../img/Brgy Landayan Logo.png" className={classes.logo} alt=""  />
+            <img src="../img/Brgy Landayan Logo.png" className={classes.logo} alt=""  />
           </Button>
           <Typography variant="h6" className={classes.title} >
             Online Document Request

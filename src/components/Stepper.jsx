@@ -4,13 +4,18 @@ import Box from '@mui/material/Box';
 import Stepper from '@mui/material/Stepper';
 import Step from '@mui/material/Step';
 import StepLabel from '@mui/material/StepLabel';
+import Typography from '@material-ui/core/Typography';
 
-import Request from './Requests.jsx'
+import Request from '../navigation/Requests.jsx'
 
 const useStyles = makeStyles((theme) => ({
   root: {
     padding: '30px 30px 10px 30px'
+  },
+  step_label_root: {
+    fontSize: '10px',
   }
+
 }));
 
 const steps = ['Select a document', 'Fill out the required information', 'Review your document/s'];
@@ -52,8 +57,10 @@ const HorizontalLinearStepper = () => {
               const stepProps = {};
               const labelProps = {};
               return (
-                <Step key={label} {...stepProps}>
-                  <StepLabel {...labelProps}>{label}</StepLabel>
+                <Step key={label} {...stepProps} >
+                  <StepLabel  {...labelProps}>
+                    <Typography variant='subtitle2'>{label}</Typography>
+                  </StepLabel>
                 </Step>
               );
             })}
