@@ -128,7 +128,6 @@ const DentalServiceForm = ({ activeForm, handleBack, handleNext, handleChange, d
             handleNext()
         }
     }
-
     return (
         <>
             <FormHeader formTitle={'Dental Service Form'}/>
@@ -245,10 +244,10 @@ const DentalServiceForm = ({ activeForm, handleBack, handleNext, handleChange, d
                                                     onChange={(e) => setInformation({...information, civilStatus:e.target.value})}
                                                     error={civilStatusError}
                                                 >
-                                                <MenuItem value={'Single'}>Single</MenuItem>
-                                                <MenuItem value={'Married'}>Married</MenuItem>
-                                                <MenuItem value={'Widowed'}>Widowed</MenuItem>
-                                                <MenuItem value={'Divorced'}>Divorced</MenuItem>
+                                                <MenuItem value={'SINGLE'}>Single</MenuItem>
+                                                <MenuItem value={'MARRIED'}>Married</MenuItem>
+                                                <MenuItem value={'WIDOWED'}>Widowed</MenuItem>
+                                                <MenuItem value={'DIVORCED'}>Divorced</MenuItem>
                                                 </Select>
                                             </FormControl>
                                         </Grid>

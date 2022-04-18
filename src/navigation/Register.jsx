@@ -210,6 +210,25 @@ function Register() {
     const[addressError, setAddressError] = useState(false)
     const[residentNumberError, setResidentNumberError] = useState(false)
     const[ageError, setAgeError] = useState(false)
+    
+    //from Register2nd
+    const [values, setValues] = useState({
+      password: '',
+      showPassword: false,
+      });
+    
+      const handleChange = (prop) => (event) => {
+        setValues({ ...values, [prop]: event.target.value });
+      };
+
+    const[open, setOpen] = useState(false);
+
+    const[birthplace, setBirthplace] = useState('Laguna')
+    const[barangay, setBarangay] = useState('Landayan');
+    const[civilstatus, setCivilstatus] = useState('');
+    const[contactnumber, setContactnumber] = useState('');
+    const[email, setEmail] = useState('');
+  
     const[birthplaceError, setBirthplaceError] = useState(false)
     const[barangayError, setBarangayError] = useState(false)
     const[civilstatusError, setCivilstatusError] = useState(false)
@@ -257,7 +276,7 @@ function Register() {
       setResidentNumberError(false)
       setAgeError(false)
       setBirthplaceError(false)
-      // setBarangayError(false)
+      setBarangayError(false)
       setCivilstatusError(false)
       setContactnumberError(false)
       setEmailError(false)
@@ -606,7 +625,7 @@ function Register() {
                             label="Birth Place"
                             name="birth_place"
                             autoComplete="birth_place"
-                            autoFocus
+                            defaultValue={birthplace}
                             error={birthplaceError}
                             />
                           </Grid>
@@ -623,7 +642,7 @@ function Register() {
                               label="Barangay"
                               name="barangay"
                               autoComplete="barangay"
-                              autoFocus
+                              defaultValue={barangay}
                               error={barangayError}
                             />
                           </Grid>

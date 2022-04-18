@@ -18,15 +18,17 @@ import MaternalCareForm from '../forms/MaternalCareForm';
 import BusinessClearanceForm from '../forms/BusinessClearanceForm';
 import ReviewRequest from './ReviewRequest';
 
-const ListOfRequest = ({ selectedRequest, apiFormsData, handleAPIFormsDataChange }) => {
+const ListOfRequest = ({ selectedRequest, apiFormsData, handleAPIFormsDataChange, handleNextStepper, handleBackStepper }) => {
     const submittedRequest = selectedRequest;
     const getRequest= (i) => {
         return selectedRequest[i]
     }
     const [activeForm, setActiveForm] = useState(0);
     const handleNext = () => {
+        
         if(activeForm === selectedRequest.length - 1){
             setActiveForm(activeForm + 1);
+            handleNextStepper();
         }else{
             setActiveForm(activeForm + 1);
             console.log(activeForm)
@@ -34,6 +36,7 @@ const ListOfRequest = ({ selectedRequest, apiFormsData, handleAPIFormsDataChange
     };
 
     const handleBack = () => {
+        handleBackStepper();
         if(activeForm == selectedRequest.length){
             setActiveForm(0)
             

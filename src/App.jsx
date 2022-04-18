@@ -15,6 +15,8 @@ import Register from './navigation/Register';
 import MenuAppBar from './components/navbar';
 import MyAccount from './navigation/Myaccount';
 import ReviewRequest from './navigation/ReviewRequest'
+import HorizontalLinearStepper from './components/Stepper'
+import StickyFooter from "./components/Footer";
 
 //to remove
 import Cedula from './forms/Cedula';
@@ -53,7 +55,7 @@ function App() {
           <Route exact path="/" component={Home}></Route>
           <Route exact path="/login" component={Login}></Route>
           <Route exact path="/register" component={Register}></Route>
-          <Route exact path="/requests" component={Requests}></Route>
+          <Route exact path="/requests" component={HorizontalLinearStepper}></Route>
           <Route exact path="/myaccount" component={MyAccount}></Route>
           <Route exact path="/reviewrequest" component={ReviewRequest}></Route>
           
@@ -75,6 +77,7 @@ function App() {
           <Route exact path="/requests/maternalcareform" component={MaternalCareForm}></Route>
         </Switch>
       </div>
+      <StickyFooter/>
     </ThemeProvider> 
     </Router>
   );

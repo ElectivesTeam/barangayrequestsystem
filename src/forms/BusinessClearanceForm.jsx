@@ -44,11 +44,13 @@ const BusinessClearanceForm = ({ activeForm, handleBack, handleNext, handleChang
     const[addressError, setAddressError] = useState(false)
     const[ownerError, setOwnerError] = useState(false)
     const[natureError, setNatureError] = useState(false)
+    const[startBusinessError, setStartBusinessError] = useState(false)
     const [information, setInformation] = useState({
         businessName: businessClearance.businessName,
         businessOwner: businessClearance.businessOwner,
         businessAddress: businessClearance.businessAddress,
-        businessNature: businessClearance.businessNature
+        businessNature: businessClearance.businessNature,
+        start_business_operated: businessClearance.start_business_operated
     });
     
     const handleSubmit = (e) =>{
@@ -76,6 +78,12 @@ const BusinessClearanceForm = ({ activeForm, handleBack, handleNext, handleChang
         setNatureError(false)
         if(information.businessNature == ''){
             setNatureError(true)
+            setChecker = false
+        }
+
+        setStartBusinessError(false)
+        if(information.start_business_operated == ''){
+            setStartBusinessError(true)
             setChecker = false
         }
 
@@ -167,6 +175,29 @@ const BusinessClearanceForm = ({ activeForm, handleBack, handleNext, handleChang
                                                 error={natureError}
                                             />
                                         </Grid>
+
+                                        {/* Start Business */}
+                                        <Grid item xs={6}>
+                                            {/* Input goes here */}
+                                            <TextField
+                                                type="date"
+                                                onChange={(e) => setInformation({...information, start_business_operated:e.target.value})}
+                                                variant="outlined"
+                                                margin="normal"
+                                                required
+                                                fullWidth
+                                                id="start_business_operated"
+                                                label="Start Business Operated"
+                                                name="start_business_operated"
+                                                autoComplete="start_business_operated"
+                                                error={startBusinessError}
+                                                defaultValue={businessClearance.start_business_operated}
+                                                InputLabelProps={{
+                                                    shrink: true,
+                                                }}
+                                            />
+                                        </Grid>
+
                                     </Grid>
                                 </div>
 

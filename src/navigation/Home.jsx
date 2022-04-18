@@ -7,12 +7,13 @@ import CardActionArea from '@material-ui/core/CardActionArea';
 import CardContent from '@material-ui/core/CardContent';
 import CardMedia from '@material-ui/core/CardMedia';
 import Button from '@material-ui/core/Button';
-import Divider from '@material-ui/core/Divider';
+import ArrowForwardOutlinedIcon from '@mui/icons-material/ArrowForwardOutlined';
+
 import AuthService from "../services/auth.service";
 
 const useStyles = makeStyles((theme) => ({
     root: {
-        width: '95%',
+        width: '100%',
         margin: 'auto',
         
     },
@@ -56,10 +57,11 @@ const useStyles = makeStyles((theme) => ({
             fontSize: '1.2rem',
         },
     },
-    
+    divtest: {
+        background: '#e0ecff',
+    },
     styledGridContainer: {
-        margin: '0px 30px',
-        paddingBottom: '30px',
+        padding: '30px 20px 35px 20px',
         '@media (max-width:600px)': {
             margin:'auto',
             width: '100%'
@@ -77,6 +79,7 @@ const useStyles = makeStyles((theme) => ({
         marginRight: 'auto',
         marginTop: '13px',
         maxHeight: '350px',
+        borderRadius:'15px',
         
         '@media (min-width:1300px)': {
             width: '32%', 
@@ -91,18 +94,9 @@ const useStyles = makeStyles((theme) => ({
         
     },
     styledButton: {
-        width: '58%',
         textAlign: 'center',
-        display:'block',
-        marginLeft: 'auto',
-        marginRight: 'auto',
         marginTop: 8,
-        
         letterSpacing: 1,
-        '@media (min-width:1000px)': {
-            width: '32%', 
-            
-        },
     },
 
     heroImg: {
@@ -125,7 +119,7 @@ const useStyles = makeStyles((theme) => ({
 
     heroPage: {
         display: 'flex',
-        
+
     },
 
     heroContent: {
@@ -151,14 +145,11 @@ function Home() {
     const classes = useStyles();
     const getStarted = () => {
         if (!user) {
-            return <div style={{display: "contents"}}>
-                <Button href="/register" variant="contained" className={classes.styledButton} color = "primary" >
+            return <div className={classes.styledButton}>
+                <Button href="/register" variant="contained"  color = "primary" endIcon={<ArrowForwardOutlinedIcon/>}>
                             Get Started
                 </Button>
             </div>
-        }
-        else {
-            return 
         }
     }
 
@@ -190,81 +181,72 @@ function Home() {
             
         </Grid>
         
-        <div className={classes.divtest}>
-        <Divider />  
-        <Grid container spacing={2} className={classes.styledGridContainer}>
-        <Card className={classes.styledCard}>
-            <CardActionArea>
-                <CardMedia
-                    component="img"
-                    alt="Document"
-                    height="175"
-                    image="../img/graph.png"
-                    title="test"
-                />
-                <CardContent>
-                    <Typography gutterBottom variant="h5" component="h2">
-                        Document Requesting
-                    </Typography>
-                    <Typography variant="body2" color="textSecondary" component="p">
-                        Requesting of documents is now available online. Create an account and upload your valid ID for verfication to get an access to the Online Document Request Page
-                    </Typography>
-                </CardContent>
-            </CardActionArea>
-            
-            
-        </Card>
-        <Card className={classes.styledCard}>
-            <CardActionArea>
-                <CardMedia
-                    component="img"
-                    alt="Payment"
-                    height="175"
-                    image="../img/payment.png"
-                    title="test"
-                />
-                <CardContent>
-                    <Typography gutterBottom variant="h5" component="h2">
-                    Easy Payment
-                    </Typography>
-                    <Typography variant="body2" color="textSecondary" component="p">
-                    Requesting of documents is now available online. Create an account and upload your valid ID for verfication to get an access to the Online Document Request Page
-                    </Typography>
-                </CardContent>
-            </CardActionArea>
-            
-            
-        </Card>
-        <Card className={classes.styledCard}>
-            <CardActionArea>
-                <CardMedia
-                    component="img"
-                    alt="Clearance"
-                    height="175"
-                    image="../img/team.png"
-                    title="test"
-                />
-                <CardContent>
-                    <Typography gutterBottom variant="h5" component="h2">
-                    Clearance Monitoring
-                    </Typography>
-                    <Typography variant="body2" color="textSecondary" component="p" >
-                    Requesting of documents is now available online. Create an account and upload your valid ID for verfication to get an access to the Online Document Request Page
-                    </Typography>
-                </CardContent>
-            </CardActionArea>
-            
-            
-        </Card>
-        
-        
-        </Grid>
+        <div className={classes.divtest}>   
+            <Grid container spacing={2} className={classes.styledGridContainer}>
+                <Card className={classes.styledCard}>
+                    <CardActionArea>
+                        <CardMedia
+                            component="img"
+                            alt="Document"
+                            height="175"
+                            image="../img/graph.png"
+                            title="test"
+                        />
+                        <CardContent>
+                            <Typography gutterBottom variant="h5" component="h2">
+                                Document Requesting
+                            </Typography>
+                            <Typography variant="body2" color="textSecondary" component="p">
+                                Requesting of documents is now available online. Create an account and upload your valid ID for verfication to get an access to the Online Document Request Page
+                            </Typography>
+                        </CardContent>
+                    </CardActionArea>
+                    
+                    
+                </Card>
+                <Card className={classes.styledCard}>
+                    <CardActionArea>
+                        <CardMedia
+                            component="img"
+                            alt="Payment"
+                            height="175"
+                            image="../img/payment.png"
+                            title="test"
+                        />
+                        <CardContent>
+                            <Typography gutterBottom variant="h5" component="h2">
+                            Easy Payment
+                            </Typography>
+                            <Typography variant="body2" color="textSecondary" component="p">
+                            Requesting of documents is now available online. Create an account and upload your valid ID for verfication to get an access to the Online Document Request Page
+                            </Typography>
+                        </CardContent>
+                    </CardActionArea>
+                    
+                    
+                </Card>
+                <Card className={classes.styledCard}>
+                    <CardActionArea>
+                        <CardMedia
+                            component="img"
+                            alt="Clearance"
+                            height="175"
+                            image="../img/team.png"
+                            title="test"
+                        />
+                        <CardContent>
+                            <Typography gutterBottom variant="h5" component="h2">
+                            Clearance Monitoring
+                            </Typography>
+                            <Typography variant="body2" color="textSecondary" component="p" >
+                            Requesting of documents is now available online. Create an account and upload your valid ID for verfication to get an access to the Online Document Request Page
+                            </Typography>
+                        </CardContent>
+                    </CardActionArea>
+                </Card>
+            </Grid>
         </div>
     </Grid>
-        
-        
-        
-        
     )
 }
 

@@ -42,7 +42,6 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 const Cedula = ({ activeForm, handleBack, handleNext, handleChange, cedula}) => {
-    console.log(cedula)
     const classes = useStyles();
     const[nameError, setNameError] = useState(false)
     const[addressError, setAddressError] = useState(false)
@@ -50,7 +49,6 @@ const Cedula = ({ activeForm, handleBack, handleNext, handleChange, cedula}) => 
     const[birthPlaceError, setBirthPlaceError] = useState(false)
     const[civilStatusError, setCivilStatusError] = useState(false)
     const[genderError, setGenderError] = useState(false)
-    const[nationalityError, setNationalityError] = useState(false)
     const[professionError, setProfessionError] = useState(false)
     const[monthlyIncomeError, setMonthlyIncomeError] = useState(false)
     const [information, setInformation] = useState({
@@ -60,7 +58,6 @@ const Cedula = ({ activeForm, handleBack, handleNext, handleChange, cedula}) => 
         birthplace: cedula.birthplace,
         civilStatus: cedula.civilStatus,
         gender: cedula.gender,
-        nationality: cedula.nationality,
         profession: cedula.profession,
         monthlyIncome: cedula.monthlyIncome,
         
@@ -102,12 +99,6 @@ const Cedula = ({ activeForm, handleBack, handleNext, handleChange, cedula}) => 
         setGenderError(false)
         if(information.gender == ''){
             setGenderError(true)
-            setChecker = false
-        }
-
-        setNationalityError(false)
-        if(information.nationality == ''){
-            setNationalityError(true)
             setChecker = false
         }
 
@@ -194,7 +185,6 @@ const Cedula = ({ activeForm, handleBack, handleNext, handleChange, cedula}) => 
                                                 autoComplete="birthday"
                                                 autoFocus
                                                 error={birthdayError}
-                                                defaultValue="2017-05-24"
                                                 InputLabelProps={{
                                                     shrink: true,
                                                 }}
@@ -257,24 +247,6 @@ const Cedula = ({ activeForm, handleBack, handleNext, handleChange, cedula}) => 
                                             </FormControl>
                                         </Grid>
 
-                                        {/* Nationality */}
-                                        <Grid item xs={6}>
-                                            <TextField
-                                                onChange={(e) => setInformation({...information, nationality:e.target.value})}
-                                                variant="outlined"
-                                                margin="normal"
-                                                defaultValue={cedula.nationality}
-                                                required
-                                                fullWidth
-                                                id="nationality"
-                                                label="Nationality"
-                                                name="nationality"
-                                                autoComplete="nationality"
-                                                autoFocus
-                                                error={nationalityError}
-                                            />
-                                        </Grid> 
-
                                         {/* Profession */}
                                         <Grid item xs={6}>
                                             <TextField
@@ -305,7 +277,6 @@ const Cedula = ({ activeForm, handleBack, handleNext, handleChange, cedula}) => 
                                                 label="Monthly Income"
                                                 name="monthlyincome"
                                                 autoComplete="monthlyincome"
-                                                autoFocus
                                                 error={monthlyIncomeError}
                                             />
                                         </Grid>   

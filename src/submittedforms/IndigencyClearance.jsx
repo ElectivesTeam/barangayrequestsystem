@@ -18,6 +18,7 @@ const useStyles = makeStyles((theme) => ({
         fontSize:'1rem',
         paddingLeft:'25px'
     }
+
 }));
 
 function IndigencyClearance(reviewIndigencyClearance){
@@ -35,8 +36,11 @@ function IndigencyClearance(reviewIndigencyClearance){
                                     <Grid item xs={6}>
                                         <p>Claimant: {reviewIndigencyClearance.reviewIndigencyClearance.name}</p>
                                         <p>Address: {reviewIndigencyClearance.reviewIndigencyClearance.address}</p>
+                                        <p>Patient Name: {reviewIndigencyClearance.reviewIndigencyClearance.patient_name}</p>
                                     </Grid>
                                     <Grid item xs={6}>
+                                        <p>Passed onto whom: {reviewIndigencyClearance.reviewIndigencyClearance.passed_onto_whom}</p>
+                                        <p>Patient Relationship: {reviewIndigencyClearance.reviewIndigencyClearance.patient_relationship}</p>
                                         <p>Purpose: {reviewIndigencyClearance.reviewIndigencyClearance.purpose}</p>
                                     </Grid>
                                 </Grid>
