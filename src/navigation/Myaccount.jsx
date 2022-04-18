@@ -149,6 +149,7 @@ function MyAccount() {
             }
 		})
 	}
+	const[profile_pic, setProfilePic] = useState([]);
 
 	//run once
 	useEffect(async() => {
@@ -187,10 +188,15 @@ function MyAccount() {
 									setEmail(JSON.stringify(response.data.email).slice(1,-1));
 								if(JSON.stringify(response.data.mobile_number).length >= 3)
 									setContactNumber(JSON.stringify(response.data.mobile_number).slice(1,-1));
+								if(JSON.stringify(response.data.profile_pic).length >= 3)
+									if(response.data.profile_pic != null)
+										setProfilePic(JSON.stringify(AuthService.baseURL() + response.data.profile_pic).slice(1,-1))
+									else
+										setProfilePic('')
 							}
 						})
 						.catch(error => {
-							console.log("getInfoFailed")
+							console.log("get Info Failed")
 						}
 						)
 						console.log("access verified")
@@ -449,7 +455,7 @@ function MyAccount() {
 									<Grid item xs={12} sm={12} className={classes.uploadContainer}>
 										Upload your selfie 
 										<div className={classes.divtest}>
-											<img src="https://image.flaticon.com/icons/png/512/149/149092.png" width = "170px" height = "150px"></img>
+											<img src={profile_pic=='' ? '../img/image.png': profile_pic} width = "170px" height = "150px"></img>
 											<Grid item xs={12} sm={2}>
 												<div className={classes.picture}>
 													<Button 

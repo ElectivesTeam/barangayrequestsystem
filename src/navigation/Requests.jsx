@@ -117,8 +117,8 @@ const Request = ({ handleNextStepper, handleBackStepper }) => {
     const [apiFormsData, setAPIFormsData] = useState({})
 
     useEffect(async() => {
-		
-        await AuthService.getUserInformation()
+		if (AuthService.getCurrentUser()){
+            await AuthService.getUserInformation()
             .then((response) => {
                 if (response !== undefined){
                     if(JSON.stringify(response.data.first_name).length >= 3 && JSON.stringify(response.data.middle_name).length >= 0 && JSON.stringify(response.data.last_name).length >= 3)
@@ -232,10 +232,10 @@ const Request = ({ handleNextStepper, handleBackStepper }) => {
                             },
                         })
                 }
-            })
-        
+            })   
+        }
     }, [])
-    //console.log(apiFormsData?.bailBondData?.resident_number)
+
     const handleAPIFormsDataChange = (formName, formData) => {
         
         switch (formName) {
