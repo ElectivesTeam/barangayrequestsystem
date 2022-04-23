@@ -187,16 +187,19 @@ function Register() {
     const[gender, setGender] = useState('');
     const[address, setAddress] = useState('');
     const[residentnumber, setResidentNumber] = useState('');
-    const[birthplace, setBirthplace] = useState('')
-    const[barangay, setBarangay] = useState('');
-    const[contactnumber, setContactnumber] = useState('');
-    const ph_country_code = "+63";
+
+    const[birthplace, setBirthplace] = useState('Laguna')
+    const[barangay, setBarangay] = useState('Landayan');
     const[civilstatus, setCivilstatus] = useState('');
+    const[contactnumber, setContactnumber] = useState('');
     const[email, setEmail] = useState('');
     const [values, setValues] = useState({
       password: '',
       showPassword: false,
       });
+
+    const ph_country_code = "+63";
+    
     const[ImageID, setImageID] = useState('')
     const[ImageSelfie, setImageSelfie] = useState('')
     const[ImageIDURL, setImageIDURL] = useState('')
@@ -210,25 +213,6 @@ function Register() {
     const[addressError, setAddressError] = useState(false)
     const[residentNumberError, setResidentNumberError] = useState(false)
     const[ageError, setAgeError] = useState(false)
-    
-    //from Register2nd
-    const [values, setValues] = useState({
-      password: '',
-      showPassword: false,
-      });
-    
-      const handleChange = (prop) => (event) => {
-        setValues({ ...values, [prop]: event.target.value });
-      };
-
-    const[open, setOpen] = useState(false);
-
-    const[birthplace, setBirthplace] = useState('Laguna')
-    const[barangay, setBarangay] = useState('Landayan');
-    const[civilstatus, setCivilstatus] = useState('');
-    const[contactnumber, setContactnumber] = useState('');
-    const[email, setEmail] = useState('');
-  
     const[birthplaceError, setBirthplaceError] = useState(false)
     const[barangayError, setBarangayError] = useState(false)
     const[civilstatusError, setCivilstatusError] = useState(false)
@@ -347,51 +331,8 @@ function Register() {
         setPasswordError(true)
         setChecker = false
       }
-  
-      if(setChecker){
-        // setOpen(true)
-        AuthService.register(
-          email, 
-          firstname,
-          middlename,
-          lastname,
-          values.password,
-          address,
-          contactnumber,
-          residentnumber,
-          dateValue,
-          age,
-          gender.toUpperCase(),
-          birthplace, //province
-          civilstatus.toUpperCase(),
-          ImageSelfie,
-          ImageID
-        )
-        .then((response) => {
-            if (response !== undefined){
-                setOpen(true)
-                console.log('Register Success')
-                window.history.push('/login')
-                window.location.reload(false);
-            }
-        })
-        .catch(error => {
-          if (error.response != undefined){
-            if (error.response.status === 400) {
-              // setLastnameError(JSON.stringify(error.response.data.last_name));
-              // setFirstnameError(JSON.stringify(error.response.data.first_name));
-              // setResidentNumberError(JSON.stringify(error.response.data.resident_number));
-              // setCivilstatusError(JSON.stringify(error.response.data.civil_status));
-              setEmailError(JSON.stringify(error.response.data.email))
-              setContactnumberError(JSON.stringify(error.response.data.mobile_number))
-              setPasswordError(JSON.stringify(error.response.data.password))
-            }
-              else console.log(error.response);
-            }
-          }
-        )
-      }
 
+      setOpen(true)
     }
 
     //from Register2nd
@@ -421,6 +362,47 @@ function Register() {
       const [openNotice, setOpenNotice] = React.useState(false);
       const handleClickOpenNotice = () => {
         setOpenNotice(true);
+
+        //Submit Registration
+        AuthService.register(
+          email, 
+          firstname,
+          middlename,
+          lastname,
+          values.password,
+          address,
+          contactnumber,
+          residentnumber,
+          dateValue,
+          age,
+          gender.toUpperCase(),
+          birthplace, //province
+          civilstatus.toUpperCase(),
+          ImageSelfie,
+          ImageID
+        )
+        .then((response) => {
+            if (response !== undefined){
+                console.log('Register Success')
+                window.history.push('/login')
+                window.location.reload(false);
+            }
+        })
+        .catch(error => {
+          if (error.response != undefined){
+            if (error.response.status === 400) {
+              // setLastnameError(JSON.stringify(error.response.data.last_name));
+              // setFirstnameError(JSON.stringify(error.response.data.first_name));
+              // setResidentNumberError(JSON.stringify(error.response.data.resident_number));
+              // setCivilstatusError(JSON.stringify(error.response.data.civil_status));
+              setEmailError(JSON.stringify(error.response.data.email))
+              setContactnumberError(JSON.stringify(error.response.data.mobile_number))
+              setPasswordError(JSON.stringify(error.response.data.password))
+            }
+              else console.log(error.response);
+            }
+          }
+        )
       };
       const handleCloseNotice = () => {
         setOpenNotice(false);

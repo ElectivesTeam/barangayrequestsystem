@@ -10,7 +10,8 @@ import Request from '../navigation/Requests.jsx'
 
 const useStyles = makeStyles((theme) => ({
   root: {
-    padding: '30px 30px 10px 30px'
+    padding: '30px 0px 10px 0px',
+    margin: '0px 20px 0px 20px'
   },
   step_label_root: {
     fontSize: '10px',
@@ -18,7 +19,7 @@ const useStyles = makeStyles((theme) => ({
 
 }));
 
-const steps = ['Select a document', 'Fill out the required information', 'Review your document/s'];
+const steps = ['Select a document', 'Fill out the required information', 'Review requests'];
 
 const HorizontalLinearStepper = () => {
   const classes = useStyles();

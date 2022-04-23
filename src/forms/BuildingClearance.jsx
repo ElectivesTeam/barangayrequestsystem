@@ -13,7 +13,7 @@ import FormControl from '@mui/material/FormControl'
 
 const useStyles = makeStyles((theme) => ({
     root: {
-        padding: '5px 30px 0px 30px',
+        padding: '5px 30px 160px 30px',
       
     },
     title:{ 
