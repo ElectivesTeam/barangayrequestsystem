@@ -9,7 +9,7 @@ import Box from '@mui/material/Box';
 
 const useStyles = makeStyles((theme) => ({
     root: {
-        padding: '5px 30px 0px 30px',
+        padding: '5px 30px 232px 30px',
       
     },
     title:{ 

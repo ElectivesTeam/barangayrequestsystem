@@ -1,9 +1,9 @@
 import axios from "axios";
 
-const API_URL = "https://brgy-landayan-odrs-app-backend.herokuapp.com/api/users/";
-const BASE_URL = "https://brgy-landayan-odrs-app-backend.herokuapp.com"
-// const API_URL = "http://localhost:8000/api/users/"
-// const BASE_URL = "http://localhost:8000"
+// const API_URL = "https://brgy-landayan-odrs-app-backend.herokuapp.com/api/users/";
+// const BASE_URL = "https://brgy-landayan-odrs-app-backend.herokuapp.com"
+const API_URL = "http://localhost:8000/api/users/"
+const BASE_URL = "http://localhost:8000"
 
 class AuthService {
     baseURL(){

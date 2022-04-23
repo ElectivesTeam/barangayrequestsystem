@@ -35,11 +35,6 @@ import formService from '../services/form.service';
 import AuthService from "../services/auth.service";
 
 const useStyles = makeStyles((theme) => ({
-    button: {
-        // width: '9%',
-        // height: '10%',   
-        // left: '78%',
-    },
     buttondiv: {
         paddingTop: '15px',
         paddingBottom: '15px',
