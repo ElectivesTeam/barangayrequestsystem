@@ -22,17 +22,20 @@ class AuthService {
     }
 
     logout() {
-        var token = JSON.parse(localStorage.getItem('user')).refresh;
-        var access = JSON.parse(localStorage.getItem('user')).access;
-        return axios.post(API_URL +"logout/", {"refresh": token}, {
-            headers:{
-                Accept: 'application/json',
-                Authorization: 'Bearer ' + access
-            }
-        })
-        .then(
-            localStorage.removeItem("user")
-        )
+        const user = localStorage.getItem('user')
+        if (user){
+            var token = JSON.parse(localStorage.getItem('user')).refresh;
+            var access = JSON.parse(localStorage.getItem('user')).access;
+            return axios.post(API_URL +"logout/", {"refresh": token}, {
+                headers:{
+                    Accept: 'application/json',
+                    Authorization: 'Bearer ' + access
+                }
+            })
+            .then(
+                localStorage.removeItem("user")
+            )
+        }
     }
 
     register(
@@ -72,9 +75,57 @@ class AuthService {
         return axios.post(API_URL + "register/", formData, config);
     }
 
+    updateUser(
+        first_name,
+        middle_name,
+        last_name,
+        email,
+        address,
+        contact_number){
+        var token = JSON.parse(localStorage.getItem('user')).access;
+        let formData = new FormData();
+        formData.append("email", email);
+        formData.append("first_name", first_name);
+        formData.append("middle_name", middle_name);
+        formData.append("last_name", last_name);
+        formData.append("address", address);
+        formData.append("mobile_number", contact_number);
+        const config = {headers: { 
+            Accept: 'application/json',
+            Authorization: 'Bearer ' + token}};
+        return axios.put(API_URL + "getuser/", formData, config)
+        .then(response =>{
+            console.log("info updated")
+            return response;
+        })
+
+    }
+
+    updatePassword(
+        old_password,
+        new_password,
+        confirm_password){
+        var token = JSON.parse(localStorage.getItem('user')).access;
+        let formData = new FormData();
+        formData.append("old_password", old_password);
+        formData.append("password", new_password);
+        formData.append("password2", confirm_password);
+        const config = {headers: { 
+            Accept: 'application/json',
+            Authorization: 'Bearer ' + token}};
+        return axios.put(API_URL + "change_password/", formData, config)
+        .then(response =>{
+            console.log("password updated")
+            return response;
+        })
+
+    }
+
     getCurrentUser() {
         if(localStorage.getItem('user') != null){
             return JSON.parse(localStorage.getItem('user'));
+        }else{
+            return false;
         }
     }
 
@@ -90,7 +141,6 @@ class AuthService {
             console.log("info fetched")
             return response;
         })
-
     }
 
     verifyToken(token){

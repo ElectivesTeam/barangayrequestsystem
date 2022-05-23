@@ -128,10 +128,123 @@ function MyAccount() {
 	const[last_name, setLastName] = useState([]);
 	const[middle_name, setMiddleName] = useState([]);
 	const[email, setEmail] = useState([]);
+	const[address, setAddress] = useState([]);
 	const[contact_number, setContactNumber] = useState([]);
 	const[getInfo, setGetInfoCheck] = useState(false)
+	const[profile_pic, setProfilePic] = useState([]);
+	const[old_password, setOldPassword] = useState([]);
+	const[new_password, setNewPassword] = useState([]);
+	const[confirm_password, setConfirmPassword] = useState([]);
 
-	if (!getInfo){
+	//run once
+	useEffect(async() => {
+		if (!AuthService.getCurrentUser()){
+			history.push('/')
+		}
+		else{
+			var checkAccess = false
+			var refreshAccess = false
+			authService.verifyToken("refresh")
+			.then((response) => {
+				if(response.status === 200){
+					console.log("refresh verified")
+				}
+			})
+			.catch(error => {
+				if (error.response.status === 401){
+					authService.logout()
+					history.push('/')
+				}else{
+					console.log("Something went wrong")
+				}
+			})
+			if (!getInfo){
+				AuthService.getUserInformation()
+				.then((response) => {
+					if (response !== undefined){
+						if(JSON.stringify(response.data.first_name).length >= 3)
+							setFirstName(JSON.stringify(response.data.first_name).slice(1,-1));
+						if(JSON.stringify(response.data.last_name).length >= 3)
+							setLastName(JSON.stringify(response.data.last_name).slice(1,-1));
+						if(JSON.stringify(response.data.middle_name).length >= 3)
+							setMiddleName(JSON.stringify(response.data.middle_name).slice(1,-1));
+						if(JSON.stringify(response.data.email).length >= 3)
+							setEmail(JSON.stringify(response.data.email).slice(1,-1));
+						if(JSON.stringify(response.data.mobile_number).length >= 3)
+							setContactNumber(JSON.stringify(response.data.mobile_number).slice(1,-1));
+						setGetInfoCheck(true);
+					}
+				})
+			}
+			for (let index = 0; index < 3; index++) {
+				if(checkAccess === false){
+					await authService.verifyToken("access")
+					.then(response =>{
+						if (response.data != undefined && response.status === 200){
+							checkAccess = true
+							AuthService.getUserInformation()
+							.then((response) => {
+								if (response !== undefined){
+									if(JSON.stringify(response.data.first_name).length >= 3)
+										setFirstName(JSON.stringify(response.data.first_name).slice(1,-1));
+									if(JSON.stringify(response.data.last_name).length >= 3)
+										setLastName(JSON.stringify(response.data.last_name).slice(1,-1));
+									if(JSON.stringify(response.data.middle_name).length >= 3)
+										setMiddleName(JSON.stringify(response.data.middle_name).slice(1,-1));
+									if(JSON.stringify(response.data.email).length >= 3)
+										setEmail(JSON.stringify(response.data.email).slice(1,-1));
+									if(JSON.stringify(response.data.mobile_number).length >= 3)
+										setContactNumber(JSON.stringify(response.data.mobile_number).slice(1,-1));
+									if(JSON.stringify(response.data.address).length >= 3)
+										setAddress(JSON.stringify(response.data.address).slice(1,-1));
+									if(JSON.stringify(response.data.profile_pic).length >= 3)
+										if(response.data.profile_pic != null)
+											setProfilePic(JSON.stringify(AuthService.baseURL() + response.data.profile_pic).slice(1,-1))
+										else
+											setProfilePic('')
+								}
+							})
+							.catch(error => {
+								console.log("get Info Failed")
+							}
+							)
+							console.log("access verified")
+						}
+					})
+					.catch(error => {
+						refreshAccess = true;
+						checkAccess = true;
+					})
+				}
+				if(refreshAccess === true){
+					await authService.refreshAccess()
+					.then(response =>{
+						refreshAccess = false;
+						checkAccess = false
+					})
+					.catch(error =>{
+						console.log("access token refreshing failed")
+					}
+					)
+				}
+			}
+		}
+	}, [])
+
+	const Alert = React.forwardRef(function Alert(props, ref) {
+		return <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />;
+	  });
+
+	const handleUpdateInfo = (e) => {
+		e.preventDefault()
+		AuthService.updateUser(
+			first_name,
+			middle_name,
+			last_name,
+			email,
+			address,
+			contact_number
+		  )
 		AuthService.getUserInformation()
 		.then((response) => {
 			if (response !== undefined){
@@ -146,87 +259,18 @@ function MyAccount() {
 				if(JSON.stringify(response.data.mobile_number).length >= 3)
 					setContactNumber(JSON.stringify(response.data.mobile_number).slice(1,-1));
 				setGetInfoCheck(true);
-            }
-		})
-	}
-	const[profile_pic, setProfilePic] = useState([]);
-
-	//run once
-	useEffect(async() => {
-		var checkAccess = false
-		var refreshAccess = false
-		authService.verifyToken("refresh")
-		.then((response) => {
-			if(response.status === 200){
-				console.log("refresh verified")
 			}
 		})
-		.catch(error => {
-			if (error.response.status === 401){
-				authService.logout()
-				history.push('/')
-			}else{
-				console.log("Something went wrong")
-			}
-		})
-		for (let index = 0; index < 3; index++) {
-			if(checkAccess === false){
-				await authService.verifyToken("access")
-				.then(response =>{
-					if (response.data != undefined && response.status === 200){
-						checkAccess = true
-						AuthService.getUserInformation()
-						.then((response) => {
-							if (response !== undefined){
-								if(JSON.stringify(response.data.first_name).length >= 3)
-									setFirstName(JSON.stringify(response.data.first_name).slice(1,-1));
-								if(JSON.stringify(response.data.last_name).length >= 3)
-									setLastName(JSON.stringify(response.data.last_name).slice(1,-1));
-								if(JSON.stringify(response.data.middle_name).length >= 3)
-									setMiddleName(JSON.stringify(response.data.middle_name).slice(1,-1));
-								if(JSON.stringify(response.data.email).length >= 3)
-									setEmail(JSON.stringify(response.data.email).slice(1,-1));
-								if(JSON.stringify(response.data.mobile_number).length >= 3)
-									setContactNumber(JSON.stringify(response.data.mobile_number).slice(1,-1));
-								if(JSON.stringify(response.data.profile_pic).length >= 3)
-									if(response.data.profile_pic != null)
-										setProfilePic(JSON.stringify(AuthService.baseURL() + response.data.profile_pic).slice(1,-1))
-									else
-										setProfilePic('')
-							}
-						})
-						.catch(error => {
-							console.log("get Info Failed")
-						}
-						)
-						console.log("access verified")
-					}
-				})
-				.catch(error => {
-					refreshAccess = true;
-					checkAccess = true;
-				})
-			}
-			if(refreshAccess === true){
-				await authService.refreshAccess()
-				.then(response =>{
-					refreshAccess = false;
-					checkAccess = false
-				})
-				.catch(error =>{
-					console.log("access token refreshing failed")
-				}
-				)
-			}
-		}
-	}, [])
+		setOpen(true);
+	};
 
-	const Alert = React.forwardRef(function Alert(props, ref) {
-		return <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />;
-	  });
-
-	const handleClick = (e) => {
+	const handleUpdatePassword = (e) => {
 		e.preventDefault()
+		AuthService.updatePassword(
+			old_password,
+			new_password,
+			confirm_password
+		  )
 		setOpen(true);
 	};
 
@@ -381,7 +425,7 @@ function MyAccount() {
 											fullWidth
 											variant="contained"
 											className={classes.button}
-											onClick={handleClick}
+											onClick={handleUpdateInfo}
 											>
 											SAVE
 										</Button>
@@ -397,6 +441,7 @@ function MyAccount() {
 									{/* Old Password */}
 									<Grid item xs={12} sm={12}>
 										<TextField
+										onChange={(e) => setOldPassword(e.target.value)}
 										variant="outlined"
 										margin="normal"
 										required
@@ -412,6 +457,7 @@ function MyAccount() {
 									{/* New Password */}
 									<Grid item xs={12} sm={12}>
 										<TextField
+										onChange={(e) => setNewPassword(e.target.value)}
 										variant="outlined"
 										margin="normal"
 										required
@@ -427,6 +473,7 @@ function MyAccount() {
 									{/* Confirm New Password */}
 									<Grid item xs={12} sm={12}>
 										<TextField
+										onChange={(e) => setConfirmPassword(e.target.value)}
 										variant="outlined"
 										margin="normal"
 										required
@@ -444,7 +491,7 @@ function MyAccount() {
 										fullWidth
 										variant="contained"
 										className={classes.button}
-										onClick={handleClick}
+										onClick={handleUpdatePassword}
 										>
 										CONFIRM
 									</Button>
