@@ -123,7 +123,8 @@ function MyAccount() {
 	//Style
 	const classes = useStyles();
 	let history = useHistory();
-	const [open, setOpen] = useState(false);
+	const [changeSuccess, openChangeSuccess] = useState(false);
+	const [changeFailed, openChangeFailed] = useState(false);
 	const[first_name, setFirstName] = useState([]);
 	const[last_name, setLastName] = useState([]);
 	const[middle_name, setMiddleName] = useState([]);
@@ -135,6 +136,15 @@ function MyAccount() {
 	const[old_password, setOldPassword] = useState([]);
 	const[new_password, setNewPassword] = useState([]);
 	const[confirm_password, setConfirmPassword] = useState([]);
+	const[lastnameError, setLastnameError] = useState(false);
+    const[firstnameError, setFirstnameError] = useState(false);
+    const[middlenameError, setMiddlenameError] = useState(false);
+	const[contactnumberError, setContactnumberError] = useState(false);
+    const[emailError, setEmailError] = useState(false);
+	const[oldpasswordError, setOldPasswordError] = useState(false);
+	const[newpasswordError, setNewPasswordError] = useState(false);
+	const[newpassword2Error, setNewPassword2Error] = useState(false);
+	
 
 	//run once
 	useEffect(async() => {
@@ -237,6 +247,11 @@ function MyAccount() {
 
 	const handleUpdateInfo = (e) => {
 		e.preventDefault()
+		setLastnameError(false)
+		setFirstnameError(false)
+		setMiddlenameError(false)
+		setContactnumberError(false)
+		setEmailError(false)
 		AuthService.updateUser(
 			first_name,
 			middle_name,
@@ -245,9 +260,8 @@ function MyAccount() {
 			address,
 			contact_number
 		  )
-		AuthService.getUserInformation()
 		.then((response) => {
-			if (response !== undefined){
+			if (response.status === 200){
 				if(JSON.stringify(response.data.first_name).length >= 3)
 					setFirstName(JSON.stringify(response.data.first_name).slice(1,-1));
 				if(JSON.stringify(response.data.last_name).length >= 3)
@@ -259,26 +273,64 @@ function MyAccount() {
 				if(JSON.stringify(response.data.mobile_number).length >= 3)
 					setContactNumber(JSON.stringify(response.data.mobile_number).slice(1,-1));
 				setGetInfoCheck(true);
+				openChangeSuccess(true);
+				AuthService.getUserInformation()
 			}
 		})
-		setOpen(true);
+		.catch((error) => {
+			openChangeFailed(true)
+			if (error.response !== undefined){
+				if (error.response.status === 400) {
+				  setLastnameError(JSON.stringify(error.response.data.last_name));
+				  setMiddlenameError(JSON.stringify(error.response.data.middle_name));
+				  setFirstnameError(JSON.stringify(error.response.data.first_name));
+				  setEmailError(JSON.stringify(error.response.data.email))
+				  setContactnumberError(JSON.stringify(error.response.data.mobile_number))
+				}
+				  else console.log(error.response);
+			}
+		})
 	};
 
 	const handleUpdatePassword = (e) => {
 		e.preventDefault()
+		setOldPasswordError(false)
+		setNewPasswordError(false)
+		setNewPassword2Error(false)
+		openChangeSuccess(false);
+		openChangeFailed(false);
 		AuthService.updatePassword(
 			old_password,
 			new_password,
 			confirm_password
-		  )
-		setOpen(true);
+		)
+		.then((response) => {
+			if (response.status === 200){
+				openChangeSuccess(true);
+				setOldPassword('');
+				setNewPassword('');
+				setConfirmPassword('');
+			}
+		})
+		.catch((error) => {
+			openChangeFailed(true)
+			if (error.response !== undefined){
+				if (error.response.status === 400) {
+					setOldPasswordError(JSON.stringify(error.response.data.old_password));
+					setNewPasswordError(JSON.stringify(error.response.data.password));
+					setNewPassword2Error(JSON.stringify(error.response.data.password));
+				}
+				  else console.log(error.response);
+			}
+		})
 	};
 
 	const handleClose = (event, reason) => {
 		if (reason === 'clickaway') {
 			return;
 		}
-		setOpen(false);
+		openChangeSuccess(false);
+		openChangeFailed(false);
 	};
 	
 	  
@@ -348,7 +400,11 @@ function MyAccount() {
 										name="first_name"
 										autoComplete="first_name"
 										autoFocus
+										error={firstnameError}
 										/>
+										<Typography variant="body2"  align="left" color="secondary" name="firstnameError">
+										  {firstnameError}
+										</Typography>
 									</Grid>
 	
 									{/* Last Name */}
@@ -365,7 +421,11 @@ function MyAccount() {
 										name="last_name"
 										autoComplete="last_name"
 										autoFocus
+										error={lastnameError}
 										/>
+										<Typography variant="body2"  align="left" color="secondary" name="lastnameError">
+										  {lastnameError}
+										</Typography>
 									</Grid>
 	
 									{/* Middle Name */}
@@ -382,7 +442,11 @@ function MyAccount() {
 										name="Middle Name"
 										autoComplete="middle_name"
 										autoFocus
+										error={middlenameError}
 										/>
+										<Typography variant="body2"  align="left" color="secondary" name="middlenameError">
+										  {middlenameError}
+										</Typography>
 									</Grid>
 	
 									{/* E-mail */}
@@ -399,7 +463,11 @@ function MyAccount() {
 										name="email"
 										autoComplete="email"
 										autoFocus
+										error={emailError}
 										/>
+										<Typography variant="body2"  align="left" color="secondary" name="emailError">
+										  {emailError}
+										</Typography>
 									</Grid>
 	
 									{/* Contact Number */}
@@ -416,7 +484,11 @@ function MyAccount() {
 										name="contact_number"
 										autoComplete="contact_number"
 										autoFocus
+										error={contactnumberError}
 										/>
+										<Typography variant="body2"  align="left" color="secondary" name="contactnumberError">
+											{contactnumberError}
+										</Typography>
 									</Grid>
 									<Stack spacing={2} sx={{ width: '100%' }}>
 										<Button
@@ -429,9 +501,14 @@ function MyAccount() {
 											>
 											SAVE
 										</Button>
-										<Snackbar open={open} autoHideDuration={6000} onClose={handleClose} anchorOrigin={{vertical: 'bottom', horizontal: 'right'}} TransitionComponent={Slide}>
+										<Snackbar open={changeSuccess} autoHideDuration={6000} onClose={handleClose} anchorOrigin={{vertical: 'bottom', horizontal: 'right'}} TransitionComponent={Slide}>
 											<Alert onClose={handleClose} severity="success" sx={{ width: '100%' }}>
 												Account updated
+											</Alert>
+										</Snackbar>
+										<Snackbar open={changeFailed} autoHideDuration={6000} onClose={handleClose} anchorOrigin={{vertical: 'bottom', horizontal: 'right'}} TransitionComponent={Slide}>
+											<Alert onClose={handleClose} severity="error" sx={{ width: '100%' }}>
+												Account change failed
 											</Alert>
 										</Snackbar>
 									</Stack>
@@ -442,6 +519,7 @@ function MyAccount() {
 									<Grid item xs={12} sm={12}>
 										<TextField
 										onChange={(e) => setOldPassword(e.target.value)}
+										value={old_password}
 										variant="outlined"
 										margin="normal"
 										required
@@ -451,13 +529,18 @@ function MyAccount() {
 										name="old_password"
 										autoComplete="old_password"
 										autoFocus
+										error={oldpasswordError}
 										/>
+										<Typography variant="body2"  align="left" color="secondary" name="oldpasswordError">
+										  {oldpasswordError}
+										</Typography>
 									</Grid>
 	
 									{/* New Password */}
 									<Grid item xs={12} sm={12}>
 										<TextField
 										onChange={(e) => setNewPassword(e.target.value)}
+										value={new_password}
 										variant="outlined"
 										margin="normal"
 										required
@@ -467,13 +550,18 @@ function MyAccount() {
 										name="new_password"
 										autoComplete="new_password"
 										autoFocus
+										error={newpasswordError}
 										/>
+										<Typography variant="body2"  align="left" color="secondary" name="newpasswordError">
+										  {newpasswordError}
+										</Typography>
 									</Grid>
 	
 									{/* Confirm New Password */}
 									<Grid item xs={12} sm={12}>
 										<TextField
 										onChange={(e) => setConfirmPassword(e.target.value)}
+										value={confirm_password}
 										variant="outlined"
 										margin="normal"
 										required
@@ -483,7 +571,11 @@ function MyAccount() {
 										name="confirm_new_password"
 										autoComplete="confirm_new_password"
 										autoFocus
+										error={newpassword2Error}
 										/>
+										<Typography variant="body2"  align="left" color="secondary" name="newpassword2Error">
+										  {newpassword2Error}
+										</Typography>
 									</Grid>
 									<Button
 										type="submit"
