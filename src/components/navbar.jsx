@@ -13,6 +13,7 @@ import VpnKeyIcon from '@material-ui/icons/VpnKey';
 import Tooltip from '@material-ui/core/Tooltip';
 import Button from '@material-ui/core/Button';
 import NoteAddIcon from '@material-ui/icons/NoteAdd';
+import AdminPanelSettingsIcon from '@mui/icons-material/AdminPanelSettings';
 
 import AuthService from "../services/auth.service";
 import { useHistory } from "react-router-dom";
@@ -103,7 +104,7 @@ export default function MenuAppBar() {
   const profileMenu = () => {
     if(user){
       return <div style={{display: "contents"}}>
-        <Tooltip title="Menu" color="inherit">
+        <Tooltip title="Profile" color="inherit">
           <IconButton
             aria-label="account of current user"
             aria-controls="menu-appbar"
@@ -140,7 +141,7 @@ export default function MenuAppBar() {
             className={classes.styledMenuItem}  
             onClick={handleClose}
             component={Link}
-            to="#"
+            to="/myrequests"
             >                   
           My Requests</MenuItem>
           <MenuItem 
@@ -152,6 +153,18 @@ export default function MenuAppBar() {
           Logout</MenuItem>
         </Menu>
       </div>
+    }
+  }
+
+  const admin = () => {
+    if (user){
+      return <Tooltip title="Admin" color="inherit"> 
+        <IconButton
+          href="/admin"
+        >
+          <AdminPanelSettingsIcon />
+        </IconButton>
+      </Tooltip>
     }
   }
 
@@ -182,8 +195,8 @@ export default function MenuAppBar() {
                   <NoteAddIcon />
                 </IconButton>
               </Tooltip>
-              {profileMenu()}       
-                   
+              {admin()}
+              {profileMenu()}            
             </div>
           )}
         </Toolbar>
