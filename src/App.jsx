@@ -17,6 +17,8 @@ import MyAccount from './navigation/Myaccount';
 import ReviewRequest from './navigation/ReviewRequest'
 import HorizontalLinearStepper from './components/Stepper'
 import StickyFooter from "./components/Footer";
+import MyRequests from './navigation/MyRequests'
+import Admin from './navigation/Admin'
 
 //to remove
 import Cedula from './forms/Cedula';
@@ -56,6 +58,8 @@ function App() {
             <Route exact path="/requests" component={HorizontalLinearStepper}></Route>
             <Route exact path="/myaccount" component={MyAccount}></Route>
             <Route exact path="/reviewrequest" component={ReviewRequest}></Route>
+            <Route exact path="/myrequests" component={MyRequests}></Route>
+            <Route exact path="/admin" component={Admin}></Route>
             //to remove
             <Route exact path="/requests/cedula" component={Cedula}></Route>
             <Route exact path="/requests/buildingclearance" component={BuildingClearance}></Route>
