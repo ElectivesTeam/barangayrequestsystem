@@ -19,19 +19,18 @@ import BusinessClearanceForm from '../forms/BusinessClearanceForm';
 import ReviewRequest from './ReviewRequest';
 
 const ListOfRequest = ({ selectedRequest, apiFormsData, handleAPIFormsDataChange, handleNextStepper, handleBackStepper }) => {
-    const submittedRequest = selectedRequest;
+    const submittedRequest = selectedRequest.selectionModel;
     const getRequest= (i) => {
-        return selectedRequest[i]
+        return selectedRequest.selectionModel[i]
     }
     const [activeForm, setActiveForm] = useState(0);
     const handleNext = () => {
         
-        if(activeForm === selectedRequest.length - 1){
+        if(activeForm === selectedRequest.selectionModel.length - 1){
             setActiveForm(activeForm + 1);
             handleNextStepper();
         }else{
             setActiveForm(activeForm + 1);
-            console.log(activeForm)
         }
     };
 

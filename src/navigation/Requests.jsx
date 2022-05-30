@@ -402,7 +402,6 @@ const Request = ({ handleNextStepper, handleBackStepper }) => {
     const handleSubmit = (e) =>{
         e.preventDefault()
         handleNextStepper();
-        console.log(requestId);
         setSubmitted(true)
     }
 
@@ -442,8 +441,8 @@ const Request = ({ handleNextStepper, handleBackStepper }) => {
                     >
                     <MenuItem value={0}>Scholarship</MenuItem>
                     <MenuItem value={1}>Work Requirements</MenuItem>
-                    <MenuItem value={1}>Financial Assistance</MenuItem>
-                    <MenuItem value={2}>Others</MenuItem>
+                    <MenuItem value={2}>Financial Assistance</MenuItem>
+                    <MenuItem value={3}>Others</MenuItem>
                     </Select>
 
                     <FormGroup >
