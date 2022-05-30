@@ -46,21 +46,21 @@ const columns = [
   ];
   
 const rows = [
-    { id: 'bailbondform', processTime: 'N/A', requestList: 'Bail Bond Form', price: 69 },
-    { id: 'barangayclearanceform', processTime: 'N/A', requestList: 'Barangay Clearance Form', price: 69 },
-    { id: 'buildingclearance', processTime: 'N/A', requestList: 'Building Clearance', price: 69 },
-    { id: 'businessclearance', processTime: 'N/A', requestList: 'Business Clearance', price: 69 },
-    { id: 'businessclosure', processTime: 'N/A', requestList: 'Business Closure', price: 69 },
-    { id: 'cedula', processTime: 'N/A', requestList: 'Cedula Form', price: 69 },
-    { id: 'comelecform', processTime: 'N/A', requestList: 'Comelec Form', price: 69 },
-    { id: 'constituentidform', processTime: 'N/A', requestList: 'Constituent ID Form', price: 69 },
-    { id: 'dentalserviceform', processTime: 'N/A', requestList: 'Dental Service Form', price: 69 },
-    { id: 'guardianshipform', processTime: 'N/A', requestList: 'Guardianship Form', price: 69 },
-    { id: 'immunizationform', processTime: 'N/A', requestList: 'Immunization Form', price: 69 },
-    { id: 'indigencyclearance', processTime: 'N/A', requestList: 'Indigency Clearance', price: 69 },
-    { id: 'maternalcareform', processTime: 'N/A', requestList: 'Maternal Care Form', price: 69 },
-    { id: 'residencyform', processTime: 'N/A', requestList: 'Residency Form', price: 69 },
-    { id: 'voucherform', processTime: 'N/A', requestList: 'Voucher Form', price: 69 },
+    { id: 'bailbondform', processTime: '1-2 hours', requestList: 'Bail Bond Form', price: 50 },
+    { id: 'barangayclearanceform', processTime: '1-2 hours', requestList: 'Barangay Clearance Form', price: 100 },
+    { id: 'buildingclearance', processTime: '3-4 hours', requestList: 'Building Clearance', price: 100 },
+    { id: 'businessclearance', processTime: '3-4 hours', requestList: 'Business Clearance', price: 100 },
+    { id: 'businessclosure', processTime: '1-2 hours', requestList: 'Business Closure', price: 100 },
+    { id: 'cedula', processTime: '1-2 hours', requestList: 'Cedula Form', price: 50 },
+    { id: 'comelecform', processTime: '1-2 hours', requestList: 'Comelec Form', price: 50 },
+    { id: 'constituentidform', processTime: '1-2 hours', requestList: 'Constituent ID Form', price: 50 },
+    { id: 'dentalserviceform', processTime: '1-2 hours', requestList: 'Dental Service Form', price: 100 },
+    { id: 'guardianshipform', processTime: '1 day', requestList: 'Guardianship Form', price: 100 },
+    { id: 'immunizationform', processTime: '1 day', requestList: 'Immunization Form', price: 100 },
+    { id: 'indigencyclearance', processTime: '1-2 hours', requestList: 'Indigency Clearance', price: 'FREE' },
+    { id: 'maternalcareform', processTime: '1 day', requestList: 'Maternal Care Form', price: 100 },
+    { id: 'residencyform', processTime: '1 day', requestList: 'Residency Form', price: 100 },
+    { id: 'voucherform', processTime: '1-2 hours', requestList: 'Voucher Form', price: 50 },
 ];
 
 const useStyles = makeStyles((theme) => ({
@@ -99,21 +99,23 @@ const useStyles = makeStyles((theme) => ({
 const Request = ({ handleNextStepper, handleBackStepper }) => {
     const [submitted, setSubmitted] = React.useState(false)
     const classes = useStyles();
-    const [age, setAge] = React.useState('');
+    const [purpose, setPurpose] = React.useState('')
     const [state, setState] = React.useState({
-        notify: true,
+        notify: false,
         agree: false,
         check: false,
       });
     const handleChange = (event) => {
-        setAge(event.target.valunpme);
         setState({ ...state, [event.target.name]: event.target.checked });
     };
+    const handlePurpose = (event) => {
+        setPurpose(event.target.value);
+    }
     const { notify, agree, check } = state;
     const error = [notify, agree, check].filter((v) => v).length !== 3;  
 
     const [selectedRequest, setSelectedRequest] = React.useState([])
-    const requestId = selectedRequest.selectionModel;
+    const requestId = selectedRequest;   
     const [apiFormsData, setAPIFormsData] = useState({})
 
     useEffect(async() => {
@@ -435,12 +437,13 @@ const Request = ({ handleNextStepper, handleBackStepper }) => {
                     <Select
                     labelId="demo-simple-select-label"
                     id="demo-simple-select"
-                    value={age}
-                    onChange={handleChange}
+                    value={purpose}
+                    onChange={handlePurpose}
                     >
-                    <MenuItem value={0}>N/A</MenuItem>
-                    <MenuItem value={0}>N/A</MenuItem>
-                    <MenuItem value={0}>N/A</MenuItem>
+                    <MenuItem value={0}>Scholarship</MenuItem>
+                    <MenuItem value={1}>Work Requirements</MenuItem>
+                    <MenuItem value={1}>Financial Assistance</MenuItem>
+                    <MenuItem value={2}>Others</MenuItem>
                     </Select>
 
                     <FormGroup >
@@ -465,7 +468,7 @@ const Request = ({ handleNextStepper, handleBackStepper }) => {
                 <div className={classes.total}>
                     
                     <div>
-                        {notify && agree && check ? (
+                        {notify && agree && check && purpose && selectedRequest.length != 0 ? (
                             <Button variant="contained" color="primary" onClick = {handleSubmit} endIcon={<ArrowCircleUpIcon/>} >
                                 <Stack direction="row" alignItems="center" >
                                     <Typography variant="button" className={classes.button}>
