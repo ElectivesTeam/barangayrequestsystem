@@ -439,10 +439,10 @@ const Request = ({ handleNextStepper, handleBackStepper }) => {
                     value={purpose}
                     onChange={handlePurpose}
                     >
-                    <MenuItem value={0}>Scholarship</MenuItem>
-                    <MenuItem value={1}>Work Requirements</MenuItem>
-                    <MenuItem value={2}>Financial Assistance</MenuItem>
-                    <MenuItem value={3}>Others</MenuItem>
+                    <MenuItem value={1}>Scholarship</MenuItem>
+                    <MenuItem value={2}>Work Requirements</MenuItem>
+                    <MenuItem value={3}>Financial Assistance</MenuItem>
+                    <MenuItem value={4}>Others</MenuItem>
                     </Select>
 
                     <FormGroup >
