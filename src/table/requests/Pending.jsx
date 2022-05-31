@@ -1,4 +1,4 @@
-import React, { useState, forwardRef }from 'react'
+import React, { useState, forwardRef, useEffect }from 'react'
 import MaterialTable from 'material-table'
 import Chip from '@mui/material/Chip';
 import Modal from '@mui/material/Modal';
@@ -30,6 +30,8 @@ import ReceiptLongIcon from '@mui/icons-material/ReceiptLong';
 import AssignmentLateOutlinedIcon from '@mui/icons-material/AssignmentLateOutlined';
 import CloseOutlinedIcon from '@mui/icons-material/CloseOutlined';
 import QuestionMarkIcon from '@mui/icons-material/QuestionMark';
+
+import axios from 'axios';
 
 const tableIcons = {
   Add: forwardRef((props, ref) => <AddBox {...props} ref={ref} />),
@@ -64,32 +66,133 @@ const style = {
 };
 
 //dummy data
-const data = [
-  {
-      requestId: "123456",
-      name: "Juan Dela Cruz",
-      document: "Cedula",
-      dateOfRequest: "02-22-22",
-      paymentStatus: "Paid",
-      requestStatus: "Pending"
-  },
-  {
-      requestId: "4578",
-      name: "Juan Dela Cruz",
-      document: "Barangay Indigency",
-      dateOfRequest: "02-22-22",
-      paymentStatus: "Free",
-      requestStatus: "Pending"
-  }
-]
+// const data = [
+//   {
+//       requestId: "123456",
+//       name: "Juan Dela Cruz",
+//       document: "Cedula",
+//       dateOfRequest: "02-22-22",
+//       paymentStatus: "Paid",
+//       requestStatus: "Pending"
+//   },
+//   {
+//       requestId: "4578",
+//       name: "Juan Dela Cruz",
+//       document: "Barangay Indigency",
+//       dateOfRequest: "02-22-22",
+//       paymentStatus: "Free",
+//       requestStatus: "Pending"
+//   }
+// ]
+
 
 function Pending() {
+    
     //modal
     const [open, setOpen] = useState(false);
     const handleOpen = () => setOpen(true);
     const handleClose = () => setOpen(false);
+    const [requestedForms, setRequestedForm] = useState({
+        cedula: [], 
+        constituent: [],
+        building: [],
+        residency: [],
+        barangayClearance: [],
+        comelec: [],
+        businessClosure: [],
+        bailbond: [],
+        guardianship: [],
+        indigencyBurial: [],
+        indigencyClearance: [],
+        voucher: [],
+        businessClearance: [],
+        immunization: [],
+        dentalService: [],
+        maternalCare: [],
     
-    const [dataInTable, setDataInTable] = useState(data)
+    })
+
+    const API_URL = "http://127.0.0.1:8000/api/forms/";
+    var token = JSON.parse(localStorage.getItem('user')).access;
+
+    useEffect(async () => {
+        let endpoints = [
+            API_URL + "cedula/",
+            API_URL + "constituent/",
+            API_URL + "building/",
+            API_URL + "residency/",
+            API_URL + "barangay-clearance/",
+            API_URL + "comelec/",
+            API_URL + "business-closure/",
+            API_URL + "bailbond/",
+            API_URL + "guardianship/",
+            API_URL + "indigency-burial/",
+            API_URL + "indigency-clearance/",
+            API_URL + "voucher/",
+            API_URL + "business-clearance/",
+            API_URL + "immunization/",
+            API_URL + "dental-service/",
+            API_URL + "maternal-care/"
+          ];
+         
+        //call multiple requests here
+        await axios.all(endpoints.map((endpoint) => axios.get(endpoint, {
+            headers: {
+                Accept: 'application/json', 
+                Authorization: 'Bearer ' + token
+            }
+        })))
+        .then(
+            //get all the data
+            axios.spread((...responses) => {
+                setRequestedForm({
+                    cedula: responses[0].data,
+                    constituent: responses[1].data,
+                    building: responses[2].data,
+                    residency: responses[3].data,
+                    barangayClearance: responses[4].data,
+                    comelec: responses[5].data,
+                    businessClosure: responses[6].data,
+                    bailbond: responses[7].data,
+                    guardianship: responses[8].data,
+                    indigencyBurial: responses[9].data,
+                    indigencyClearance: responses[10].data,
+                    voucher: responses[11].data,
+                    businessClearance: responses[12].data,
+                    immunization: responses[13].data,
+                    dentalService: responses[14].data,
+                    maternalCare: responses[15].data,
+                })
+            })
+        );    
+    }, [])
+
+    //compile in array
+    const allRequestedForms = [
+        ...requestedForms.cedula, 
+        ...requestedForms.constituent,
+        ...requestedForms.building,
+        ...requestedForms.residency,
+        ...requestedForms.barangayClearance,
+        ...requestedForms.comelec,
+        ...requestedForms.bailbond,
+        ...requestedForms.guardianship,
+        ...requestedForms.indigencyBurial,
+        ...requestedForms.indigencyClearance,
+        ...requestedForms.voucher,
+        ...requestedForms.businessClearance,
+        ...requestedForms.dentalService,
+        ...requestedForms.immunization,
+        ...requestedForms.maternalCare,
+        ...requestedForms.businessClosure
+    ]
+    
+    //map the compiled requests
+    const mapRequests = allRequestedForms.map((form) => form)
+    console.log(mapRequests)
+
+    const [dataInTable, setDataInTable] = useState(mapRequests)
+      
   return (
     <>
         <div style={{
@@ -102,32 +205,33 @@ function Pending() {
                 title="Pending Requests"
                 icons={tableIcons}
                 columns ={[
+                    // TEMPORARY FIELDS -------------------
                     { 
                         title: "Request ID", 
-                        field: "requestId"
+                        field: "request_number"
                     },
                     { 
                         title: "Name", 
-                        field: "name" 
+                        field: "purpose" 
                     },
                     { 
-                        title: "Document", 
-                        field: "document" 
+                        title: "Has Payment", 
+                        field: "has_payment" 
                     },
                     { 
-                        title: "Date of Request", 
-                        field: "dateOfRequest"
+                        title: "Payment Status", 
+                        field: "is_paid"
                     },
                     { 
-                        title: "Request Status", 
-                        field: 'requestStatus',
-                        render: (rowData) => (
-                            rowData.requestStatus == "Approved" ? <Chip icon={<CheckIcon/>} label="Approved" color="success" variant="outlined"/> :
-                            rowData.requestStatus == "Released" ? <Chip icon={<ReceiptLongIcon/>} label="Released" color="primary" variant="outlined"/> :
-                            rowData.requestStatus == "Pending" ? <Chip icon={<AssignmentLateOutlinedIcon/>} label="Pending" color="warning" variant="outlined"/> :
-                            rowData.requestStatus == "Rejected" ? <Chip icon={<CloseOutlinedIcon/>} label="Rejected" color="error" variant="outlined"/> : 
-                                                                <Chip icon={<QuestionMarkIcon/>} label="Unknown Status" variant="outlined"/>
-                        )
+                        title: "Approval Status", 
+                        field: 'approval',
+                         render: (rowData) => (
+                             rowData.requestStatus == "Approved" ? <Chip icon={<CheckIcon/>} label="Approved" color="success" variant="outlined"/> :
+                             rowData.requestStatus == "Released" ? <Chip icon={<ReceiptLongIcon/>} label="Released" color="primary" variant="outlined"/> :
+                             rowData.requestStatus == "Pending" ? <Chip icon={<AssignmentLateOutlinedIcon/>} label="Pending" color="warning" variant="outlined"/> :
+                             rowData.requestStatus == "Rejected" ? <Chip icon={<CloseOutlinedIcon/>} label="Rejected" color="error" variant="outlined"/> : 
+                                                                 <Chip icon={<QuestionMarkIcon/>} label="Unknown Status" variant="outlined"/>
+                         )
                     },
                     // { 
                     //     title: "Payment Status", 
@@ -135,7 +239,7 @@ function Pending() {
                     // },
                     
                 ]}
-                data = {dataInTable}
+                data = {mapRequests}
                 actions={[
                     {
                         icon: () => <CheckIcon color='secondary'/>,
