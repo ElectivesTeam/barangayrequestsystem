@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { makeStyles  } from '@material-ui/core/styles';
 import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
@@ -87,6 +87,17 @@ export default function MenuAppBar() {
   };
 
   const user = AuthService.getCurrentUser()
+  const[adminstatus, setAdminStatus] = useState(false)
+  useEffect(async () => {
+    if(user){
+      await AuthService.getAccountStatus()
+      .then (response => {
+        if(response.data != undefined && response.status === 200){
+          setAdminStatus(response.data.is_admin)
+        }
+      })
+    }
+  })
   
   const loginButton = () => {
     if(user){
@@ -158,13 +169,15 @@ export default function MenuAppBar() {
 
   const admin = () => {
     if (user){
-      return <Tooltip title="Admin" color="inherit"> 
-        <IconButton
-          href="/admin"
-        >
-          <AdminPanelSettingsIcon />
-        </IconButton>
-      </Tooltip>
+      if(adminstatus){
+        return <Tooltip title="Admin" color="inherit"> 
+          <IconButton
+            href="/admin"
+          >
+            <AdminPanelSettingsIcon />
+          </IconButton>
+        </Tooltip>
+      }
     }
   }
 

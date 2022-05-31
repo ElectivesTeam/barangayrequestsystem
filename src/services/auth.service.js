@@ -129,6 +129,20 @@ class AuthService {
         }
     }
 
+    getAccountStatus() {
+        var token = JSON.parse(localStorage.getItem('user')).access;
+        return axios.get(API_URL + "account-status/", {
+            headers:{
+                Accept: 'application/json',
+                Authorization: 'Bearer ' + token
+            }
+        })
+        .then(response =>{
+            console.log("account status fetched")
+            return response;
+        })
+    }
+
     getUserInformation(){
         var token = JSON.parse(localStorage.getItem('user')).access;
         return axios.get(API_URL + "getuser/", {
