@@ -211,25 +211,25 @@ function Pending() {
                         field: "request_number"
                     },
                     { 
-                        title: "Name", 
-                        field: "purpose" 
+                        title: "Resident_Number", 
+                        field: "resident_number" 
                     },
                     { 
-                        title: "Has Payment", 
-                        field: "has_payment" 
+                        title: "Document Name", 
+                        field: "document_name"
                     },
                     { 
-                        title: "Payment Status", 
-                        field: "is_paid"
+                        title: "Date Requested", 
+                        field: "date_requested"
                     },
                     { 
-                        title: "Approval Status", 
-                        field: 'approval',
+                        title: "Status", 
+                        field: "status",
                          render: (rowData) => (
-                             rowData.requestStatus == "Approved" ? <Chip icon={<CheckIcon/>} label="Approved" color="success" variant="outlined"/> :
-                             rowData.requestStatus == "Released" ? <Chip icon={<ReceiptLongIcon/>} label="Released" color="primary" variant="outlined"/> :
-                             rowData.requestStatus == "Pending" ? <Chip icon={<AssignmentLateOutlinedIcon/>} label="Pending" color="warning" variant="outlined"/> :
-                             rowData.requestStatus == "Rejected" ? <Chip icon={<CloseOutlinedIcon/>} label="Rejected" color="error" variant="outlined"/> : 
+                             rowData.status == "Approved" ? <Chip icon={<CheckIcon/>} label="Approved" color="success" variant="outlined"/> :
+                             rowData.status == "Released" ? <Chip icon={<ReceiptLongIcon/>} label="Released" color="primary" variant="outlined"/> :
+                             rowData.status == "Pending" ? <Chip icon={<AssignmentLateOutlinedIcon/>} label="Pending" color="warning" variant="outlined"/> :
+                             rowData.status == "Rejected" ? <Chip icon={<CloseOutlinedIcon/>} label="Rejected" color="error" variant="outlined"/> : 
                                                                  <Chip icon={<QuestionMarkIcon/>} label="Unknown Status" variant="outlined"/>
                          )
                     },
