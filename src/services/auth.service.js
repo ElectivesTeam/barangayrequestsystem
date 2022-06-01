@@ -143,6 +143,20 @@ class AuthService {
         })
     }
 
+    sendVerificationLink() {
+        var token = JSON.parse(localStorage.getItem('user')).access;
+        return axios.get(API_URL + "resend-activation/", {
+            headers:{
+                Accept: 'application/json',
+                Authorization: 'Bearer ' + token
+            }
+        })
+        .then(response =>{
+            console.log("account activation sent")
+            return response;
+        })
+    }
+
     getUserInformation(){
         var token = JSON.parse(localStorage.getItem('user')).access;
         return axios.get(API_URL + "getuser/", {

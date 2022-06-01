@@ -152,22 +152,6 @@ function MyAccount() {
 			history.push('/')
 		}
 		else{
-			var checkAccess = false
-			var refreshAccess = false
-			authService.verifyToken("refresh")
-			.then((response) => {
-				if(response.status === 200){
-					console.log("refresh verified")
-				}
-			})
-			.catch(error => {
-				if (error.response.status === 401){
-					authService.logout()
-					history.push('/')
-				}else{
-					console.log("Something went wrong")
-				}
-			})
 			if (!getInfo){
 				AuthService.getUserInformation()
 				.then((response) => {
@@ -182,61 +166,15 @@ function MyAccount() {
 							setEmail(JSON.stringify(response.data.email).slice(1,-1));
 						if(JSON.stringify(response.data.mobile_number).length >= 3)
 							setContactNumber(JSON.stringify(response.data.mobile_number).slice(1,-1));
+						if(JSON.stringify(response.data.profile_pic).length >= 3){
+							if(response.data.profile_pic != null)
+								setProfilePic(JSON.stringify(AuthService.baseURL() + response.data.profile_pic).slice(1,-1))
+							else
+								setProfilePic('')
+						}
 						setGetInfoCheck(true);
 					}
 				})
-			}
-			for (let index = 0; index < 3; index++) {
-				if(checkAccess === false){
-					await authService.verifyToken("access")
-					.then(response =>{
-						if (response.data != undefined && response.status === 200){
-							checkAccess = true
-							AuthService.getUserInformation()
-							.then((response) => {
-								if (response !== undefined){
-									if(JSON.stringify(response.data.first_name).length >= 3)
-										setFirstName(JSON.stringify(response.data.first_name).slice(1,-1));
-									if(JSON.stringify(response.data.last_name).length >= 3)
-										setLastName(JSON.stringify(response.data.last_name).slice(1,-1));
-									if(JSON.stringify(response.data.middle_name).length >= 3)
-										setMiddleName(JSON.stringify(response.data.middle_name).slice(1,-1));
-									if(JSON.stringify(response.data.email).length >= 3)
-										setEmail(JSON.stringify(response.data.email).slice(1,-1));
-									if(JSON.stringify(response.data.mobile_number).length >= 3)
-										setContactNumber(JSON.stringify(response.data.mobile_number).slice(1,-1));
-									if(JSON.stringify(response.data.address).length >= 3)
-										setAddress(JSON.stringify(response.data.address).slice(1,-1));
-									if(JSON.stringify(response.data.profile_pic).length >= 3)
-										if(response.data.profile_pic != null)
-											setProfilePic(JSON.stringify(AuthService.baseURL() + response.data.profile_pic).slice(1,-1))
-										else
-											setProfilePic('')
-								}
-							})
-							.catch(error => {
-								console.log("get Info Failed")
-							}
-							)
-							console.log("access verified")
-						}
-					})
-					.catch(error => {
-						refreshAccess = true;
-						checkAccess = true;
-					})
-				}
-				if(refreshAccess === true){
-					await authService.refreshAccess()
-					.then(response =>{
-						refreshAccess = false;
-						checkAccess = false
-					})
-					.catch(error =>{
-						console.log("access token refreshing failed")
-					}
-					)
-				}
 			}
 		}
 	}, [])
