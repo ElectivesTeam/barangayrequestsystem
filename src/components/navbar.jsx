@@ -13,6 +13,8 @@ import VpnKeyIcon from '@material-ui/icons/VpnKey';
 import Tooltip from '@material-ui/core/Tooltip';
 import Button from '@material-ui/core/Button';
 import NoteAddIcon from '@material-ui/icons/NoteAdd';
+import Snackbar from '@mui/material/Snackbar';
+import CloseIcon from '@mui/icons-material/Close';
 import AdminPanelSettingsIcon from '@mui/icons-material/AdminPanelSettings';
 
 import AuthService from "../services/auth.service";
@@ -67,6 +69,7 @@ const useStyles = makeStyles((theme) => ({
 
 
 export default function MenuAppBar() {
+  const history = useHistory();
   const classes = useStyles();
   const [anchorEl, setAnchorEl] = React.useState(null);
   const open = Boolean(anchorEl);
@@ -88,14 +91,66 @@ export default function MenuAppBar() {
 
   const user = AuthService.getCurrentUser()
   const[adminstatus, setAdminStatus] = useState(false)
+  const[refreshVerified, setRefreshVerified] = useState(false)
+  const[accessVerified, setAccessVerified] = useState(false)
+  const[emailStatus, setEmailStatus] = useState(false)
+  const[openNotice, setOpenNotice] = useState(true)
   useEffect(async () => {
     if(user){
-      await AuthService.getAccountStatus()
-      .then (response => {
-        if(response.data != undefined && response.status === 200){
-          setAdminStatus(response.data.is_admin)
-        }
-      })
+      await AuthService.verifyToken("refresh")
+			.then((response) => {
+				if(response.status === 200){
+          setRefreshVerified(true)
+					console.log("refresh verified")
+				}
+			})
+			.catch(error => {
+				if (error.response.status === 401){
+					AuthService.logout()
+					history.push('/')
+				}else{
+					console.log("Something went wrong")
+				}
+			})
+      if (refreshVerified){
+        await AuthService.verifyToken("access")
+        .then((response) => {
+          if(response.status === 200){
+            setAccessVerified(true)
+            console.log("access verified")
+          }
+        })
+        .catch(error => {
+          if (error.response.status === 401){
+            AuthService.refreshAccess()
+            window.location.reload()
+          }else{
+            console.log("Something went wrong")
+          }
+        })
+      }
+      if (accessVerified){
+        await AuthService.getAccountStatus()
+        .then (response => {
+          if(response.data != undefined && response.status === 200){
+            setAdminStatus(response.data.is_admin)
+            setEmailStatus(response.data.is_email_verified)
+            if (emailStatus === true){
+              setOpenNotice(false)
+            }
+          }
+        })
+        .catch(error => {
+          if (error.response !== undefined){
+            if (error.response.status === 401) {
+              AuthService.refreshAccess()
+              console.log('new access token')
+              window.location.reload()
+            }
+              else console.log(error.response);
+          }
+        })
+      }
     }
   })
   
@@ -181,8 +236,34 @@ export default function MenuAppBar() {
     }
   }
 
+  const sendVerificationLink = (event, reason) => {
+		if (reason === 'clickaway') {
+			return;
+		}
+    AuthService.sendVerificationLink()
+    .then((response) => {
+			if (response.status === 200){
+        setOpenNotice(false)
+			}
+		})
+	};
+
+  const action = (
+    <React.Fragment>
+      <Button color="primary" size="small" onClick={sendVerificationLink}>
+        Send Link
+      </Button>
+    </React.Fragment>
+  );
+
   return (
     <div className={classes.root}>
+      <Snackbar
+        open={openNotice}
+        TransitionComponent="Fade"
+        message="Your email is not verified. Please check your email or click the button to send a new verification link"
+        action={action}
+      />
       <AppBar position="static" className={classes.navbar} color="primary">
         <Toolbar>
           <Button href="/">
