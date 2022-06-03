@@ -99,7 +99,7 @@ const useStyles = makeStyles((theme) => ({
 const Request = ({ handleNextStepper, handleBackStepper }) => {
     const [submitted, setSubmitted] = React.useState(false)
     const classes = useStyles();
-    const [purpose, setPurpose] = React.useState('')
+    // const [purpose, setPurpose] = React.useState('')
     const [state, setState] = React.useState({
         notify: false,
         agree: false,
@@ -108,9 +108,9 @@ const Request = ({ handleNextStepper, handleBackStepper }) => {
     const handleChange = (event) => {
         setState({ ...state, [event.target.name]: event.target.checked });
     };
-    const handlePurpose = (event) => {
-        setPurpose(event.target.value);
-    }
+    // const handlePurpose = (event) => {
+    //     setPurpose(event.target.value);
+    // }
     const { notify, agree, check } = state;
     const error = [notify, agree, check].filter((v) => v).length !== 3;  
 
@@ -446,7 +446,7 @@ const Request = ({ handleNextStepper, handleBackStepper }) => {
                 <div>
                 
                 <FormControl required error={error} component="fieldset" className={classes.formControl} >     
-                    <InputLabel id="demo-simple-select-label">Purpose of Request</InputLabel>
+                    {/* <InputLabel id="demo-simple-select-label">Purpose of Request</InputLabel>
                     <Select
                     labelId="demo-simple-select-label"
                     id="demo-simple-select"
@@ -457,7 +457,7 @@ const Request = ({ handleNextStepper, handleBackStepper }) => {
                     <MenuItem value={2}>Work Requirements</MenuItem>
                     <MenuItem value={3}>Financial Assistance</MenuItem>
                     <MenuItem value={4}>Others</MenuItem>
-                    </Select>
+                    </Select> */}
 
                     <FormGroup >
                         <FormControlLabel
@@ -481,7 +481,7 @@ const Request = ({ handleNextStepper, handleBackStepper }) => {
                 <div className={classes.total}>
                     
                     <div>
-                        {notify && agree && check && purpose && selectedRequest.length != 0 ? (
+                        {notify && agree && check && selectedRequest.length != 0 ? (
                             <Button variant="contained" color="primary" onClick = {handleSubmit} endIcon={<ArrowCircleUpIcon/>} >
                                 <Stack direction="row" alignItems="center" >
                                     <Typography variant="button" className={classes.button}>
