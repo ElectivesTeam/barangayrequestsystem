@@ -143,6 +143,20 @@ class AuthService {
         })
     }
 
+    getUserList(){
+        var token = JSON.parse(localStorage.getItem('user')).access;
+        return axios.get(API_URL + "list/", {
+            headers:{
+                Accept: 'application/json',
+                Authorization: 'Bearer ' + token
+            }
+        })
+        .then(response =>{
+            console.log("info fetched")
+            return response;
+        })
+    }
+
     verifyToken(token){
         if (token === "refresh"){
             token = JSON.parse(localStorage.getItem('user')).refresh;

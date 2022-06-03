@@ -1,4 +1,5 @@
-import React, { useState, forwardRef }from 'react'
+import React, { useState, forwardRef, useEffect }from 'react'
+import axios from 'axios';
 import MaterialTable from 'material-table'
 import Chip from '@mui/material/Chip';
 import Modal from '@mui/material/Modal';
@@ -88,6 +89,260 @@ function Approved() {
     const [open, setOpen] = useState(false);
     const handleOpen = () => setOpen(true);
     const handleClose = () => setOpen(false);
+    const [requestedForms, setRequestedForm] = useState({
+        requestedCedula: [], 
+        requestedConstituent: [],
+        requestedBuilding: [],
+        requestedResidency: [],
+        requestedBarangayClearance: [],
+        requestedComelec: [],
+        requestedBusinessClosure: [],
+        requestedBailbond: [],
+        requestedGuardianship: [],
+        requestedIndigencyBurial: [],
+        requestedIndigencyClearance: [],
+        requestedVoucher: [],
+        requestedBusinessClearance: [],
+        requestedImmunization: [],
+        requestedDentalService: [],
+        requestedMaternalCare: [],
+    
+    })
+
+    var cedula =[]
+    var constituent =[]
+    var building =[]
+    var residency =[]
+    var barangayClearance =[]
+    var comelec =[]
+    var businessClosure =[]
+    var bailBond =[]
+    var guardianship =[]
+    var indigencyBurial =[]
+    var indigencyClearance =[]
+    var voucher =[]
+    var businessClearance =[]
+    var immunization =[]
+    var dentalService =[]
+    var maternalCare =[]
+
+    const API_URL = "http://127.0.0.1:8000/api/forms/";
+    var token = JSON.parse(localStorage.getItem('user')).access;
+
+    useEffect(async () => {
+        let endpoints = [
+            API_URL + "cedula/",
+            API_URL + "constituent/",
+            API_URL + "building/",
+            API_URL + "residency/",
+            API_URL + "barangay-clearance/",
+            API_URL + "comelec/",
+            API_URL + "business-closure/",
+            API_URL + "bailbond/",
+            API_URL + "guardianship/",
+            API_URL + "indigency-burial/",
+            API_URL + "indigency-clearance/",
+            API_URL + "voucher/",
+            API_URL + "business-clearance/",
+            API_URL + "immunization/",
+            API_URL + "dental-service/",
+            API_URL + "maternal-care/"
+          ];
+         
+        //call multiple requests here
+        await axios.all(endpoints.map((endpoint) => axios.get(endpoint, {
+            headers: {
+                Accept: 'application/json', 
+                Authorization: 'Bearer ' + token
+            }
+        })))
+        .then(
+            //get all the data
+            axios.spread((...responses) => {
+                for (let i=0; i<16; i++){
+                    switch(i){
+                        case 0:
+                            for (let j=0; j<responses[i].data.length; j++){
+                                if (responses[i].data[j].status === "Approved"){
+                                    cedula.push(responses[i].data[j])
+                                }
+                            }
+                            break;
+                            
+                            case 1:
+                                for (let j=0; j<responses[i].data.length; j++){
+                                    if (responses[i].data[j].status === "Approved"){
+                                        constituent.push(responses[i].data[j])
+                                    }
+                                }
+                            break;
+
+                            case 2:
+                                for (let j=0; j<responses[i].data.length; j++){
+                                    if (responses[i].data[j].status === "Approved"){
+                                        building.push(responses[i].data[j])
+                                    }
+                                }
+                            break;
+
+                            case 3:
+                                for (let j=0; j<responses[i].data.length; j++){
+                                    if (responses[i].data[j].status === "Approved"){
+                                        residency.push(responses[i].data[j])
+                                    }
+                                }
+                            break;
+
+                            case 4:
+                                for (let j=0; j<responses[i].data.length; j++){
+                                    if (responses[i].data[j].status === "Approved"){
+                                        barangayClearance.push(responses[i].data[j])
+                                    }
+                                }
+                            break;
+
+                            case 5:
+                                for (let j=0; j<responses[i].data.length; j++){
+                                    if (responses[i].data[j].status === "Approved"){
+                                        comelec.push(responses[i].data[j])
+                                    }
+                                }
+                            break;
+
+                            case 6:
+                                for (let j=0; j<responses[i].data.length; j++){
+                                    if (responses[i].data[j].status === "Approved"){
+                                        businessClosure.push(responses[i].data[j])
+                                    }
+                                }
+                            break;
+
+                            case 7:
+                                for (let j=0; j<responses[i].data.length; j++){
+                                    if (responses[i].data[j].status === "Approved"){
+                                        barangayClearance.push(responses[i].data[j])
+                                    }
+                                }
+                            break;
+
+                            case 8:
+                                for (let j=0; j<responses[i].data.length; j++){
+                                    if (responses[i].data[j].status === "Approved"){
+                                        bailBond.push(responses[i].data[j])
+                                    }
+                                }
+                            break;
+
+                            case 9:
+                                for (let j=0; j<responses[i].data.length; j++){
+                                    if (responses[i].data[j].status === "Approved"){
+                                        guardianship.push(responses[i].data[j])
+                                    }
+                                }
+                            break;
+
+                            case 10:
+                                for (let j=0; j<responses[i].data.length; j++){
+                                    if (responses[i].data[j].status === "Approved"){
+                                        indigencyBurial.push(responses[i].data[j])
+                                    }
+                                }
+                            break;
+
+                            case 11:
+                                for (let j=0; j<responses[i].data.length; j++){
+                                    if (responses[i].data[j].status === "Approved"){
+                                        indigencyClearance.push(responses[i].data[j])
+                                    }
+                                }
+                            break;
+
+                            case 12:
+                                for (let j=0; j<responses[i].data.length; j++){
+                                    if (responses[i].data[j].status === "Approved"){
+                                        voucher.push(responses[i].data[j])
+                                    }
+                                }
+                            break;
+
+                            case 13:
+                                for (let j=0; j<responses[i].data.length; j++){
+                                    if (responses[i].data[j].status === "Approved"){
+                                        businessClearance.push(responses[i].data[j])
+                                    }
+                                }
+                            break;
+
+                            case 14:
+                                for (let j=0; j<responses[i].data.length; j++){
+                                    if (responses[i].data[j].status === "Approved"){
+                                        immunization.push(responses[i].data[j])
+                                    }
+                                }
+                            break;
+
+                            case 15:
+                                for (let j=0; j<responses[i].data.length; j++){
+                                    if (responses[i].data[j].status === "Approved"){
+                                        dentalService.push(responses[i].data[j])
+                                    }
+                                }
+                            break;
+
+                            case 16:
+                                for (let j=0; j<responses[i].data.length; j++){
+                                    if (responses[i].data[j].status === "Approved"){
+                                        maternalCare.push(responses[i].data[j])
+                                    }
+                                }
+                            break;
+                    }
+                }
+                setRequestedForm({
+                    requestedCedula : cedula,
+                    requestedConstituent : constituent,
+                    requestedBuilding : building,
+                    requestedResidency : residency,
+                    requestedBarangayClearance : barangayClearance,
+                    requestedComelec : comelec,
+                    requestedBusinessClosure : businessClosure,
+                    requestedBailbond : bailBond,
+                    requestedGuardianship : guardianship,
+                    requestedIndigencyBurial : indigencyBurial,
+                    requestedIndigencyClearance : indigencyClearance,
+                    requestedVoucher : voucher,
+                    requestedBusinessClearance : businessClearance,
+                    requestedImmunization : immunization,
+                    requestedDentalService : dentalService,
+                    requestedMaternalCare : maternalCare,
+                })
+            })
+        );   
+    }, [])
+    
+
+    //compile in array
+    const allRequestedForms = [
+        ...requestedForms.requestedCedula, 
+        ...requestedForms.requestedConstituent,
+        ...requestedForms.requestedBuilding,
+        ...requestedForms.requestedResidency,
+        ...requestedForms.requestedBarangayClearance,
+        ...requestedForms.requestedComelec,
+        ...requestedForms.requestedBailbond,
+        ...requestedForms.requestedGuardianship,
+        ...requestedForms.requestedIndigencyBurial,
+        ...requestedForms.requestedIndigencyClearance,
+        ...requestedForms.requestedVoucher,
+        ...requestedForms.requestedBusinessClearance,
+        ...requestedForms.requestedDentalService,
+        ...requestedForms.requestedImmunization,
+        ...requestedForms.requestedMaternalCare,
+        ...requestedForms.requestedBusinessClosure
+    ]
+    
+    //map the compiled requests
+    const mapRequests = allRequestedForms.map((form) => form)
     
     const [dataInTable, setDataInTable] = useState(data)
   return (
@@ -104,38 +359,34 @@ function Approved() {
                 columns ={[
                     { 
                         title: "Request ID", 
-                        field: "requestId"
+                        field: "request_number"
                     },
                     { 
-                        title: "Name", 
-                        field: "name" 
+                        title: "Resident Number", 
+                        field: "resident_number" 
                     },
                     { 
                         title: "Document", 
-                        field: "document" 
+                        field: "document_name" 
                     },
-                    { 
-                        title: "Date of Request", 
-                        field: "dateOfRequest"
-                    },
-                    { 
-                        title: "Request Status", 
-                        field: 'requestStatus',
-                        render: (rowData) => (
-                            rowData.requestStatus == "Approved" ? <Chip icon={<CheckIcon/>} label="Approved" color="success" variant="outlined"/> :
-                            rowData.requestStatus == "Released" ? <Chip icon={<ReceiptLongIcon/>} label="Released" color="primary" variant="outlined"/> :
-                            rowData.requestStatus == "Pending" ? <Chip icon={<AssignmentLateOutlinedIcon/>} label="Pending" color="warning" variant="outlined"/> :
-                            rowData.requestStatus == "Rejected" ? <Chip icon={<CloseOutlinedIcon/>} label="Rejected" color="error" variant="outlined"/> : 
-                                                                <Chip icon={<QuestionMarkIcon/>} label="Unknown Status" variant="outlined"/>
-                        )
-                    },
+                    // { 
+                    //     title: "Request Status", 
+                    //     field: 'requestStatus',
+                    //     render: (rowData) => (
+                    //         rowData.requestStatus == "Approved" ? <Chip icon={<CheckIcon/>} label="Approved" color="success" variant="outlined"/> :
+                    //         rowData.requestStatus == "Released" ? <Chip icon={<ReceiptLongIcon/>} label="Released" color="primary" variant="outlined"/> :
+                    //         rowData.requestStatus == "Pending" ? <Chip icon={<AssignmentLateOutlinedIcon/>} label="Pending" color="warning" variant="outlined"/> :
+                    //         rowData.requestStatus == "Rejected" ? <Chip icon={<CloseOutlinedIcon/>} label="Rejected" color="error" variant="outlined"/> : 
+                    //                                             <Chip icon={<QuestionMarkIcon/>} label="Unknown Status" variant="outlined"/>
+                    //     )
+                    // },
                     // { 
                     //     title: "Payment Status", 
                     //     field: "paymentStatus" 
                     // },
                     
                 ]}
-                data = {dataInTable}
+                data = {mapRequests}
                 actions={[
                     {
                         icon: () => <ReceiptLongIcon color='secondary'/>,

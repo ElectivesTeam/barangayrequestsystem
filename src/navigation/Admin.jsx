@@ -2,7 +2,7 @@ import React, {useState} from 'react';
 import { useHistory } from "react-router-dom";
 import Box from '@mui/material/Box';
 import Fab from '@mui/material/Fab';
-import HomeIcon from '@mui/icons-material/Home';
+import AllInboxIcon from '@mui/icons-material/AllInbox';
 import ArticleIcon from '@mui/icons-material/Article';
 import GroupIcon from '@mui/icons-material/Group';
 import Tooltip from '@mui/material/Tooltip';
@@ -17,8 +17,8 @@ import Approved from '../table/requests/Approved';
 import Pending from '../table/requests/Pending';
 import Rejected from '../table/requests/Rejected';
 import Released from '../table/requests/Released';
+import General from '../table/requests/General';
 import AdminListofUser from '../table/AdminListofUser';
-import AdminHome from '../table/AdminHome';
 
 import CheckIcon from '@mui/icons-material/Check';
 import ReceiptLongIcon from '@mui/icons-material/ReceiptLong';
@@ -39,24 +39,24 @@ function Admin() {
     const classes = useStyles();
     let history = useHistory();
 
-    const [showListOfUserTable, setShowListOfUserTable] = useState(false)
+    const [showListOfUserTable, setShowListOfUserTable] = useState(true)
+    const [showGeneral, setShowGeneral] = useState(false)
     const [showApproved, setShowApproved] = useState(false)
     const [showRejected, setShowRejected] = useState(false)
     const [showPending, setShowPending] = useState(false)
     const [showReleased, setShowReleased] = useState(false)
-    const [showHome, setShowHome] = useState(true)
 
     const onClick = button => {
         setShowListOfUserTable(false)
+        setShowGeneral(false)
         setShowApproved(false)
         setShowRejected(false)
         setShowPending(false)
         setShowReleased(false)
-        setShowHome(false)
 
         switch (button){
-            case "home":
-                setShowHome(true)
+            case "general":
+                setShowGeneral(true)
                 break;
             case "approved":
                 setShowApproved(true)
@@ -74,7 +74,7 @@ function Admin() {
                 setShowListOfUserTable(true)
                 break;
             default:
-                setShowHome(true)
+                setShowListOfUserTable(true)
         }
         console.log(button)
     }
@@ -103,13 +103,19 @@ function Admin() {
             <Grid container>
                 <Grid item xs={1}>
                     <Box sx={{ '& > :not(style)': { m: 1 } }} className={classes.floatingButtonContainer}>
-                        <Tooltip title="Home">
-
-                            <Fab aria-label="add" onClick={() => onClick("home")} color={showHome ? "primary" : "default"}>
-                                <HomeIcon />
+                        <Tooltip title="User">
+                            <Fab aria-label="add" onClick={() => onClick("user")} color={showListOfUserTable ? "primary" : "default"}>
+                                <GroupIcon />
                             </Fab>
                         </Tooltip>
                         <Divider />
+
+                        <Tooltip title="General">
+
+                            <Fab aria-label="add" onClick={() => onClick("general")} color={showGeneral ? "primary" : "default"}>
+                                <AllInboxIcon />
+                            </Fab>
+                        </Tooltip>
 
                         <Tooltip title="Approved">
 
@@ -141,22 +147,18 @@ function Admin() {
                         <Divider />
 
                     
-                        <Tooltip title="User">
-                            <Fab aria-label="add" onClick={() => onClick("user")} color={showListOfUserTable ? "primary" : "default"}>
-                                <GroupIcon />
-                            </Fab>
-                        </Tooltip>
+                        
                     </Box>
                 </Grid>
                 
                 {/* show tables */}
                 <Grid item xs={11}>
+                    {showGeneral && <General/>}
                     {showApproved && <Approved/>}
                     {showRejected && <Rejected/>}
                     {showPending && <Pending/>}
                     {showReleased && <Released/>}
                     {showListOfUserTable && <AdminListofUser/>}
-                    {showHome && <AdminHome/>}
                 </Grid>
             </Grid>
           )
