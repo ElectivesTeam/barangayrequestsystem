@@ -112,6 +112,8 @@ function Pending() {
     
     })
 
+    var requestedcedula=[]
+
     const API_URL = "http://127.0.0.1:8000/api/forms/";
     var token = JSON.parse(localStorage.getItem('user')).access;
 
@@ -145,8 +147,20 @@ function Pending() {
         .then(
             //get all the data
             axios.spread((...responses) => {
+                for (let i=0; i<16; i++){
+                    switch(i){
+                        case 0:
+                            for (let j=0; j<responses[i].data.length; j++){
+                                if (responses[i].data[j].status === "Pending"){
+                                    requestedcedula.push(responses[i].data[j])
+                                    console.log(requestedcedula)
+                                }
+                            }
+                            break;
+                    }
+                }
                 setRequestedForm({
-                    cedula: responses[0].data,
+                    cedula: requestedcedula,
                     constituent: responses[1].data,
                     building: responses[2].data,
                     residency: responses[3].data,
@@ -164,8 +178,9 @@ function Pending() {
                     maternalCare: responses[15].data,
                 })
             })
-        );    
+        );   
     }, [])
+    
 
     //compile in array
     const allRequestedForms = [
