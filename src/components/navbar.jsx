@@ -98,14 +98,9 @@ export default function MenuAppBar() {
   const[adminstatus, setAdminStatus] = useState(false)
   const[refreshVerified, setRefreshVerified] = useState(false)
   const[accessVerified, setAccessVerified] = useState(false)
-<<<<<<< Updated upstream
-  const[emailStatus, setEmailStatus] = useState(false)
-  const[openNotice, setOpenNotice] = useState(true)
-=======
   const[snackbarEmailSentState, setSnackbarEmailSentState] = useState({open: false, Transition: Slide})
   const[snackbarNoticeState, setSnackbarState] = useState({open: false, Transition: Grow})
   const[dataLoaded, setDataLoaded] = useState(false)
->>>>>>> Stashed changes
   useEffect(async () => {
     if(user && dataLoaded === false){
       if(refreshVerified === false){
@@ -147,15 +142,9 @@ export default function MenuAppBar() {
         .then (response => {
           if(response.data != undefined && response.status === 200){
             setAdminStatus(response.data.is_admin)
-<<<<<<< Updated upstream
-            setEmailStatus(response.data.is_email_verified)
-            if (emailStatus === true){
-              setOpenNotice(false)
-=======
             if(response.data.is_email_verified === false){
               setSnackbarState({open: true, Transition: Grow})
               setSnackbarEmailSentState({open: false, Transition: Slide})
->>>>>>> Stashed changes
             }
             console.log("account status loaded")
             setDataLoaded(true)
