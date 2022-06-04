@@ -1,4 +1,5 @@
 import React, { useState, forwardRef, useEffect }from 'react'
+import axios from 'axios';
 import MaterialTable from 'material-table'
 import Chip from '@mui/material/Chip';
 import Modal from '@mui/material/Modal';
@@ -31,7 +32,6 @@ import AssignmentLateOutlinedIcon from '@mui/icons-material/AssignmentLateOutlin
 import CloseOutlinedIcon from '@mui/icons-material/CloseOutlined';
 import QuestionMarkIcon from '@mui/icons-material/QuestionMark';
 
-import axios from 'axios';
 
 const tableIcons = {
   Add: forwardRef((props, ref) => <AddBox {...props} ref={ref} />),
@@ -93,24 +93,41 @@ function Pending() {
     const handleOpen = () => setOpen(true);
     const handleClose = () => setOpen(false);
     const [requestedForms, setRequestedForm] = useState({
-        cedula: [], 
-        constituent: [],
-        building: [],
-        residency: [],
-        barangayClearance: [],
-        comelec: [],
-        businessClosure: [],
-        bailbond: [],
-        guardianship: [],
-        indigencyBurial: [],
-        indigencyClearance: [],
-        voucher: [],
-        businessClearance: [],
-        immunization: [],
-        dentalService: [],
-        maternalCare: [],
+        requestedCedula: [], 
+        requestedConstituent: [],
+        requestedBuilding: [],
+        requestedResidency: [],
+        requestedBarangayClearance: [],
+        requestedComelec: [],
+        requestedBusinessClosure: [],
+        requestedBailbond: [],
+        requestedGuardianship: [],
+        requestedIndigencyBurial: [],
+        requestedIndigencyClearance: [],
+        requestedVoucher: [],
+        requestedBusinessClearance: [],
+        requestedImmunization: [],
+        requestedDentalService: [],
+        requestedMaternalCare: [],
     
     })
+
+    var cedula =[]
+    var constituent =[]
+    var building =[]
+    var residency =[]
+    var barangayClearance =[]
+    var comelec =[]
+    var businessClosure =[]
+    var bailBond =[]
+    var guardianship =[]
+    var indigencyBurial =[]
+    var indigencyClearance =[]
+    var voucher =[]
+    var businessClearance =[]
+    var immunization =[]
+    var dentalService =[]
+    var maternalCare =[]
 
     const API_URL = "http://127.0.0.1:8000/api/forms/";
     var token = JSON.parse(localStorage.getItem('user')).access;
@@ -145,51 +162,190 @@ function Pending() {
         .then(
             //get all the data
             axios.spread((...responses) => {
+                for (let i=0; i<16; i++){
+                    switch(i){
+                        case 0:
+                            for (let j=0; j<responses[i].data.length; j++){
+                                if (responses[i].data[j].status === "Pending"){
+                                    cedula.push(responses[i].data[j])
+                                }
+                            }
+                            break;
+                            
+                            case 1:
+                                for (let j=0; j<responses[i].data.length; j++){
+                                    if (responses[i].data[j].status === "Pending"){
+                                        constituent.push(responses[i].data[j])
+                                    }
+                                }
+                            break;
+
+                            case 2:
+                                for (let j=0; j<responses[i].data.length; j++){
+                                    if (responses[i].data[j].status === "Pending"){
+                                        building.push(responses[i].data[j])
+                                    }
+                                }
+                            break;
+
+                            case 3:
+                                for (let j=0; j<responses[i].data.length; j++){
+                                    if (responses[i].data[j].status === "Pending"){
+                                        residency.push(responses[i].data[j])
+                                    }
+                                }
+                            break;
+
+                            case 4:
+                                for (let j=0; j<responses[i].data.length; j++){
+                                    if (responses[i].data[j].status === "Pending"){
+                                        barangayClearance.push(responses[i].data[j])
+                                    }
+                                }
+                            break;
+
+                            case 5:
+                                for (let j=0; j<responses[i].data.length; j++){
+                                    if (responses[i].data[j].status === "Pending"){
+                                        comelec.push(responses[i].data[j])
+                                    }
+                                }
+                            break;
+
+                            case 6:
+                                for (let j=0; j<responses[i].data.length; j++){
+                                    if (responses[i].data[j].status === "Pending"){
+                                        businessClosure.push(responses[i].data[j])
+                                    }
+                                }
+                            break;
+
+                            case 7:
+                                for (let j=0; j<responses[i].data.length; j++){
+                                    if (responses[i].data[j].status === "Pending"){
+                                        barangayClearance.push(responses[i].data[j])
+                                    }
+                                }
+                            break;
+
+                            case 8:
+                                for (let j=0; j<responses[i].data.length; j++){
+                                    if (responses[i].data[j].status === "Pending"){
+                                        bailBond.push(responses[i].data[j])
+                                    }
+                                }
+                            break;
+
+                            case 9:
+                                for (let j=0; j<responses[i].data.length; j++){
+                                    if (responses[i].data[j].status === "Pending"){
+                                        guardianship.push(responses[i].data[j])
+                                    }
+                                }
+                            break;
+
+                            case 10:
+                                for (let j=0; j<responses[i].data.length; j++){
+                                    if (responses[i].data[j].status === "Pending"){
+                                        indigencyBurial.push(responses[i].data[j])
+                                    }
+                                }
+                            break;
+
+                            case 11:
+                                for (let j=0; j<responses[i].data.length; j++){
+                                    if (responses[i].data[j].status === "Pending"){
+                                        indigencyClearance.push(responses[i].data[j])
+                                    }
+                                }
+                            break;
+
+                            case 12:
+                                for (let j=0; j<responses[i].data.length; j++){
+                                    if (responses[i].data[j].status === "Pending"){
+                                        voucher.push(responses[i].data[j])
+                                    }
+                                }
+                            break;
+
+                            case 13:
+                                for (let j=0; j<responses[i].data.length; j++){
+                                    if (responses[i].data[j].status === "Pending"){
+                                        businessClearance.push(responses[i].data[j])
+                                    }
+                                }
+                            break;
+
+                            case 14:
+                                for (let j=0; j<responses[i].data.length; j++){
+                                    if (responses[i].data[j].status === "Pending"){
+                                        immunization.push(responses[i].data[j])
+                                    }
+                                }
+                            break;
+
+                            case 15:
+                                for (let j=0; j<responses[i].data.length; j++){
+                                    if (responses[i].data[j].status === "Pending"){
+                                        dentalService.push(responses[i].data[j])
+                                    }
+                                }
+                            break;
+
+                            case 16:
+                                for (let j=0; j<responses[i].data.length; j++){
+                                    if (responses[i].data[j].status === "Pending"){
+                                        maternalCare.push(responses[i].data[j])
+                                    }
+                                }
+                            break;
+                    }
+                }
                 setRequestedForm({
-                    cedula: responses[0].data,
-                    constituent: responses[1].data,
-                    building: responses[2].data,
-                    residency: responses[3].data,
-                    barangayClearance: responses[4].data,
-                    comelec: responses[5].data,
-                    businessClosure: responses[6].data,
-                    bailbond: responses[7].data,
-                    guardianship: responses[8].data,
-                    indigencyBurial: responses[9].data,
-                    indigencyClearance: responses[10].data,
-                    voucher: responses[11].data,
-                    businessClearance: responses[12].data,
-                    immunization: responses[13].data,
-                    dentalService: responses[14].data,
-                    maternalCare: responses[15].data,
+                    requestedCedula : cedula,
+                    requestedConstituent : constituent,
+                    requestedBuilding : building,
+                    requestedResidency : residency,
+                    requestedBarangayClearance : barangayClearance,
+                    requestedComelec : comelec,
+                    requestedBusinessClosure : businessClosure,
+                    requestedBailbond : bailBond,
+                    requestedGuardianship : guardianship,
+                    requestedIndigencyBurial : indigencyBurial,
+                    requestedIndigencyClearance : indigencyClearance,
+                    requestedVoucher : voucher,
+                    requestedBusinessClearance : businessClearance,
+                    requestedImmunization : immunization,
+                    requestedDentalService : dentalService,
+                    requestedMaternalCare : maternalCare,
                 })
             })
-        );    
+        );   
     }, [])
+    
 
     //compile in array
     const allRequestedForms = [
-        ...requestedForms.cedula, 
-        ...requestedForms.constituent,
-        ...requestedForms.building,
-        ...requestedForms.residency,
-        ...requestedForms.barangayClearance,
-        ...requestedForms.comelec,
-        ...requestedForms.bailbond,
-        ...requestedForms.guardianship,
-        ...requestedForms.indigencyBurial,
-        ...requestedForms.indigencyClearance,
-        ...requestedForms.voucher,
-        ...requestedForms.businessClearance,
-        ...requestedForms.dentalService,
-        ...requestedForms.immunization,
-        ...requestedForms.maternalCare,
-        ...requestedForms.businessClosure
+        ...requestedForms.requestedCedula, 
+        ...requestedForms.requestedConstituent,
+        ...requestedForms.requestedBuilding,
+        ...requestedForms.requestedResidency,
+        ...requestedForms.requestedBarangayClearance,
+        ...requestedForms.requestedComelec,
+        ...requestedForms.requestedBailbond,
+        ...requestedForms.requestedGuardianship,
+        ...requestedForms.requestedIndigencyBurial,
+        ...requestedForms.requestedIndigencyClearance,
+        ...requestedForms.requestedVoucher,
+        ...requestedForms.requestedBusinessClearance,
+        ...requestedForms.requestedDentalService,
+        ...requestedForms.requestedImmunization,
+        ...requestedForms.requestedMaternalCare,
+        ...requestedForms.requestedBusinessClosure
     ]
     
     //map the compiled requests
     const mapRequests = allRequestedForms.map((form) => form)
-    console.log(mapRequests)
 
     const [dataInTable, setDataInTable] = useState(mapRequests)
       
@@ -211,28 +367,28 @@ function Pending() {
                         field: "request_number"
                     },
                     { 
-                        title: "Name", 
-                        field: "purpose" 
+                        title: "Resident_Number", 
+                        field: "resident_number" 
                     },
                     { 
-                        title: "Has Payment", 
-                        field: "has_payment" 
+                        title: "Document", 
+                        field: "document_name"
                     },
                     { 
-                        title: "Payment Status", 
-                        field: "is_paid"
+                        title: "Date Requested", 
+                        field: "date_requested"
                     },
-                    { 
-                        title: "Approval Status", 
-                        field: 'approval',
-                         render: (rowData) => (
-                             rowData.requestStatus == "Approved" ? <Chip icon={<CheckIcon/>} label="Approved" color="success" variant="outlined"/> :
-                             rowData.requestStatus == "Released" ? <Chip icon={<ReceiptLongIcon/>} label="Released" color="primary" variant="outlined"/> :
-                             rowData.requestStatus == "Pending" ? <Chip icon={<AssignmentLateOutlinedIcon/>} label="Pending" color="warning" variant="outlined"/> :
-                             rowData.requestStatus == "Rejected" ? <Chip icon={<CloseOutlinedIcon/>} label="Rejected" color="error" variant="outlined"/> : 
-                                                                 <Chip icon={<QuestionMarkIcon/>} label="Unknown Status" variant="outlined"/>
-                         )
-                    },
+                    // { 
+                    //     title: "Status", 
+                    //     field: "status",
+                    //      render: (rowData) => (
+                    //          rowData.status == "Approved" ? <Chip icon={<CheckIcon/>} label="Approved" color="success" variant="outlined"/> :
+                    //          rowData.status == "Released" ? <Chip icon={<ReceiptLongIcon/>} label="Released" color="primary" variant="outlined"/> :
+                    //          rowData.status == "Pending" ? <Chip icon={<AssignmentLateOutlinedIcon/>} label="Pending" color="warning" variant="outlined"/> :
+                    //          rowData.status == "Rejected" ? <Chip icon={<CloseOutlinedIcon/>} label="Rejected" color="error" variant="outlined"/> : 
+                    //                                              <Chip icon={<QuestionMarkIcon/>} label="Unknown Status" variant="outlined"/>
+                    //      )
+                    // },
                     // { 
                     //     title: "Payment Status", 
                     //     field: "paymentStatus" 
