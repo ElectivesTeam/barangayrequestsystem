@@ -94,7 +94,7 @@ export default function MenuAppBar() {
   const[refreshVerified, setRefreshVerified] = useState(false)
   const[accessVerified, setAccessVerified] = useState(false)
   const[emailStatus, setEmailStatus] = useState(false)
-  const[openNotice, setOpenNotice] = useState(true)
+  const[openNotice, setOpenNotice] = useState(false)
   useEffect(async () => {
     if(user){
       await AuthService.verifyToken("refresh")
@@ -135,8 +135,8 @@ export default function MenuAppBar() {
           if(response.data != undefined && response.status === 200){
             setAdminStatus(response.data.is_admin)
             setEmailStatus(response.data.is_email_verified)
-            if (emailStatus === true){
-              setOpenNotice(false)
+            if (emailStatus === false){
+              setOpenNotice(true)
             }
           }
         })
