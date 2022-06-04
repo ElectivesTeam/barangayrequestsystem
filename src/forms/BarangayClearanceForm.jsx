@@ -140,9 +140,10 @@ const BarangayClearanceForm = ({ activeForm, handleBack, handleNext, handleChang
                                                     onChange={(e) => setInformation({...information, purpose:e.target.value})}
                                                     error={purposeError}
                                                 >
-                                                <MenuItem value={'one'}>one</MenuItem>
-                                                <MenuItem value={'two'}>two</MenuItem>
-                                                <MenuItem value={'three'}>three</MenuItem>
+                                                {/* <MenuItem value={'Scholarship'}>Scholarship</MenuItem> */}
+                                                <MenuItem value={'Work Requirements'}>Work Requirements</MenuItem>
+                                                <MenuItem value={'Financial Assistance'}>Financial Assistance</MenuItem>
+                                                <MenuItem value={'Others'}>Others</MenuItem>
                                                 </Select>
                                             </FormControl>
                                         </Grid> 
