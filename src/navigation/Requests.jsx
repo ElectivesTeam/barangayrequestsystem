@@ -417,10 +417,11 @@ const Request = ({ handleNextStepper, handleBackStepper }) => {
     }
 
     let history = useHistory();
-    if(isLoading){
-        return <div className="App">Loading...</div>;
-    }
+
     if (AuthService.getCurrentUser() && accountStatus) {
+        if(isLoading){
+            return <div className="App">Loading...</div>;
+        }
         return submitted ? (
         <ListOfRequest selectedRequest={requestId} apiFormsData = {apiFormsData} handleAPIFormsDataChange= {handleAPIFormsDataChange} handleNextStepper={handleNextStepper} handleBackStepper={handleBackStepper} />
     ): (

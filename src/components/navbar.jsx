@@ -14,11 +14,16 @@ import Tooltip from '@material-ui/core/Tooltip';
 import Button from '@material-ui/core/Button';
 import NoteAddIcon from '@material-ui/icons/NoteAdd';
 import Snackbar from '@mui/material/Snackbar';
-import CloseIcon from '@mui/icons-material/Close';
+import Slide from '@mui/material/Slide';
 import AdminPanelSettingsIcon from '@mui/icons-material/AdminPanelSettings';
-
+import Grow from '@mui/material/Grow';
 import AuthService from "../services/auth.service";
 import { useHistory } from "react-router-dom";
+import MuiAlert from '@mui/material/Alert';
+
+const Alert = React.forwardRef(function Alert(props, ref) {
+  return <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />;
+});
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -93,26 +98,29 @@ export default function MenuAppBar() {
   const[adminstatus, setAdminStatus] = useState(false)
   const[refreshVerified, setRefreshVerified] = useState(false)
   const[accessVerified, setAccessVerified] = useState(false)
-  const[emailStatus, setEmailStatus] = useState(false)
-  const[openNotice, setOpenNotice] = useState(false)
+  const[snackbarEmailSentState, setSnackbarEmailSentState] = useState({open: false, Transition: Slide})
+  const[snackbarNoticeState, setSnackbarState] = useState({open: false, Transition: Grow})
+  const[dataLoaded, setDataLoaded] = useState(false)
   useEffect(async () => {
-    if(user){
-      await AuthService.verifyToken("refresh")
-			.then((response) => {
-				if(response.status === 200){
-          setRefreshVerified(true)
-					console.log("refresh verified")
-				}
-			})
-			.catch(error => {
-				if (error.response.status === 401){
-					AuthService.logout()
-					history.push('/')
-				}else{
-					console.log("Something went wrong")
-				}
-			})
-      if (refreshVerified){
+    if(user && dataLoaded === false){
+      if(refreshVerified === false){
+        await AuthService.verifyToken("refresh")
+        .then((response) => {
+          if(response.status === 200){
+            setRefreshVerified(true)
+            console.log("refresh verified")
+          }
+        })
+        .catch(error => {
+          if (error.response.status === 401){
+            AuthService.logout()
+            history.push('/')
+          }else{
+            console.log(error)
+          }
+        })
+      }
+      if (refreshVerified === true && accessVerified === false){
         await AuthService.verifyToken("access")
         .then((response) => {
           if(response.status === 200){
@@ -129,25 +137,22 @@ export default function MenuAppBar() {
           }
         })
       }
-      if (accessVerified){
+      if (accessVerified === true && dataLoaded === false){
         await AuthService.getAccountStatus()
         .then (response => {
           if(response.data != undefined && response.status === 200){
             setAdminStatus(response.data.is_admin)
-            setEmailStatus(response.data.is_email_verified)
-            if (emailStatus === false){
-              setOpenNotice(true)
+            if(response.data.is_email_verified === false){
+              setSnackbarState({open: true, Transition: Grow})
+              setSnackbarEmailSentState({open: false, Transition: Slide})
             }
+            console.log("account status loaded")
+            setDataLoaded(true)
           }
         })
         .catch(error => {
           if (error.response !== undefined){
-            if (error.response.status === 401) {
-              AuthService.refreshAccess()
-              console.log('new access token')
-              window.location.reload()
-            }
-              else console.log(error.response);
+            console.log(error.response);
           }
         })
       }
@@ -243,27 +248,43 @@ export default function MenuAppBar() {
     AuthService.sendVerificationLink()
     .then((response) => {
 			if (response.status === 200){
-        setOpenNotice(false)
+        setSnackbarState({open: false, Transition: Grow})
+        setSnackbarEmailSentState({open: true, Transition: Slide})
 			}
 		})
 	};
 
   const action = (
     <React.Fragment>
-      <Button color="primary" size="small" onClick={sendVerificationLink}>
+      <Button color="inherit" size="small" onClick={sendVerificationLink}>
         Send Link
       </Button>
     </React.Fragment>
   );
 
+  const closeSnackBar = () => {
+    setSnackbarEmailSentState({open: false, Transition: Slide})
+  };
+
   return (
     <div className={classes.root}>
       <Snackbar
-        open={openNotice}
-        TransitionComponent="Fade"
-        message="Your email is not verified. Please check your email or click the button to send a new verification link"
-        action={action}
-      />
+        open={snackbarEmailSentState.open}
+        onClose={closeSnackBar}
+        TransitionComponent={snackbarEmailSentState.Transition}
+      >
+        <Alert onClose={closeSnackBar} severity="success" sx={{ width: '100%' }}>
+          Email Verification Link Sent
+        </Alert>
+      </Snackbar>
+      <Snackbar
+        open={snackbarNoticeState.open}
+        TransitionComponent={snackbarNoticeState.Transition}
+      >
+        <Alert onClose={handleClose} severity="warning" sx={{ width: '100%' , backgroundColor: "#3f51b5"}} action={action}>
+          Your email is not verified. Please check your email or click the button to send a new verification link
+        </Alert>
+      </Snackbar>
       <AppBar position="static" className={classes.navbar} color="primary">
         <Toolbar>
           <Button href="/">

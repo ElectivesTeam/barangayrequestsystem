@@ -5,7 +5,7 @@ import {
   Switch,
   Route,
 } from "react-router-dom";
-import { createMuiTheme } from '@material-ui/core/styles';
+import { createTheme } from '@material-ui/core/styles';
 import { ThemeProvider } from '@material-ui/styles';
 
 import Home from './navigation/Home';
@@ -37,7 +37,7 @@ import ImmunizationForm from './forms/ImmunizationForm';
 import DentalServiceForm from './forms/DentalServiceForm';
 import MaternalCareForm from './forms/MaternalCareForm';
 
-const theme = createMuiTheme({
+const theme = createTheme({
   typography: {
     fontFamily: [
       "'Montserrat', sans-serif",
