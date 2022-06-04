@@ -35,6 +35,9 @@ class AuthService {
             .then(
                 localStorage.removeItem("user")
             )
+            .catch(
+                localStorage.removeItem("user")
+            )
         }
     }
 
@@ -138,7 +141,6 @@ class AuthService {
             }
         })
         .then(response =>{
-            console.log("account status fetched")
             return response;
         })
     }

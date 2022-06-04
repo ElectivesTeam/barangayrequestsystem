@@ -417,11 +417,17 @@ const Request = ({ handleNextStepper, handleBackStepper }) => {
     }
 
     let history = useHistory();
+<<<<<<< Updated upstream
 
     if(isLoading){
         return <div className="App">Loading...</div>;
     }
+=======
+>>>>>>> Stashed changes
     if (AuthService.getCurrentUser() && accountStatus) {
+        if(isLoading){
+            return <div className="App">Loading...</div>;
+        }
         return submitted ? (
         <ListOfRequest selectedRequest={requestId} apiFormsData = {apiFormsData} handleAPIFormsDataChange= {handleAPIFormsDataChange} handleNextStepper={handleNextStepper} handleBackStepper={handleBackStepper} />
     ): (
