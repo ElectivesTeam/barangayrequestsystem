@@ -1,4 +1,4 @@
-import React, { useState, forwardRef }from 'react'
+import React, { useState, forwardRef, useEffect }from 'react'
 import MaterialTable from 'material-table'
 import Chip from '@mui/material/Chip';
 import Modal from '@mui/material/Modal';
@@ -25,6 +25,8 @@ import ViewColumn from '@material-ui/icons/ViewColumn';
 
 import ArticleOutlinedIcon from '@mui/icons-material/ArticleOutlined';
 import DeleteOutlinedIcon from '@mui/icons-material/DeleteOutlined';
+
+import AuthService from "../services/auth.service"
 
 const tableIcons = {
   Add: forwardRef((props, ref) => <AddBox {...props} ref={ref} />),
@@ -82,6 +84,14 @@ function AdminListofUser() {
     const [open, setOpen] = useState(false);
     const handleOpen = () => setOpen(true);
     const handleClose = () => setOpen(false);
+    const [userList, setUserList] = useState ([])
+
+    useEffect (async () => {
+        AuthService.getUserList()
+        .then((response) => {
+            setUserList(response.data)
+        })
+      }, [])
     
     const [dataInTable, setDataInTable] = useState(data)
   return (
@@ -97,16 +107,20 @@ function AdminListofUser() {
                 icons={tableIcons}
                 columns ={[
                     { 
-                        title: "User ID", 
-                        field: "userId"
+                        title: "Resident Number", 
+                        field: "resident_number"
                     },
                     { 
-                        title: "Name", 
-                        field: "name" 
+                        title: "First Name", 
+                        field: "first_name" 
+                    },
+                    { 
+                        title: "Last Name", 
+                        field: "last_name" 
                     },
                     { 
                         title: "Date Created", 
-                        field: "dateCreated" 
+                        field: "date_joined" 
                     }
                     // { 
                     //     title: "Payment Status", 
@@ -114,7 +128,7 @@ function AdminListofUser() {
                     // },
                     
                 ]}
-                data = {dataInTable}
+                data = {userList}
                 actions={[
                     {
                         icon: () => <ArticleOutlinedIcon color="primary" onClick={handleOpen}/>,
