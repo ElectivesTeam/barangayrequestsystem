@@ -1,4 +1,5 @@
-import React, { useState, forwardRef }from 'react'
+import React, { useState, forwardRef, useEffect }from 'react'
+import { useHistory } from "react-router-dom";
 import MaterialTable from 'material-table'
 import Chip from '@mui/material/Chip';
 import Modal from '@mui/material/Modal';
@@ -31,6 +32,8 @@ import AssignmentLateOutlinedIcon from '@mui/icons-material/AssignmentLateOutlin
 import CloseOutlinedIcon from '@mui/icons-material/CloseOutlined';
 import QuestionMarkIcon from '@mui/icons-material/QuestionMark';
 
+import formService from '../services/form.service';
+import authService from '../services/auth.service';
 
 const tableIcons = {
     Add: forwardRef((props, ref) => <AddBox {...props} ref={ref} />),
@@ -65,172 +68,119 @@ const style = {
     p: 4,
 };
 
-//dummy data
-const data = [
-    {
-        requestId: "123456",
-        document: "Cedula",
-        dateOfRequest: "02-22-22",
-        paymentStatus: "Paid",
-        requestStatus: "Approved"
-    },
-    {
-        requestId: "4578",
-        document: "Barangay Indigency",
-        dateOfRequest: "02-22-22",
-        paymentStatus: "Free",
-        requestStatus: "Rejected"
-    },
-    {
-        requestId: "657382",
-        document: "Bail Bond Form",
-        dateOfRequest: "02-22-22",
-        paymentStatus: "Paid",
-        requestStatus: "Released"
-    },
-    {
-        requestId: "657382",
-        document: "Barangay Certificate",
-        dateOfRequest: "02-22-22",
-        paymentStatus: "Not Paid",
-        requestStatus: "Approved"
-    },
-    {
-        requestId: "123456",
-        document: "Cedula",
-        dateOfRequest: "02-22-22",
-        paymentStatus: "Paid",
-        requestStatus: "Pending"
-    },
-    {
-        requestId: "4578",
-        document: "Barangay Indigency",
-        dateOfRequest: "02-22-22",
-        paymentStatus: "Free",
-        requestStatus: "Rejected"
-    },
-    {
-        requestId: "657382",
-        document: "Bail Bond Form",
-        dateOfRequest: "02-22-22",
-        paymentStatus: "Paid",
-        requestStatus: "Rejected"
-    },
-    {
-        requestId: "657382",
-        document: "Barangay Certificate",
-        dateOfRequest: "02-22-22",
-        paymentStatus: "Not Paid",
-        requestStatus: "Released"
-    },
-    {
-        requestId: "657382",
-        document: "Bail Bond Form",
-        dateOfRequest: "02-22-22",
-        paymentStatus: "Paid",
-        requestStatus: "Pending"
-    },
-    {
-        requestId: "657382",
-        document: "Barangay Certificate",
-        dateOfRequest: "02-22-22",
-        paymentStatus: "Not Paid",
-        requestStatus: "Approved"
-    }
-]
 
 function MyRequests() {
     //modal
+    let history = useHistory();
     const [open, setOpen] = useState(false);
     const handleOpen = () => setOpen(true);
     const handleClose = () => setOpen(false);
-    
-    const [dataInTable, setDataInTable] = useState(data)
-  return (
-    <>
-        <div style={{
-            maxWidth: "95%", 
-            display: "block",
-            margin: "auto",
-            marginTop: "30px"
-        }}>
-            <MaterialTable
-                title="My Requests"
-                icons={tableIcons}
-                columns ={[
-                    { 
-                        title: "Request ID", 
-                        field: "requestId"
-                    },
-                    { 
-                        title: "Document", 
-                        field: "document" 
-                    },
-                    { 
-                        title: "Date of Request", 
-                        field: "dateOfRequest"
-                    },
-                    { 
-                        title: "Request Status", 
-                        field: 'requestStatus',
-                        render: (rowData) => (
-                            rowData.requestStatus == "Approved" ? <Chip icon={<CheckIcon/>} label="Approved" color="success" variant="outlined"/> :
-                            rowData.requestStatus == "Released" ? <Chip icon={<ReceiptLongIcon/>} label="Released" color="primary" variant="outlined"/> :
-                            rowData.requestStatus == "Pending" ? <Chip icon={<AssignmentLateOutlinedIcon/>} label="Pending" color="warning" variant="outlined"/> :
-                            rowData.requestStatus == "Rejected" ? <Chip icon={<CloseOutlinedIcon/>} label="Rejected" color="error" variant="outlined"/> : 
-                                                                <Chip icon={<QuestionMarkIcon/>} label="Unknown Status" variant="outlined"/>
-                        )
-                    },
-                    // { 
-                    //     title: "Payment Status", 
-                    //     field: "paymentStatus" 
-                    // },
-                    
-                ]}
-                data = {dataInTable}
-                actions={[
-                    {
-                        icon: () => <ArticleOutlinedIcon color="primary" onClick={handleOpen}/>,
-                        tooltip: 'Show Details',
-                    },
-                    {
-                        icon: () => <DeleteOutlinedIcon color="error"/>,
-                        tooltip: 'Delete',
-                        onClick: (event, rowData) => {
-                            //frontend magic
-                            const index = rowData.tableData.id;
-                            const updatedRows = [...dataInTable]
-                            if(window.confirm("Are you sure you want to delete this request?")){
-                                console.log(index)
-                                updatedRows.splice(index, 1)
-                                setDataInTable(updatedRows)
-                            }
+    const [myRequests, setMyRequests] = useState([]);
+
+    useEffect(async() => {
+        if (!authService.getCurrentUser()){
+			history.push('/')
+		}
+        else {
+            formService.getMyRequests()
+            .then((response) => {
+                setMyRequests(response.data)
+            })
+            .catch((error) =>{
+                console.log(error)
+            }
+            )
+        }
+        
+    }, [])
+
+    const [dataInTable, setDataInTable] = useState()
+    return (
+        <>
+            <div style={{
+                maxWidth: "95%", 
+                display: "block",
+                margin: "auto",
+                marginTop: "30px"
+            }}>
+                <MaterialTable
+                    title="My Requests"
+                    icons={tableIcons}
+                    columns ={[
+                        { 
+                            title: "Request ID", 
+                            field: "request_number"
                         },
-                    }                    
-                  ]}
-                  options={{
-                    actionsColumnIndex: -1
-                  }}
-            />
-            <Modal
-                open={open}
-                onClose={handleClose}
-                aria-labelledby="modal-modal-title"
-                aria-describedby="modal-modal-description"
-            >
-                <Box sx={style}>
-                    <Typography id="modal-modal-title" variant="h6" component="h2">
-                        Request Details
-                    </Typography>
-                    <Typography id="modal-modal-description" sx={{ mt: 2 }}>
-                        //Details
-                    </Typography>
-                </Box>
-            </Modal>
-        </div>
-    </>
-    
-  )
+                        { 
+                            title: "Document", 
+                            field: "document_name" 
+                        },
+                        { 
+                            title: "Date of Request", 
+                            field: "date_requested"
+                        },
+                        { 
+                            title: "Request Status", 
+                            field: 'status',
+                            render: (rowData) => (
+                                rowData.status == "Approved" ? <Chip icon={<CheckIcon/>} label="Approved" color="success" variant="outlined"/> :
+                                rowData.status == "Released" ? <Chip icon={<ReceiptLongIcon/>} label="Released" color="primary" variant="outlined"/> :
+                                rowData.status == "Pending" ? <Chip icon={<AssignmentLateOutlinedIcon/>} label="Pending" color="warning" variant="outlined"/> :
+                                rowData.status == "Rejected" ? <Chip icon={<CloseOutlinedIcon/>} label="Rejected" color="error" variant="outlined"/> : 
+                                                                    <Chip icon={<QuestionMarkIcon/>} label="Unknown Status" variant="outlined"/>
+                            )
+                        },
+                        // { 
+                        //     title: "Payment Status", 
+                        //     field: "paymentStatus" 
+                        // },
+                        
+                    ]}
+                    data = {myRequests}
+                    actions={[
+                        {
+                            icon: () => <ArticleOutlinedIcon color="primary" onClick={handleOpen}/>,
+                            tooltip: 'Show Details',
+                        },
+                        {
+                            icon: () => <DeleteOutlinedIcon color="error"/>,
+                            tooltip: 'Delete',
+                            onClick: (event, rowData) => {
+                                //frontend magic
+                                const index = rowData.tableData.id;
+                                const updatedRows = [...dataInTable]
+                                if(window.confirm("Are you sure you want to delete this request?")){
+                                    console.log(index)
+                                    updatedRows.splice(index, 1)
+                                    setDataInTable(updatedRows)
+                                }
+                            },
+                        }                    
+                      ]}
+                      options={{
+                        actionsColumnIndex: -1
+                      }}
+                />
+                <Modal
+                    open={open}
+                    onClose={handleClose}
+                    aria-labelledby="modal-modal-title"
+                    aria-describedby="modal-modal-description"
+                >
+                    <Box sx={style}>
+                        <Typography id="modal-modal-title" variant="h6" component="h2">
+                            Request Details
+                        </Typography>
+                        <Typography id="modal-modal-description" sx={{ mt: 2 }}>
+                            //Details
+                        </Typography>
+                    </Box>
+                </Modal>
+            </div>
+        </>
+        
+      )
+  
 }
 
 export default MyRequests

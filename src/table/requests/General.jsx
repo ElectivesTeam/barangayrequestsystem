@@ -109,23 +109,6 @@ function General() {
     
     })
 
-    var cedula =[]
-    var constituent =[]
-    var building =[]
-    var residency =[]
-    var barangayClearance =[]
-    var comelec =[]
-    var businessClosure =[]
-    var bailBond =[]
-    var guardianship =[]
-    var indigencyBurial =[]
-    var indigencyClearance =[]
-    var voucher =[]
-    var businessClearance =[]
-    var immunization =[]
-    var dentalService =[]
-    var maternalCare =[]
-
     const API_URL = "http://127.0.0.1:8000/api/forms/";
     var token = JSON.parse(localStorage.getItem('user')).access;
     
