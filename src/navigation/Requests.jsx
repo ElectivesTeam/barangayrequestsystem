@@ -417,10 +417,15 @@ const Request = ({ handleNextStepper, handleBackStepper }) => {
     }
 
     let history = useHistory();
+    console.log(accountStatus)
 
-    if (AuthService.getCurrentUser() && accountStatus) {
+    if (AuthService.getCurrentUser()) {
         if(isLoading){
             return <div className="App">Loading...</div>;
+        }
+        if(!accountStatus){
+            history.push('/login')
+            return(<h2>Login</h2>)
         }
         return submitted ? (
         <ListOfRequest selectedRequest={requestId} apiFormsData = {apiFormsData} handleAPIFormsDataChange= {handleAPIFormsDataChange} handleNextStepper={handleNextStepper} handleBackStepper={handleBackStepper} />
