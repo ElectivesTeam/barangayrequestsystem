@@ -309,6 +309,33 @@ class formService {
             return response;
         })
     }
+
+    deleteRequest(request_number, document_name){
+        var token = JSON.parse(localStorage.getItem('user')).access;
+        return axios.delete(API_URL + "my" + document_name + "/", {
+            headers:{
+                Accept: 'application/json',
+                Authorization: 'Bearer ' + token
+            },
+            data: {
+                request_number: request_number
+            }
+        })
+        .then(response =>{
+            return response;
+        })
+    }
+
+    getFormDetails(request_number, document_name){
+        var token = JSON.parse(localStorage.getItem('user')).access;
+        const config = {headers: { 'Accept': 'application/json', 'Authorization': 'Bearer ' + token}};
+        let formData = new FormData();
+        formData.append("request_number", request_number);
+        return axios.post(API_URL + "my" + document_name + "/", formData, config)
+        .then(response =>{
+            return response;
+        })
+    }
 }
 
 export default new formService();
