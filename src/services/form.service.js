@@ -336,6 +336,24 @@ class formService {
             return response;
         })
     }
+
+    moveFormRequest(request_number, document_name, status){
+        var token = JSON.parse(localStorage.getItem('user')).access;
+        return axios.patch(API_URL + "my" + document_name + "/", 
+        {
+            request_number: request_number,
+            status: status
+        },
+        {
+            headers:{
+                Accept: 'application/json',
+                Authorization: 'Bearer ' + token
+            }
+        })
+        .then(response =>{
+            return response;
+        })
+    }
 }
 
 export default new formService();

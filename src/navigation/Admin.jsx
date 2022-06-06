@@ -76,7 +76,6 @@ function Admin() {
             default:
                 setShowListOfUserTable(true)
         }
-        console.log(button)
     }
 
     

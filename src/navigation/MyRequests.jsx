@@ -4,7 +4,6 @@ import MaterialTable from 'material-table'
 import Chip from '@mui/material/Chip';
 import Modal from '@mui/material/Modal';
 import Box from '@mui/material/Box';
-import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
 
 //icon in table
@@ -108,19 +107,7 @@ function MyRequests() {
         )
     }
 
-    const getDetails = async (request_number, document_name) => {
-        await formService.getFormDetails(request_number, document_name)
-        .then((response) => {
-            if(response.status === 200){
-                setRequestDetails(JSON.stringify(response.data))
-                handleOpen()
-            }
-        })
-        .catch((error) =>{
-            console.log(error.response.data)
-        }
-        )
-    }
+    const [details, setDetails] = useState({})   
 
     const [dataInTable, setDataInTable] = useState([])
     return (
@@ -172,9 +159,46 @@ function MyRequests() {
                             onClick: (event, rowData) => {
                                 //frontend magic
                                 const index = rowData.tableData.id;
-                                const request_number = rowData["request_number"]
-                                const document_name = rowData["document_name"].replace(/\s+/g, '-').toLowerCase()
-                                getDetails(request_number, document_name)
+                                setDetails({
+                                    request_number: rowData.request_number,
+                                    case_number: rowData.case_number,
+                                    purpose: rowData.purpose,
+                                    has_payment: rowData.has_payment,
+                                    maintenance_type: rowData.maintenance_type,
+                                    business_name: rowData.business_name,
+                                    business_owner: rowData.business_owner,
+                                    business_address: rowData.business_address,
+                                    business_nature: rowData.business_nature,
+                                    start_business_operated: rowData.start_business_operated,
+                                    last_business_operated: rowData.last_business_operated,
+                                    id_number: rowData.id_number,
+                                    date_received: rowData.date_received,
+                                    signature: rowData.signature,
+                                    picture: rowData.picture,
+                                    guardian_name: rowData.guardian_name,
+                                    mother_name: rowData.mother_name,
+                                    father_name: rowData.father_name,
+                                    birth_height: rowData.birth_height,
+                                    deceased_relationship: rowData.deceased_relationship,
+                                    deceased_name: rowData.deceased_name,
+                                    passed_onto_whom: rowData.passed_onto_whom,
+                                    patient_relationship: rowData.patient_relationship,
+                                    patient_name: rowData.patient_name,
+                                    child_name: rowData.child_name,
+                                    date_of_birth: rowData.date_of_birth,
+                                    student_name: rowData.student_name,
+                                    parent_name: rowData.parent_name,
+                                    school: rowData.school,
+                                    grade: rowData.grade,
+                                    birth_place: rowData.birth_place,
+                                    profession: rowData.profession,
+                                    monthly_income: rowData.monthly_income,
+                                    status: rowData.status,
+                                    date_requested: rowData.date_requested,
+                                    document_name: rowData.document_name,
+                                    resident_number: rowData.resident_number
+                                })
+                                handleOpen()
                             },
                         },
                         {
@@ -208,7 +232,82 @@ function MyRequests() {
                             Request Details
                         </Typography>
                         <Typography id="modal-modal-description" sx={{ mt: 2 }}>
-                            {requestDetails}
+                            <b>Request Number:</b> {details.request_number} <br/>
+                            {details.document_name === "Bail Bond" ? <>
+                                <b>Case Number:</b> {details.case_number} <br/>
+                            </>: null}
+                            {details.document_name === "Barangay Clearance" ? <>
+                                <b>Purpose:</b> {details.purpose} <br/>
+                                <b>Has Payment:</b> {details.has_payment === true ? 'Yes' : 'No'} <br/>
+                            </>: null}
+                            {details.document_name === "Building Clearance" ? <>
+                                <b>Maintenance Type:</b> {details.maintenance_type} <br/>
+                                <b>Status:</b> {details.status} <br/>
+                            </>: null}
+                            {details.document_name === "Business Clearance" ? <>
+                                <b>Business Name:</b> {details.business_name} <br/>
+                                <b>Business Owner:</b> {details.business_owner} <br/>
+                                <b>Business Address:</b> {details.business_address} <br/>
+                                <b>Business Nature:</b> {details.business_nature} <br/>
+                                <b>Start Business Operated:</b> {details.start_business_operated} <br/>
+                            </>: null}
+                            {details.document_name === "Business Closure" ? <>
+                                <b>Business Name:</b> {details.business_name} <br/>
+                                <b>Business Owner:</b> {details.business_owner} <br/>
+                                <b>Business Address:</b> {details.business_address} <br/>
+                                <b>Business Nature:</b> {details.business_nature} <br/>
+                                <b>Last Business Operated:</b> {details.last_business_operated} <br/>
+                            </>: null}
+                            {details.document_name === "Cedula" ? <>
+                                <b>Birth Place:</b> {details.birth_place} <br/>
+                                <b>Profession:</b> {details.profession} <br/>
+                                <b>Monthly Income:</b> {details.monthly_income} <br/>
+                            </>: null}
+                            {details.document_name === "Constituent ID" ? <>
+                                <b>ID Number:</b> {details.id_number} <br/>
+                                <b>Date Received:</b> {details.date_received} <br/>
+                                <Box sx={{columnGap: 1, display: 'flex', justifyContent:"flex-start", alignItems:"flex-start"}}>
+                                    <b>Signature:</b>
+                                    <img sx={{flexGrow: 3}} src={details.signature==='' ? '../img/image.png': details.signature} width = "170px" height = "150px"></img>
+                                </Box><br/>
+                                <Box sx={{columnGap: 1,display: 'flex', justifyContent:"flex-start", alignItems:"flex-start"}}>
+                                    <b>Picture:</b>
+                                    <img src={details.picture==='' ? '../img/image.png': details.picture} width = "170px" height = "150px"></img>
+                                </Box><br/>
+                            </>: null}
+                            {details.document_name === "Guardianship" ? <>
+                                <b>Guardian Name:</b> {details.guardian_name} <br/>
+                            </>: null}
+                            {details.document_name === "Immunization" ? <>
+                                <b>Mother's Name:</b> {details.mother_name} <br/>
+                                <b>Father's Name:</b> {details.father_name} <br/>
+                                <b>Birth Height:</b> {details.birth_height} <br/>
+                            </>: null}
+                            {details.document_name === "Indigency Burial" ? <>
+                                <b>Deceased Relationship:</b> {details.deceased_relationship} <br/>
+                                <b>Deceased Name:</b> {details.deceased_name} <br/>
+                                <b>Passed Onto Whom:</b> {details.passed_onto_whom} <br/>
+                            </>: null}
+                            {details.document_name === "Indigency Clearance" ? <>
+                                <b>Patient Relationship:</b> {details.patient_relationship} <br/>
+                                <b>Patient Name:</b> {details.patient_name} <br/>
+                                <b>Purpose:</b> {details.purpose} <br/>
+                                <b>Passed Onto Whom:</b> {details.passed_onto_whom} <br/>
+                            </>: null}
+                            {details.document_name === "Maternal Care" ? <>
+                                <b>Child's Name:</b> {details.child_name} <br/>
+                                <b>Date of Birth:</b> {details.date_of_birth} <br/>
+                                <b>Birth Place:</b> {details.birth_place} <br/>
+                            </>: null}
+                            {details.document_name === "Voucher" ? <>
+                                <b>Student's Name:</b> {details.student_name} <br/>
+                                <b>Parent's Name:</b> {details.parent_name} <br/>
+                                <b>School:</b> {details.school} <br/>
+                                <b>Grade:</b> {details.grade} <br/>
+                            </>: null}
+                            <b>Date Requested:</b> {details.date_requested} <br/>
+                            <b>Document Name:</b> {details.document_name} <br/>
+                            <b>Resident Number:</b> {details.resident_number} <br/>
                         </Typography>
                     </Box>
                 </Modal>
