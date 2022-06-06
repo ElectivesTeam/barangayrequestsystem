@@ -65,24 +65,24 @@ const style = {
 };
 
 //dummy data
-const data = [
-  {
-      requestId: "123456",
-      name: "Juan Dela Cruz",
-      document: "Cedula",
-      dateOfRequest: "02-22-22",
-      paymentStatus: "Paid",
-      requestStatus: "Approved"
-  },
-  {
-      requestId: "4578",
-      name: "Juan Dela Cruz",
-      document: "Barangay Indigency",
-      dateOfRequest: "02-22-22",
-      paymentStatus: "Free",
-      requestStatus: "Approved"
-  }
-]
+// const data = [
+//   {
+//       requestId: "123456",
+//       name: "Juan Dela Cruz",
+//       document: "Cedula",
+//       dateOfRequest: "02-22-22",
+//       paymentStatus: "Paid",
+//       requestStatus: "Approved"
+//   },
+//   {
+//       requestId: "4578",
+//       name: "Juan Dela Cruz",
+//       document: "Barangay Indigency",
+//       dateOfRequest: "02-22-22",
+//       paymentStatus: "Free",
+//       requestStatus: "Approved"
+//   }
+// ]
 
 function General() {
     //modal
@@ -164,8 +164,9 @@ function General() {
         );   
     }, [])
 
+
     //compile in array
-    const allRequestedForms = [
+    var allRequestedForms = [
         ...requestedForms.requestedCedula, 
         ...requestedForms.requestedConstituent,
         ...requestedForms.requestedBuilding,
@@ -185,10 +186,21 @@ function General() {
     ]
     
     //map the compiled requests
-    const mapRequests = allRequestedForms.map((form) => form)
+    // const mapRequests = allRequestedForms.map((form) => form)
 
 
-    const [dataInTable, setDataInTable] = useState(data)
+    const [dataInTable, setDataInTable] = useState(allRequestedForms)
+    const [details, setDetails] = useState({
+        request_number:"",
+        birth_place: "",
+        profession: "",
+        monthly_income: "",
+        status: "",
+        date_requested: "",
+        document_name: "",
+        resident_number: ""
+
+    })
   return (
     <>
         <div style={{
@@ -198,7 +210,7 @@ function General() {
             marginTop: "30px"
         }}>
             <MaterialTable
-                title="Approved Requests"
+                title="All Requests"
                 icons={tableIcons}
                 columns ={[
                     { 
@@ -234,25 +246,46 @@ function General() {
                     // },
                     
                 ]}
-                data = {mapRequests}
+                data = {allRequestedForms}
                 actions={[
-                    {
-                        icon: () => <ReceiptLongIcon color='secondary'/>,
-                        tooltip: 'Mark as Released',
-                        onClick: (event, rowData) => {
-                            //frontend magic
-                            const index = rowData.tableData.id;
-                            const updatedRows = [...dataInTable]
-                            if(window.confirm("Do you want to Release this Document?")){
-                                console.log(index)
-                                updatedRows.splice(index, 1)
-                                setDataInTable(updatedRows)
-                            }
-                        },
-                    },
+                    // {
+                    //     icon: () => <ReceiptLongIcon color='secondary'/>,
+                    //     tooltip: 'Mark as Released',
+                    //     onClick: (event, rowData) => {
+                    //         //frontend magic
+                    //         const index = rowData.tableData.id;
+                    //         const updatedRows = [...dataInTable]
+                    //         if(window.confirm("Do you want to Release this Document?")){
+                    //             console.log(index)
+                    //             updatedRows.splice(index, 1)
+                    //             setDataInTable(updatedRows)
+                    //         }
+                    //     },
+                    // },
                     {
                         icon: () => <ArticleOutlinedIcon color="primary" onClick={handleOpen}/>,
                         tooltip: 'Show Details',
+                        onClick: (event, rowData) => {
+                            //frontend magic
+                            const form = rowData;
+                            // console.log(form)
+                            setDetails({
+                                request_number: form.request_number,
+                                birth_place: form.birth_place,
+                                profession: form.profession,
+                                monthly_income: form.monthly_income,
+                                status: form.status,
+                                date_requested: form.date_requested,
+                                document_name: form.document_name,
+                                resident_number: form.resident_number
+                            })
+                            // const updatedRows = [...dataInTable]
+                            // if(window.confirm("Are you sure you want to delete this request?")){
+                            //     console.log(index)
+                            //     updatedRows.splice(index, 1)
+                            //     setDataInTable(updatedRows)
+                            // }
+                        },
                     },
                     {
                         icon: () => <DeleteOutlinedIcon color="error"/>,
@@ -284,7 +317,14 @@ function General() {
                         Request Details
                     </Typography>
                     <Typography id="modal-modal-description" sx={{ mt: 2 }}>
-                        //Details
+                        <b>Request Number:</b> {details.request_number} <br/>
+                        <b>Birth Place:</b> {details.birth_place} <br/>
+                        <b>Profession:</b> {details.profession} <br/>
+                        <b>Monthly Income:</b> {details.monthly_income} <br/>
+                        <b>Status:</b> {details.status} <br/>
+                        <b>Date Requested:</b> {details.date_requested} <br/>
+                        <b>Document Name:</b> {details.document_name} <br/>
+                        <b>Resident Number:</b> {details.resident_number} <br/>
                     </Typography>
                 </Box>
             </Modal>
