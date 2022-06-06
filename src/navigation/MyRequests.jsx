@@ -75,7 +75,7 @@ function MyRequests() {
     const [open, setOpen] = useState(false);
     const handleOpen = () => setOpen(true);
     const handleClose = () => setOpen(false);
-    const [myRequests, setMyRequests] = useState([]);
+    const [requestDetails, setRequestDetails] = useState();
 
     useEffect(async() => {
         if (!authService.getCurrentUser()){
@@ -84,7 +84,7 @@ function MyRequests() {
         else {
             formService.getMyRequests()
             .then((response) => {
-                setMyRequests(response.data)
+                setDataInTable(response.data)
             })
             .catch((error) =>{
                 console.log(error)
@@ -94,7 +94,35 @@ function MyRequests() {
         
     }, [])
 
-    const [dataInTable, setDataInTable] = useState()
+    const deleteData = async (request_number, document_name, updatedRows, index) => {
+        await formService.deleteRequest(request_number, document_name)
+        .then((response) => {
+            if(response.status === 200){
+                updatedRows.splice(index, 1)
+                setDataInTable(updatedRows)
+            }
+        })
+        .catch((error) =>{
+            console.log(error)
+        }
+        )
+    }
+
+    const getDetails = async (request_number, document_name) => {
+        await formService.getFormDetails(request_number, document_name)
+        .then((response) => {
+            if(response.status === 200){
+                setRequestDetails(JSON.stringify(response.data))
+                handleOpen()
+            }
+        })
+        .catch((error) =>{
+            console.log(error.response.data)
+        }
+        )
+    }
+
+    const [dataInTable, setDataInTable] = useState([])
     return (
         <>
             <div style={{
@@ -136,11 +164,18 @@ function MyRequests() {
                         // },
                         
                     ]}
-                    data = {myRequests}
+                    data = {dataInTable}
                     actions={[
                         {
-                            icon: () => <ArticleOutlinedIcon color="primary" onClick={handleOpen}/>,
+                            icon: () => <ArticleOutlinedIcon color="primary"/>,
                             tooltip: 'Show Details',
+                            onClick: (event, rowData) => {
+                                //frontend magic
+                                const index = rowData.tableData.id;
+                                const request_number = rowData["request_number"]
+                                const document_name = rowData["document_name"].replace(/\s+/g, '-').toLowerCase()
+                                getDetails(request_number, document_name)
+                            },
                         },
                         {
                             icon: () => <DeleteOutlinedIcon color="error"/>,
@@ -148,11 +183,12 @@ function MyRequests() {
                             onClick: (event, rowData) => {
                                 //frontend magic
                                 const index = rowData.tableData.id;
+                                const request_number = rowData["request_number"]
+                                const document_name = rowData["document_name"].replace(/\s+/g, '-').toLowerCase()
                                 const updatedRows = [...dataInTable]
                                 if(window.confirm("Are you sure you want to delete this request?")){
                                     console.log(index)
-                                    updatedRows.splice(index, 1)
-                                    setDataInTable(updatedRows)
+                                    deleteData(request_number, document_name, updatedRows, index)
                                 }
                             },
                         }                    
@@ -172,7 +208,7 @@ function MyRequests() {
                             Request Details
                         </Typography>
                         <Typography id="modal-modal-description" sx={{ mt: 2 }}>
-                            //Details
+                            {requestDetails}
                         </Typography>
                     </Box>
                 </Modal>
