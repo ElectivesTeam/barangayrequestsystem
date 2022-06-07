@@ -1,7 +1,6 @@
 import React, { useState, forwardRef, useEffect }from 'react'
 import axios from 'axios';
 import MaterialTable from 'material-table'
-import Chip from '@mui/material/Chip';
 import Modal from '@mui/material/Modal';
 import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
@@ -26,13 +25,16 @@ import ViewColumn from '@material-ui/icons/ViewColumn';
 
 import ArticleOutlinedIcon from '@mui/icons-material/ArticleOutlined';
 import DeleteOutlinedIcon from '@mui/icons-material/DeleteOutlined';
-import CheckIcon from '@mui/icons-material/Check';
-import ReceiptLongIcon from '@mui/icons-material/ReceiptLong';
-import AssignmentLateOutlinedIcon from '@mui/icons-material/AssignmentLateOutlined';
-import CloseOutlinedIcon from '@mui/icons-material/CloseOutlined';
-import QuestionMarkIcon from '@mui/icons-material/QuestionMark';
+import EmailIcon from '@mui/icons-material/Email';
+import Grid from '@material-ui/core/Grid';
+import TextareaAutosize from '@mui/material/TextareaAutosize';
+import SendIcon from '@mui/icons-material/Send';
+import Snackbar from '@mui/material/Snackbar';
+import MuiAlert from '@mui/material/Alert';
+import Slide from '@mui/material/Slide';
 
 import formService from '../../services/form.service';
+import AuthService from '../../services/auth.service';
 
 const tableIcons = {
   Add: forwardRef((props, ref) => <AddBox {...props} ref={ref} />),
@@ -66,12 +68,33 @@ const style = {
   p: 4,
 };
 
+const emailStyle = {
+    position: 'absolute',
+    top: '50%',
+    left: '50%',
+    transform: 'translate(-50%, -50%)',
+    width: 500,
+    height: 300,
+    bgcolor: 'background.paper',
+    border: '2px solid #000',
+    boxShadow: 24,
+    p: 4,
+};
+
 function Released() {
     //modal
     const [open, setOpen] = useState(false);
     const [loading, isLoading] = useState(true);
+    const [openEmail, setOpenEmail] = useState(false);
     const handleOpen = () => setOpen(true);
     const handleClose = () => setOpen(false);
+    const handleOpenEmail = () => setOpenEmail(true);
+    const handleCloseEmail = () => setOpenEmail(false);
+    const [recipient, setRecipient] = useState();
+    const [subject, setSubject] = useState();
+    const [body, setBody] = useState();
+    const [userList, setUserList] = useState();
+    const [openAlert, setOpenAlert] = useState(false)
     const [requestedForms, setRequestedForm] = useState({
         requestedCedula: [], 
         requestedConstituent: [],
@@ -303,6 +326,11 @@ function Released() {
                 })
             })
         );   
+
+        AuthService.getUserList()
+        .then((response) => {
+            setUserList(response.data)
+        })
     }, [])
     
 
@@ -346,13 +374,39 @@ function Released() {
     }
     
     const [details, setDetails] = useState({})
+
+    const handleSubmit = () => {
+        formService.emailResident(recipient,subject,body)
+        handleCloseEmail()
+        setOpenAlert(true);
+    }
+    const handleCloseAlert = (event, reason) => {
+        if (reason === 'clickaway') {
+          return;
+        }
+    
+        setOpenAlert(false);
+    };
+
+    const getRecipient = (resident_number) => {
+        for(let i=0; i<userList.length; i++) {
+            if (userList[i].resident_number === resident_number){
+                setRecipient(userList[i].email)
+            }
+        }
+    }
+
+    const Alert = React.forwardRef(function Alert(props, ref) {
+		return <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />;
+	});
   return (
     <>
         <div style={{
             maxWidth: "95%", 
             display: "block",
             margin: "auto",
-            marginTop: "30px"
+            marginTop: "30px",
+            fontFamily:'Montserrat'
         }}>
             <MaterialTable
                 title="Released Requests"
@@ -370,25 +424,18 @@ function Released() {
                         title: "Document", 
                         field: "document_name" 
                     },
-                    // { 
-                    //     title: "Request Status", 
-                    //     field: 'requestStatus',
-                    //     render: (rowData) => (
-                    //         rowData.requestStatus == "Approved" ? <Chip icon={<CheckIcon/>} label="Approved" color="success" variant="outlined"/> :
-                    //         rowData.requestStatus == "Released" ? <Chip icon={<ReceiptLongIcon/>} label="Released" color="primary" variant="outlined"/> :
-                    //         rowData.requestStatus == "Pending" ? <Chip icon={<AssignmentLateOutlinedIcon/>} label="Pending" color="warning" variant="outlined"/> :
-                    //         rowData.requestStatus == "Released" ? <Chip icon={<CloseOutlinedIcon/>} label="Released" color="error" variant="outlined"/> : 
-                    //                                             <Chip icon={<QuestionMarkIcon/>} label="Unknown Status" variant="outlined"/>
-                    //     )
-                    // },
-                    // { 
-                    //     title: "Payment Status", 
-                    //     field: "paymentStatus" 
-                    // },
-                    
                 ]}
                 data = {dataInTable}
                 actions={[
+                    {
+                        icon: () => <EmailIcon style={{color:'#303f9f'}} onClick={handleOpenEmail}/>,
+                        tooltip: 'Email Resident',
+                        onClick: (event, rowData) => {
+                            //frontend magic
+                            const resident_number = rowData["resident_number"]
+                            getRecipient(resident_number)
+                        },
+                    },
                     {
                         icon: () => <ArticleOutlinedIcon color="primary" onClick={handleOpen}/>,
                         tooltip: 'Show Details',
@@ -461,10 +508,10 @@ function Released() {
                 aria-describedby="modal-modal-description"
             >
                 <Box sx={style}>
-                    <Typography id="modal-modal-title" variant="h6" component="h2">
+                    <Typography id="modal-modal-title" variant="h6" component="h2" sx={{fontFamily:'Montserrat'}}>
                         Request Details
                     </Typography>
-                    <Typography id="modal-modal-description" sx={{ mt: 2 }}>
+                    <Typography id="modal-modal-description" sx={{ mt: 2, fontFamily:'Montserrat' }}>
                     <b>Request Number:</b> {details.request_number} <br/>
                             {details.document_name === "Bail Bond" ? <>
                                 <b>Case Number:</b> {details.case_number} <br/>
@@ -544,6 +591,51 @@ function Released() {
                     </Typography>
                 </Box>
             </Modal>
+            <Modal
+                open={openEmail}
+                onClose={handleCloseEmail}
+                aria-labelledby="modal-modal-title"
+                aria-describedby="modal-modal-description"
+            >
+                <Box sx={emailStyle}>
+                    <Typography id="modal-modal-title" variant="h6" component="h2" sx={{fontFamily:'Montserrat'}}>
+                        Email Resident
+                    </Typography>
+                    <Typography id="modal-modal-description" sx={{ mt: 2, fontFamily:'Montserrat' }}>
+                        <Grid>
+                                <TextareaAutosize
+                                    value={recipient}
+                                    aria-label="empty textarea"
+                                    placeholder="Recipient"
+                                    disabled
+                                    style={{ width: 500, height:30, fontFamily:'Montserrat',fontSize:15}}
+                                />
+                                <TextareaAutosize
+                                    onChange={(e) => setSubject(e.target.value)}
+                                    aria-label="empty textarea"
+                                    placeholder="Subject"
+                                    style={{ width: 500, height:30, fontFamily:'Montserrat',fontSize:15}}
+                                />
+                                <TextareaAutosize
+                                    onChange={(e) => setBody(e.target.value)}
+                                    aria-label="empty textarea"
+                                    placeholder="Body"
+                                    style={{ width: 500, fontFamily:'Montserrat',fontSize:15}}
+                                    minRows={6}
+                                />
+
+                                <Button variant="contained" style={{float:'right', fontFamily:'Montserrat', fontWeight:600, backgroundColor:'#303f9f'}} endIcon={<SendIcon/>} onClick={handleSubmit}>
+                                    Submit
+                                </Button>
+                        </Grid>
+                    </Typography>
+                </Box>
+            </Modal> 
+            <Snackbar open={openAlert} autoHideDuration={3000} onClose={handleCloseAlert} anchorOrigin={{vertical: 'bottom', horizontal: 'right'}} TransitionComponent={Slide}>
+                <Alert onClose={handleCloseAlert} severity="success" sx={{ width: '100%' }}>
+                  Email sent!
+                </Alert>
+            </Snackbar>
         </div>
     </>
 

@@ -194,7 +194,8 @@ function General() {
             maxWidth: "95%", 
             display: "block",
             margin: "auto",
-            marginTop: "30px"
+            marginTop: "30px",
+            fontFamily:'Montserrat'
         }}>
             <MaterialTable
                 title="All Requests"
@@ -227,27 +228,10 @@ function General() {
                                                                 <Chip icon={<QuestionMarkIcon/>} label="Unknown Status" variant="outlined"/>
                         )
                     },
-                    // { 
-                    //     title: "Payment Status", 
-                    //     field: "paymentStatus" 
-                    // },
                     
                 ]}
                 data = {dataInTable}
                 actions={[
-                    // {
-                    //     icon: () => <ReceiptLongIcon color='secondary'/>,
-                    //     tooltip: 'Mark as Released',
-                    //     onClick: (event, rowData) => {
-                    //         //frontend magic
-                    //         const index = rowData.tableData.id;
-                    //         const updatedRows = [...dataInTable]
-                    //         if(window.confirm("Do you want to Release this Document?")){
-                    //             updatedRows.splice(index, 1)
-                    //             setDataInTable(updatedRows)
-                    //         }
-                    //     },
-                    // },
                     {
                         icon: () => <ArticleOutlinedIcon color="primary" onClick={handleOpen}/>,
                         tooltip: 'Show Details',
@@ -321,10 +305,10 @@ function General() {
                 aria-describedby="modal-modal-description"
             >
                 <Box sx={style}>
-                    <Typography id="modal-modal-title" variant="h6" component="h2">
+                    <Typography id="modal-modal-title" variant="h6" component="h2" sx={{fontFamily:'Montserrat'}}>
                         Request Details
                     </Typography>
-                    <Typography id="modal-modal-description" sx={{ mt: 2 }}>
+                    <Typography id="modal-modal-description" sx={{ mt: 2, fontFamily:'Montserrat' }}>
                     <b>Request Number:</b> {details.request_number} <br/>
                             {details.document_name === "Bail Bond" ? <>
                                 <b>Case Number:</b> {details.case_number} <br/>

@@ -53,31 +53,12 @@ const style = {
   top: '50%',
   left: '50%',
   transform: 'translate(-50%, -50%)',
-  width: 400,
+  width: 650,
   bgcolor: 'background.paper',
   border: '2px solid #000',
   boxShadow: 24,
   p: 4,
 };
-
-//dummy data
-const data = [
-  {
-      userId: "20",
-      name: "Juan Dela Cruz",
-      dateCreated: "08-18-2022"
-  },
-  {
-      userId: "21",
-      name: "Juan Dela Cruz",
-      dateCreated: "10-05-2022"
-  },
-  {
-      userId: "21",
-      name: "Juan Dela Cruz",
-      dateCreated: "01-17-2022"
-  }
-]
 
 function AdminListofUser() {
     //modal
@@ -85,6 +66,7 @@ function AdminListofUser() {
     const handleOpen = () => setOpen(true);
     const handleClose = () => setOpen(false);
     const [userList, setUserList] = useState ([])
+    const [details, setDetails] = useState({})
 
     useEffect (async () => {
         AuthService.getUserList()
@@ -92,15 +74,15 @@ function AdminListofUser() {
             setUserList(response.data)
         })
       }, [])
-    
-    const [dataInTable, setDataInTable] = useState(data)
+
   return (
     <>
         <div style={{
             maxWidth: "95%", 
             display: "block",
             margin: "auto",
-            marginTop: "30px"
+            marginTop: "30px",
+            fontFamily:'Montserrat'
         }}>
             <MaterialTable
                 title="List of Users"
@@ -122,32 +104,28 @@ function AdminListofUser() {
                         title: "Date Created", 
                         field: "date_joined" 
                     }
-                    // { 
-                    //     title: "Payment Status", 
-                    //     field: "paymentStatus" 
-                    // },
-                    
                 ]}
                 data = {userList}
                 actions={[
                     {
                         icon: () => <ArticleOutlinedIcon color="primary" onClick={handleOpen}/>,
                         tooltip: 'Show Details',
-                    },
-                    {
-                        icon: () => <DeleteOutlinedIcon color="error"/>,
-                        tooltip: 'Delete',
                         onClick: (event, rowData) => {
                             //frontend magic
-                            const index = rowData.tableData.id;
-                            const updatedRows = [...dataInTable]
-                            if(window.confirm("Are you sure you want to delete this request?")){
-                                console.log(index)
-                                updatedRows.splice(index, 1)
-                                setDataInTable(updatedRows)
-                            }
+                            const form = rowData;
+                            setDetails({
+                                email: rowData.email,
+                                address: rowData.address,
+                                age: rowData.age,
+                                gender: rowData.gender,
+                                date_of_birth: rowData.date_of_birth,
+                                civil_status: rowData.civil_status,
+                                mobile_number: rowData.mobile_number,
+                                id_pic: rowData.id_pic,
+                                profile_pic: rowData.profile_pic,
+                            })
                         },
-                    }                    
+                    }      
                   ]}
                   options={{
                     actionsColumnIndex: -1
@@ -160,11 +138,32 @@ function AdminListofUser() {
                 aria-describedby="modal-modal-description"
             >
                 <Box sx={style}>
-                    <Typography id="modal-modal-title" variant="h6" component="h2">
+                    <Typography id="modal-modal-title" variant="h6" component="h2" sx={{fontFamily:'Montserrat'}}>
                         Request Details
                     </Typography>
-                    <Typography id="modal-modal-description" sx={{ mt: 2 }}>
-                        //Details
+                    <Typography id="modal-modal-description" sx={{ mt: 2 , fontFamily:'Montserrat'}}>
+                        <div style={{display:'flex', justifyContent:'center'}}>
+                            <div style={{marginRight:50}}>
+                                <b>Email:</b> {details.email} <br/>
+                                <b>Address:</b> {details.address} <br/>
+                                <b>Age:</b> {details.age} <br/>
+                                <b>Gender:</b> {details.gender} <br/>
+                                <Box sx={{columnGap: 1,display: 'flex', justifyContent:"flex-start", alignItems:"flex-start"}}>
+                                    <b>Picture:</b>
+                                    <img src={details.profile_pic==='' ? '../img/image.png': details.profile_pic} width = "170px" height = "150px"></img>
+                                </Box><br/>
+                            </div>
+                            <div>
+                            <b>Date of Birth:</b> {details.date_of_birth} <br/>
+                                <b>Civil Status:</b> {details.civil_status} <br/>
+                                <b>Contact Number:</b> {details.mobile_number} <br/>
+                                <Box sx={{columnGap: 1, display: 'flex', justifyContent:"flex-start", alignItems:"flex-start"}}>
+                                    <b>Signature:</b>
+                                    <img sx={{flexGrow: 3}} src={details.id_pic==='' ? '../img/image.png': details.id_pic} width = "170px" height = "150px"></img>
+                                </Box><br/>
+                                
+                            </div>
+                        </div>
                     </Typography>
                 </Box>
             </Modal>
