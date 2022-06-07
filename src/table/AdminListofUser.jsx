@@ -125,7 +125,8 @@ function AdminListofUser() {
                                 profile_pic: rowData.profile_pic,
                             })
                         },
-                    }      
+                    } 
+                    },
                   ]}
                   options={{
                     actionsColumnIndex: -1
