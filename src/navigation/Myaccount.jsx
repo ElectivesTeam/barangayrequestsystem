@@ -129,7 +129,6 @@ function MyAccount() {
 	const[last_name, setLastName] = useState([]);
 	const[middle_name, setMiddleName] = useState([]);
 	const[email, setEmail] = useState([]);
-	const[address, setAddress] = useState([]);
 	const[contact_number, setContactNumber] = useState([]);
 	const[getInfo, setGetInfoCheck] = useState(false)
 	const[profile_pic, setProfilePic] = useState([]);
@@ -195,7 +194,6 @@ function MyAccount() {
 			middle_name,
 			last_name,
 			email,
-			address,
 			contact_number
 		  )
 		.then((response) => {
@@ -224,6 +222,7 @@ function MyAccount() {
 				  setFirstnameError(JSON.stringify(error.response.data.first_name));
 				  setEmailError(JSON.stringify(error.response.data.email))
 				  setContactnumberError(JSON.stringify(error.response.data.mobile_number))
+				  console.log(error.response.data);
 				}
 				  else console.log(error.response);
 			}
