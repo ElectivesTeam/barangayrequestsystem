@@ -201,9 +201,10 @@ function MyRequests() {
                                 handleOpen()
                             },
                         },
-                        {
+                        rowData => ({
                             icon: () => <DeleteOutlinedIcon color="error"/>,
                             tooltip: 'Delete',
+                            disabled: rowData.status === "Approved",
                             onClick: (event, rowData) => {
                                 //frontend magic
                                 const index = rowData.tableData.id;
@@ -215,7 +216,7 @@ function MyRequests() {
                                     deleteData(request_number, document_name, updatedRows, index)
                                 }
                             },
-                        }                    
+                        })
                       ]}
                       options={{
                         actionsColumnIndex: -1

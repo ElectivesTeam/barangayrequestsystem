@@ -344,6 +344,20 @@ function Released() {
         }
         )
     }
+
+    const moveData = async (request_number, status, document_name, updatedRows, index) => {
+        await formService.moveFormRequest(request_number, document_name, status)
+        .then((response) => {
+            if(response.status === 200){
+                updatedRows.splice(index, 1)
+                setDataInTable(updatedRows)
+            }
+        })
+        .catch((error) =>{
+            console.log(error)
+        }
+        )
+    }
     
     const [details, setDetails] = useState({})
   return (
@@ -389,6 +403,21 @@ function Released() {
                 ]}
                 data = {dataInTable}
                 actions={[
+                    {
+                        icon: () => <CheckIcon color='secondary'/>,
+                        tooltip: 'Return to Approved',
+                        onClick: (event, rowData) => {
+                            //frontend magic
+                            const index = rowData.tableData.id;
+                            const status = "Approved"
+                            const request_number = rowData["request_number"]
+                            const document_name = rowData["document_name"].replace(/\s+/g, '-').toLowerCase()
+                            const updatedRows = [...dataInTable]
+                            if(window.confirm("Do you want to return this document to Approved?")){
+                                moveData(request_number, status, document_name, updatedRows, index)
+                            }
+                        },
+                    },
                     {
                         icon: () => <ArticleOutlinedIcon color="primary" onClick={handleOpen}/>,
                         tooltip: 'Show Details',

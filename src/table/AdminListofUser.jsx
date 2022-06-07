@@ -133,21 +133,7 @@ function AdminListofUser() {
                     {
                         icon: () => <ArticleOutlinedIcon color="primary" onClick={handleOpen}/>,
                         tooltip: 'Show Details',
-                    },
-                    {
-                        icon: () => <DeleteOutlinedIcon color="error"/>,
-                        tooltip: 'Delete',
-                        onClick: (event, rowData) => {
-                            //frontend magic
-                            const index = rowData.tableData.id;
-                            const updatedRows = [...dataInTable]
-                            if(window.confirm("Are you sure you want to delete this request?")){
-                                console.log(index)
-                                updatedRows.splice(index, 1)
-                                setDataInTable(updatedRows)
-                            }
-                        },
-                    }                    
+                    },              
                   ]}
                   options={{
                     actionsColumnIndex: -1
