@@ -83,7 +83,6 @@ class AuthService {
         middle_name,
         last_name,
         email,
-        address,
         contact_number){
         var token = JSON.parse(localStorage.getItem('user')).access;
         let formData = new FormData();
@@ -91,17 +90,29 @@ class AuthService {
         formData.append("first_name", first_name);
         formData.append("middle_name", middle_name);
         formData.append("last_name", last_name);
-        formData.append("address", address);
         formData.append("mobile_number", contact_number);
         const config = {headers: { 
             Accept: 'application/json',
             Authorization: 'Bearer ' + token}};
-        return axios.put(API_URL + "getuser/", formData, config)
+        return axios.patch(API_URL + "getuser/", formData, config)
         .then(response =>{
             console.log("info updated")
             return response;
         })
+    }
 
+    updateProfilePic(profile_pic){
+        var token = JSON.parse(localStorage.getItem('user')).access;
+        let formData = new FormData();
+        formData.append("profile_pic", profile_pic);
+        const config = {headers: { 
+            Accept: 'application/json',
+            Authorization: 'Bearer ' + token}};
+        return axios.patch(API_URL + "getuser/", formData, config)
+        .then(response =>{
+            console.log("info updated")
+            return response;
+        })
     }
 
     updatePassword(
