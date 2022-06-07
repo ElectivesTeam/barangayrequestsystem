@@ -354,6 +354,21 @@ class formService {
             return response;
         })
     }
+
+    emailResident(recipient, subject, body){
+        var token = JSON.parse(localStorage.getItem('user')).access;
+        const API_URL = "http://127.0.0.1:8000/api/users/";
+        const config = {headers: { 'Accept': 'application/json', 'Authorization': 'Bearer ' + token}};
+        let formData = new FormData();
+        formData.append("email", recipient);
+        formData.append("subject", subject);
+        formData.append("body", body);
+        return axios.post(API_URL + "sendemail/", formData, config)
+        .then(response =>{
+            return response;
+            
+        })
+    }
 }
 
 export default new formService();

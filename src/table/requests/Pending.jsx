@@ -367,7 +367,8 @@ function Pending() {
             maxWidth: "95%", 
             display: "block",
             margin: "auto",
-            marginTop: "30px"
+            marginTop: "30px",
+            fontFamily:'Montserrat'
         }}>
             <MaterialTable
                 title="Pending Requests"
@@ -390,22 +391,6 @@ function Pending() {
                         title: "Date Requested", 
                         field: "date_requested"
                     },
-                    // { 
-                    //     title: "Status", 
-                    //     field: "status",
-                    //      render: (rowData) => (
-                    //          rowData.status == "Approved" ? <Chip icon={<CheckIcon/>} label="Approved" color="success" variant="outlined"/> :
-                    //          rowData.status == "Released" ? <Chip icon={<ReceiptLongIcon/>} label="Released" color="primary" variant="outlined"/> :
-                    //          rowData.status == "Pending" ? <Chip icon={<AssignmentLateOutlinedIcon/>} label="Pending" color="warning" variant="outlined"/> :
-                    //          rowData.status == "Rejected" ? <Chip icon={<CloseOutlinedIcon/>} label="Rejected" color="error" variant="outlined"/> : 
-                    //                                              <Chip icon={<QuestionMarkIcon/>} label="Unknown Status" variant="outlined"/>
-                    //      )
-                    // },
-                    // { 
-                    //     title: "Payment Status", 
-                    //     field: "paymentStatus" 
-                    // },
-                    
                 ]}
                 data = {dataInTable}
                 actions={[
@@ -511,10 +496,10 @@ function Pending() {
                 aria-describedby="modal-modal-description"
             >
                 <Box sx={style}>
-                    <Typography id="modal-modal-title" variant="h6" component="h2">
+                    <Typography id="modal-modal-title" variant="h6" component="h2" sx={{fontFamily:'Montserrat'}}>
                         Request Details
                     </Typography>
-                    <Typography id="modal-modal-description" sx={{ mt: 2 }}>
+                    <Typography id="modal-modal-description" sx={{ mt: 2, fontFamily:'Montserrat' }}>
                     <b>Request Number:</b> {details.request_number} <br/>
                             {details.document_name === "Bail Bond" ? <>
                                 <b>Case Number:</b> {details.case_number} <br/>
