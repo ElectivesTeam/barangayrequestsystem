@@ -58,31 +58,31 @@ const BusinessClearanceForm = ({ activeForm, handleBack, handleNext, handleChang
         e.preventDefault()
         
         setNameError(false)
-        if(information.businessName == ''){
+        if(information.businessName === ''){
             setNameError(true)
             setChecker = false
         }
 
         setAddressError(false)
-        if(information.businessAddress == ''){
+        if(information.businessAddress === ''){
             setAddressError(true)
             setChecker = false
         }
 
         setOwnerError(false)
-        if(information.businessOwner == ''){
+        if(information.businessOwner === ''){
             setOwnerError(true)
             setChecker = false
         }
 
         setNatureError(false)
-        if(information.businessNature == ''){
+        if(information.businessNature === ''){
             setNatureError(true)
             setChecker = false
         }
 
         setStartBusinessError(false)
-        if(information.start_business_operated == ''){
+        if(information.start_business_operated === ''){
             setStartBusinessError(true)
             setChecker = false
         }

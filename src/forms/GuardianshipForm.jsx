@@ -53,19 +53,19 @@ const GuardianshipForm = ({ activeForm, handleBack, handleNext, handleChange, gu
         e.preventDefault()
         
         setNameError(false)
-        if(information.name == ''){
+        if(information.name === ''){
             setNameError(true)
             setChecker = false
         }
 
         setAddressError(false)
-        if(information.address == ''){
+        if(information.address === ''){
             setAddressError(true)
             setChecker = false
         }
 
         setGuardianError(false)
-        if(information.guardian == ''){
+        if(information.guardian === ''){
             setGuardianError(true)
             setChecker = false
         }

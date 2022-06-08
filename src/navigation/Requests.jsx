@@ -10,9 +10,6 @@ import FormGroup from '@material-ui/core/FormGroup';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
 import FormHelperText from '@material-ui/core/FormHelperText';
 import Checkbox from '@material-ui/core/Checkbox';
-import InputLabel from '@material-ui/core/InputLabel';
-import MenuItem from '@material-ui/core/MenuItem';
-import Select from '@material-ui/core/Select';
 import Button from '@material-ui/core/Button';
 import Typography from '@material-ui/core/Typography';
 import Stack from '@mui/material/Stack';
@@ -99,7 +96,6 @@ const useStyles = makeStyles((theme) => ({
 const Request = ({ handleNextStepper, handleBackStepper }) => {
     const [submitted, setSubmitted] = React.useState(false)
     const classes = useStyles();
-    // const [purpose, setPurpose] = React.useState('')
     const [state, setState] = React.useState({
         notify: false,
         agree: false,
@@ -108,9 +104,6 @@ const Request = ({ handleNextStepper, handleBackStepper }) => {
     const handleChange = (event) => {
         setState({ ...state, [event.target.name]: event.target.checked });
     };
-    // const handlePurpose = (event) => {
-    //     setPurpose(event.target.value);
-    // }
     const { notify, agree, check } = state;
     const error = [notify, agree, check].filter((v) => v).length !== 3;  
 
@@ -120,137 +113,140 @@ const Request = ({ handleNextStepper, handleBackStepper }) => {
     const [accountStatus, setAccountStatus] = useState(false)
     const [isLoading, setLoading] = useState(true);
     
-    useEffect(async() => {
-		if (AuthService.getCurrentUser()){
-            await AuthService.getAccountStatus()
-            .then((response) => {
-                if (response !== undefined){
-                    setAccountStatus(response.data.is_email_verified)
-                    setLoading(false)
-                }
-            })
-            await AuthService.getUserInformation()
-            .then((response) => {
-                if (response !== undefined){
-                    console.log("data fetched")
-                    if(JSON.stringify(response.data.first_name).length >= 3 && JSON.stringify(response.data.middle_name).length >= 0 && JSON.stringify(response.data.last_name).length >= 3){
-                        setAPIFormsData({...apiFormsData, 
-                            bailBondData: {
-                                name:JSON.stringify(response.data.first_name + " " + response.data.middle_name + " " + response.data.last_name).slice(1,-1), 
-                                address:JSON.stringify(response.data.address).slice(1,-1),
-                                resident_number:JSON.stringify(response.data.resident_number).slice(1,-1),
-                                caseNumber: ''
-                            },
-                            barangayClearanceData: {
-                                name:JSON.stringify(response.data.first_name + " " + response.data.middle_name + " " + response.data.last_name).slice(1,-1), 
-                                address:JSON.stringify(response.data.address).slice(1,-1),
-                                purpose: ''
-                            },
-                            buildingClearanceData: {
-                                name:JSON.stringify(response.data.first_name + " " + response.data.middle_name + " " + response.data.last_name).slice(1,-1), 
-                                address:JSON.stringify(response.data.address).slice(1,-1),
-                                type: ''
-                            },
-                            businessClearanceData: {
-                                businessName: '',
-                                businessOwner: '',
-                                businessAddress: '',
-                                businessNature: '',
-                                start_business_operated: ''
-                            },
-                            businessClosureData: {
-                                businessName: '',
-                                businessOwner: '',
-                                businessAddress: '',
-                                businessNature: '',
-                                last_business_operated: ''
-                            },
-                            cedulaData: {
-                                name:JSON.stringify(response.data.first_name + " " + response.data.middle_name + " " + response.data.last_name).slice(1,-1), 
-                                address:JSON.stringify(response.data.address).slice(1,-1),
-                                birthday:JSON.stringify(response.data.date_of_birth).slice(1,-1),
-                                birthplace: 'Laguna',
-                                civilStatus:JSON.stringify(response.data.civil_status).slice(1,-1),
-                                gender:JSON.stringify(response.data.gender).slice(1,-1),
-                                nationality: '',
-                                profession: '',
-                                monthlyIncome: ''
-                            },
-                            comelecData: {
-                                name:JSON.stringify(response.data.first_name + " " + response.data.middle_name + " " + response.data.last_name).slice(1,-1), 
-                                address:JSON.stringify(response.data.address).slice(1,-1)
-                            },
-                            constituentIdData: {
-                                last_name:JSON.stringify(response.data.last_name).slice(1,-1),
-                                middle_name:JSON.stringify(response.data.middle_name).slice(1,-1),
-                                first_name:JSON.stringify(response.data.first_name).slice(1,-1),
-                                address:JSON.stringify(response.data.address).slice(1,-1),
-                                // civilStatus:JSON.stringify(response.data.civil_status).slice(1,-1),
-                                // birthplace: 'Laguna',
-                                // contactNumber:JSON.stringify(response.data.mobile_number).slice(1,-1),
-                                id_number:'',
-                                dateReceived: '',
-                            },
-                            dentalServiceData: {
-                                last_name:JSON.stringify(response.data.last_name).slice(1,-1),
-                                middle_name:JSON.stringify(response.data.middle_name).slice(1,-1),
-                                first_name:JSON.stringify(response.data.first_name).slice(1,-1),
-                                address:JSON.stringify(response.data.address).slice(1,-1),
-                                birthday:JSON.stringify(response.data.date_of_birth).slice(1,-1),
-                                civilStatus:JSON.stringify(response.data.civil_status).slice(1,-1),
-                                birthplace: 'Laguna',
-                                contactNumber:JSON.stringify(response.data.mobile_number).slice(1,-1),
-                                dateReceived: ''
-                            },
-                            guardianshipData: {
-                                name:JSON.stringify(response.data.first_name + " " + response.data.middle_name + " " + response.data.last_name).slice(1,-1), 
-                                address:JSON.stringify(response.data.address).slice(1,-1),
-                                guardian: ''
-                            },
-                            immunizationData: {
-                                name:JSON.stringify(response.data.first_name + " " + response.data.middle_name + " " + response.data.last_name).slice(1,-1), 
-                                address:JSON.stringify(response.data.address).slice(1,-1),
-                                mother_name: '',
-                                father_name: '',
-                                birth_height: '',
-                                birth_weight: ''
-                            },
-                            indigencyClearanceData: {
-                                name:JSON.stringify(response.data.first_name + " " + response.data.middle_name + " " + response.data.last_name).slice(1,-1), 
-                                address:JSON.stringify(response.data.address).slice(1,-1),
-                                patient_relationship: '',
-                                patient_name: '',
-                                purpose: '',
-                                passed_onto_whom: ''
-                            },
-                            maternalCareData: {
-                                name:JSON.stringify(response.data.first_name + " " + response.data.middle_name + " " + response.data.last_name).slice(1,-1), 
-                                address:JSON.stringify(response.data.address).slice(1,-1),
-                                child_name: '',
-                                date_of_birth: '',
-                                birthplace: 'Laguna'
-                            },
-                            residenceData: {
-                                name:JSON.stringify(response.data.first_name + " " + response.data.middle_name + " " + response.data.last_name).slice(1,-1), 
-                                address:JSON.stringify(response.data.address).slice(1,-1)
-                                // type:''
-                            },
-                            voucherData: {
-                                studentName: '',
-                                parentName: '',
-                                school: '',
-                                schoolAddress: '',
-                                grade: ''
-                            },
-                        })
+    useEffect(() => {
+        async function fetchData(){
+            if (AuthService.getCurrentUser()){
+                await AuthService.getAccountStatus()
+                .then((response) => {
+                    if (response !== undefined){
+                        setAccountStatus(response.data.is_email_verified)
+                        setLoading(false)
                     }
-                }
-            }) 
+                })
+                await AuthService.getUserInformation()
+                .then((response) => {
+                    if (response !== undefined){
+                        console.log("data fetched")
+                        if(JSON.stringify(response.data.first_name).length >= 3 && JSON.stringify(response.data.middle_name).length >= 0 && JSON.stringify(response.data.last_name).length >= 3){
+                            setAPIFormsData({...apiFormsData, 
+                                bailBondData: {
+                                    name:JSON.stringify(response.data.first_name + " " + response.data.middle_name + " " + response.data.last_name).slice(1,-1), 
+                                    address:JSON.stringify(response.data.address).slice(1,-1),
+                                    resident_number:JSON.stringify(response.data.resident_number).slice(1,-1),
+                                    caseNumber: ''
+                                },
+                                barangayClearanceData: {
+                                    name:JSON.stringify(response.data.first_name + " " + response.data.middle_name + " " + response.data.last_name).slice(1,-1), 
+                                    address:JSON.stringify(response.data.address).slice(1,-1),
+                                    purpose: ''
+                                },
+                                buildingClearanceData: {
+                                    name:JSON.stringify(response.data.first_name + " " + response.data.middle_name + " " + response.data.last_name).slice(1,-1), 
+                                    address:JSON.stringify(response.data.address).slice(1,-1),
+                                    type: ''
+                                },
+                                businessClearanceData: {
+                                    businessName: '',
+                                    businessOwner: '',
+                                    businessAddress: '',
+                                    businessNature: '',
+                                    start_business_operated: ''
+                                },
+                                businessClosureData: {
+                                    businessName: '',
+                                    businessOwner: '',
+                                    businessAddress: '',
+                                    businessNature: '',
+                                    last_business_operated: ''
+                                },
+                                cedulaData: {
+                                    name:JSON.stringify(response.data.first_name + " " + response.data.middle_name + " " + response.data.last_name).slice(1,-1), 
+                                    address:JSON.stringify(response.data.address).slice(1,-1),
+                                    birthday:JSON.stringify(response.data.date_of_birth).slice(1,-1),
+                                    birthplace: 'Laguna',
+                                    civilStatus:JSON.stringify(response.data.civil_status).slice(1,-1),
+                                    gender:JSON.stringify(response.data.gender).slice(1,-1),
+                                    nationality: '',
+                                    profession: '',
+                                    monthlyIncome: ''
+                                },
+                                comelecData: {
+                                    name:JSON.stringify(response.data.first_name + " " + response.data.middle_name + " " + response.data.last_name).slice(1,-1), 
+                                    address:JSON.stringify(response.data.address).slice(1,-1)
+                                },
+                                constituentIdData: {
+                                    last_name:JSON.stringify(response.data.last_name).slice(1,-1),
+                                    middle_name:JSON.stringify(response.data.middle_name).slice(1,-1),
+                                    first_name:JSON.stringify(response.data.first_name).slice(1,-1),
+                                    address:JSON.stringify(response.data.address).slice(1,-1),
+                                    // civilStatus:JSON.stringify(response.data.civil_status).slice(1,-1),
+                                    // birthplace: 'Laguna',
+                                    // contactNumber:JSON.stringify(response.data.mobile_number).slice(1,-1),
+                                    id_number:'',
+                                    dateReceived: '',
+                                },
+                                dentalServiceData: {
+                                    last_name:JSON.stringify(response.data.last_name).slice(1,-1),
+                                    middle_name:JSON.stringify(response.data.middle_name).slice(1,-1),
+                                    first_name:JSON.stringify(response.data.first_name).slice(1,-1),
+                                    address:JSON.stringify(response.data.address).slice(1,-1),
+                                    birthday:JSON.stringify(response.data.date_of_birth).slice(1,-1),
+                                    civilStatus:JSON.stringify(response.data.civil_status).slice(1,-1),
+                                    birthplace: 'Laguna',
+                                    contactNumber:JSON.stringify(response.data.mobile_number).slice(1,-1),
+                                    dateReceived: ''
+                                },
+                                guardianshipData: {
+                                    name:JSON.stringify(response.data.first_name + " " + response.data.middle_name + " " + response.data.last_name).slice(1,-1), 
+                                    address:JSON.stringify(response.data.address).slice(1,-1),
+                                    guardian: ''
+                                },
+                                immunizationData: {
+                                    name:JSON.stringify(response.data.first_name + " " + response.data.middle_name + " " + response.data.last_name).slice(1,-1), 
+                                    address:JSON.stringify(response.data.address).slice(1,-1),
+                                    mother_name: '',
+                                    father_name: '',
+                                    birth_height: '',
+                                    birth_weight: ''
+                                },
+                                indigencyClearanceData: {
+                                    name:JSON.stringify(response.data.first_name + " " + response.data.middle_name + " " + response.data.last_name).slice(1,-1), 
+                                    address:JSON.stringify(response.data.address).slice(1,-1),
+                                    patient_relationship: '',
+                                    patient_name: '',
+                                    purpose: '',
+                                    passed_onto_whom: ''
+                                },
+                                maternalCareData: {
+                                    name:JSON.stringify(response.data.first_name + " " + response.data.middle_name + " " + response.data.last_name).slice(1,-1), 
+                                    address:JSON.stringify(response.data.address).slice(1,-1),
+                                    child_name: '',
+                                    date_of_birth: '',
+                                    birthplace: 'Laguna'
+                                },
+                                residenceData: {
+                                    name:JSON.stringify(response.data.first_name + " " + response.data.middle_name + " " + response.data.last_name).slice(1,-1), 
+                                    address:JSON.stringify(response.data.address).slice(1,-1)
+                                    // type:''
+                                },
+                                voucherData: {
+                                    studentName: '',
+                                    parentName: '',
+                                    school: '',
+                                    schoolAddress: '',
+                                    grade: ''
+                                },
+                            })
+                        }
+                    }
+                }) 
+            }
         }
+		fetchData()
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [])
 
     const handleAPIFormsDataChange = (formName, formData) => {
-        
         switch (formName) {
             case "bailBondForm" : 
                 return setAPIFormsData({...apiFormsData, 
@@ -406,6 +402,8 @@ const Request = ({ handleNextStepper, handleBackStepper }) => {
                         grade:formData.grade,
                     }
                 })
+            default:
+                return
         }
         
     }
@@ -486,7 +484,7 @@ const Request = ({ handleNextStepper, handleBackStepper }) => {
                 <div className={classes.total}>
                     
                     <div>
-                        {notify && agree && check && selectedRequest.length != 0 ? (
+                        {notify && agree && check && selectedRequest.length !== 0 ? (
                             <Button variant="contained" color="primary" onClick = {handleSubmit} endIcon={<ArrowCircleUpIcon/>} >
                                 <Stack direction="row" alignItems="center" >
                                     <Typography variant="button" className={classes.button}>

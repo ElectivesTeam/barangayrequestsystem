@@ -58,31 +58,31 @@ const VoucherForm = ({ activeForm, handleBack, handleNext,handleChange, voucher}
         e.preventDefault()
         
         setStudentNameError(false)
-        if(information.studentName == ''){
+        if(information.studentName === ''){
             setStudentNameError(true)
             setChecker = false
         }
 
         setParentNameError(false)
-        if(information.parentName == ''){
+        if(information.parentName === ''){
             setParentNameError(true)
             setChecker = false
         }
 
         setSchoolError(false)
-        if(information.school == ''){
+        if(information.school === ''){
             setSchoolError(true)
             setChecker = false
         }
 
         setSchoolAddressError(false)
-        if(information.schoolAddress == ''){
+        if(information.schoolAddress === ''){
             setSchoolAddressError(true)
             setChecker = false
         }
 
         setGradeError(false)
-        if(information.grade == ''){
+        if(information.grade === ''){
             setGradeError(true)
             setChecker = false
         }

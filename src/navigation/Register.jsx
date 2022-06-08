@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { useHistory } from "react-router-dom";
 import Grid from '@material-ui/core/Grid'
 import Paper from '@material-ui/core/Paper'
 import CssBaseline from '@material-ui/core/CssBaseline';
@@ -23,7 +24,7 @@ import DialogActions from '@material-ui/core/DialogActions';
 import DialogContent from '@material-ui/core/DialogContent';
 import DialogContentText from '@material-ui/core/DialogContentText';
 import Link from '@material-ui/core/Link';
-import { DialogTitle, responsiveFontSizes} from '@material-ui/core';
+import { DialogTitle } from '@material-ui/core';
 import clsx from 'clsx';
 import OutlinedInput from '@material-ui/core/OutlinedInput';
 import InputAdornment from '@material-ui/core/InputAdornment';
@@ -149,6 +150,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 function Register() {
+  let history = useHistory();
   const handleDateChange = (date, value) => {
     setSelectedDate(date);
     setDateValue(value);
@@ -232,31 +234,31 @@ function Register() {
     setEmailError(false)
     setPasswordError(false)
     let setChecker = true
-    if(lastname == ''){
+    if(lastname === ''){
       setLastnameError(true)
       setChecker = false
     }
-    if(firstname == ''){
+    if(firstname === ''){
       setFirstnameError(true)
       setChecker = false
     }
-    if(middlename == ''){
+    if(middlename === ''){
       setMiddlenameError(true)
       setChecker = false
     }
-    if(gender == ''){
+    if(gender === ''){
       setGenderError(true)
       setChecker = false
     }
-    if (age == '') {
+    if (age === '') {
       setAgeError(true)
       setChecker = false
     }
-    if(address == ''){
+    if(address === ''){
       setAddressError(true)
       setChecker = false
     }
-    if(residentnumber == ''){
+    if(residentnumber === ''){
       setResidentNumberError(true)
       setChecker = false
     }
@@ -383,6 +385,11 @@ function Register() {
   }
   //Style
   const classes = useStyles();
+
+  if(AuthService.getCurrentUser()){
+    history.push('/')
+    return(<h2>Home</h2>)
+  }  
   return (
     <Grid container component="main" className={classes.root}>
       <CssBaseline/>
@@ -713,7 +720,7 @@ function Register() {
               <Grid item xs={12} sm={3} component={Paper} elevation={2} square className={classes.uploadContainer}>
                 Upload your selfie 
                 <div className={classes.divtest}>
-                  <img width = "170px" height = "150px" src={ImageSelfie=='' ? '../img/image.png': ImageSelfieURL}></img>
+                  <img width = "170px" height = "150px" src={ImageSelfie==='' ? '../img/image.png': ImageSelfieURL} alt=""></img>
                   <Grid item xs={12} sm={1}>
                     <div className={classes.picture}>
                       <Button 
@@ -749,7 +756,7 @@ function Register() {
               <Grid item xs={12} sm={3} component={Paper} elevation={2} square className={classes.uploadContainer}>
                 Upload your valid ID 
                 <div className={classes.divtest}>
-                  <img width = "170px" height = "150px" src={ImageID=='' ? '../img/image.png': ImageIDURL}></img>
+                  <img width = "170px" height = "150px" src={ImageID==='' ? '../img/image.png': ImageIDURL} alt=""></img>
                   <Grid item xs={12} sm={1}>
                     <div className={classes.picture}>
                       <Button 

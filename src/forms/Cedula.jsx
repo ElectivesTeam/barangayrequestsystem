@@ -67,49 +67,49 @@ const Cedula = ({ activeForm, handleBack, handleNext, handleChange, cedula}) => 
         e.preventDefault()
         
         setNameError(false)
-        if(information.name == ''){
+        if(information.name === ''){
             setNameError(true)
             setChecker = false
         }
 
         setAddressError(false)
-        if(information.address == ''){
+        if(information.address === ''){
             setAddressError(true)
             setChecker = false
         }
 
         setBirthdayError(false)
-        if(information.birthday == ''){
+        if(information.birthday === ''){
             setBirthdayError(true)
             setChecker = false
         }
 
         setBirthPlaceError(false)
-        if(information.birthplace == ''){
+        if(information.birthplace === ''){
             setBirthPlaceError(true)
             setChecker = false
         }
 
         setCivilStatusError(false)
-        if(information.civilStatus == ''){
+        if(information.civilStatus === ''){
             setCivilStatusError(true)
             setChecker = false
         }
 
         setGenderError(false)
-        if(information.gender == ''){
+        if(information.gender === ''){
             setGenderError(true)
             setChecker = false
         }
 
         setProfessionError(false)
-        if(information.profession == ''){
+        if(information.profession === ''){
             setProfessionError(true)
             setChecker = false
         }
 
         setMonthlyIncomeError(false)
-        if(information.monthlyIncome == ''){
+        if(information.monthlyIncome === ''){
             setMonthlyIncomeError(true)
             setChecker = false
         }

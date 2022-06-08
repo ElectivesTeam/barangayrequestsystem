@@ -6,10 +6,6 @@ import Grid from '@material-ui/core/Grid';
 import { makeStyles } from '@material-ui/core/styles'
 import Paper from '@mui/material/Paper';
 import Box from '@mui/material/Box';
-import InputLabel from '@mui/material/InputLabel'
-import MenuItem from '@mui/material/MenuItem'
-import Select from '@mui/material/Select'
-import FormControl from '@mui/material/FormControl'
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -44,12 +40,8 @@ const useStyles = makeStyles((theme) => ({
 const ConstituentIdForm = ({ activeForm, handleBack, handleNext, handleChange, constituentId}) => {
     const classes = useStyles();
     const[lastNameError, setLastNameError] = useState(false)
-    const[middleNameError, setMiddleNameError] = useState(false)
     const[firstNameError, setFirstNameError] = useState(false)
     const[addressError, setAddressError] = useState(false)
-    // const[civilStatusError, setCivilStatusError] = useState(false)
-    // const[birthPlaceError, setBirthPlaceError] = useState(false)
-    // const[contactNumberError, setContactNumberError] = useState(false)
     const[dateReceivedError, setDateReceivedError] = useState(false)
     const[idNumberError, setIdNumberError] = useState(false)
     const [information, setInformation] = useState({
@@ -57,9 +49,6 @@ const ConstituentIdForm = ({ activeForm, handleBack, handleNext, handleChange, c
         middle_name: constituentId.middle_name,
         first_name: constituentId.first_name,
         address: constituentId.address,
-        // civilStatus: constituentId.civilStatus,
-        // birthplace: constituentId.birthplace,
-        // contactNumber: constituentId.contactNumber,
         dateReceived: constituentId.dateReceived,
         id_number: constituentId.id_number
     });
@@ -67,56 +56,32 @@ const ConstituentIdForm = ({ activeForm, handleBack, handleNext, handleChange, c
         let setChecker = true
         e.preventDefault()
         
-        // setLastNameError(false)
-        // if(information.last_name == ''){
-        //     setLastNameError(true)
-        //     setChecker = false
-        // }
+        setLastNameError(false)
+        if(information.last_name === ''){
+            setLastNameError(true)
+            setChecker = false
+        }
 
-        // setMiddleNameError(false)
-        // if(information.middle_name == ''){
-        //     setMiddleNameError(true)
-        //     setChecker = false
-        // }
+        setFirstNameError(false)
+        if(information.first_name === ''){
+            setFirstNameError(true)
+            setChecker = false
+        }
 
-        // setFirstNameError(false)
-        // if(information.first_name == ''){
-        //     setFirstNameError(true)
-        //     setChecker = false
-        // }
-
-        // setAddressError(false)
-        // if(information.address == ''){
-        //     setAddressError(true)
-        //     setChecker = false
-        // }
-
-        // setCivilStatusError(false)
-        // if(information.civilStatus == ''){
-        //     setCivilStatusError(true)
-        //     setChecker = false
-        // }
-
-        // setBirthPlaceError(false)
-        // if(information.birthplace == ''){
-        //     setBirthPlaceError(true)
-        //     setChecker = false
-        // }
-
-        // setContactNumberError(false)
-        // if(information.contactNumber == ''){
-        //     setContactNumberError(true)
-        //     setChecker = false
-        // }
+        setAddressError(false)
+        if(information.address === ''){
+            setAddressError(true)
+            setChecker = false
+        }
 
         setDateReceivedError(false)
-        if(information.dateReceived == ''){
+        if(information.dateReceived === ''){
             setDateReceivedError(true)
             setChecker = false
         }
 
         setIdNumberError(false)
-        if(information.id_number == ''){
+        if(information.id_number === ''){
             setIdNumberError(true)
             setChecker = false
         }
@@ -173,7 +138,6 @@ const ConstituentIdForm = ({ activeForm, handleBack, handleNext, handleChange, c
                                                 name="middlename"
                                                 autoComplete="middlename"
                                                 autoFocus
-                                                error={middleNameError}
                                             />
                                         </Grid>
 
@@ -212,62 +176,7 @@ const ConstituentIdForm = ({ activeForm, handleBack, handleNext, handleChange, c
                                                 error={addressError}
                                             />
                                         </Grid>
-
-                                        {/* Civil Status */}
-                                        {/* <Grid item xs={6}>
-                                            <FormControl fullWidth>
-                                                <InputLabel id="demo-simple-select-label">Civil Status</InputLabel>
-                                                <Select
-                                                    labelId="demo-simple-select-label"
-                                                    id="demo-simple-select"
-                                                    defaultValue={constituentId.civilStatus}
-                                                    label="Civil Status"
-                                                    onChange={(e) => setInformation({...information, civilStatus:e.target.value})}
-                                                    error={civilStatusError}
-                                                >
-                                                <MenuItem value={'SINGLE'}>Single</MenuItem>
-                                                <MenuItem value={'MARRIED'}>Married</MenuItem>
-                                                <MenuItem value={'WIDOWED'}>Widowed</MenuItem>
-                                                <MenuItem value={'DIVORCED'}>Divorced</MenuItem>
-                                                </Select>
-                                            </FormControl>
-                                        </Grid> */}
                                         
-                                        {/* Birth Place */}
-                                        {/* <Grid item xs={6}>
-                                            <TextField
-                                                onChange={(e) => setInformation({...information, birthplace:e.target.value})}
-                                                variant="outlined"
-                                                margin="normal"
-                                                defaultValue={constituentId.birthplace}
-                                                required
-                                                fullWidth
-                                                id="birthplace"
-                                                label="Birthplace"
-                                                name="Birthplace"
-                                                autoComplete="birthplace"
-                                                autoFocus
-                                                error={birthPlaceError}
-                                            />
-                                        </Grid> */}
-
-                                        {/* Contact Number */}
-                                        {/* <Grid item xs={6}>
-                                            <TextField
-                                                onChange={(e) => setInformation({...information, contactNumber:e.target.value})}
-                                                variant="outlined"
-                                                margin="normal"
-                                                defaultValue={constituentId.contactNumber}
-                                                required
-                                                fullWidth
-                                                id="contactnumber"
-                                                label="Contact Number"
-                                                name="contactnumber"
-                                                autoComplete="ContactNumber"
-                                                autoFocus
-                                                error={contactNumberError}
-                                            />
-                                        </Grid> */}
                                         {/* ID Number */}
                                         <Grid item xs={6}>
                                             <TextField

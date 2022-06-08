@@ -5,9 +5,7 @@ import Button  from '@material-ui/core/Button';
 import Dialog from '@mui/material/Dialog';
 import DialogActions from '@mui/material/DialogActions';
 import DialogContent from '@mui/material/DialogContent';
-import DialogContentText from '@mui/material/DialogContentText';
 import DialogTitle from '@mui/material/DialogTitle';
-import Grid from '@material-ui/core/Grid';
 import Stack from '@mui/material/Stack';
 import Typography from '@material-ui/core/Typography';
 import Box from '@mui/material/Box';
@@ -82,15 +80,17 @@ const ReviewRequest = ({ handleBack, selectedRequest, apiFormsData }) => {
         window.location.reload(false);
     }
 
-    useEffect(async() => {
-      
-        await AuthService.getUserInformation()
-        .then((response) => {
-            if (response !== undefined) {
-                setResidentNumber(response.data.resident_number)
-            }
+    useEffect(() => {
+        async function fetchData() {
+            await AuthService.getUserInformation()
+            .then((response) => {
+                if (response !== undefined) {
+                    setResidentNumber(response.data.resident_number)
+                }
+            })
         }
-    )
+        fetchData();
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [])
 
     const handleOpen = () => {
@@ -113,7 +113,7 @@ const ReviewRequest = ({ handleBack, selectedRequest, apiFormsData }) => {
                 }
             })
             .catch(error => {
-                if (error.response != undefined){
+                if (error.response !== undefined){
                 if (error.response.status === 400) {
                     console.log('bailbondform error')
                 }
@@ -133,7 +133,7 @@ const ReviewRequest = ({ handleBack, selectedRequest, apiFormsData }) => {
                 }
             })
             .catch(error => {
-                if (error.response != undefined){
+                if (error.response !== undefined){
                 if (error.response.status === 400) {
                     console.log('barangayclearanceform error')
                 }
@@ -153,7 +153,7 @@ const ReviewRequest = ({ handleBack, selectedRequest, apiFormsData }) => {
                 }
             })
             .catch(error => {
-                if (error.response != undefined){
+                if (error.response !== undefined){
                 if (error.response.status === 400) {
                     console.log('buildingclearance error')
                 }
@@ -180,7 +180,7 @@ const ReviewRequest = ({ handleBack, selectedRequest, apiFormsData }) => {
                 }
             })
             .catch(error => {
-                if (error.response != undefined){
+                if (error.response !== undefined){
                 if (error.response.status === 400) {
                     console.log('businessclearance error')
                 }
@@ -207,7 +207,7 @@ const ReviewRequest = ({ handleBack, selectedRequest, apiFormsData }) => {
                 }
             })
             .catch(error => {
-                if (error.response != undefined){
+                if (error.response !== undefined){
                 if (error.response.status === 400) {
                     console.log('businessclosure error')
                 }
@@ -232,7 +232,7 @@ const ReviewRequest = ({ handleBack, selectedRequest, apiFormsData }) => {
                 }
             })
             .catch(error => {
-                if (error.response != undefined){
+                if (error.response !== undefined){
                 if (error.response.status === 400) {
                     console.log('cedula error')
                 }
@@ -252,7 +252,7 @@ const ReviewRequest = ({ handleBack, selectedRequest, apiFormsData }) => {
                 }
             })
             .catch(error => {
-                if (error.response != undefined){
+                if (error.response !== undefined){
                 if (error.response.status === 400) {
                     console.log('comelecform error')
                 }
@@ -276,7 +276,7 @@ const ReviewRequest = ({ handleBack, selectedRequest, apiFormsData }) => {
                 }
             })
             .catch(error => {
-                if (error.response != undefined){
+                if (error.response !== undefined){
                 if (error.response.status === 400) {
                     console.log('constituentidform error')
                 }
@@ -296,7 +296,7 @@ const ReviewRequest = ({ handleBack, selectedRequest, apiFormsData }) => {
                 }
             })
             .catch(error => {
-                if (error.response != undefined){
+                if (error.response !== undefined){
                 if (error.response.status === 400) {
                     console.log('dentalserviceform error')
                 }
@@ -319,7 +319,7 @@ const ReviewRequest = ({ handleBack, selectedRequest, apiFormsData }) => {
                 }
             })
             .catch(error => {
-                if (error.response != undefined){
+                if (error.response !== undefined){
                 if (error.response.status === 400) {
                     console.log('guardianshipform error')
                 }
@@ -345,7 +345,7 @@ const ReviewRequest = ({ handleBack, selectedRequest, apiFormsData }) => {
                 }
             })
             .catch(error => {
-                if (error.response != undefined){
+                if (error.response !== undefined){
                 if (error.response.status === 400) {
                     console.log('immunizationform error')
                 }
@@ -371,7 +371,7 @@ const ReviewRequest = ({ handleBack, selectedRequest, apiFormsData }) => {
                 }
             })
             .catch(error => {
-                if (error.response != undefined){
+                if (error.response !== undefined){
                 if (error.response.status === 400) {
                     console.log('indigencyclearance error')
                 }
@@ -396,7 +396,7 @@ const ReviewRequest = ({ handleBack, selectedRequest, apiFormsData }) => {
                 }
             })
             .catch(error => {
-                if (error.response != undefined){
+                if (error.response !== undefined){
                 if (error.response.status === 400) {
                     console.log('maternalcareform error')
                 }
@@ -416,7 +416,7 @@ const ReviewRequest = ({ handleBack, selectedRequest, apiFormsData }) => {
                 }
             })
             .catch(error => {
-                if (error.response != undefined){
+                if (error.response !== undefined){
                 if (error.response.status === 400) {
                     console.log('residencyform error')
                 }
@@ -441,7 +441,7 @@ const ReviewRequest = ({ handleBack, selectedRequest, apiFormsData }) => {
                 }
             })
             .catch(error => {
-                if (error.response != undefined){
+                if (error.response !== undefined){
                 if (error.response.status === 400) {
                     console.log('voucherform error')
                 }
@@ -450,10 +450,6 @@ const ReviewRequest = ({ handleBack, selectedRequest, apiFormsData }) => {
             })
         }
 
-    };
-
-    const handleClose = () => {
-        setOpen(false);
     };
 
     return (

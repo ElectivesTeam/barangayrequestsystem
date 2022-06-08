@@ -56,19 +56,19 @@ const BarangayClearanceForm = ({ activeForm, handleBack, handleNext, handleChang
         e.preventDefault()
         
         setNameError(false)
-        if(information.name == ''){
+        if(information.name === ''){
             setNameError(true)
             setChecker = false
         }
 
         setAddressError(false)
-        if(information.address == ''){
+        if(information.address === ''){
             setAddressError(true)
             setChecker = false
         }
 
         setPurposeError(false)
-        if(information.purpose == ''){
+        if(information.purpose === ''){
             setPurposeError(true)
             setChecker = false
         }
