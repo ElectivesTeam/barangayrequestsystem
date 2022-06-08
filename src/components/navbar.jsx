@@ -112,10 +112,12 @@ export default function MenuAppBar() {
           }
         })
         .catch(error => {
-          if (error.response.status === 401){
-            AuthService.logout()
-            history.push('/')
-          }else{
+          try {
+            if (error.response.status === 401){
+              AuthService.logout()
+              history.push('/')
+            }
+          } catch (error) {
             console.log(error)
           }
         })
