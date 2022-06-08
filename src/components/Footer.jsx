@@ -12,7 +12,7 @@ const useStyles = makeStyles((theme) => ({
 
 const Copyright = () => {
   return (
-    <Typography variant="body2" color="text.secondary" sx={{fontFamily:'Montserrat'}}>
+    <Typography variant="body2" color="white" sx={{fontFamily:'Montserrat'}}>
       {'Copyright © '}
       {new Date().getFullYear()}
       {' | '}
@@ -32,16 +32,13 @@ const StickyFooter = () => {
           py: 3,
           px: 2,
           textAlign:'center',
-          backgroundColor: (theme) =>
-            theme.palette.mode === 'light'
-              ? theme.palette.grey[200]
-              : theme.palette.grey[800],
+          backgroundColor: '#3f51b5'
         }} 
       >
             <Box sx={{display:'flex', flexDirection:'row', justifyContent:'center'}}>
-              <img src="../img/Brgy Landayan Logo(1).png" className={classes.logo} alt=""  />
+              <img src="../img/Brgy Landayan Logo.png" className={classes.logo} alt=""  />
             </Box>
-            <Typography variant="body1" sx={{fontFamily:'Montserrat', fontWeight:600}}>
+            <Typography variant="body1" sx={{fontFamily:'Montserrat', fontWeight:600, color:'white'}}>
               Brgy. Landayan, Laguna ODRS
             </Typography>
         <Copyright />
