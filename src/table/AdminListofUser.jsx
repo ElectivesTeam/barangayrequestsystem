@@ -126,11 +126,10 @@ function AdminListofUser() {
                             })
                         },
                     } 
-                    },
-                  ]}
-                  options={{
+                ]}
+                options={{
                     actionsColumnIndex: -1
-                  }}
+                }}
             />
             <Modal
                 open={open}

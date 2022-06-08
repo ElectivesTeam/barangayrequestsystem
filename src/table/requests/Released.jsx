@@ -32,6 +32,7 @@ import SendIcon from '@mui/icons-material/Send';
 import Snackbar from '@mui/material/Snackbar';
 import MuiAlert from '@mui/material/Alert';
 import Slide from '@mui/material/Slide';
+import CheckIcon from '@mui/icons-material/Check';
 
 import formService from '../../services/form.service';
 import AuthService from '../../services/auth.service';
@@ -442,12 +443,6 @@ function Released() {
                 data = {dataInTable}
                 actions={[
                     {
-                        icon: () => <EmailIcon style={{color:'#303f9f'}} onClick={handleOpenEmail}/>,
-                        tooltip: 'Email Resident',
-                        onClick: (event, rowData) => {
-                            //frontend magic
-                            const resident_number = rowData["resident_number"]
-                            getRecipient(resident_number)
                         icon: () => <CheckIcon color='secondary'/>,
                         tooltip: 'Return to Approved',
                         onClick: (event, rowData) => {
@@ -460,6 +455,15 @@ function Released() {
                             if(window.confirm("Do you want to return this document to Approved?")){
                                 moveData(request_number, status, document_name, updatedRows, index)
                             }
+                        },
+                    },
+                    {
+                        icon: () => <EmailIcon style={{color:'#303f9f'}} onClick={handleOpenEmail}/>,
+                        tooltip: 'Email Resident',
+                        onClick: (event, rowData) => {
+                            //frontend magic
+                            const resident_number = rowData["resident_number"]
+                            getRecipient(resident_number)
                         },
                     },
                     {
