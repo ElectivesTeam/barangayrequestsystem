@@ -63,37 +63,37 @@ const IndigencyClearance = ({ activeForm, handleBack, handleNext, handleChange, 
         e.preventDefault()
         
         setNameError(false)
-        if(information.name == ''){
+        if(information.name === ''){
             setNameError(true)
             setChecker = false
         }
 
         setAddressError(false)
-        if(information.address == ''){
+        if(information.address === ''){
             setAddressError(true)
             setChecker = false
         }
 
         setPatientRelationshipError(false)
-        if(information.patient_relationship == ''){
+        if(information.patient_relationship === ''){
             setPatientRelationshipError(true)
             setChecker = false
         }
 
         setPatientNameError(false)
-        if(information.patient_name == ''){
+        if(information.patient_name === ''){
             setPatientNameError(true)
             setChecker = false
         }
 
         setPurposeError(false)
-        if(information.purpose == ''){
+        if(information.purpose === ''){
             setPurposeError(true)
             setChecker = false
         }
 
         setPassedError(false)
-        if(information.passed_onto_whom == ''){
+        if(information.passed_onto_whom === ''){
             setPassedError(true)
             setChecker = false
         }

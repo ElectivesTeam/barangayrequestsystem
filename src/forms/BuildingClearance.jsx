@@ -57,19 +57,19 @@ const BuildingClearance = ({ activeForm, handleBack, handleNext, handleChange, b
         e.preventDefault()
         
         setNameError(false)
-        if(information.name == ''){
+        if(information.name === ''){
             setNameError(true)
             setChecker = false
         }
 
         setAddressError(false)
-        if(information.address == ''){
+        if(information.address === ''){
             setAddressError(true)
             setChecker = false
         }
 
         setTypeError(false)
-        if(information.type == ''){
+        if(information.type === ''){
             setTypeError(true)
             setChecker = false
         }

@@ -4,7 +4,6 @@ import MaterialTable from 'material-table'
 import Chip from '@mui/material/Chip';
 import Modal from '@mui/material/Modal';
 import Box from '@mui/material/Box';
-import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
 
 //icon in table
@@ -97,56 +96,60 @@ function General() {
     
     const [dataInTable, setDataInTable] = useState()
     
-    useEffect(async () => {
-        let endpoints = [
-            API_URL + "cedula/",
-            API_URL + "constituent/",
-            API_URL + "building/",
-            API_URL + "residency/",
-            API_URL + "barangay-clearance/",
-            API_URL + "comelec/",
-            API_URL + "business-closure/",
-            API_URL + "bailbond/",
-            API_URL + "guardianship/",
-            API_URL + "indigency-burial/",
-            API_URL + "indigency-clearance/",
-            API_URL + "voucher/",
-            API_URL + "business-clearance/",
-            API_URL + "immunization/",
-            API_URL + "dental-service/",
-            API_URL + "maternal-care/"
-          ];
-         
-        //call multiple requests here
-        await axios.all(endpoints.map((endpoint) => axios.get(endpoint, {
-            headers: {
-                Accept: 'application/json', 
-                Authorization: 'Bearer ' + token
-            }
-        })))
-        .then(
-            //get all the data
-            axios.spread((...responses) => {
-                setRequestedForm({
-                    requestedCedula : responses[0].data,
-                    requestedConstituent : responses[1].data,
-                    requestedBuilding : responses[2].data,
-                    requestedResidency : responses[3].data,
-                    requestedBarangayClearance : responses[4].data,
-                    requestedComelec : responses[5].data,
-                    requestedBusinessClosure : responses[6].data,
-                    requestedBailbond : responses[7].data,
-                    requestedGuardianship : responses[8].data,
-                    requestedIndigencyBurial : responses[9].data,
-                    requestedIndigencyClearance : responses[10].data,
-                    requestedVoucher : responses[11].data,
-                    requestedBusinessClearance : responses[12].data,
-                    requestedImmunization : responses[13].data,
-                    requestedDentalService : responses[14].data,
-                    requestedMaternalCare : responses[15].data,
+    useEffect( () => {
+        async function fetchData() {    
+            let endpoints = [
+                API_URL + "cedula/",
+                API_URL + "constituent/",
+                API_URL + "building/",
+                API_URL + "residency/",
+                API_URL + "barangay-clearance/",
+                API_URL + "comelec/",
+                API_URL + "business-closure/",
+                API_URL + "bailbond/",
+                API_URL + "guardianship/",
+                API_URL + "indigency-burial/",
+                API_URL + "indigency-clearance/",
+                API_URL + "voucher/",
+                API_URL + "business-clearance/",
+                API_URL + "immunization/",
+                API_URL + "dental-service/",
+                API_URL + "maternal-care/"
+            ];
+            
+            //call multiple requests here
+            await axios.all(endpoints.map((endpoint) => axios.get(endpoint, {
+                headers: {
+                    Accept: 'application/json', 
+                    Authorization: 'Bearer ' + token
+                }
+            })))
+            .then(
+                //get all the data
+                axios.spread((...responses) => {
+                    setRequestedForm({
+                        requestedCedula : responses[0].data,
+                        requestedConstituent : responses[1].data,
+                        requestedBuilding : responses[2].data,
+                        requestedResidency : responses[3].data,
+                        requestedBarangayClearance : responses[4].data,
+                        requestedComelec : responses[5].data,
+                        requestedBusinessClosure : responses[6].data,
+                        requestedBailbond : responses[7].data,
+                        requestedGuardianship : responses[8].data,
+                        requestedIndigencyBurial : responses[9].data,
+                        requestedIndigencyClearance : responses[10].data,
+                        requestedVoucher : responses[11].data,
+                        requestedBusinessClearance : responses[12].data,
+                        requestedImmunization : responses[13].data,
+                        requestedDentalService : responses[14].data,
+                        requestedMaternalCare : responses[15].data,
+                    })
                 })
-            })
-        );   
+            );  
+        } 
+        fetchData()
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [])
 
     //compile in array
@@ -221,10 +224,10 @@ function General() {
                         title: "Status", 
                         field: 'status',
                         render: (rowData) => (
-                            rowData.status == "Approved" ? <Chip icon={<CheckIcon/>} label="Approved" color="success" variant="outlined"/> :
-                            rowData.status == "Released" ? <Chip icon={<ReceiptLongIcon/>} label="Released" color="primary" variant="outlined"/> :
-                            rowData.status == "Pending" ? <Chip icon={<AssignmentLateOutlinedIcon/>} label="Pending" color="warning" variant="outlined"/> :
-                            rowData.status == "Rejected" ? <Chip icon={<CloseOutlinedIcon/>} label="Rejected" color="error" variant="outlined"/> : 
+                            rowData.status === "Approved" ? <Chip icon={<CheckIcon/>} label="Approved" color="success" variant="outlined"/> :
+                            rowData.status === "Released" ? <Chip icon={<ReceiptLongIcon/>} label="Released" color="primary" variant="outlined"/> :
+                            rowData.status === "Pending" ? <Chip icon={<AssignmentLateOutlinedIcon/>} label="Pending" color="warning" variant="outlined"/> :
+                            rowData.status === "Rejected" ? <Chip icon={<CloseOutlinedIcon/>} label="Rejected" color="error" variant="outlined"/> : 
                                                                 <Chip icon={<QuestionMarkIcon/>} label="Unknown Status" variant="outlined"/>
                         )
                     },
@@ -237,7 +240,6 @@ function General() {
                         tooltip: 'Show Details',
                         onClick: (event, rowData) => {
                             //frontend magic
-                            const form = rowData;
                             setDetails({
                                 request_number: rowData.request_number,
                                 case_number: rowData.case_number,
@@ -345,11 +347,11 @@ function General() {
                                 <b>Date Received:</b> {details.date_received} <br/>
                                 <Box sx={{columnGap: 1, display: 'flex', justifyContent:"flex-start", alignItems:"flex-start"}}>
                                     <b>Signature:</b>
-                                    <img sx={{flexGrow: 3}} src={details.signature==='' ? '../img/image.png': details.signature} width = "170px" height = "150px"></img>
+                                    <img sx={{flexGrow: 3}} src={details.signature==='' ? '../img/image.png': details.signature} alt="" width = "170px" height = "150px"></img>
                                 </Box><br/>
                                 <Box sx={{columnGap: 1,display: 'flex', justifyContent:"flex-start", alignItems:"flex-start"}}>
                                     <b>Picture:</b>
-                                    <img src={details.picture==='' ? '../img/image.png': details.picture} width = "170px" height = "150px"></img>
+                                    <img src={details.picture==='' ? '../img/image.png': details.picture} alt="" width = "170px" height = "150px"></img>
                                 </Box><br/>
                             </>: null}
                             {details.document_name === "Guardianship" ? <>

@@ -59,37 +59,37 @@ const ImmunizationForm = ({ activeForm, handleBack, handleNext, handleChange, im
         e.preventDefault()
         
         setNameError(false)
-        if(information.name == ''){
+        if(information.name === ''){
             setNameError(true)
             setChecker = false
         }
 
         setAddressError(false)
-        if(information.address == ''){
+        if(information.address === ''){
             setAddressError(true)
             setChecker = false
         }
 
         setMotherNameError(false)
-        if(information.mother_name == ''){
+        if(information.mother_name === ''){
             setMotherNameError(true)
             setChecker = false
         }
 
         setFatherNameError(false)
-        if(information.father_name == ''){
+        if(information.father_name === ''){
             setFatherNameError(true)
             setChecker = false
         }
 
         setBirthHeightError(false)
-        if(information.birth_height == ''){
+        if(information.birth_height === ''){
             setBirthHeightError(true)
             setChecker = false
         }
 
         setBirthWeightError(false)
-        if(information.birth_weight == ''){
+        if(information.birth_weight === ''){
             setBirthWeightError(true)
             setChecker = false
         }

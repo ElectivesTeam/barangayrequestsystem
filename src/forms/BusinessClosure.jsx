@@ -58,31 +58,31 @@ const BusinessClosure = ({ activeForm, handleBack, handleNext, handleChange, bus
         e.preventDefault()
         
         setBusinessNameError(false)
-        if(information.businessName == ''){
+        if(information.businessName === ''){
             setBusinessNameError(true)
             setChecker = false
         }
         
         setBusinessOwnerError(false)
-        if(information.businessOwner == ''){
+        if(information.businessOwner === ''){
             setBusinessOwnerError(true)
             setChecker = false
         }
 
         setBusinessAddressError(false)
-        if(information.businessAddress == ''){
+        if(information.businessAddress === ''){
             setBusinessAddressError(true)
             setChecker = false
         }
 
         setNatureOfBusinessError(false)
-        if(information.businessNature == ''){
+        if(information.businessNature === ''){
             setNatureOfBusinessError(true)
             setChecker = false
         }
 
         setDateReceivedError(false)
-        if(information.dateReceived == ''){
+        if(information.dateReceived === ''){
             setDateReceivedError(true)
             setChecker = false
         }

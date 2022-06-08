@@ -74,23 +74,25 @@ function MyRequests() {
     const [open, setOpen] = useState(false);
     const handleOpen = () => setOpen(true);
     const handleClose = () => setOpen(false);
-    const [requestDetails, setRequestDetails] = useState();
 
-    useEffect(async() => {
-        if (!authService.getCurrentUser()){
-			history.push('/')
-		}
-        else {
-            formService.getMyRequests()
-            .then((response) => {
-                setDataInTable(response.data)
-            })
-            .catch((error) =>{
-                console.log(error)
+    useEffect(() => {
+        async function fetchData() {
+            if (!authService.getCurrentUser()){
+                history.push('/')
             }
-            )
+            else {
+                formService.getMyRequests()
+                .then((response) => {
+                    setDataInTable(response.data)
+                })
+                .catch((error) =>{
+                    console.log(error)
+                }
+                )
+            }
         }
-        
+        fetchData();
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [])
 
     const deleteData = async (request_number, document_name, updatedRows, index) => {
@@ -138,10 +140,10 @@ function MyRequests() {
                             title: "Request Status", 
                             field: 'status',
                             render: (rowData) => (
-                                rowData.status == "Approved" ? <Chip icon={<CheckIcon/>} label="Approved" color="success" variant="outlined"/> :
-                                rowData.status == "Released" ? <Chip icon={<ReceiptLongIcon/>} label="Released" color="primary" variant="outlined"/> :
-                                rowData.status == "Pending" ? <Chip icon={<AssignmentLateOutlinedIcon/>} label="Pending" color="warning" variant="outlined"/> :
-                                rowData.status == "Rejected" ? <Chip icon={<CloseOutlinedIcon/>} label="Rejected" color="error" variant="outlined"/> : 
+                                rowData.status === "Approved" ? <Chip icon={<CheckIcon/>} label="Approved" color="success" variant="outlined"/> :
+                                rowData.status === "Released" ? <Chip icon={<ReceiptLongIcon/>} label="Released" color="primary" variant="outlined"/> :
+                                rowData.status === "Pending" ? <Chip icon={<AssignmentLateOutlinedIcon/>} label="Pending" color="warning" variant="outlined"/> :
+                                rowData.status === "Rejected" ? <Chip icon={<CloseOutlinedIcon/>} label="Rejected" color="error" variant="outlined"/> : 
                                                                     <Chip icon={<QuestionMarkIcon/>} label="Unknown Status" variant="outlined"/>
                             )
                         },
@@ -158,7 +160,6 @@ function MyRequests() {
                             tooltip: 'Show Details',
                             onClick: (event, rowData) => {
                                 //frontend magic
-                                const index = rowData.tableData.id;
                                 setDetails({
                                     request_number: rowData.request_number,
                                     case_number: rowData.case_number,
@@ -269,11 +270,11 @@ function MyRequests() {
                                 <b>Date Received:</b> {details.date_received} <br/>
                                 <Box sx={{columnGap: 1, display: 'flex', justifyContent:"flex-start", alignItems:"flex-start"}}>
                                     <b>Signature:</b>
-                                    <img sx={{flexGrow: 3}} src={details.signature==='' ? '../img/image.png': details.signature} width = "170px" height = "150px"></img>
+                                    <img sx={{flexGrow: 3}} src={details.signature==='' ? '../img/image.png': details.signature} alt="" width = "170px" height = "150px"></img>
                                 </Box><br/>
                                 <Box sx={{columnGap: 1,display: 'flex', justifyContent:"flex-start", alignItems:"flex-start"}}>
                                     <b>Picture:</b>
-                                    <img src={details.picture==='' ? '../img/image.png': details.picture} width = "170px" height = "150px"></img>
+                                    <img src={details.picture==='' ? '../img/image.png': details.picture} alt="" width = "170px" height = "150px"></img>
                                 </Box><br/>
                             </>: null}
                             {details.document_name === "Guardianship" ? <>

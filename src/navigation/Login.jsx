@@ -127,12 +127,12 @@ function SignInSide() {
 
     let setChecker = true
 
-    if(email == ''){
+    if(email === ''){
       setEmailError(true)
       setChecker = false
     }
 
-    if(password == ''){
+    if(password === ''){
       setPasswordError(true)
       setChecker = false
     }

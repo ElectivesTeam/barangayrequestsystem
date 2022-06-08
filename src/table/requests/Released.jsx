@@ -138,44 +138,45 @@ function Released() {
 
     const [dataInTable, setDataInTable] = useState()
 
-    useEffect(async () => {
-        let endpoints = [
-            API_URL + "cedula/",
-            API_URL + "constituent/",
-            API_URL + "building/",
-            API_URL + "residency/",
-            API_URL + "barangay-clearance/",
-            API_URL + "comelec/",
-            API_URL + "business-closure/",
-            API_URL + "bailbond/",
-            API_URL + "guardianship/",
-            API_URL + "indigency-burial/",
-            API_URL + "indigency-clearance/",
-            API_URL + "voucher/",
-            API_URL + "business-clearance/",
-            API_URL + "immunization/",
-            API_URL + "dental-service/",
-            API_URL + "maternal-care/"
-          ];
-         
-        //call multiple requests here
-        await axios.all(endpoints.map((endpoint) => axios.get(endpoint, {
-            headers: {
-                Accept: 'application/json', 
-                Authorization: 'Bearer ' + token
-            }
-        })))
-        .then(
-            //get all the data
-            axios.spread((...responses) => {
-                for (let i=0; i<16; i++){
-                    switch(i){
-                        case 0:
-                            for (let j=0; j<responses[i].data.length; j++){
-                                if (responses[i].data[j].status === "Released"){
-                                    cedula.push(responses[i].data[j])
+    useEffect( () => {
+        async function fetchData(){
+            let endpoints = [
+                API_URL + "cedula/",
+                API_URL + "constituent/",
+                API_URL + "building/",
+                API_URL + "residency/",
+                API_URL + "barangay-clearance/",
+                API_URL + "comelec/",
+                API_URL + "business-closure/",
+                API_URL + "bailbond/",
+                API_URL + "guardianship/",
+                API_URL + "indigency-burial/",
+                API_URL + "indigency-clearance/",
+                API_URL + "voucher/",
+                API_URL + "business-clearance/",
+                API_URL + "immunization/",
+                API_URL + "dental-service/",
+                API_URL + "maternal-care/"
+              ];
+             
+            //call multiple requests here
+            await axios.all(endpoints.map((endpoint) => axios.get(endpoint, {
+                headers: {
+                    Accept: 'application/json', 
+                    Authorization: 'Bearer ' + token
+                }
+            })))
+            .then(
+                //get all the data
+                axios.spread((...responses) => {
+                    for (let i=0; i<16; i++){
+                        switch(i){
+                            case 0:
+                                for (let j=0; j<responses[i].data.length; j++){
+                                    if (responses[i].data[j].status === "Released"){
+                                        cedula.push(responses[i].data[j])
+                                    }
                                 }
-                            }
                             break;
                             
                             case 1:
@@ -185,7 +186,7 @@ function Released() {
                                     }
                                 }
                             break;
-
+    
                             case 2:
                                 for (let j=0; j<responses[i].data.length; j++){
                                     if (responses[i].data[j].status === "Released"){
@@ -193,7 +194,7 @@ function Released() {
                                     }
                                 }
                             break;
-
+    
                             case 3:
                                 for (let j=0; j<responses[i].data.length; j++){
                                     if (responses[i].data[j].status === "Released"){
@@ -201,7 +202,7 @@ function Released() {
                                     }
                                 }
                             break;
-
+    
                             case 4:
                                 for (let j=0; j<responses[i].data.length; j++){
                                     if (responses[i].data[j].status === "Released"){
@@ -209,7 +210,7 @@ function Released() {
                                     }
                                 }
                             break;
-
+    
                             case 5:
                                 for (let j=0; j<responses[i].data.length; j++){
                                     if (responses[i].data[j].status === "Released"){
@@ -217,7 +218,7 @@ function Released() {
                                     }
                                 }
                             break;
-
+    
                             case 6:
                                 for (let j=0; j<responses[i].data.length; j++){
                                     if (responses[i].data[j].status === "Released"){
@@ -225,7 +226,7 @@ function Released() {
                                     }
                                 }
                             break;
-
+    
                             case 7:
                                 for (let j=0; j<responses[i].data.length; j++){
                                     if (responses[i].data[j].status === "Released"){
@@ -233,7 +234,7 @@ function Released() {
                                     }
                                 }
                             break;
-
+    
                             case 8:
                                 for (let j=0; j<responses[i].data.length; j++){
                                     if (responses[i].data[j].status === "Released"){
@@ -241,7 +242,7 @@ function Released() {
                                     }
                                 }
                             break;
-
+    
                             case 9:
                                 for (let j=0; j<responses[i].data.length; j++){
                                     if (responses[i].data[j].status === "Released"){
@@ -249,7 +250,7 @@ function Released() {
                                     }
                                 }
                             break;
-
+    
                             case 10:
                                 for (let j=0; j<responses[i].data.length; j++){
                                     if (responses[i].data[j].status === "Released"){
@@ -257,7 +258,7 @@ function Released() {
                                     }
                                 }
                             break;
-
+    
                             case 11:
                                 for (let j=0; j<responses[i].data.length; j++){
                                     if (responses[i].data[j].status === "Released"){
@@ -265,7 +266,7 @@ function Released() {
                                     }
                                 }
                             break;
-
+    
                             case 12:
                                 for (let j=0; j<responses[i].data.length; j++){
                                     if (responses[i].data[j].status === "Released"){
@@ -273,7 +274,7 @@ function Released() {
                                     }
                                 }
                             break;
-
+    
                             case 13:
                                 for (let j=0; j<responses[i].data.length; j++){
                                     if (responses[i].data[j].status === "Released"){
@@ -281,7 +282,7 @@ function Released() {
                                     }
                                 }
                             break;
-
+    
                             case 14:
                                 for (let j=0; j<responses[i].data.length; j++){
                                     if (responses[i].data[j].status === "Released"){
@@ -289,7 +290,7 @@ function Released() {
                                     }
                                 }
                             break;
-
+    
                             case 15:
                                 for (let j=0; j<responses[i].data.length; j++){
                                     if (responses[i].data[j].status === "Released"){
@@ -297,7 +298,7 @@ function Released() {
                                     }
                                 }
                             break;
-
+    
                             case 16:
                                 for (let j=0; j<responses[i].data.length; j++){
                                     if (responses[i].data[j].status === "Released"){
@@ -305,33 +306,40 @@ function Released() {
                                     }
                                 }
                             break;
+                            
+                            default:
+                            break;
+                        }
                     }
-                }
-                setRequestedForm({
-                    requestedCedula : cedula,
-                    requestedConstituent : constituent,
-                    requestedBuilding : building,
-                    requestedResidency : residency,
-                    requestedBarangayClearance : barangayClearance,
-                    requestedComelec : comelec,
-                    requestedBusinessClosure : businessClosure,
-                    requestedBailbond : bailBond,
-                    requestedGuardianship : guardianship,
-                    requestedIndigencyBurial : indigencyBurial,
-                    requestedIndigencyClearance : indigencyClearance,
-                    requestedVoucher : voucher,
-                    requestedBusinessClearance : businessClearance,
-                    requestedImmunization : immunization,
-                    requestedDentalService : dentalService,
-                    requestedMaternalCare : maternalCare,
+                    setRequestedForm({
+                        requestedCedula : cedula,
+                        requestedConstituent : constituent,
+                        requestedBuilding : building,
+                        requestedResidency : residency,
+                        requestedBarangayClearance : barangayClearance,
+                        requestedComelec : comelec,
+                        requestedBusinessClosure : businessClosure,
+                        requestedBailbond : bailBond,
+                        requestedGuardianship : guardianship,
+                        requestedIndigencyBurial : indigencyBurial,
+                        requestedIndigencyClearance : indigencyClearance,
+                        requestedVoucher : voucher,
+                        requestedBusinessClearance : businessClearance,
+                        requestedImmunization : immunization,
+                        requestedDentalService : dentalService,
+                        requestedMaternalCare : maternalCare,
+                    })
                 })
+            );   
+    
+            AuthService.getUserList()
+            .then((response) => {
+                setUserList(response.data)
             })
-        );   
-
-        AuthService.getUserList()
-        .then((response) => {
-            setUserList(response.data)
-        })
+            
+        }
+        fetchData();
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [])
     
 
@@ -578,11 +586,11 @@ function Released() {
                                 <b>Date Received:</b> {details.date_received} <br/>
                                 <Box sx={{columnGap: 1, display: 'flex', justifyContent:"flex-start", alignItems:"flex-start"}}>
                                     <b>Signature:</b>
-                                    <img sx={{flexGrow: 3}} src={details.signature==='' ? '../img/image.png': details.signature} width = "170px" height = "150px"></img>
+                                    <img sx={{flexGrow: 3}} src={details.signature==='' ? '../img/image.png': details.signature} alt="" width = "170px" height = "150px"></img>
                                 </Box><br/>
                                 <Box sx={{columnGap: 1,display: 'flex', justifyContent:"flex-start", alignItems:"flex-start"}}>
                                     <b>Picture:</b>
-                                    <img src={details.picture==='' ? '../img/image.png': details.picture} width = "170px" height = "150px"></img>
+                                    <img src={details.picture==='' ? '../img/image.png': details.picture} alt="" width = "170px" height = "150px"></img>
                                 </Box><br/>
                             </>: null}
                             {details.document_name === "Guardianship" ? <>

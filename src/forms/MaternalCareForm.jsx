@@ -57,30 +57,30 @@ const MaternalCareForm = ({ activeForm, handleBack, handleNext, handleChange, ma
         e.preventDefault()
         
         setNameError(false)
-        if(information.name == ''){
+        if(information.name === ''){
             setNameError(true)
             setChecker = false
         }
 
         setAddressError(false)
-        if(information.address == ''){
+        if(information.address === ''){
             setAddressError(true)
             setChecker = false
         }
         setChildNameError(false)
-        if(information.child_name == ''){
+        if(information.child_name === ''){
             setChildNameError(true)
             setChecker = false
         }
 
         setDateOfBirthError(false)
-        if(information.date_of_birth == ''){
+        if(information.date_of_birth === ''){
             setDateOfBirthError(true)
             setChecker = false
         }
 
         setBirthplaceError(false)
-        if(information.birthplace == ''){
+        if(information.birthplace === ''){
             setBirthplaceError(true)
             setChecker = false
         }

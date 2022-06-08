@@ -1,4 +1,4 @@
-import React, { useState, Component } from 'react';
+import React, { useState } from 'react';
 import { useEffect } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import Grid from '@material-ui/core/Grid'
@@ -15,7 +15,6 @@ import Slide from '@mui/material/Slide';
 
 import AuthService from "../services/auth.service";
 import { useHistory } from "react-router-dom";
-import authService from '../services/auth.service';
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -42,7 +41,6 @@ const useStyles = makeStyles((theme) => ({
     },
 
     paper: {
-      margin: theme.spacing(4, 4),
       display: 'flex',
       flexDirection: 'column',
       alignItems: 'left',
@@ -146,36 +144,40 @@ function MyAccount() {
 	
 
 	//run once
-	useEffect(async() => {
-		if (!AuthService.getCurrentUser()){
-			history.push('/')
-		}
-		else{
-			if (!getInfo){
-				AuthService.getUserInformation()
-				.then((response) => {
-					if (response !== undefined){
-						if(JSON.stringify(response.data.first_name).length >= 3)
-							setFirstName(JSON.stringify(response.data.first_name).slice(1,-1));
-						if(JSON.stringify(response.data.last_name).length >= 3)
-							setLastName(JSON.stringify(response.data.last_name).slice(1,-1));
-						if(JSON.stringify(response.data.middle_name).length >= 3)
-							setMiddleName(JSON.stringify(response.data.middle_name).slice(1,-1));
-						if(JSON.stringify(response.data.email).length >= 3)
-							setEmail(JSON.stringify(response.data.email).slice(1,-1));
-						if(JSON.stringify(response.data.mobile_number).length >= 3)
-							setContactNumber(JSON.stringify(response.data.mobile_number).slice(1,-1));
-						if(JSON.stringify(response.data.profile_pic).length >= 3){
-							if(response.data.profile_pic != null)
-								setProfilePic(JSON.stringify(AuthService.baseURL() + response.data.profile_pic).slice(1,-1))
-							else
-								setProfilePic('')
+	useEffect(() => {
+		async function fetchData() {
+			if (!AuthService.getCurrentUser()){
+				history.push('/')
+			}
+			else{
+				if (!getInfo){
+					AuthService.getUserInformation()
+					.then((response) => {
+						if (response !== undefined){
+							if(JSON.stringify(response.data.first_name).length >= 3)
+								setFirstName(JSON.stringify(response.data.first_name).slice(1,-1));
+							if(JSON.stringify(response.data.last_name).length >= 3)
+								setLastName(JSON.stringify(response.data.last_name).slice(1,-1));
+							if(JSON.stringify(response.data.middle_name).length >= 3)
+								setMiddleName(JSON.stringify(response.data.middle_name).slice(1,-1));
+							if(JSON.stringify(response.data.email).length >= 3)
+								setEmail(JSON.stringify(response.data.email).slice(1,-1));
+							if(JSON.stringify(response.data.mobile_number).length >= 3)
+								setContactNumber(JSON.stringify(response.data.mobile_number).slice(1,-1));
+							if(JSON.stringify(response.data.profile_pic).length >= 3){
+								if(response.data.profile_pic != null)
+									setProfilePic(JSON.stringify(AuthService.baseURL() + response.data.profile_pic).slice(1,-1))
+								else
+									setProfilePic('')
+							}
+							setGetInfoCheck(true);
 						}
-						setGetInfoCheck(true);
-					}
-				})
+					})
+				}
 			}
 		}
+		fetchData()
+        // eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [])
 
 	const Alert = React.forwardRef(function Alert(props, ref) {
@@ -531,7 +533,7 @@ function MyAccount() {
 									<Grid item xs={12} sm={12} className={classes.uploadContainer}>
 										Upload your selfie 
 										<div className={classes.divtest}>
-											<img src={profile_pic=='' ? '../img/image.png': profile_pic} width = "170px" height = "150px"></img>
+											<img src={profile_pic==='' ? '../img/image.png': profile_pic} alt="" width = "170px" height = "150px"></img>
 											<Grid item xs={12} sm={2}>
 												<div className={classes.picture}>
 													<Button 

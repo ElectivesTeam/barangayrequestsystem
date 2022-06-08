@@ -1,4 +1,4 @@
-import React, {useState, useEffect} from 'react'
+import React, {useState} from 'react'
 
 //forms to be imported
 import Cedula from '../forms/Cedula';
@@ -36,7 +36,7 @@ const ListOfRequest = ({ selectedRequest, apiFormsData, handleAPIFormsDataChange
 
     const handleBack = () => {
         handleBackStepper();
-        if(activeForm == selectedRequest.length){
+        if(activeForm === selectedRequest.length){
             setActiveForm(0)
             
         }else{

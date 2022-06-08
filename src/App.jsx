@@ -10,7 +10,6 @@ import { ThemeProvider } from '@material-ui/styles';
 
 import Home from './navigation/Home';
 import Login from './navigation/Login';
-import Requests from './navigation/Requests';
 import Register from './navigation/Register';
 import MenuAppBar from './components/navbar';
 import MyAccount from './navigation/Myaccount';
@@ -60,7 +59,7 @@ function App() {
             <Route exact path="/reviewrequest" component={ReviewRequest}></Route>
             <Route exact path="/myrequests" component={MyRequests}></Route>
             <Route exact path="/admin" component={Admin}></Route>
-            //to remove
+
             <Route exact path="/requests/cedula" component={Cedula}></Route>
             <Route exact path="/requests/buildingclearance" component={BuildingClearance}></Route>
             <Route exact path="/requests/constituentidform" component={ConstituentIdForm}></Route>

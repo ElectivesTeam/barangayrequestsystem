@@ -68,55 +68,55 @@ const DentalServiceForm = ({ activeForm, handleBack, handleNext, handleChange, d
         e.preventDefault()
         
         setLastNameError(false)
-        if(information.last_name == ''){
+        if(information.last_name === ''){
             setLastNameError(true)
             setChecker = false
         }
 
         setMiddleNameError(false)
-        if(information.middle_name == ''){
+        if(information.middle_name === ''){
             setMiddleNameError(true)
             setChecker = false
         }
 
         setFirstNameError(false)
-        if(information.first_name == ''){
+        if(information.first_name === ''){
             setFirstNameError(true)
             setChecker = false
         }
 
         setBirthdayError(false)
-        if(information.birthday == ''){
+        if(information.birthday === ''){
             setBirthdayError(true)
             setChecker = false
         }
 
         setAddressError(false)
-        if(information.address == ''){
+        if(information.address === ''){
             setAddressError(true)
             setChecker = false
         }
 
         setCivilStatusError(false)
-        if(information.civilStatus == ''){
+        if(information.civilStatus === ''){
             setCivilStatusError(true)
             setChecker = false
         }
 
         setBirthPlaceError(false)
-        if(information.birthplace == ''){
+        if(information.birthplace === ''){
             setBirthPlaceError(true)
             setChecker = false
         }
 
         setContactNumberError(false)
-        if(information.contactNumber == ''){
+        if(information.contactNumber === ''){
             setContactNumberError(true)
             setChecker = false
         }
 
         setDateReceivedError(false)
-        if(information.dateReceived == ''){
+        if(information.dateReceived === ''){
             setDateReceivedError(true)
             setChecker = false
         }

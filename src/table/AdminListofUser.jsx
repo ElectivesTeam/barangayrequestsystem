@@ -1,9 +1,7 @@
 import React, { useState, forwardRef, useEffect }from 'react'
 import MaterialTable from 'material-table'
-import Chip from '@mui/material/Chip';
 import Modal from '@mui/material/Modal';
 import Box from '@mui/material/Box';
-import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
 
 //icon in table
@@ -24,7 +22,6 @@ import Search from '@material-ui/icons/Search';
 import ViewColumn from '@material-ui/icons/ViewColumn';
 
 import ArticleOutlinedIcon from '@mui/icons-material/ArticleOutlined';
-import DeleteOutlinedIcon from '@mui/icons-material/DeleteOutlined';
 
 import AuthService from "../services/auth.service"
 
@@ -68,11 +65,15 @@ function AdminListofUser() {
     const [userList, setUserList] = useState ([])
     const [details, setDetails] = useState({})
 
-    useEffect (async () => {
-        AuthService.getUserList()
-        .then((response) => {
-            setUserList(response.data)
-        })
+    useEffect (() => {
+        async function fetchData(){
+            AuthService.getUserList()
+            .then((response) => {
+                setUserList(response.data)
+            })
+        }
+        fetchData();
+        // eslint-disable-next-line react-hooks/exhaustive-deps
       }, [])
 
   return (
@@ -112,7 +113,6 @@ function AdminListofUser() {
                         tooltip: 'Show Details',
                         onClick: (event, rowData) => {
                             //frontend magic
-                            const form = rowData;
                             setDetails({
                                 email: rowData.email,
                                 address: rowData.address,
@@ -150,7 +150,7 @@ function AdminListofUser() {
                                 <b>Gender:</b> {details.gender} <br/>
                                 <Box sx={{columnGap: 1,display: 'flex', justifyContent:"flex-start", alignItems:"flex-start"}}>
                                     <b>Picture:</b>
-                                    <img src={details.profile_pic==='' ? '../img/image.png': details.profile_pic} width = "170px" height = "150px"></img>
+                                    <img src={details.profile_pic==='' ? '../img/image.png': details.profile_pic} alt="" width = "170px" height = "150px"></img>
                                 </Box><br/>
                             </div>
                             <div>
@@ -159,7 +159,7 @@ function AdminListofUser() {
                                 <b>Contact Number:</b> {details.mobile_number} <br/>
                                 <Box sx={{columnGap: 1, display: 'flex', justifyContent:"flex-start", alignItems:"flex-start"}}>
                                     <b>Signature:</b>
-                                    <img sx={{flexGrow: 3}} src={details.id_pic==='' ? '../img/image.png': details.id_pic} width = "170px" height = "150px"></img>
+                                    <img sx={{flexGrow: 3}} src={details.id_pic==='' ? '../img/image.png': details.id_pic} alt="" width = "170px" height = "150px"></img>
                                 </Box><br/>
                                 
                             </div>

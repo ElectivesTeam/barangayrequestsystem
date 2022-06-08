@@ -101,64 +101,67 @@ export default function MenuAppBar() {
   const[snackbarEmailSentState, setSnackbarEmailSentState] = useState({open: false, Transition: Slide})
   const[snackbarNoticeState, setSnackbarState] = useState({open: false, Transition: Grow})
   const[dataLoaded, setDataLoaded] = useState(false)
-  useEffect(async () => {
-    if(user && dataLoaded === false){
-      if(refreshVerified === false){
-        await AuthService.verifyToken("refresh")
-        .then((response) => {
-          if(response.status === 200){
-            setRefreshVerified(true)
-            console.log("refresh verified")
-          }
-        })
-        .catch(error => {
-          try {
+  useEffect( () => {
+    async function fetchData(){
+      if(user && dataLoaded === false){
+        if(refreshVerified === false){
+          await AuthService.verifyToken("refresh")
+          .then((response) => {
+            if(response.status === 200){
+              setRefreshVerified(true)
+              console.log("refresh verified")
+            }
+          })
+          .catch(error => {
+            try {
+              if (error.response.status === 401){
+                AuthService.logout()
+                history.push('/')
+              }
+            } catch (error) {
+              console.log(error)
+            }
+          })
+        }
+        if (refreshVerified === true && accessVerified === false){
+          await AuthService.verifyToken("access")
+          .then((response) => {
+            if(response.status === 200){
+              setAccessVerified(true)
+              console.log("access verified")
+            }
+          })
+          .catch(error => {
             if (error.response.status === 401){
-              AuthService.logout()
-              history.push('/')
+              AuthService.refreshAccess()
+              window.location.reload()
+            }else{
+              console.log("Something went wrong")
             }
-          } catch (error) {
-            console.log(error)
-          }
-        })
-      }
-      if (refreshVerified === true && accessVerified === false){
-        await AuthService.verifyToken("access")
-        .then((response) => {
-          if(response.status === 200){
-            setAccessVerified(true)
-            console.log("access verified")
-          }
-        })
-        .catch(error => {
-          if (error.response.status === 401){
-            AuthService.refreshAccess()
-            window.location.reload()
-          }else{
-            console.log("Something went wrong")
-          }
-        })
-      }
-      if (accessVerified === true && dataLoaded === false){
-        await AuthService.getAccountStatus()
-        .then (response => {
-          if(response.data != undefined && response.status === 200){
-            setAdminStatus(response.data.is_admin)
-            if(response.data.is_email_verified === false){
-              setSnackbarState({open: true, Transition: Grow})
-              setSnackbarEmailSentState({open: false, Transition: Slide})
+          })
+        }
+        if (accessVerified === true && dataLoaded === false){
+          await AuthService.getAccountStatus()
+          .then (response => {
+            if(response.data !== undefined && response.status === 200){
+              setAdminStatus(response.data.is_admin)
+              if(response.data.is_email_verified === false){
+                setSnackbarState({open: true, Transition: Grow})
+                setSnackbarEmailSentState({open: false, Transition: Slide})
+              }
+              console.log("account status loaded")
+              setDataLoaded(true)
             }
-            console.log("account status loaded")
-            setDataLoaded(true)
-          }
-        })
-        .catch(error => {
-          if (error.response !== undefined){
-            console.log(error.response);
-          }
-        })
+          })
+          .catch(error => {
+            if (error.response !== undefined){
+              console.log(error.response);
+            }
+          })
+        }
       }
     }
+    fetchData()
   })
   
   const loginButton = () => {
