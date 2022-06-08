@@ -30,7 +30,7 @@ const useStyles = makeStyles((theme) => ({
     
     title : {
         fontWeight: 600,
-        
+        color:'#3f51b5',
         '@media (max-width:600px)': {
             fontSize: '1.7rem',
             textAlign: 'center',  
@@ -56,9 +56,6 @@ const useStyles = makeStyles((theme) => ({
         '@media (min-width:1200px)': {
             fontSize: '1.2rem',
         },
-    },
-    divtest: {
-        background: '#e0ecff',
     },
     styledGridContainer: {
         padding: '30px 20px 35px 20px',
@@ -134,6 +131,12 @@ const useStyles = makeStyles((theme) => ({
         },
     },
     
+    // stepsTitle: {
+    //     fontSize:40,
+    //     fontWeight: 600,
+    //     padding: 30,
+        
+    // },
     
 
     
@@ -168,7 +171,7 @@ function Home() {
                         Request Documents Online!
                     </Typography>
                     <Typography variant="h5"className={classes.styledTypography}>
-                        (For Residents of Barangay Landayan)
+                        (For Residents of Barangay Landayan, Laguna)
                     </Typography>
                     <Typography variant="h5" className={classes.styledTypography}>
                         Request, Pay, Submit the Requirements, & Claim.
@@ -181,71 +184,122 @@ function Home() {
             
         </Grid>
         
-        <div className={classes.divtest}>   
-            <Grid container spacing={2} className={classes.styledGridContainer}>
-                <Card className={classes.styledCard}>
-                    <CardActionArea>
-                        <CardMedia
-                            component="img"
-                            alt="Document"
-                            height="175"
-                            image="../img/graph.png"
-                            title="test"
-                        />
-                        <CardContent>
-                            <Typography gutterBottom variant="h5" component="h2">
-                                Document Requesting
-                            </Typography>
-                            <Typography variant="body2" color="textSecondary" component="p">
-                                Requesting of documents is now available online. Create an account and upload your valid ID for verfication to get an access to the Online Document Request Page
-                            </Typography>
-                        </CardContent>
-                    </CardActionArea>
-                    
-                    
-                </Card>
-                <Card className={classes.styledCard}>
-                    <CardActionArea>
-                        <CardMedia
-                            component="img"
-                            alt="Payment"
-                            height="175"
-                            image="../img/payment.png"
-                            title="test"
-                        />
-                        <CardContent>
-                            <Typography gutterBottom variant="h5" component="h2">
-                            Easy Payment
-                            </Typography>
-                            <Typography variant="body2" color="textSecondary" component="p">
+         
+        <Grid container spacing={2} className={classes.styledGridContainer} style= {{backgroundColor:'#e0ecff'}}>
+            <Card className={classes.styledCard}>
+                <CardActionArea>
+                    <CardMedia
+                        component="img"
+                        alt="Document"
+                        height="175"
+                        image="../img/graph.png"
+                    />
+                    <CardContent>
+                        <Typography gutterBottom variant="h5" component="h2" style={{color:'#3f51b5'}}>
+                            Document Requesting
+                        </Typography>
+                        <Typography variant="body2" color="textSecondary" component="p">
                             Requesting of documents is now available online. Create an account and upload your valid ID for verfication to get an access to the Online Document Request Page
-                            </Typography>
-                        </CardContent>
-                    </CardActionArea>
-                    
-                    
-                </Card>
-                <Card className={classes.styledCard}>
-                    <CardActionArea>
-                        <CardMedia
-                            component="img"
-                            alt="Clearance"
-                            height="175"
-                            image="../img/team.png"
-                            title="test"
-                        />
-                        <CardContent>
-                            <Typography gutterBottom variant="h5" component="h2">
-                            Clearance Monitoring
-                            </Typography>
-                            <Typography variant="body2" color="textSecondary" component="p" >
-                            Requesting of documents is now available online. Create an account and upload your valid ID for verfication to get an access to the Online Document Request Page
-                            </Typography>
-                        </CardContent>
-                    </CardActionArea>
-                </Card>
+                        </Typography>
+                    </CardContent>
+                </CardActionArea>
+                
+                
+            </Card>
+            <Card className={classes.styledCard}>
+                <CardActionArea>
+                    <CardMedia
+                        component="img"
+                        alt="Payment"
+                        height="175"
+                        image="../img/payment.png"
+                    />
+                    <CardContent>
+                        <Typography gutterBottom variant="h5" component="h2" style={{color:'#3f51b5'}}>
+                        Easy & Convenient
+                        </Typography>
+                        <Typography variant="body2" color="textSecondary" component="p">
+                        We made it easier to request documents. No more waiting in long lines; simply select your desired document, fill in the required details, and submit. 
+                        </Typography>
+                    </CardContent>
+                </CardActionArea>
+                
+                
+            </Card>
+            <Card className={classes.styledCard}>
+                <CardActionArea>
+                    <CardMedia
+                        component="img"
+                        alt="Clearance"
+                        height="175"
+                        image="../img/team.png"
+                    />
+                    <CardContent>
+                        <Typography gutterBottom variant="h5" component="h2" style={{color:'#3f51b5'}}>
+                        Clearance Monitoring
+                        </Typography>
+                        <Typography variant="body2" color="textSecondary" component="p" >
+                            Check the latest status updates on your request. Easier communication when additional requirement is needed and notification when requested documents are ready for pick-up.
+                        </Typography>
+                    </CardContent>
+                </CardActionArea>
+            </Card>
+        </Grid>
+        
+
+        <Grid style={{margin: 'auto'}}>
+            <Grid style={{margin: '45px 0 45px 0'}}>
+                <Typography variant="h1" style={{textAlign:'center',fontSize:40, fontWeight:600, color:'#3f51b5'}}>
+                    How it works
+                </Typography>
+                <Typography variant="h2" style={{textAlign:'center',fontSize:20}}>
+                    Get started with 3 easy steps.
+                </Typography>
             </Grid>
-        </div>
+            <Grid style={{}}>
+                <Grid style={{display:'flex', flexDirection:'row', margin:'0 90px'}}>
+                    <Grid style={{padding:'0 30px 50px 0'}}>
+                        <img src="../img/step1.png" alt=""  style={{borderRadius: 15, width:700, boxShadow:'-10px 10px 5px 0px rgba(0,0,0,0.3)'}} />
+                    </Grid>
+                    <Grid style={{margin:'110px 0'}}>
+                        <Typography variant="h2" style={{fontSize:30, fontWeight: 600, textAlign:'right', color:'#3f51b5'}}>
+                            1. Create an Account
+                        </Typography>
+                        <Typography variant="h2" style={{fontSize:19, textAlign:'right'}}>
+                            To create an account, go to the Registration page. Fill out the form and upload your valid ID and a picture.
+                        </Typography>
+                    </Grid>
+                </Grid>
+                <Grid style={{display:'flex', flexDirection:'row', margin:'0 90px'}}>
+                    <Grid style={{margin:'110px 0'}}>
+                        <Typography variant="h2" style={{fontSize:30, fontWeight: 600, color:'#3f51b5'}}>
+                            2. Select a Document
+                        </Typography>
+                        <Typography variant="h2" style={{fontSize:19}}>
+                            Select the document you wish to request and provide the necessary information.
+                        </Typography>
+                    </Grid>
+                    <Grid style={{padding:'0 0 30px 50px'}}>
+                        <img src="../img/step2.png" alt="" style={{borderRadius: 15, width:700, boxShadow:'10px 10px 5px 0px rgba(0,0,0,0.3)'}} />
+                    </Grid>
+                </Grid>
+                <Grid style={{display:'flex', flexDirection:'row', margin:'0 90px'}}>
+                    <Grid style={{padding:'0 30px 50px 0'}}>
+                        <img src="../img/step3.png" alt="" style={{borderRadius: 15, width:700, boxShadow:'-10px 10px 5px 0px rgba(0,0,0,0.3)'}} />
+                    </Grid>
+                    <Grid style={{margin:'110px 0'}}>
+                        <Typography variant="h2" style={{fontSize:30, fontWeight: 600, textAlign:'right', color:'#3f51b5'}}>
+                            3. Review & Submit
+                        </Typography>
+                        <Typography variant="h2" style={{fontSize:19, textAlign:'right'}}>
+                            Review all the provided information & Submit. We will notify you in your email for further instruction.
+                        </Typography>
+                    </Grid>
+                </Grid>
+            </Grid>
+        </Grid>
+
+        
     </Grid>
     )
 }

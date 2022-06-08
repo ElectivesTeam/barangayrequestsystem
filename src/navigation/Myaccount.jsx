@@ -95,11 +95,7 @@ const useStyles = makeStyles((theme) => ({
 		fontFamily: 'Montserrat',
 		fontWeight: 600,
 		fontSize: 11,
-		backgroundColor: 'gray',
 		color: 'white',
-		'&:hover': {
-		  backgroundColor: '#b71c1c',
-		},
 	  },
 	
 	  button: {
@@ -540,6 +536,7 @@ function MyAccount() {
 													type="submit"
 													fullWidth
 													variant="contained"
+													color="primary"
 													className={classes.buttonUpload}
 													href="#"
 													>
@@ -549,6 +546,7 @@ function MyAccount() {
 													type="submit"
 													fullWidth
 													variant="contained"
+													color="primary"
 													className={classes.buttonUpload}
 													href="#"
 													>

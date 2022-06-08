@@ -68,11 +68,7 @@ const useStyles = makeStyles((theme) => ({
     fontFamily: 'Montserrat',
     fontWeight: 600,
     fontSize: 11,
-    backgroundColor: 'gray',
     color: 'white',
-    '&:hover': {
-      backgroundColor: '#b71c1c',
-    },
   },
   button: {
     margin: theme.spacing(7, 0, 0, 0),
@@ -81,12 +77,8 @@ const useStyles = makeStyles((theme) => ({
     fontWeight: 600,
     fontSize: 18,
     width: '15%',
-    left: '83%',    
-    backgroundColor: 'black',
-    color: 'white',
-    '&:hover': {
-      backgroundColor: '#b71c1c',
-    }
+    left: '83%',   
+    color: 'white'
   },
   h1: {
     fontFamily: 'Montserrat',
@@ -727,6 +719,7 @@ function Register() {
                         component="label"
                         fullWidth
                         variant="contained"
+                        color="primary"
                         className={classes.buttonUpload}
                         href="#"
                       >
@@ -743,6 +736,7 @@ function Register() {
                         onClick={handleSelfieRemove}
                         fullWidth
                         variant="contained"
+                        color="primary"
                         className={classes.buttonUpload}
                         href="#"
                       >
@@ -763,6 +757,7 @@ function Register() {
                         component="label"
                         fullWidth
                         variant="contained"
+                        color="primary"
                         className={classes.buttonUpload}
                         href="#"
                       >
@@ -779,6 +774,7 @@ function Register() {
                         onClick={handleIDRemove}
                         fullWidth
                         variant="contained"
+                        color="primary"
                         className={classes.buttonUpload}
                         href="#"
                       >
@@ -791,7 +787,7 @@ function Register() {
             </Grid>
             {/* Submit Button */}
             <div className={classes.divtest}>			    
-              <Button variant="outlined" color="primary" onClick={handleSubmit}
+              <Button variant="contained" color="primary" onClick={handleSubmit}
                 fullWidth
                 className={classes.button}
               >
