@@ -21,8 +21,6 @@ import ReviewRequest from './ReviewRequest';
 const ListOfRequest = ({ selectedRequest, apiFormsData, handleAPIFormsDataChange, handleNextStepper, handleBackStepper }) => {
     const submittedRequest = selectedRequest.selectionModel;
     const getRequest= (i) => {
-        console.log(selectedRequest)
-        console.log(selectedRequest[i])
         return selectedRequest[i]
     }
     const [activeForm, setActiveForm] = useState(0);
@@ -84,7 +82,6 @@ const ListOfRequest = ({ selectedRequest, apiFormsData, handleAPIFormsDataChange
         }
     }   
 
-    console.log(activeForm)
     return <> {renderRequest(getRequest(activeForm))} </>
     
 }

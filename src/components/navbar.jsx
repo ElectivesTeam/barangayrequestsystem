@@ -134,7 +134,7 @@ export default function MenuAppBar() {
           .catch(error => {
             if (error.response.status === 401){
               AuthService.refreshAccess()
-              window.location.reload()
+              window.location.href = window.location.href
             }else{
               console.log("Something went wrong")
             }
