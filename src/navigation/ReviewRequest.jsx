@@ -453,7 +453,7 @@ const ReviewRequest = ({ handleBack, selectedRequest, apiFormsData }) => {
     };
 
     return (
-        <>
+        <div style={{minHeight: "65vh"}}>
             <FormHeader formTitle={'Review Request'}/>
                 {cedula !== -1 && <Cedula reviewCedula = {apiFormsData.cedulaData}/>}
                 {buildingclearance !== -1 && <BuildingClearance reviewBuildingClearance = {apiFormsData.buildingClearanceData}/>}
@@ -532,7 +532,7 @@ const ReviewRequest = ({ handleBack, selectedRequest, apiFormsData }) => {
                 </Button>
                 </DialogActions>
             </Dialog>
-        </>
+        </div>
     )
 }
 
