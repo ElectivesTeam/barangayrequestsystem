@@ -125,7 +125,8 @@ function MyAccount() {
 	const[email, setEmail] = useState([]);
 	const[contact_number, setContactNumber] = useState([]);
 	const[getInfo, setGetInfoCheck] = useState(false)
-	const[profile_pic, setProfilePic] = useState([]);
+	const[profilePic, setProfilePic] = useState([])
+	const[profilePicURL, setProfilePicURL] = useState([])
 	const[old_password, setOldPassword] = useState([]);
 	const[new_password, setNewPassword] = useState([]);
 	const[confirm_password, setConfirmPassword] = useState([]);
@@ -138,6 +139,15 @@ function MyAccount() {
 	const[newpasswordError, setNewPasswordError] = useState(false);
 	const[newpassword2Error, setNewPassword2Error] = useState(false);
 	
+	function handleSelfieUpload(e) {
+		setProfilePic(e.target.files[0]);
+		let url = URL.createObjectURL(e.target.files[0]);
+		setProfilePicURL(url)
+	}
+	function handleSelfieRemove() {
+		setProfilePic('');
+		setProfilePicURL('')
+	}
 
 	//run once
 	useEffect(() => {
@@ -149,6 +159,7 @@ function MyAccount() {
 				if (!getInfo){
 					AuthService.getUserInformation()
 					.then((response) => {
+						console.log(response.data.profile_pic)
 						if (response !== undefined){
 							if(JSON.stringify(response.data.first_name).length >= 3)
 								setFirstName(JSON.stringify(response.data.first_name).slice(1,-1));
@@ -527,23 +538,31 @@ function MyAccount() {
 								<Grid item xs={12} sm={1}></Grid>
 								<Grid item xs={12} sm={3}>
 									<Grid item xs={12} sm={12} className={classes.uploadContainer}>
-										Upload your selfie 
+										Update your selfie 
 										<div className={classes.divtest}>
-											<img src={profile_pic==='' ? '../img/image.png': profile_pic} alt="" width = "170px" height = "150px"></img>
+											<img src={profilePic==='' ? '../img/image.png': profilePicURL} alt="" width = "170px" height = "150px"></img>
 											<Grid item xs={12} sm={2}>
 												<div className={classes.picture}>
 													<Button 
-													type="submit"
+													component="label"
 													fullWidth
 													variant="contained"
 													color="primary"
 													className={classes.buttonUpload}
 													href="#"
 													>
+													<input 
+														accept="image/*"
+														type="file"
+														hidden 
+														onChange={handleSelfieUpload}
+													/>
 													UPLOAD
 													</Button>
+
 													<Button 
-													type="submit"
+													component="label"
+													onClick={handleSelfieRemove}
 													fullWidth
 													variant="contained"
 													color="primary"

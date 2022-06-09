@@ -304,6 +304,9 @@ function Home() {
                 <Grid style={{}} className={classes.stepsContentContainer}>
                     <Grid style={{}} className={classes.steps}>
                         <img src="../img/step1.PNG" alt="" className={classes.stepsContentImage} />
+                <Grid style={{display:'flex', flexDirection:'row', margin:'0 90px'}}>
+                    <Grid style={{padding:'0 30px 50px 0'}}>
+                        <img src="../img/step1.PNG" alt=""  style={{borderRadius: 15, width:700, boxShadow:'-10px 10px 5px 0px rgba(0,0,0,0.3)'}} />
                     </Grid>
                     <Grid className={classes.stepsContentText}>
                         <Typography variant="h2" style={{fontSize:30, fontWeight: 600,  color:'#3f51b5'}}>
@@ -330,6 +333,13 @@ function Home() {
                 <Grid style={{}} className={classes.stepsContentContainer}>
                     <Grid className={classes.steps}>
                         <img src="../img/step3.PNG" alt="" className={classes.stepsContentImage}  />
+                    <Grid style={{padding:'0 0 30px 50px'}}>
+                        <img src="../img/step2.PNG" alt="" style={{borderRadius: 15, width:700, boxShadow:'10px 10px 5px 0px rgba(0,0,0,0.3)'}} />
+                    </Grid>
+                </Grid>
+                <Grid style={{display:'flex', flexDirection:'row', margin:'0 90px'}}>
+                    <Grid style={{padding:'0 30px 50px 0'}}>
+                        <img src="../img/step3.PNG" alt="" style={{borderRadius: 15, width:700, boxShadow:'-10px 10px 5px 0px rgba(0,0,0,0.3)'}} />
                     </Grid>
                     <Grid className={classes.stepsContentText}>
                         <Typography variant="h2" style={{fontSize:30, fontWeight: 600, color:'#3f51b5'}}>

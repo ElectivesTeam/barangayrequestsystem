@@ -135,7 +135,8 @@ function Approved() {
     var dentalService =[]
     var maternalCare =[]
 
-    const API_URL = "http://127.0.0.1:8000/api/forms/";
+    // const API_URL = "http://127.0.0.1:8000/api/forms/";
+    const API_URL = "https://brgy-landayan-odrs-app.herokuapp.com/api/forms/"
     var token = JSON.parse(localStorage.getItem('user')).access;
     
     const [dataInTable, setDataInTable] = useState()
