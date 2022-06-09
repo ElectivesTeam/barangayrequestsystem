@@ -26,7 +26,7 @@ const ListOfRequest = ({ selectedRequest, apiFormsData, handleAPIFormsDataChange
     const [activeForm, setActiveForm] = useState(0);
     const handleNext = () => {
         
-        if(activeForm === selectedRequest.selectionModel.length - 1){
+        if(activeForm === selectedRequest.length - 1){
             setActiveForm(activeForm + 1);
             handleNextStepper();
         }else{
