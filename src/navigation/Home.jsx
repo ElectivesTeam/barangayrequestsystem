@@ -130,16 +130,60 @@ const useStyles = makeStyles((theme) => ({
             
         },
     },
-    
-    // stepsTitle: {
-    //     fontSize:40,
-    //     fontWeight: 600,
-    //     padding: 30,
-        
-    // },
-    
 
-    
+    stepsContentContainer: {
+        // padding: '30px 20px 35px 20px',
+        display:'flex', 
+        flexDirection:'row',
+        margin:'0 90px',
+        '@media (max-width:600px)': {
+            
+        },
+        '@media (max-width:1080px)': {
+            margin:0,
+            flexDirection:'column',
+        },  
+    },
+
+    stepsContentImage: {
+        borderRadius: 15, 
+        width:700, 
+        boxShadow:'0px 10px 5px 0px rgba(0,0,0,0.4)',
+
+        '@media (max-width:750px)': {
+            width:550,
+            
+        }, 
+        
+        '@media (max-width:500px)': {
+            width:350,
+            
+        },  
+
+    },
+
+    steps:{
+        textAlign:'center',
+        padding:'0 30px 50px 0',
+        '@media (max-width:1080px)': {
+            padding:0
+        }, 
+    },
+
+    stepsContentText:{
+        margin:'110px 0', 
+        textAlign:'left',
+
+        '@media (max-width:1080px)': {
+          textAlign:'left',
+          margin:'20px 50px'
+        }, 
+        '@media (max-width:550px)': {
+            margin:'20px 20px',
+            textAlign:'center'
+        },  
+    },
+
 }));
 
 const user = AuthService.getCurrentUser()
@@ -247,8 +291,8 @@ function Home() {
         </Grid>
         
 
-        <Grid style={{margin: 'auto'}}>
-            <Grid style={{margin: '45px 0 45px 0'}}>
+        <Grid style={{margin: 'auto'}} >
+            <Grid style={{margin: '45px 0 45px 0'}} >
                 <Typography variant="h1" style={{textAlign:'center',fontSize:40, fontWeight:600, color:'#3f51b5'}}>
                     How it works
                 </Typography>
@@ -257,21 +301,21 @@ function Home() {
                 </Typography>
             </Grid>
             <Grid style={{}}>
-                <Grid style={{display:'flex', flexDirection:'row', margin:'0 90px'}}>
-                    <Grid style={{padding:'0 30px 50px 0'}}>
-                        <img src="../img/step1.PNG" alt=""  style={{borderRadius: 15, width:700, boxShadow:'-10px 10px 5px 0px rgba(0,0,0,0.3)'}} />
+                <Grid style={{}} className={classes.stepsContentContainer}>
+                    <Grid style={{}} className={classes.steps}>
+                        <img src="../img/step1.PNG" alt="" className={classes.stepsContentImage} />
                     </Grid>
-                    <Grid style={{margin:'110px 0'}}>
-                        <Typography variant="h2" style={{fontSize:30, fontWeight: 600, textAlign:'right', color:'#3f51b5'}}>
+                    <Grid className={classes.stepsContentText}>
+                        <Typography variant="h2" style={{fontSize:30, fontWeight: 600,  color:'#3f51b5'}}>
                             1. Create an Account
                         </Typography>
-                        <Typography variant="h2" style={{fontSize:19, textAlign:'right'}}>
+                        <Typography variant="h2" style={{fontSize:19 }}>
                             To create an account, go to the Registration page. Fill out the form and upload your valid ID and a picture.
                         </Typography>
                     </Grid>
                 </Grid>
-                <Grid style={{display:'flex', flexDirection:'row', margin:'0 90px'}}>
-                    <Grid style={{margin:'110px 0'}}>
+                <Grid style={{}} className={classes.stepsContentContainer}>
+                    <Grid className={classes.stepsContentText}>
                         <Typography variant="h2" style={{fontSize:30, fontWeight: 600, color:'#3f51b5'}}>
                             2. Select a Document
                         </Typography>
@@ -279,19 +323,19 @@ function Home() {
                             Select the document you wish to request and provide the necessary information.
                         </Typography>
                     </Grid>
-                    <Grid style={{padding:'0 0 30px 50px'}}>
-                        <img src="../img/step2.PNG" alt="" style={{borderRadius: 15, width:700, boxShadow:'10px 10px 5px 0px rgba(0,0,0,0.3)'}} />
+                    <Grid className={classes.steps}>
+                        <img src="../img/step2.PNG" alt="" className={classes.stepsContentImage} style={{marginBottom:30}} />
                     </Grid>
                 </Grid>
-                <Grid style={{display:'flex', flexDirection:'row', margin:'0 90px'}}>
-                    <Grid style={{padding:'0 30px 50px 0'}}>
-                        <img src="../img/step3.PNG" alt="" style={{borderRadius: 15, width:700, boxShadow:'-10px 10px 5px 0px rgba(0,0,0,0.3)'}} />
+                <Grid style={{}} className={classes.stepsContentContainer}>
+                    <Grid className={classes.steps}>
+                        <img src="../img/step3.PNG" alt="" className={classes.stepsContentImage}/>
                     </Grid>
-                    <Grid style={{margin:'110px 0'}}>
-                        <Typography variant="h2" style={{fontSize:30, fontWeight: 600, textAlign:'right', color:'#3f51b5'}}>
+                    <Grid className={classes.stepsContentText}>
+                        <Typography variant="h2" style={{fontSize:30, fontWeight: 600, color:'#3f51b5'}}>
                             3. Review & Submit
                         </Typography>
-                        <Typography variant="h2" style={{fontSize:19, textAlign:'right'}}>
+                        <Typography variant="h2" style={{fontSize:19}}>
                             Review all the provided information & Submit. We will notify you in your email for further instruction.
                         </Typography>
                     </Grid>
