@@ -22,8 +22,8 @@ const ListOfRequest = ({ selectedRequest, apiFormsData, handleAPIFormsDataChange
     const submittedRequest = selectedRequest.selectionModel;
     const getRequest= (i) => {
         console.log(selectedRequest)
-        console.log(selectedRequest.selectionModel[i])
-        return selectedRequest.selectionModel[i]
+        console.log(selectedRequest[i])
+        return selectedRequest[i]
     }
     const [activeForm, setActiveForm] = useState(0);
     const handleNext = () => {
