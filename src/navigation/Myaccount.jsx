@@ -142,11 +142,29 @@ function MyAccount() {
 	function handleSelfieUpload(e) {
 		setProfilePic(e.target.files[0]);
 		let url = URL.createObjectURL(e.target.files[0]);
-		setProfilePicURL(url)
+		try {
+			AuthService.updateProfilePic(e.target.files[0])
+			.then(() => {
+				openChangeSuccess(true);
+				setProfilePicURL(url)
+			})
+		} catch (error) {
+			openChangeFailed(true)
+			console.log(error)
+		}
 	}
 	function handleSelfieRemove() {
-		setProfilePic('');
-		setProfilePicURL('')
+		try {
+			AuthService.updateProfilePic('')
+			.then(() => {
+				setProfilePic('');
+				setProfilePicURL('')
+				openChangeSuccess(true);
+			})
+		} catch (error) {
+			openChangeFailed(true)
+			console.log(error)
+		}
 	}
 
 	//run once
@@ -159,7 +177,6 @@ function MyAccount() {
 				if (!getInfo){
 					AuthService.getUserInformation()
 					.then((response) => {
-						console.log(response.data.profile_pic)
 						if (response !== undefined){
 							if(JSON.stringify(response.data.first_name).length >= 3)
 								setFirstName(JSON.stringify(response.data.first_name).slice(1,-1));
@@ -172,8 +189,9 @@ function MyAccount() {
 							if(JSON.stringify(response.data.mobile_number).length >= 3)
 								setContactNumber(JSON.stringify(response.data.mobile_number).slice(1,-1));
 							if(JSON.stringify(response.data.profile_pic).length >= 3){
-								if(response.data.profile_pic != null)
-									setProfilePic(JSON.stringify(AuthService.baseURL() + response.data.profile_pic).slice(1,-1))
+								if(response.data.profile_pic != null){
+									setProfilePicURL(AuthService.CLOUDINARY_URL() + response.data.profile_pic)
+								}
 								else
 									setProfilePic('')
 							}
@@ -540,7 +558,7 @@ function MyAccount() {
 									<Grid item xs={12} sm={12} className={classes.uploadContainer}>
 										Update your selfie 
 										<div className={classes.divtest}>
-											<img src={profilePic==='' ? '../img/image.png': profilePicURL} alt="" width = "170px" height = "150px"></img>
+											<img src={(profilePic==='' || profilePic===null) ? '../img/image.png': profilePicURL} alt="" width = "170px" height = "150px"></img>
 											<Grid item xs={12} sm={2}>
 												<div className={classes.picture}>
 													<Button 

@@ -118,7 +118,8 @@ function MyRequests() {
                 maxWidth: "95%", 
                 display: "block",
                 margin: "auto",
-                marginTop: "30px"
+                marginTop: "30px",
+                minHeight: "70vh"
             }}>
                 <MaterialTable
                     title="My Requests"
@@ -159,6 +160,7 @@ function MyRequests() {
                             icon: () => <ArticleOutlinedIcon color="primary"/>,
                             tooltip: 'Show Details',
                             onClick: (event, rowData) => {
+                                console.log(rowData.signature)
                                 //frontend magic
                                 setDetails({
                                     request_number: rowData.request_number,
