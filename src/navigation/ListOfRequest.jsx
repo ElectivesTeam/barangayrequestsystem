@@ -19,7 +19,7 @@ import BusinessClearanceForm from '../forms/BusinessClearanceForm';
 import ReviewRequest from './ReviewRequest';
 
 const ListOfRequest = ({ selectedRequest, apiFormsData, handleAPIFormsDataChange, handleNextStepper, handleBackStepper }) => {
-    const submittedRequest = selectedRequest.selectionModel;
+    const submittedRequest = selectedRequest;
     const getRequest= (i) => {
         return selectedRequest[i]
     }
