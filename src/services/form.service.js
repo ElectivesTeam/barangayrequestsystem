@@ -1,6 +1,7 @@
 import axios from 'axios';
 
-const API_URL = "http://127.0.0.1:8000/api/forms/";
+// const API_URL = "http://127.0.0.1:8000/api/forms/";
+const API_URL = "https://brgy-landayan-odrs-app.herokuapp.com/api/forms/"
 
 
 class formService {
