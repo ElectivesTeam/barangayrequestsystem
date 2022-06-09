@@ -32,6 +32,7 @@ import CloseOutlinedIcon from '@mui/icons-material/CloseOutlined';
 import QuestionMarkIcon from '@mui/icons-material/QuestionMark';
 
 import formService from '../services/form.service';
+import AuthService from '../services/auth.service';
 import authService from '../services/auth.service';
 
 const tableIcons = {
@@ -160,8 +161,15 @@ function MyRequests() {
                             icon: () => <ArticleOutlinedIcon color="primary"/>,
                             tooltip: 'Show Details',
                             onClick: (event, rowData) => {
-                                console.log(rowData.signature)
                                 //frontend magic
+                                var signature_URL = ''
+                                var picture_URL = ''
+                                if(rowData.picture !== null && rowData.picture !== ''){
+                                    picture_URL = AuthService.CLOUDINARY_URL() + rowData.picture;
+                                }
+                                if(rowData.signature !== null && rowData.signature !== ''){
+                                    signature_URL = AuthService.CLOUDINARY_URL() + rowData.signature;
+                                }
                                 setDetails({
                                     request_number: rowData.request_number,
                                     case_number: rowData.case_number,
@@ -176,8 +184,8 @@ function MyRequests() {
                                     last_business_operated: rowData.last_business_operated,
                                     id_number: rowData.id_number,
                                     date_received: rowData.date_received,
-                                    signature: rowData.signature,
-                                    picture: rowData.picture,
+                                    signature: signature_URL,
+                                    picture: picture_URL,
                                     guardian_name: rowData.guardian_name,
                                     mother_name: rowData.mother_name,
                                     father_name: rowData.father_name,
