@@ -259,7 +259,7 @@ function Home() {
             <Grid style={{}}>
                 <Grid style={{display:'flex', flexDirection:'row', margin:'0 90px'}}>
                     <Grid style={{padding:'0 30px 50px 0'}}>
-                        <img src="../img/step1.png" alt=""  style={{borderRadius: 15, width:700, boxShadow:'-10px 10px 5px 0px rgba(0,0,0,0.3)'}} />
+                        <img src="../img/step1.PNG" alt=""  style={{borderRadius: 15, width:700, boxShadow:'-10px 10px 5px 0px rgba(0,0,0,0.3)'}} />
                     </Grid>
                     <Grid style={{margin:'110px 0'}}>
                         <Typography variant="h2" style={{fontSize:30, fontWeight: 600, textAlign:'right', color:'#3f51b5'}}>
@@ -280,12 +280,12 @@ function Home() {
                         </Typography>
                     </Grid>
                     <Grid style={{padding:'0 0 30px 50px'}}>
-                        <img src="../img/step2.png" alt="" style={{borderRadius: 15, width:700, boxShadow:'10px 10px 5px 0px rgba(0,0,0,0.3)'}} />
+                        <img src="../img/step2.PNG" alt="" style={{borderRadius: 15, width:700, boxShadow:'10px 10px 5px 0px rgba(0,0,0,0.3)'}} />
                     </Grid>
                 </Grid>
                 <Grid style={{display:'flex', flexDirection:'row', margin:'0 90px'}}>
                     <Grid style={{padding:'0 30px 50px 0'}}>
-                        <img src="../img/step3.png" alt="" style={{borderRadius: 15, width:700, boxShadow:'-10px 10px 5px 0px rgba(0,0,0,0.3)'}} />
+                        <img src="../img/step3.PNG" alt="" style={{borderRadius: 15, width:700, boxShadow:'-10px 10px 5px 0px rgba(0,0,0,0.3)'}} />
                     </Grid>
                     <Grid style={{margin:'110px 0'}}>
                         <Typography variant="h2" style={{fontSize:30, fontWeight: 600, textAlign:'right', color:'#3f51b5'}}>
