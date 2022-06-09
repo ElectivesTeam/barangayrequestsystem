@@ -83,7 +83,8 @@ function AdminListofUser() {
             display: "block",
             margin: "auto",
             marginTop: "30px",
-            fontFamily:'Montserrat'
+            fontFamily:'Montserrat',
+            minHeight: "70vh"
         }}>
             <MaterialTable
                 title="List of Users"
