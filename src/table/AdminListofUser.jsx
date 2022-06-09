@@ -83,7 +83,8 @@ function AdminListofUser() {
             display: "block",
             margin: "auto",
             marginTop: "30px",
-            fontFamily:'Montserrat'
+            fontFamily:'Montserrat',
+            minHeight: "70vh"
         }}>
             <MaterialTable
                 title="List of Users"
@@ -113,6 +114,15 @@ function AdminListofUser() {
                         tooltip: 'Show Details',
                         onClick: (event, rowData) => {
                             //frontend magic
+                            var profile_pic_URL = ''
+                            var id_pic_URL = ''
+                            if(rowData.profile_pic !== null && rowData.profile_pic !== ''){
+                                profile_pic_URL = AuthService.CLOUDINARY_URL() + rowData.profile_pic;
+                            }
+                            if(rowData.id_pic !== null && rowData.id_pic !== ''){
+                                id_pic_URL = AuthService.CLOUDINARY_URL() + rowData.id_pic;
+                            }
+                            console.log(id_pic_URL)
                             setDetails({
                                 email: rowData.email,
                                 address: rowData.address,
@@ -121,8 +131,8 @@ function AdminListofUser() {
                                 date_of_birth: rowData.date_of_birth,
                                 civil_status: rowData.civil_status,
                                 mobile_number: rowData.mobile_number,
-                                id_pic: rowData.id_pic,
-                                profile_pic: rowData.profile_pic,
+                                id_pic: id_pic_URL,
+                                profile_pic: profile_pic_URL,
                             })
                         },
                     } 
@@ -150,7 +160,7 @@ function AdminListofUser() {
                                 <b>Gender:</b> {details.gender} <br/>
                                 <Box sx={{columnGap: 1,display: 'flex', justifyContent:"flex-start", alignItems:"flex-start"}}>
                                     <b>Picture:</b>
-                                    <img src={details.profile_pic==='' ? '../img/image.png': details.profile_pic} alt="" width = "170px" height = "150px"></img>
+                                    <img src={(details.profile_pic==='' || details.profile_pic===null) ? '../img/image.png': details.profile_pic} alt="" width = "170px" height = "150px"></img>
                                 </Box><br/>
                             </div>
                             <div>
@@ -159,7 +169,7 @@ function AdminListofUser() {
                                 <b>Contact Number:</b> {details.mobile_number} <br/>
                                 <Box sx={{columnGap: 1, display: 'flex', justifyContent:"flex-start", alignItems:"flex-start"}}>
                                     <b>Signature:</b>
-                                    <img sx={{flexGrow: 3}} src={details.id_pic==='' ? '../img/image.png': details.id_pic} alt="" width = "170px" height = "150px"></img>
+                                    <img sx={{flexGrow: 3}} src={(details.id_pic==='' || details.id_pic===null) ? '../img/image.png': details.id_pic} alt="" width = "170px" height = "150px"></img>
                                 </Box><br/>
                                 
                             </div>

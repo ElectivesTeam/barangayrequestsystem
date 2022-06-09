@@ -115,7 +115,13 @@ export default function MenuAppBar() {
           .catch(error => {
             try {
               if (error.response.status === 401){
-                AuthService.logout()
+                try{
+                  AuthService.logout()
+                }
+                catch(error){
+                  console.log(error)
+                }
+                localStorage.removeItem("user")
                 history.push('/')
               }
             } catch (error) {
@@ -133,8 +139,18 @@ export default function MenuAppBar() {
           })
           .catch(error => {
             if (error.response.status === 401){
-              AuthService.refreshAccess()
-              window.location.reload()
+              try {
+                AuthService.refreshAccess()
+                .then(response => {
+                  if(response.status === 200){
+                    setAccessVerified(true)
+                    console.log("access verified")
+                  }
+                })
+              }
+              catch(error){
+                console.log(error)
+              }
             }else{
               console.log("Something went wrong")
             }

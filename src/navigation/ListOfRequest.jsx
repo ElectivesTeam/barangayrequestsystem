@@ -19,14 +19,14 @@ import BusinessClearanceForm from '../forms/BusinessClearanceForm';
 import ReviewRequest from './ReviewRequest';
 
 const ListOfRequest = ({ selectedRequest, apiFormsData, handleAPIFormsDataChange, handleNextStepper, handleBackStepper }) => {
-    const submittedRequest = selectedRequest.selectionModel;
+    const submittedRequest = selectedRequest;
     const getRequest= (i) => {
-        return selectedRequest.selectionModel[i]
+        return selectedRequest[i]
     }
     const [activeForm, setActiveForm] = useState(0);
     const handleNext = () => {
         
-        if(activeForm === selectedRequest.selectionModel.length - 1){
+        if(activeForm === selectedRequest.length - 1){
             setActiveForm(activeForm + 1);
             handleNextStepper();
         }else{
@@ -81,7 +81,6 @@ const ListOfRequest = ({ selectedRequest, apiFormsData, handleAPIFormsDataChange
             default: return <ReviewRequest handleBack={handleBack} selectedRequest={submittedRequest} apiFormsData ={apiFormsData} handleChange={handleAPIFormsDataChange}/>
         }
     }   
-
 
     return <> {renderRequest(getRequest(activeForm))} </>
     

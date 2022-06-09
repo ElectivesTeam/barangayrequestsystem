@@ -358,7 +358,7 @@ class formService {
 
     emailResident(recipient, subject, body){
         var token = JSON.parse(localStorage.getItem('user')).access;
-        const API_URL = "http://127.0.0.1:8000/api/users/";
+        const API_URL = "https://brgy-landayan-odrs-app.herokuapp.com/api/users/";
         const config = {headers: { 'Accept': 'application/json', 'Authorization': 'Bearer ' + token}};
         let formData = new FormData();
         formData.append("email", recipient);

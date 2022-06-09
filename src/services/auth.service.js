@@ -2,12 +2,16 @@ import axios from "axios";
 
 const API_URL = "https://brgy-landayan-odrs-app.herokuapp.com/api/users/";
 const BASE_URL = "https://brgy-landayan-odrs-app.herokuapp.com"
+const CLOUDINARY_URL = "https://res.cloudinary.com/hhflnonyj/"
 // const API_URL = "http://localhost:8000/api/users/"
 // const BASE_URL = "http://localhost:8000"
 
 class AuthService {
     baseURL(){
         return BASE_URL
+    }
+    CLOUDINARY_URL(){
+        return CLOUDINARY_URL
     }
     login(email, password) {
         return axios
